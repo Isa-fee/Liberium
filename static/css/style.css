@@ -1,0 +1,73 @@
+/* Fundo gradiente da página inicial */
+.tenor-sans-regular {
+  font-family: "Tenor Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
+  color: #442b1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Seção central */
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Logo */
+.logo {
+  
+  margin-bottom: 2rem;
+}
+
+/* Título / slogan */
+.welcome h2 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+  max-width: 600px;
+}
+
+/* Botão principal */
+.btn-primary {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #879d84;
+  color: #f7f6f8;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  border: 1px solid #36503c;
+}
+
+.btn-primary:hover {
+  background: #f5f4f6;
+  color: #879d84;
+}
+
+/* Link de login */
+.login-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.login-link a {
+  color: #fff;
+  text-decoration: underline;
+}

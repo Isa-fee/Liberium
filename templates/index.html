@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Liberium - Bem-vindo{% endblock %}
+
+{% block content %}
+<section class="welcome">
+  <!-- Logo -->
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Liberium Logo" class="logo">
+
+  <!-- Slogan / título -->
+  <h2>Descubra, organize e compartilhe seus livros favoritos</h2>
+
+  <!-- Botão de ação -->
+  <a href="#" class="btn-primary">Cadastre-se!</a>
+
+  <!-- Link alternativo -->
+  <p class="login-link">Já tem um cadastro? <a href="#">Entrar</a></p>
+</section>
+{% endblock %}
