@@ -1,2 +1,2 @@
 # Liberium
-Projeto integrador e Prática
+Prática Profissional
