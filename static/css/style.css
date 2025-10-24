@@ -71,3 +71,47 @@ body {
   color: #fff;
   text-decoration: underline;
 }
+
+
+/* navbar */
+.topnav {
+  height: 70px;               /* altura desejada da navbar */
+  display: flex;
+  align-items: center;
+  padding: 2px 30px;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* logo com altura igual à navbar */
+.topnav .navlogo {
+  max-height: 100%;   /* nunca ultrapassa a altura da navbar */
+  height: 100%;       /* tenta ocupar a altura toda */
+  width: auto;        /* mantém proporção */
+  display: block;     /* evita espaçamento de linha em imagens inline */
+}
+
+.topnav .link {
+  color: #fdf9f6;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+.pesquisa {
+  color: white;
+  width: 300px;
+  padding: 8px 16px;
+  border: 1px solid #36503c;
+  border-radius: 20px;
+  font-size: 16px;
+  background-color: #879d84;
+}
+
+.pesquisa::placeholder {
+  color: #f7f6f8;
+}
+.content{
+  background-color:white ;
+  height: 100vh;
+}

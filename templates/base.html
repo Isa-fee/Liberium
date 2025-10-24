@@ -15,9 +15,12 @@
   {% if request.endpoint != 'index' %}
   <header>
     <nav class="topnav">
-  <a href="{{ url_for('index') }}" class="brand">Liberium</a>
-  <a href="{{ url_for('home') }}">Minha Estante</a>
-  <a href="{{ url_for('login') }}">Entrar</a>
+
+    <img src="/static/img/navlogo.png" alt="" class="navlogo">
+    <a href="{{ url_for('home') }}" class="link"> Minha Estante</a>
+    <a href="{{ url_for('login') }}" class="link">Perfil</a>
+    <input type="text" placeholder="Busque livros por título, autor, ISBN..." class="pesquisa">
+    
 </nav>
 
     </nav>
