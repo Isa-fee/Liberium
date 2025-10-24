@@ -15,9 +15,11 @@
   {% if request.endpoint != 'index' %}
   <header>
     <nav class="topnav">
-      <a href="#" class="brand">Liberium</a>
-      <a href="#">Minha Estante</a>
-      <a href="#">Entrar</a>
+  <a href="{{ url_for('index') }}" class="brand">Liberium</a>
+  <a href="{{ url_for('home') }}">Minha Estante</a>
+  <a href="{{ url_for('login') }}">Entrar</a>
+</nav>
+
     </nav>
   </header>
   {% endif %}
