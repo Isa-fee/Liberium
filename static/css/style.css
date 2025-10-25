@@ -15,6 +15,11 @@ body {
   flex-direction: column;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* Seção central */
 .welcome {
@@ -78,9 +83,11 @@ body {
   height: 70px;               /* altura desejada da navbar */
   display: flex;
   align-items: center;
-  padding: 2px 30px;
+  justify-content: space-between; /* distribui espaço entre os blocos */
+  padding: 5px 30px;
   gap: 16px;
   box-sizing: border-box;
+  margin-top: 5px;
 }
 
 /* logo com altura igual à navbar */
@@ -91,27 +98,115 @@ body {
   display: block;     /* evita espaçamento de linha em imagens inline */
 }
 
+.topnav .logonav {
+  height: 100%;      /* ocupa todo o espaço disponível */
+}
+
 .topnav .link {
   color: #fdf9f6;
   text-decoration: none;
-  font-weight: bold;
+
   padding: 8px 16px;
+}
+
+
+.content{
+  background-color:white ;
+  height: 100vh;
+  padding-top: 10px;
+}
+
+
+
+.material-symbols-outlined {
+  color: #36503c;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
+  cursor: pointer;
+}
+.busca{
+  position: relative; /* necessário para o posicionamento do ícone */
+  display: inline-block;
+  width: 400px;
+
 }
 
 .pesquisa {
   color: white;
-  width: 300px;
-  padding: 8px 16px;
+  width: 400px;
   border: 1px solid #36503c;
   border-radius: 20px;
   font-size: 16px;
   background-color: #879d84;
+  padding: 10px 15px 10px 45px;
 }
 
 .pesquisa::placeholder {
   color: #f7f6f8;
 }
-.content{
-  background-color:white ;
-  height: 100vh;
+
+.busca .material-symbols-outlined {
+  position: absolute;
+  left: 10px;  /* distância da borda direita */
+  top: 50%;    /* centraliza verticalmente */
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+
+
+
+
+/* RODAPÉ */
+
+footer> div{
+  border: 1px solid #36503c;
+}
+.rodape-icones img {
+  width: 28px;
+}
+
+.rodape-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px 100px 5px 10px;
+}
+
+.rodape-logo {
+  height: 100px;
+  margin-left: 0;
+}
+
+.rodape-logo img {
+  max-height: 100%;   /* nunca ultrapassa a altura da navbar */
+  height: 100%;       /* tenta ocupar a altura toda */
+  width: auto;        /* mantém proporção */
+  display: block; 
+}
+
+
+.rodape-links {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 8px 40px;
+  text-align: center;
+}
+
+.rodape-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: opacity 0.3s;
+}
+
+.rodape-icones {
+  display: flex;
+  gap: 20px;
 }

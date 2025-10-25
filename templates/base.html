@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=barcode_scanner" />
+
 </head>
 <body>
 
@@ -15,14 +17,13 @@
   {% if request.endpoint != 'index' %}
   <header>
     <nav class="topnav">
+      <div class="logonav"><img src="/static/img/navlogo.png" alt="" class="navlogo"></div>
+      <div><a href="{{ url_for('home') }}" class="link"> MINHA ESTANTE</a>
+        <a href="{{ url_for('login') }}" class="link">PERFIL</a></div>
 
-    <img src="/static/img/navlogo.png" alt="" class="navlogo">
-    <a href="{{ url_for('home') }}" class="link"> Minha Estante</a>
-    <a href="{{ url_for('login') }}" class="link">Perfil</a>
-    <input type="text" placeholder="Busque livros por título, autor, ISBN..." class="pesquisa">
-    
-</nav>
-
+      <div class="busca"><span class="material-symbols-outlined">barcode_scanner</span>
+        <input type="text" placeholder="Busque livros por título, autor, ISBN..." class="pesquisa"></div>
+      <div class="input-container">
     </nav>
   </header>
   {% endif %}
@@ -33,8 +34,23 @@
 
   {# Só mostra rodapé se NÃO estiver na rota index #}
   {% if request.endpoint != 'index' %}
-  <footer>
-    <p>&copy; 2025 Liberium</p>
+  <footer class="rodape">
+  <div class="rodape-conteudo">
+    <div class="rodape-logo">
+      <img src="/static/img/navlogo.png" alt="Logo Liberium">
+    </div>
+    <div class="rodape-links">
+      <a href="#">SOBRE</a>
+      <a href="#">CONTATO</a>
+      <a href="#">AJUDA</a>
+      <a href="#">TUTORIAIS</a>
+    </div>
+    <div class="rodape-icones">
+      <a href="#"><img src="/static/img/instagram.png" alt=""></a> <!-- Instagram -->
+      <a href="#"><img src="/static/img/tik-tok.png" alt=""></a> <!-- TikTok -->
+      <a href="#"><img src="/static/img/bluesky.png" alt=""></a> <!-- Libélula / símbolo -->
+    </div>
+  </div>
   </footer>
   {% endif %}
 
