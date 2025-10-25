@@ -1,4 +1,11 @@
-/* Fundo gradiente da página inicial */
+:root {
+  /* 🌿 Paleta principal do Liberium */
+  --verde-oliva: #879d84;      /* tom suave e natural — pode ser usado em botões e destaques */
+  --branco-floral: #f5f5f5;    /* fundo principal */
+  --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
+  --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
+}
+
 .tenor-sans-regular {
   font-family: "Tenor Sans", sans-serif;
   font-weight: 400;
@@ -8,8 +15,9 @@
 body {
   margin: 0;
   font-family: 'Raleway', sans-serif;
+  /* Fundo gradiente da página inicial */
   background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
-  color: #442b1a;
+  color: var(--marrom-cafe);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,14 +59,14 @@ body {
 .btn-primary {
   display: inline-block;
   padding: 0.8rem 2rem;
-  background: #879d84;
+  background: var(--verde-oliva);
   color: #f7f6f8;
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
   transition: 0.3s;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  border: 1px solid #36503c;
+  border: 1px solid var(--verde-musgo);
 }
 
 .btn-primary:hover {
@@ -111,15 +119,19 @@ body {
 
 
 .content{
-  background-color:white ;
-  height: 100vh;
-  padding-top: 10px;
+  background-color:var(--branco-floral);
+  height: 150vh;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 
-
 .material-symbols-outlined {
-  color: #36503c;
+  color: var(--verde-musgo);
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
@@ -137,10 +149,10 @@ body {
 .pesquisa {
   color: white;
   width: 400px;
-  border: 1px solid #36503c;
+  border: 1px solid var(--verde-musgo);
   border-radius: 20px;
   font-size: 16px;
-  background-color: #879d84;
+  background-color: var(--verde-oliva);
   padding: 10px 15px 10px 45px;
 }
 
@@ -163,9 +175,7 @@ body {
 
 /* RODAPÉ */
 
-footer> div{
-  border: 1px solid #36503c;
-}
+
 .rodape-icones img {
   width: 28px;
 }
@@ -209,4 +219,191 @@ footer> div{
 .rodape-icones {
   display: flex;
   gap: 20px;
+}
+
+
+/* CARROSSEL */
+
+
+
+.titulo-home {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+/* Estatísticas */
+.estatisticas {
+    width: 80%;
+    border: 1px solid var(--marrom-cafe);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    background-color: var(--branco-floral);
+}
+
+.estatisticas h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.estatisticas-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.grafico {
+    width: 180px;
+}
+
+.numero-livros span {
+    font-size: 3rem;
+    color: #4a3b2c;
+    font-weight: bold;
+}
+
+/* Meta de leitura */
+.meta{
+  width: 75%;
+}
+
+
+.meta-leitura {
+    margin-top: 2rem;
+}
+
+.barra-progresso {
+  border: 1px solid var(--marrom-cafe);
+    flex-grow: 1;
+    /* width: 100%; */
+    height: 30px;
+    background-color: #efe8dd;
+    
+    margin: 0.5rem auto;
+    overflow: hidden;
+}
+
+.progresso {
+    height: 100%;
+    background-color: var(--verde-oliva);
+}
+.t1-meta{
+  text-align: left;
+}
+.texto-meta {
+    font-size: 0.9rem;
+    color: var(--marrom-cafe);
+}
+
+/* Carrossel */
+.carrossel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px; /* espaço entre o título e os cards */
+  margin-top: 3rem;
+}
+
+.carrossel h2 {
+  writing-mode: vertical-rl; /* coloca o texto na vertical */
+  transform: rotate(180deg); /* faz a leitura de baixo pra cima */
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--marrom-cafe);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.carrossel-container {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrossel-cards {
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    padding: 20px 0;
+    margin-left:20px ;
+    margin-right: 20px;
+}
+
+.card {
+    flex: 0 0 180px; /* largura fixa — controla quantos aparecem por vez */
+    height: 270px; /* altura fixa, formato retangular vertical */
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card img {
+    width: 100%;
+    height: 220px; /* ocupa a maior parte do card */
+    object-fit: cover; /* mantém o formato da capa sem distorcer */
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.carrossel-btn {
+    background-color: var(--branco-floral);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 60px;
+    border-radius: 8px;
+}
+
+.carrossel-btn.left { left: -30px; }
+.carrossel-btn.right { right: -30px; }
+
+/* Botão “Ver minha estante” */
+.botao-estante {
+    margin-top: 40px;
+
+}
+
+.btn-estante {
+    background-color: var(--verde-oliva);
+    color: #fff;
+    padding: 15px 40px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+
+    
+}
+
+.btn-estante:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.19);
 }

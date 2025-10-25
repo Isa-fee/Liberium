@@ -4,8 +4,72 @@
 
 {% block content %}
 <div class="content">
-    <h1>Bem-vindo à sua Estante Liberium!</h1>
-    <p>Aqui você pode gerenciar seus livros favoritos. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita et dignissimos iusto qui ipsa obcaecati beatae culpa dolores minima doloribus? Numquam, saepe eum pariatur et sed obcaecati itaque quibusdam perferendis.</p>
-    
+     <h1 class="titulo-home">Bem-vindo(a) à sua Estante Liberium!</h1>
+
+    <!-- Seção de Estatísticas -->
+    <section class="estatisticas">
+        <h2>Suas Estatísticas</h2>
+        <div class="estatisticas-container">
+            <div class="grafico">
+                <canvas id="generosLidos"></canvas>
+                <p>Gêneros Lidos</p>
+            </div>
+            <div class="numero-livros">
+                <h3>Livros Lidos</h3>
+                <span>30</span>
+            </div>
+            <div class="grafico">
+                <canvas id="livrosAndamento"></canvas>
+                <p>Livros em andamento</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="meta">
+      <div class="meta-leitura">
+            <p class="t1-meta"><strong>Sua meta de leitura:</strong> 10 livros esse mês.</p>
+            <div class="barra-progresso">
+                <div class="progresso" style="width: 60%;"></div>
+            </div>
+            <p class="texto-meta">Você está no caminho certo, continue lendo mais 4 livros para bater sua meta!</p>
+        </div>
+      </section>
+
+    <!-- Seção de Sugestão de Leituras -->
+    <section class="carrossel">
+        <h2>Sugestões de leitura</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn left">&#10094;</button>
+            <div class="carrossel-cards">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/livros/livro1.jpg') }}" alt="O Duque e Eu">
+                    <p>O Duque e Eu</p>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/livros/livro2.jpg') }}" alt="A Coragem da Lady">
+                    <p>A Coragem da Lady</p>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/livros/livro3.jpg') }}" alt="Um Amor Problemático de Verão">
+                    <p>Um Amor Problemático de Verão</p>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/livros/livro4.jpg') }}" alt="Duque e Eu">
+                    <p>Duque e Eu</p>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='img/livros/livro5.jpg') }}" alt="Sua Vez, Cupido">
+                    <p>Sua Vez, Cupido</p>
+                </div>
+            </div>
+            <button class="carrossel-btn right">&#10095;</button>
+        </div>
+
+       
+    </section>
+     <div class="botao-estante">
+            <a href="#" class="btn-estante">Ver minha estante</a>
+        </div>
+
 </div>
 {% endblock %}
