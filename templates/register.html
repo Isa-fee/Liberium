@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Liberium - Cadastro{% endblock %}
+
+{% block content %}
+<section class="form-container">
+  <div class="form-card">
+    <h2>Cadastro</h2>
+
+    <form action="/cadastro" method="POST">
+      <input type="text" name="nome" placeholder="Nome" required>
+      <input type="email" name="email" placeholder="Email" required>
+
+      <div class="senha-container">
+        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+      </div>
+
+      <div class="senha-container">
+        <input type="password" name="confirmar_senha" id="confirmar_senha" placeholder="Confirmar senha" required>
+      </div>
+
+      <p class="login-text">
+        Já possui cadastro? <a href="/login">Faça login</a>
+      </p>
+
+      <button type="submit">Continuar</button>
+    </form>
+
+    <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-pequena">
+  </div>
+</section>
+{% endblock %}

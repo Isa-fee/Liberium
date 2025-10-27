@@ -1,5 +1,5 @@
 :root {
-  /* 🌿 Paleta principal do Liberium */
+  /*Paleta principal do Liberium */
   --verde-oliva: #879d84;      /* tom suave e natural — pode ser usado em botões e destaques */
   --branco-floral: #f5f5f5;    /* fundo principal */
   --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
@@ -400,10 +400,95 @@ body {
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-
-    
 }
 
 .btn-estante:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.19);
 }
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: #fff;
+    padding: 2rem 0;
+  }
+
+.form-card {
+    background: linear-gradient(135deg, #e1d4c3, #6a8b6f);
+    padding: 3rem 2rem 1rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    text-align: center;
+    width: 350px;
+}
+
+.form-card h2 {
+    color: #2b3b2d;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.form-card input,
+.form-card input[type="email"],
+.form-card input[type="password"] {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.6rem 1rem;
+    border: 1px solid #888;
+    border-radius: 25px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.form-card button {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
+    border: none;
+    border-radius: 25px;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-card button:hover {
+    background: linear-gradient(135deg, #57705b, #d6c6b1);
+}
+
+.logo-pequena {
+    width: 90px;
+    margin-top: 1rem;
+}
+
+.checkbox-area {
+    display: flex;
+    align-items: center; /* centraliza verticalmente */
+    gap: 8px; /* espaço entre o quadrado e o texto */
+    font-size: 0.85rem;
+    color: #2b3b2d;
+    margin-bottom: 1.2rem;
+}
+
+.checkbox-area input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #6a8b6f;
+    cursor: pointer;
+}
+
+.link-cadastro,
+.login-text {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.link-cadastro a,
+.login-text a {
+    color: #2b3b2d;
+    text-decoration: underline;
+  }

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Liberium - Login{% endblock %}
+
+{% block content %}
+<section class="form-container">
+  <div class="form-card">
+    <h2>Bem-vindo(a)!</h2>
+
+    <form action="/login" method="POST">
+
+      <input type="email" name="email" placeholder="Email" required>
+
+      <div class="senha-container">
+        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+      </div>
+
+      <div class="checkbox-area">
+        <input type="checkbox" id="lembrar" name="lembrar">
+        <label for="lembrar">Esqueci-me da senha</label>
+      </div>
+
+      <button type="submit">Continuar</button>
+
+      <p class="link-cadastro">
+        Não tem uma conta? <a href="/register">Inscrever-se</a>
+      </p>
+    </form>
+
+    <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-pequena">
+  </div>
+</section>
+{% endblock %}
