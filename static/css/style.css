@@ -492,3 +492,69 @@ body {
     color: #2b3b2d;
     text-decoration: underline;
   }
+
+.sobre-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 60px auto;
+    max-width: 1100px;
+    padding: 20px;
+}
+
+.texto-sobre {
+    background-color: #c5d7c0;
+    border-radius: 20px;
+    padding: 30px;
+    width: 65%;
+    color: #2e3c2f; 
+}
+
+.texto-sobre h1 {
+    font-size: 2rem;
+    color: #7b9c7a;
+    padding: 10px 10px;
+    border-radius: 15px;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.texto-sobre p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.card-sobre{
+    background-color: #c5d7c0;
+    border-radius: 20px;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    color: #2e3c2f;
+}
+
+.card-sobre h2 {
+  color: #7b9c7a ;
+}
+
+.card-sobre img.foto-sobre {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top; 
+    margin-bottom: 10px;
+}
+
+.card-sobre h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-sobre p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: justify;
+}

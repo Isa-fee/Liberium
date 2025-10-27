@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre - Liberium{% endblock %}
+
+{% block content %}
+<section class="sobre-container">
+    <div class="texto-sobre">
+        <h1>Sobre</h1>
+        <p>
+            O Liberium nasceu com o propósito de despertar o prazer da leitura e aproximar os jovens do mundo dos livros de uma forma leve, acolhedora e digital. A plataforma foi criada para ser um espaço de conexão entre leitores, onde cada história lida possa inspirar novas ideias, reflexões e descobertas. Mais do que um site, o Liberium representa um convite para desacelerar, mergulhar nas páginas e reencontrar o encanto das palavras.
+        </p>
+
+        <p>
+            A proposta do Liberium é unir tecnologia e literatura, transformando a leitura em uma experiência interativa e colaborativa. Por meio de resenhas, indicações, estantes virtuais e conteúdos compartilhados, o projeto busca construir uma comunidade de leitores apaixonados que trocam experiências, opiniões e recomendações. Assim, o hábito da leitura deixa de ser solitário e passa a ser um diálogo constante entre pessoas que amam histórias.
+        </p>
+
+        <p>
+            Criado com base em princípios de empatia e criatividade, o Liberium também tem como missão incentivar a leitura nas escolas públicas, tornando o acesso à literatura mais inclusivo. Cada recurso da plataforma foi pensado para aproximar o leitor do livro certo no momento certo, mostrando que toda história tem o poder de transformar. Ler é libertar — e o Liberium existe para lembrar disso todos os dias.
+        </p>
+    </div>
+
+    <div class="card-sobre">
+        <img src="{{ url_for('static', filename='img/lift.jpg') }}" alt="Foto da equipe" class="foto-sobre">
+        <h2>LIFT</h2>
+        <p>
+            O LIFT é formado por um grupo de meninas apaixonadas por leitura, criatividade e compartilhamento de ideias. Unidas pelo desejo de transformar o amor pelos livros em algo que inspirasse outras pessoas, elas deram vida ao projeto com dedicação, amizade e muita sensibilidade.
+        </p>
+    </div>
+</section>
+{% endblock %}
