@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}A Loucura do Mel - Liberium{% endblock %}
+
+{% block content %}
+<section class="livro-container">
+    <div class="livro-info">
+        <img src="{{ url_for('static', filename='img/a_loucura_do_mel.jpg') }}" alt="Capa do livro A Loucura do Mel" class="capa-livro">
+
+        <div class="detalhes-livro">
+            <h1>A Loucura do Mel</h1>
+            <p class="autores">
+                por <strong>Jodi Picoult</strong> (Autora), <strong>Jennifer Finney Boylan</strong> (Autora), 
+                <strong>Carolina Simmer</strong> (Tradutora)
+            </p>
+
+            <div class="avaliacao">
+                <span class="estrelas">★★★★★</span>
+                <span class="nota">(4,5)</span>
+            </div>
+
+            <div class="botoes-livro">
+                <button class="btn-principal">Adicionar à estante</button>
+                <button class="btn-secundario">Ler agora</button>
+            </div>
+
+            <div class="status-livro">
+                <p><strong>Status:</strong> Já li</p>
+                <p><strong>Formato:</strong> eBook</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="descricao-livro">
+        <h2>Sinopse</h2>
+        <p>
+            Misturando suspense, histórias de amor e reflexões pessoais e sociais, 
+            <strong>A Loucura do Mel</strong> é um fenômeno mundial, com mais de 1 milhão de exemplares vendidos.
+        </p>
+        <p>
+            Olivia McAfee sabe o que significa recomeçar. A vida perfeita — vivida em Boston e casada com um cirurgião brilhante —
+            começa a desmoronar quando sua filha adolescente, Asher, é presa por um crime chocante. 
+            Enquanto Olivia busca respostas, segredos de família vêm à tona, forçando-a a enfrentar escolhas impossíveis.
+        </p>
+        <p>
+            Uma narrativa intensa, com personagens profundamente humanos e um debate sobre verdade, justiça e perdão.
+        </p>
+    </div>
+
+    <div class="info-extra">
+        <p><strong>Formato:</strong> eBook</p>
+        <p><strong>Páginas:</strong> 320</p>
+        <p><strong>Editora:</strong> Companhia Editora</p>
+        <p><strong>Ano:</strong> 2021</p>
+    </div>
+
+    <div class="avaliacoes-livro">
+        <h2>Avaliações</h2>
+        <p>
+            Leitores comentaram: “Uma história envolvente e emocional, com reviravoltas que mexem com a cabeça.”
+        </p>
+    </div>
+</section>
+{% endblock %}
