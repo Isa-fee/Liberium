@@ -680,3 +680,209 @@ body {
     margin-bottom: 12px;
     color: #3b3b3b;
 }
+
+
+/* ============================= */
+/* 📱 RESPONSIVIDADE LIBERIUM */
+/* ============================= */
+
+/* --- Tablets (até 992px) --- */
+@media (max-width: 992px) {
+
+  .topnav {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+   .topnav img {
+    width: 120px; /* <-- Reduz o tamanho do logo */
+    height: auto;
+  }
+
+  .busca {
+    width: 100%;
+  }
+
+  .pesquisa {
+    width: 100%;
+  }
+
+  .estatisticas {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .estatisticas-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .meta {
+    width: 90%;
+  }
+
+  .carrossel {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .carrossel h2 {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .carrossel-cards {
+    gap: 10px;
+  }
+
+  .card {
+    flex: 0 0 150px;
+    height: 240px;
+  }
+
+  .rodape-conteudo {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .rodape-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 20px;
+  }
+}
+
+
+/* --- Celulares (até 600px) --- */
+/* --- AJUSTE RESPONSIVO FINAL --- */
+@media (max-width: 600px) {
+
+  /* ===== CABEÇALHO ===== */
+  .topnav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    padding: 10px 15px;
+  }
+
+  /*LOGO*/
+  .topnav img {
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* 🔹 LINKS DO TOPO */
+  .topnav a {
+    font-size: 15px;
+    margin: 0 4px;
+  }
+
+  /* 🔹 CAMPO DE BUSCA */
+  .busca {
+    width: 95%;
+    max-width: 320px;
+  }
+
+  .pesquisa {
+    width: 100%;
+  }
+
+  /* ===== BLOCO DE ESTATÍSTICAS ===== */
+  
+  .estatisticas {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* ===== CARDS ===== */
+  .carrossel {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden; /* impede o contêiner de ultrapassar a tela */
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+  .carrossel-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 10px 5px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+   .card {
+  max-width: 180px;
+  height: 220px;
+  scroll-snap-align: center;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+  .card img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+  }
+  .carrossel-btn {
+    display: none;
+  }
+
+  /* ===== BOTÃO ===== */
+  .btn-estante {
+    width: 90%;
+    max-width: 280px;
+    font-size: 18px;
+    margin: 20px auto;
+  }
+
+  /* ===== RODAPÉ ===== */
+  .rodape-logo img {
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .rodape-links {
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 10px;
+
+  }
+
+  .rodape-icones img {
+    width: 24px;
+  }
+}
+ .rodape-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
