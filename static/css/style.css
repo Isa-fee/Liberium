@@ -19,6 +19,7 @@ html {
 }
 /* Adicione esta regra fora das media queries */
 main {
+  background-color: var(--marrom-cafe);
     flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário */
     width: 100%; /* Garante que ele use a largura total */
 }
@@ -192,7 +193,12 @@ body {
 
 
 /* RODAPÉ */
-
+.rodape {
+  display: flex;
+  color: var(--branco-floral);         /* Define a cor padrão do texto (links e texto) como clara */
+  padding: 15px 0;                     /* Adiciona um padding vertical */
+  margin-top: auto;                    /* Empurra o rodapé para baixo */
+}
 
 .rodape-icones img {
   width: 28px;
@@ -206,6 +212,7 @@ body {
   margin: 0 auto;
   padding: 5px 100px 5px 10px;
 }
+
 
 .rodape-logo {
   height: 100px;
@@ -811,6 +818,7 @@ body {
 /* --- AJUSTE RESPONSIVO FINAL --- */
 @media (max-width: 600px) {
   .content{
+    padding-bottom: 30px;
     max-width: 100%;
     width: 100%;
     display: block;
@@ -942,21 +950,60 @@ body {
   .carrossel-btn {
     display: none; /* Mantém os botões de navegação ocultos */
   }
+  .meta {
+    width: 90%; /* Define a largura máxima que o bloco pode ocupar */
+    max-width: 340px; /* Limita a largura para não ficar muito largo em alguns celulares */
+    margin: 0 auto; /* Centraliza o bloco na tela */
+    text-align: center; /* Centraliza os textos internos, como "Você está no caminho certo..." */
+  }
+
+  /* Garante que o texto da meta (e.g., "Sua meta de leitura:") esteja alinhado à esquerda, se desejado */
+  .t1-meta {
+    text-align: left;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .barra-progresso {
+      width: 100%; /* Garante que a barra ocupe o espaço total do container .meta */
+  }
 
   /* ===== BOTÃO ===== */
   .btn-estante {
+    /* Estas linhas já estão no seu CSS e devem ser suficientes */
     width: 90%;
     max-width: 280px;
     font-size: 18px;
-    margin: 20px auto;
+    margin: 20px auto; /* ⬅️ Isso deve estar correto para centralizar */
+    display: inline-block; /* Garante que o margin auto funcione para centralização se o text-align: center falhar */
+  }
+  .botao-estante {
+    /* Garante que o container ocupe a largura total e possa ser centralizado se necessário */
+    width: 100%; 
+    text-align: center; /* Centraliza o botão que é um elemento inline-block/inline */
+    margin-top: 30px;
+    margin-bottom: 40px;
   }
 
   /* ===== RODAPÉ ===== */
+  .rodape {
+   
+      padding: 10px 0; /* Um pouco de padding para afastar das bordas do celular */
+  }
   .rodape-logo img {
+
     max-width: 220px;
     width: 100%;
     height: auto;
     object-fit: contain;
+  }
+  .rodape-conteudo {
+
+    display: flex;
+    flex-direction: column; /* ⬅️ REINTRODUZA ESTA LINHA */
+    align-items: center; /* Centraliza o conteúdo (logo, links, ícones) */
+    gap: 15px; /* Adiciona espaço entre os blocos empilhados */
+    padding: 10px 15px;
   }
 
   .rodape-links {
@@ -970,11 +1017,3 @@ body {
     width: 24px;
   }
 }
- .rodape-conteudo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-  }
