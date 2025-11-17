@@ -23,7 +23,7 @@ main {
     width: 100%; /* Garante que ele use a largura total */
 }
 canvas{
-  background-color: #2b3b2d;
+  border: 1px solid black;
 }
 
 body {
@@ -248,14 +248,15 @@ body {
     font-size: 1.8rem;
     margin-bottom: 2rem;
 }
-.estatisticas-container{
-  border: 1px solid black;
-}
+
 /* Estatísticas */
 .estatisticas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 1px solid var(--marrom-cafe);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
     margin-bottom: 2.5rem;
     background-color: var(--branco-floral);
     width: 95%; /* Mantenha uma boa porcentagem para que ele se adapte ao max-width do .content */
@@ -263,13 +264,16 @@ body {
 }
 
 .estatisticas h2 {
+    width: 40%;
+
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
 }
 
 .estatisticas-container {
+    width: 90%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
@@ -277,6 +281,7 @@ body {
 
 .grafico {
     width: 180px;
+    height: 200px;
 }
 
 .numero-livros span {
@@ -321,11 +326,15 @@ body {
 
 /* Carrossel */
 .carrossel {
+
   display: flex;
   align-items: center;
   justify-content: center;
+  align-content: center;
   gap: 30px; /* espaço entre o título e os cards */
   margin-top: 3rem;
+  max-width: 90%;
+  margin-bottom: 2rem;
 }
 
 .carrossel h2 {
@@ -340,8 +349,9 @@ body {
 }
 
 .carrossel-container {
+
     position: relative;
-    max-width: 1500px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -354,7 +364,7 @@ body {
     gap: 20px;
     width: 100%;
     justify-content: center;
-    padding: 20px 0;
+    padding: 20px;
     margin-left:20px ;
     margin-right: 20px;
 }
@@ -406,12 +416,13 @@ body {
     border-radius: 8px;
 }
 
-.carrossel-btn.left { left: -30px; }
-.carrossel-btn.right { right: -30px; }
+.carrossel-btn.left { left: 5px; }
+.carrossel-btn.right { right: 5px; }
 
 /* Botão “Ver minha estante” */
 .botao-estante {
     margin-top: 40px;
+    margin-bottom: 80px;
 
 }
 
@@ -591,12 +602,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333333;
 }
-.grafico{
-  border: 1px solid black;
-}
+
 
 #generosLidos, #livrosAndamento {
   width: 100%;
+  height: 100%
 }
 
 
@@ -767,7 +777,15 @@ body {
   }
 
   .carrossel-cards {
-    gap: 10px;
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    /* Mude padding: 20px 0; para padding: 20px 20px; */
+    padding: 20px 20px; /* <--- CORREÇÃO: Adiciona padding lateral */
+    margin-left:20px ; /* Remova ou comente estas duas linhas */
+    margin-right: 20px; /* Remova ou comente estas duas linhas */
   }
 
   .card {

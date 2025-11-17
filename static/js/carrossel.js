@@ -30,7 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Posição inicial: move o scroll para o primeiro conjunto real de cards
         // Isso esconde os clones iniciais
-        carrossel.scrollLeft = cardWidth * cards.length;
+        const viewportCenter = carrossel.offsetWidth / 2; // Metade da área visível
+        const cardCenterOffset = cardWidth / 2; // Metade da largura de um card
+        // Posição = Início dos cards reais - (Metade da Viewport - Metade do Card)
+        carrossel.scrollLeft = (cardWidth * cards.length) - viewportCenter + cardCenterOffset;
 
 
         // --- 2. Funções de Easing e Scroll Suave ---
