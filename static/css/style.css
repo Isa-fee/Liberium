@@ -19,7 +19,6 @@ html {
 }
 /* Adicione esta regra fora das media queries */
 main {
-  background-color: var(--marrom-cafe);
     flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário */
     width: 100%; /* Garante que ele use a largura total */
 }
@@ -728,6 +727,103 @@ body {
     margin-bottom: 12px;
     color: #3b3b3b;
 }
+
+/* =============================== */
+/*           PERFIL               */
+/* =============================== */
+
+
+.perfil-container {
+    width: 100%;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Foto + texto lado a lado */
+.perfil-header {
+  max-width: 60%;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    background-color: var(--branco-floral);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Foto maior */
+.perfil-foto {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--verde-oliva);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-nome {
+    font-size: 2rem;
+    color: var(--marrom-cafe);
+    margin-bottom: -5px;
+}
+
+.perfil-arroba {
+    font-size: .9rem;
+    color: var(--marrom-cafe);
+    opacity: .7;
+    margin-bottom: 15px;
+}
+
+.perfil-boasvindas {
+    color: var(--marrom-cafe);
+    margin-bottom: 5px;
+}
+
+.perfil-msg {
+    max-width: 600px;
+    color: #444;
+    line-height: 1.4;
+}
+
+/* =============================== */
+/* CARDS LADO A LADO */
+/* =============================== */
+
+.perfil-acoes {
+  max-width: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;     /* 🔥 coloca os 3 lado a lado */
+    gap: 20px;                          /* espaço entre eles */
+    margin-top: 10px;
+}
+
+/* Cada card deve ocupar o mesmo tamanho */
+.acao-card {
+    flex: 1;                            /* 🔥 divide igualmente o espaço */
+    height: 180px;                      /* altura do quadrado */
+    background-color: var(--branco-floral);
+    border-radius: 15px;
+    text-decoration: none;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: 0.25s ease;
+}
+
+/* Efeito hover */
+.acao-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.20);
+}
+
 
 
 /* ============================= */

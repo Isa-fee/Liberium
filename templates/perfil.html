@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil | Liberium{% endblock %}
+
+{% block content %}
+
+<div class="content perfil-container">
+
+    <!-- Bloco topo: foto + texto lado a lado -->
+    <div class="perfil-header">
+        
+        <img src="/static/img/lift.jpg" 
+             alt="Foto do usuário" 
+             class="perfil-foto">
+
+        <div class="perfil-info">
+            <h1 class="perfil-nome">Nomedousuario</h1>
+            <p class="perfil-arroba">@dousuario</p>
+
+            <h2 class="perfil-boasvindas">Bem-vinda(o), fulaninho!</h2>
+            <p class="perfil-msg">
+                Pronta(o) para continuar sua jornada literária? Aqui você pode acompanhar seu progresso,
+                atualizar seus livros e gerenciar sua estante.
+            </p>
+        </div>
+
+    </div>
+
+     <div class="perfil-acoes">
+
+    <!-- Card 1 - Mini estante -->
+    <a href="{{ url_for('home') }}" class="acao-card card-estante">aqui uma miniatura da estante</a>
+
+    <!-- Card 2 - Estatísticas -->
+    <a href="#" class="acao-card card-estatisticas">gráfico</a>
+
+    <!-- Card 3 - Configurações -->
+    <a href="#" class="acao-card card-configuracoes">configurações</a>
+
+</div>
+
+
+</div>
+
+
+{% endblock %}
