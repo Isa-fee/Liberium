@@ -1,34 +1,14 @@
-from flask import Flask, request, render_template, flash, redirect, url_for, make_response
+from flask import Flask
+from controllers.home_controller import home_bp
+from controllers.books_controller import books_bp
+from controllers.user_controller import user_bp
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-   
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
-@app.route('/books')
-def books():
-    return render_template('books.html')
-
-@app.route('/sobre')
-def sobre():
-    return render_template('sobre.html')
-
-@app.route('/perfil')
-def perfil():
-    return render_template('perfil.html')
+# Registrando os controllers
+app.register_blueprint(home_bp)
+app.register_blueprint(books_bp)
+app.register_blueprint(user_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

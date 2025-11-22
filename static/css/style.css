@@ -1,254 +1,245 @@
 :root {
-  /*Paleta principal do Liberium */
-  --verde-oliva: #879d84;      /* tom suave e natural — pode ser usado em botões e destaques */
-  --branco-floral: #f5f5f5;    /* fundo principal */
-  --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
-  --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
+    /*Paleta principal do Liberium */
+    --verde-oliva: #879d84;      /* tom suave e natural — pode ser usado em botões e destaques */
+    --branco-floral: #f5f5f5;    /* fundo principal */
+    --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
+    --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
 }
 
 
 
 .tenor-sans-regular {
-  font-family: "Tenor Sans", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Tenor Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
+
 html {
-    /* ⭐️ Garante que nada ultrapasse o viewport horizontalmente */
+    /* Garante que nada ultrapasse o viewport horizontalmente */
     overflow-x: hidden; 
 }
+
 /* Adicione esta regra fora das media queries */
 main {
     flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário */
     width: 100%; /* Garante que ele use a largura total */
 }
-canvas{
-  border: 1px solid black;
+
+canvas {
+    border: 1px solid black;
 }
 
 body {
-  margin: 0;
-  font-family: 'Raleway', sans-serif;
-  /* Fundo gradiente da página inicial */
-  background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
-  color: var(--marrom-cafe);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    /* Fundo gradiente da página inicial */
+    background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
+    color: var(--marrom-cafe);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Seção central */
 .welcome {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  max-width: 1200px; /* Adicione uma largura máxima para centrar em telas grandes */
-  margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    max-width: 1200px; /* Adicione uma largura máxima para centrar em telas grandes */
+    margin: 0 auto;
 }
 
 /* Logo */
 .logo {
-  
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 /* Título / slogan */
 .welcome h2 {
-  font-size: 1.8rem;
-  font-weight: 400;
-  margin-bottom: 2rem;
-  line-height: 1.4;
-  max-width: 600px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+    max-width: 600px;
 }
 
 /* Botão principal */
 .btn-primary {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background: var(--verde-oliva);
-  color: #f7f6f8;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  border: 1px solid var(--verde-musgo);
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--verde-oliva);
+    color: #f7f6f8;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid var(--verde-musgo);
 }
 
 .btn-primary:hover {
-  background: #f5f4f6;
-  color: #879d84;
+    background: #f5f4f6;
+    color: #879d84;
 }
 
 /* Link de login */
 .login-link {
-  margin-top: 1rem;
-  font-size: 0.9rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
 }
 
 .login-link a {
-  color: #fff;
-  text-decoration: underline;
+    color: #fff;
+    text-decoration: underline;
 }
-
 
 /* navbar */
 .topnav {
-  height: 70px;               /* altura desejada da navbar */
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* distribui espaço entre os blocos */
-  padding: 5px 30px;
-  gap: 16px;
-  box-sizing: border-box;
-  margin-top: 5px;
+    height: 70px;     /* altura desejada da navbar */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* distribui espaço entre os blocos */
+    padding: 5px 30px;
+    gap: 16px;
+    box-sizing: border-box;
+    margin-top: 5px;
 }
 
 /* logo com altura igual à navbar */
 .topnav .navlogo {
-  max-height: 100%;   /* nunca ultrapassa a altura da navbar */
-  height: 100%;       /* tenta ocupar a altura toda */
-  width: auto;        /* mantém proporção */
-  display: block;     /* evita espaçamento de linha em imagens inline */
+    max-height: 100%;   /* nunca ultrapassa a altura da navbar */
+    height: 100%;       /* tenta ocupar a altura toda */
+    width: auto;        /* mantém proporção */
+    display: block;     /* evita espaçamento de linha em imagens inline */
 }
 
 .topnav .logonav {
-  height: 100%;      /* ocupa todo o espaço disponível */
+    height: 100%;      /* ocupa todo o espaço disponível */
 }
 
 .topnav .link {
-  color: #fdf9f6;
-  text-decoration: none;
+    color: #fdf9f6;
+    text-decoration: none;
+    padding: 8px 16px;
+  }
 
-  padding: 8px 16px;
+
+.content {
+    background-color:var(--branco-floral);
+    /* height: 150vh; */
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
 }
-
-
-.content{
-  background-color:var(--branco-floral);
-  /* height: 150vh; */
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  margin: 0 auto;
-}
-
-
 
 .material-symbols-outlined {
-  color: var(--verde-musgo);
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48;
-  cursor: pointer;
+    color: var(--verde-musgo);
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+    cursor: pointer;
 }
-.busca{
-  position: relative; /* necessário para o posicionamento do ícone */
-  display: inline-block;
-  width: 400px;
 
+.busca {
+    position: relative; /* necessário para o posicionamento do ícone */
+    display: inline-block;
+    width: 400px;
 }
 
 .pesquisa {
-  color: white;
-  width: 400px;
-  border: 1px solid var(--verde-musgo);
-  border-radius: 20px;
-  font-size: 16px;
-  background-color: var(--verde-oliva);
-  padding: 10px 15px 10px 45px;
+    color: white;
+    width: 400px;
+    border: 1px solid var(--verde-musgo);
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: var(--verde-oliva);
+    padding: 10px 15px 10px 45px;
 }
 
 .pesquisa::placeholder {
-  color: #f7f6f8;
+    color: #f7f6f8;
 }
 
 .busca .material-symbols-outlined {
-  position: absolute;
-  left: 10px;  /* distância da borda direita */
-  top: 50%;    /* centraliza verticalmente */
-  transform: translateY(-50%);
-  cursor: pointer;
-  transition: color 0.2s ease;
+    position: absolute;
+    left: 10px;  /* distância da borda direita */
+    top: 50%;    /* centraliza verticalmente */
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
-
-
-
 
 
 /* RODAPÉ */
 .rodape {
-  display: flex;
-  color: var(--branco-floral);         /* Define a cor padrão do texto (links e texto) como clara */
-  padding: 15px 0;                     /* Adiciona um padding vertical */
-  margin-top: auto;                    /* Empurra o rodapé para baixo */
+    display: flex;
+    color: var(--branco-floral);  /* Define a cor padrão do texto (links e texto) como clara */
+    padding: 15px 0; /* Adiciona um padding vertical */
+    margin-top: auto;  /* Empurra o rodapé para baixo */
 }
 
 .rodape-icones img {
-  width: 28px;
+    width: 28px;
 }
 
 .rodape-conteudo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0 auto;
-  padding: 5px 100px 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px 100px 5px 10px;
 }
 
 
 .rodape-logo {
-  height: 100px;
-  margin-left: 0;
+    height: 100px;
+    margin-left: 0;
 }
 
 .rodape-logo img {
-  max-height: 100%;   /* nunca ultrapassa a altura da navbar */
-  height: 100%;       /* tenta ocupar a altura toda */
-  width: auto;        /* mantém proporção */
-  display: block; 
-}
-
+    max-height: 100%;   /* nunca ultrapassa a altura da navbar */
+    height: 100%;       /* tenta ocupar a altura toda */
+    width: auto;        /* mantém proporção */
+    display: block; 
+  }
 
 .rodape-links {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 8px 40px;
-  text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 8px 40px;
+    text-align: center;
 }
 
 .rodape-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  transition: opacity 0.3s;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: opacity 0.3s;
 }
 
 .rodape-icones {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 }
 
-
 /* CARROSSEL */
-
-
 
 .titulo-home {
     font-size: 1.8rem;
@@ -271,7 +262,6 @@ body {
 
 .estatisticas h2 {
     width: 40%;
-
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
 }
@@ -297,9 +287,9 @@ body {
 }
 
 /* Meta de leitura */
-.meta{
-  width: 95%; /* Mantenha uma boa porcentagem */
-  max-width: 700px;
+.meta {
+    width: 95%; /* Mantenha uma boa porcentagem */
+    max-width: 700px;
 }
 
 
@@ -308,12 +298,11 @@ body {
 }
 
 .barra-progresso {
-  border: 1px solid var(--marrom-cafe);
+    border: 1px solid var(--marrom-cafe);
     flex-grow: 1;
     /* width: 100%; */
     height: 30px;
     background-color: #efe8dd;
-    
     margin: 0.5rem auto;
     overflow: hidden;
 }
@@ -322,9 +311,11 @@ body {
     height: 100%;
     background-color: var(--verde-oliva);
 }
+
 .t1-meta{
-  text-align: left;
+    text-align: left;
 }
+
 .texto-meta {
     font-size: 0.9rem;
     color: var(--marrom-cafe);
@@ -332,30 +323,28 @@ body {
 
 /* Carrossel */
 .carrossel {
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  gap: 30px; /* espaço entre o título e os cards */
-  margin-top: 3rem;
-  max-width: 90%;
-  margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 30px; /* espaço entre o título e os cards */
+    margin-top: 3rem;
+    max-width: 90%;
+    margin-bottom: 2rem;
 }
 
 .carrossel h2 {
-  writing-mode: vertical-rl; /* coloca o texto na vertical */
-  transform: rotate(180deg); /* faz a leitura de baixo pra cima */
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--marrom-cafe);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin: 0;
+    writing-mode: vertical-rl; /* coloca o texto na vertical */
+    transform: rotate(180deg); /* faz a leitura de baixo pra cima */
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--marrom-cafe);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
 }
 
 .carrossel-container {
-
     position: relative;
     width: 100%;
     margin: 0 auto;
@@ -403,7 +392,6 @@ body {
     font-weight: 500;
 }
 
-
 .card:hover {
     transform: scale(1.05);
 }
@@ -422,14 +410,17 @@ body {
     border-radius: 8px;
 }
 
-.carrossel-btn.left { left: 5px; }
-.carrossel-btn.right { right: 5px; }
+.carrossel-btn.left { 
+    left: 5px; 
+}
+.carrossel-btn.right {
+    right: 5px; 
+}
 
 /* Botão “Ver minha estante” */
 .botao-estante {
     margin-top: 40px;
     margin-bottom: 80px;
-
 }
 
 .btn-estante {
@@ -444,6 +435,10 @@ body {
 .btn-estante:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.19);
 }
+
+/* =============================== */
+/*        LOGIN E CADASTRO         */
+/* =============================== */
 
 .form-container {
     display: flex;
@@ -506,8 +501,8 @@ body {
 
 .checkbox-area {
     display: flex;
-    align-items: center; /* centraliza verticalmente */
-    gap: 8px; /* espaço entre o quadrado e o texto */
+    align-items: center;  /*centraliza verticalmente  */
+    gap: 8px;  
     font-size: 0.85rem;
     color: #2b3b2d;
     margin-bottom: 1.2rem;
@@ -518,7 +513,7 @@ body {
     height: 16px;
     accent-color: #6a8b6f;
     cursor: pointer;
-}
+} 
 
 .link-cadastro,
 .login-text {
@@ -530,7 +525,11 @@ body {
 .login-text a {
     color: #2b3b2d;
     text-decoration: underline;
-  }
+}
+
+/* =============================== */
+/*             SOBRE               */
+/* =============================== */
 
 .sobre-container {
     display: flex;
@@ -598,7 +597,10 @@ body {
     text-align: justify;
 }
 
-/* Books */
+/* =============================== */
+/*             BOOKS               */
+/* =============================== */
+
 .livro-container {
     display: flex;
     flex-wrap: wrap;
@@ -609,18 +611,17 @@ body {
     color: #333333;
 }
 
-
 #generosLidos, #livrosAndamento {
-  width: 100%;
-  height: 100%
+    width: 100%;
+    height: 100%
 }
-
 
 .livro-info {
     flex: 1 1 280px;
     display: flex;
     gap: 30px;
 }
+
 .capa-livro {
     width: 200px;
     height: 300px;
@@ -628,41 +629,49 @@ body {
     border-radius: 6px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
+
 .detalhes-livro {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
+
 .detalhes-livro h1 {
     font-size: 1.9rem;
     margin-bottom: 8px;
     font-weight: 600;
 }
+
 .autores {
     font-size: 0.9rem;
     margin-bottom: 15px;
     color: #555555;
 }
+
 .avaliacao {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
+
 .estrelas {
     color: #f5b50a;
     font-size: 1.1rem;
     margin-right: 6px;
     user-select: none;
 }
+
 .nota {
     font-size: 0.9rem;
     color: #777777;
 }
+
 .botoes-livro {
     margin-bottom: 25px;
     display: flex;
     gap: 15px;
 }
+
 .btn-principal {
     background-color: #6c8a50;
     border: none;
@@ -673,9 +682,11 @@ body {
     border-radius: 6px;
     transition: background-color 0.3s ease;
 }
+
 .btn-principal:hover {
     background-color: #567337;
 }
+
 .btn-secundario {
     background-color: transparent;
     border: 2px solid #6c8a50;
@@ -686,26 +697,31 @@ body {
     border-radius: 6px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 .btn-secundario:hover {
     background-color: #6c8a50;
     color: white;
 }
+
 .status-livro p {
     font-size: 0.87rem;
     margin-bottom: 6px;
     color: #444444;
 }
+
 .descricao-livro {
     flex: 1 1 600px;
     font-size: 1rem;
     line-height: 1.6;
     color: #3e3e3e;
 }
+
 .descricao-livro h2 {
     font-size: 1.4rem;
     margin-bottom: 12px;
     font-weight: 700;
 }
+
 .info-extra {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -715,6 +731,7 @@ body {
     font-weight: 500;
     font-size: 0.95rem;
 }
+
 .avaliacoes-livro {
     margin-top: 45px;
     font-style: italic;
@@ -722,6 +739,7 @@ body {
     font-size: 1rem;
     max-width: 700px;
 }
+
 .avaliacoes-livro h2 {
     font-weight: 700;
     margin-bottom: 12px;
@@ -794,21 +812,21 @@ body {
 }
 
 /* =============================== */
-/* CARDS LADO A LADO */
+/*        CARDS LADO A LADO        */
 /* =============================== */
 
 .perfil-acoes {
   max-width: 60%;
     width: 100%;
     display: flex;
-    justify-content: space-between;     /* 🔥 coloca os 3 lado a lado */
+    justify-content: space-between;  /*coloca os 3 lado a lado */
     gap: 20px;                          /* espaço entre eles */
     margin-top: 10px;
 }
 
 /* Cada card deve ocupar o mesmo tamanho */
 .acao-card {
-    flex: 1;                            /* 🔥 divide igualmente o espaço */
+    flex: 1;                            /* divide igualmente o espaço */
     height: 180px;                      /* altura do quadrado */
     background-color: var(--branco-floral);
     border-radius: 15px;
@@ -825,9 +843,8 @@ body {
 }
 
 
-
 /* ============================= */
-/* 📱 RESPONSIVIDADE LIBERIUM */
+/*         RESPONSIVIDADE        */
 /* ============================= */
 
 /* --- Tablets (até 992px) --- */
@@ -995,7 +1012,7 @@ body {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding: 10px 20px; /* <--- NOVO: Adiciona 20px de espaçamento nas laterais */
+    padding: 10px 20px; /* Adiciona 20px de espaçamento nas laterais */
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1070,7 +1087,7 @@ body {
     width: 90%;
     max-width: 280px;
     font-size: 18px;
-    margin: 20px auto; /* ⬅️ Isso deve estar correto para centralizar */
+    margin: 20px auto; /* Isso deve estar correto para centralizar */
     display: inline-block; /* Garante que o margin auto funcione para centralização se o text-align: center falhar */
   }
   .botao-estante {
@@ -1096,7 +1113,7 @@ body {
   .rodape-conteudo {
 
     display: flex;
-    flex-direction: column; /* ⬅️ REINTRODUZA ESTA LINHA */
+    flex-direction: column; /*  REINTRODUZA ESTA LINHA */
     align-items: center; /* Centraliza o conteúdo (logo, links, ícones) */
     gap: 15px; /* Adiciona espaço entre os blocos empilhados */
     padding: 10px 15px;

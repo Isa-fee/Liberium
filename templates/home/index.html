@@ -11,9 +11,9 @@
   <h2>Descubra, organize e compartilhe seus livros favoritos</h2>
 
   <!-- Botão de ação -->
-  <a href="/register" class="btn-primary">Cadastre-se!</a>
+  <a href="{{ url_for('user.register') }}" class="btn-primary">Cadastre-se!</a>
 
   <!-- Link alternativo -->
-  <p class="login-link">Já tem um cadastro? <a href="/login">Entrar</a></p>
+  <p class="login-link">Já tem um cadastro? <a href="{{ url_for('user.login') }}">Entrar</a></p>
 </section>
 {% endblock %}
