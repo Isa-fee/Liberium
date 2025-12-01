@@ -7,7 +7,7 @@
   <div class="form-card">
     <h2>Bem-vindo(a)!</h2>
 
-  <form action="{{ url_for('user.login') }}" method="POST">
+  <form action="{{ url_for('user_bp.login') }}" method="POST">
 
       <input type="email" name="email" placeholder="Email" required>
 
@@ -23,7 +23,7 @@
       <button type="submit">Continuar</button>
 
       <p class="link-cadastro">
-        Não tem uma conta? <a href="{{ url_for('user.register') }}">Inscrever-se</a>
+        Não tem uma conta? <a href="{{ url_for('user_bp.register') }}">Inscrever-se</a>
       </p>
     </form>
 

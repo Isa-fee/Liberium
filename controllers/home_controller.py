@@ -9,3 +9,8 @@ def index():
 @home_bp.route('/home')
 def home():
     return render_template('home/home.html')
+
+@home_bp.route("/sobre")
+def sobre():
+    return render_template("home/sobre.html")
+
