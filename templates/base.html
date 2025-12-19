@@ -14,7 +14,7 @@
 <body>
 
   {# Só mostra cabeçalho se NÃO estiver na rota index #}
-  {% if request.endpoint != 'index' %}
+  {% if request.endpoint != 'home.index' %}
   <header>
     <nav class="topnav">
       <div class="logonav"><img src="/static/img/navlogo.png" alt="" class="navlogo"></div>
@@ -33,7 +33,7 @@
   </main>
 
   {# Só mostra rodapé se NÃO estiver na rota index #}
-  {% if request.endpoint != 'index' %}
+  {% if request.endpoint != 'home.index' %}
   <footer class="rodape">
   <div class="rodape-conteudo">
     <div class="rodape-logo">
