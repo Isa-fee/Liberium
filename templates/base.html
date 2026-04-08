@@ -21,8 +21,18 @@
       <div><a href="{{ url_for('home.home') }}" class="link"> MINHA ESTANTE</a>
         <a href="{{ url_for('user_bp.login') }}" class="link">PERFIL</a></div>
 
-      <div class="busca"><span class="material-symbols-outlined">barcode_scanner</span>
-        <input type="text" placeholder="Busque livros por título, autor, ISBN..." class="pesquisa"></div>
+      <form action="/books/buscar" method="get" class="busca">
+  <span class="material-symbols-outlined">barcode_scanner</span>
+
+  <input 
+    type="text" 
+    name="q" 
+    placeholder="Busque livros por título, autor, ISBN..." 
+    class="pesquisa"
+  >
+
+  <button type="submit" style="display: none;"></button>
+</form>
       <div class="input-container">
     </nav>
   </header>

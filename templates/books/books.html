@@ -5,13 +5,12 @@
 {% block content %}
 <section class="livro-container">
     <div class="livro-info">
-        <img src="{{ url_for('static', filename='img/a_loucura_do_mel.jpg') }}" alt="Capa do livro A Loucura do Mel" class="capa-livro">
+        <img src="{{ capa }}" class="capa-livro" class="capa-livro">
 
         <div class="detalhes-livro">
-            <h1>A Loucura do Mel</h1>
+            <h1>{{ titulo }}</h1>
             <p class="autores">
-                por <strong>Jodi Picoult</strong> (Autora), <strong>Jennifer Finney Boylan</strong> (Autora), 
-                <strong>Carolina Simmer</strong> (Tradutora)
+                por <strong>{{ autor }}</strong>
             </p>
 
             <div class="avaliacao">
@@ -33,23 +32,7 @@
 
     <div class="descricao-livro">
         <h2>Sinopse</h2>
-        <p>
-            Misturando suspense, histórias de amor e reflexões pessoais e sociais, 
-            <strong>A Loucura do Mel</strong> é um fenômeno mundial, com mais de 1 milhão de exemplares vendidos.
-        </p>
-        <p>
-        Olivia McAfee sabe o que significa recomeçar. A vida perfeita — vivendo em Boston e casada com um cirurgião brilhante enquanto cria seu lindo filho, Asher — desmorona quando o marido revela um lado sombrio. Ela nunca imaginou que voltaria à sua monótona cidade natal, em New Hampshire, para morar na casa em que cresceu e assumir o negócio de apicultura de seu falecido pai.
-        Lily Campanello também está familiarizada com recomeços. Quando ela e a mãe se mudam para Adams, New Hampshire, onde Lily pretende concluir o último ano do ensino médio, ambas esperam que seja o início de uma nova vida.
-        Os caminhos de Olivia e Lily se cruzam quando Asher se apaixona pela garota nova da escola, e Lily não consegue deixar de se apaixonar de volta. Ao lado de Ash, ela se sente feliz pela primeira vez. Mas, às vezes, ela se pergunta se pode confiar completamente nele.
-        Um dia, Olivia recebe uma ligação: Lily está morta, e Asher está sendo interrogado pela polícia.
-        Olivia tem certeza de que seu filho é inocente. Mas ela estaria se enganando se não reconhecesse os traços do temperamento de seu ex-marido em Asher e, à medida que o julgamento dele se desenrola, ela percebe que o filho manteve mais coisas escondidas do que imaginava.
-        A loucura do mel é um suspense instigante, uma história de amor inesquecível e uma exploração poderosa dos segredos que guardamos e dos riscos que corremos para nos tornar quem somos.
-        "Jodi Picoult é daquelas escritoras singulares, uma em um milhão; seus livros deixam o coração apertado e expandem a mente." — Emily Henry, autora best-seller de Leitura de verão
-        "Um dos melhores livros do ano." — PopSugar
-        </p>
-        <p>
-           <strong>Uma narrativa intensa, com personagens profundamente humanos e um debate sobre verdade, justiça e perdão.</strong> 
-        </p>
+        <p>{{ descricao }}</p>
     </div>
 
     <div class="info-extra">
