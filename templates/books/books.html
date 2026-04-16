@@ -5,34 +5,22 @@
 {% block content %}
 <section class="livro-container">
     <div class="livro-info">
-        <img src="{{ capa }}" class="capa-livro" class="capa-livro">
+        <p class="autores">por <strong>{{ livro.autores }}</strong></p>
+        <p><strong>Editora:</strong> {{ livro.editora }}</p>
+        <p><strong>Ano:</strong> {{ livro.ano }}</p>
+        <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
+        <p><strong>Categorias:</strong> {{ livro.categorias }}</p>
+        <p><strong>Avaliação:</strong> ⭐ {{ livro.avaliacao }} ({{ livro.avaliacoes }} avaliações)</p>
 
-        <div class="detalhes-livro">
-            <h1>{{ titulo }}</h1>
-            <p class="autores">
-                por <strong>{{ autor }}</strong>
-            </p>
-
-            <div class="avaliacao">
-                <span class="estrelas">★★★★★</span>
-                <span class="nota">(4,5)</span>
-            </div>
-
-            <div class="botoes-livro">
-                <button class="btn-principal">Adicionar à estante</button>
-                <button class="btn-secundario">Ler agora</button>
-            </div>
-
-            <div class="status-livro">
-                <p><strong>Status:</strong> Já li</p>
-                <p><strong>Formato:</strong> eBook</p>
-            </div>
+        {% if livro.capa %}
+            <img src="{{ livro.capa }}" class="capa-livro">
+        {% endif %}
         </div>
     </div>
 
     <div class="descricao-livro">
         <h2>Sinopse</h2>
-        <p>{{ descricao }}</p>
+        <p>{{ livro.descricao | safe }}</p>
     </div>
 
     <div class="info-extra">

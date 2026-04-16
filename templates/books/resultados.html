@@ -1,41 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Resultados{% endblock %}
-
 {% block content %}
 
-<h1 style="padding-left: 20px;">Resultados da busca</h1>
+<h1 style="padding-left: 20px;">Resultados</h1>
 
-<div style="padding: 20px; display: flex; flex-wrap: wrap; gap: 20px;">
+<div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;">
 
     {% for livro in livros %}
-        <a href="/books/detalhes{{ livro.key }}" style="text-decoration: none; color: inherit;">
-            
-            <div style="width: 180px; border: 1px solid #ddd; border-radius: 10px; padding: 10px; text-align: center; transition: 0.2s;">
+    
+    <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}" 
+       style="text-decoration: none; color: inherit;">
 
-                {% if livro.cover_i %}
-                    <img 
-                        src="https://covers.openlibrary.org/b/id/{{ livro.cover_i }}-M.jpg" 
-                        width="120"
-                        style="border-radius: 5px;"
-                    >
-                {% else %}
-                    <div style="width:120px; height:180px; background:#eee; display:flex; align-items:center; justify-content:center;">
-                        Sem capa
-                    </div>
-                {% endif %}
+        <div style="width: 180px; border: 1px solid #ddd; padding: 10px; border-radius: 10px;">
 
-                <h4 style="margin-top: 10px;">
-                    {{ livro.title }}
-                </h4>
+            {% if livro.capa %}
+                <img src="{{ livro.capa }}" width="120">
+            {% else %}
+                <div style="width:120px; height:180px; background:#eee;">
+                    Sem capa
+                </div>
+            {% endif %}
 
-                <p style="font-size: 14px; color: #555;">
-                    {{ livro.author_name[0] if livro.author_name else "Autor desconhecido" }}
-                </p>
+            <h4>{{ livro.titulo }}</h4>
+            <p>{{ livro.autor }}</p>
 
-            </div>
+            <small style="color: gray;">
+                {{ livro.origem }}
+            </small>
 
-        </a>
+        </div>
+    </a>
+
     {% endfor %}
 
 </div>

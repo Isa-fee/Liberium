@@ -1029,6 +1029,7 @@ body {
   .card {
     /* Define a largura do card, garantindo que seja o mesmo do desktop/tablet */
     flex: 0 0 180px; /* Largura fixa para que a rolagem funcione */
+    min-width: 180px; 
     max-width: 180px; 
     height: 270px; /* Volta para a altura do desktop */
     scroll-snap-align: start; /* <--- CORREÇÃO: Alinha o início do card, não o centro */
@@ -1048,7 +1049,18 @@ body {
       object-fit: cover; 
       border-radius: 6px;
       margin-bottom: 8px;
+      
   }
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+}
+.sem-capa {
+    width: 100%;
+    height: 220px;
+    background: #eee;
+    border-radius: 6px;
+}
 
   .card p {
       font-size: 0.9rem;

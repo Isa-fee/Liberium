@@ -17,23 +17,28 @@
   {% if request.endpoint != 'home.index' %}
   <header>
     <nav class="topnav">
-      <div class="logonav"><img src="/static/img/navlogo.png" alt="" class="navlogo"></div>
-      <div><a href="{{ url_for('home.home') }}" class="link"> MINHA ESTANTE</a>
-        <a href="{{ url_for('user_bp.login') }}" class="link">PERFIL</a></div>
-
+      <div class="logonav">
+        <a href="{{ url_for('home.home') }}"><img src="/static/img/navlogo.png" alt="" class="navlogo"></a>
+      </div>
+  
+      <div>
+        <a href="{{ url_for('home.home') }}" class="link">MINHA ESTANTE</a>
+        <a href="{{ url_for('user_bp.login') }}" class="link">PERFIL</a>
+      </div>
+  
       <form action="/books/buscar" method="get" class="busca">
-  <span class="material-symbols-outlined">barcode_scanner</span>
-
-  <input 
-    type="text" 
-    name="q" 
-    placeholder="Busque livros por título, autor, ISBN..." 
-    class="pesquisa"
-  >
-
-  <button type="submit" style="display: none;"></button>
-</form>
-      <div class="input-container">
+        <span class="material-symbols-outlined">barcode_scanner</span>
+  
+        <input 
+          type="text" 
+          name="q" 
+          placeholder="Busque livros por título, autor, ISBN..." 
+          class="pesquisa"
+        >
+  
+        <button type="submit" style="display: none;"></button>
+      </form>
+  
     </nav>
   </header>
   {% endif %}
