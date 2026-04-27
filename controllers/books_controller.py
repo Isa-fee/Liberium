@@ -93,12 +93,15 @@ def buscar():
             if info.get("imageLinks"):
                 capa = info["imageLinks"].get("thumbnail")
 
+            descricao = info.get("description", "")
+
             livros.append({
                 "titulo": info.get("title"),
                 "autor": ", ".join(info.get("authors", ["Autor desconhecido"])),
                 "capa": capa,
                 "id": item.get("id"),
-                "origem": "google"
+                "origem": "google",
+                "descricao": ""
             })
     except:
         pass

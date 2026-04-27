@@ -1,21 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}A Loucura do Mel - Liberium{% endblock %}
+{% block title %}{{ livro.titulo }} - Liberium{% endblock %}
 
 {% block content %}
 <section class="livro-container">
+
     <div class="livro-info">
-        <p class="autores">por <strong>{{ livro.autores }}</strong></p>
-        <p><strong>Editora:</strong> {{ livro.editora }}</p>
-        <p><strong>Ano:</strong> {{ livro.ano }}</p>
-        <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
-        <p><strong>Categorias:</strong> {{ livro.categorias }}</p>
-        <p><strong>Avaliação:</strong> ⭐ {{ livro.avaliacao }} ({{ livro.avaliacoes }} avaliações)</p>
 
         {% if livro.capa %}
             <img src="{{ livro.capa }}" class="capa-livro">
         {% endif %}
+
+        <div class="detalhes-livro">
+            <h1>{{ livro.titulo }}</h1>
+
+            <p class="autores">por <strong>{{ livro.autores }}</strong></p>
+            <p><strong>Editora:</strong> {{ livro.editora }}</p>
+            <p><strong>Ano:</strong> {{ livro.ano }}</p>
+            <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
+            <p><strong>Categorias:</strong> {{ livro.categorias }}</p>
+            <p><strong>Avaliação:</strong> ⭐ {{ livro.avaliacao }} ({{ livro.avaliacoes }} avaliações)</p>
         </div>
+
     </div>
 
     <div class="descricao-livro">
@@ -24,17 +30,16 @@
     </div>
 
     <div class="info-extra">
-        <p><strong>Formato:</strong> eBook</p>
-        <p><strong>Páginas:</strong> 320</p>
-        <p><strong>Editora:</strong> Companhia Editora</p>
-        <p><strong>Ano:</strong> 2021</p>
+        <!-- <p><strong>Formato:</strong> {{livro.formato}}</p> -->
+        <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
+        <p><strong>Editora:</strong> {{ livro.editora }}</p>
+        <p><strong>Ano:</strong> {{ livro.ano }}</p>
     </div>
 
     <div class="avaliacoes-livro">
         <h2>Avaliações</h2>
-        <p>
-            Leitores comentaram: “Uma história envolvente e emocional, com reviravoltas que mexem com a cabeça.”
-        </p>
+        <p>{{ livro.comentario}}</p>
     </div>
+
 </section>
 {% endblock %}

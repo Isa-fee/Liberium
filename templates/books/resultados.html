@@ -2,37 +2,30 @@
 
 {% block content %}
 
-<h1 style="padding-left: 20px;">Resultados</h1>
+<h1 class="titulo-resultados">Resultados</h1>
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;">
+<div class="lista-livros">
 
     {% for livro in livros %}
     
     <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}" 
-       style="text-decoration: none; color: inherit;">
+       class="card-livro">
 
-        <div style="width: 180px; border: 1px solid #ddd; padding: 10px; border-radius: 10px;">
+        {% if livro.capa %}
+            <img src="{{ livro.capa }}" class="capa-lista">
+        {% else %}
+            <div class="sem-capa">Sem capa</div>
+        {% endif %}
 
-            {% if livro.capa %}
-                <img src="{{ livro.capa }}" width="120">
-            {% else %}
-                <div style="width:120px; height:180px; background:#eee;">
-                    Sem capa
-                </div>
-            {% endif %}
-
+        <div class="info-livro">
             <h4>{{ livro.titulo }}</h4>
             <p>{{ livro.autor }}</p>
-
-            <small style="color: gray;">
-                {{ livro.origem }}
-            </small>
-
+            <p class="descricao-curta">{{ livro.descricao }}</p>
         </div>
+
     </a>
 
     {% endfor %}
 
 </div>
-
 {% endblock %}
