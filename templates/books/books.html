@@ -1,45 +1,72 @@
+
 {% extends "base.html" %}
 
 {% block title %}{{ livro.titulo }} - Liberium{% endblock %}
 
 {% block content %}
 <section class="livro-container">
-
-    <div class="livro-info">
-
+    <div class="coluna-esquerda">
         {% if livro.capa %}
-            <img src="{{ livro.capa }}" class="capa-livro">
+            <img src="{{ livro.capa }}" class="capa-livro" alt="Capa de {{ livro.titulo }}">
         {% endif %}
 
-        <div class="detalhes-livro">
-            <h1>{{ livro.titulo }}</h1>
-
-            <p class="autores">por <strong>{{ livro.autores }}</strong></p>
-            <p><strong>Editora:</strong> {{ livro.editora }}</p>
-            <p><strong>Ano:</strong> {{ livro.ano }}</p>
-            <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
-            <p><strong>Categorias:</strong> {{ livro.categorias }}</p>
-            <p><strong>Avaliação:</strong> ⭐ {{ livro.avaliacao }} ({{ livro.avaliacoes }} avaliações)</p>
+        <div class="avaliacao-estrelas">
+            ⭐ ⭐ ⭐ ⭐ ⭐ <span class="nota">({{ livro.avaliacao }})</span>
         </div>
 
+        <div class="acoes-usuario">
+            <button class="btn-principal">Adicionar na estante ▾</button>
+            <div class="cards-status">
+                <div class="card-item">Lendo</div>
+                <div class="card-item">Já li</div>
+                <div class="card-item">Quero ler</div>
+            </div>
+            <div class="progresso-leitura">
+                <p>Atualize seu progresso!</p>
+                <div class="input-fake">% de páginas lidas</div>
+            </div>
+        </div>
     </div>
 
-    <div class="descricao-livro">
-        <h2>Sinopse</h2>
-        <p>{{ livro.descricao | safe }}</p>
-    </div>
+    <div class="coluna-direita">
+        <div class="cabecalho-livro">
+            <h1>{{ livro.titulo }} <span class="badge-ebook">eBook</span></h1>
+            <p class="autores">por <strong>{{ livro.autores }}</strong> (Autor)</p>
+        </div>
 
-    <div class="info-extra">
-        <!-- <p><strong>Formato:</strong> {{livro.formato}}</p> -->
-        <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
-        <p><strong>Editora:</strong> {{ livro.editora }}</p>
-        <p><strong>Ano:</strong> {{ livro.ano }}</p>
-    </div>
+        <div class="sinopse-container">
+            <h2>Sinopse</h2>
+            <div class="texto-sinopse">
+                {{ livro.descricao | safe }}
+            </div>
+        </div>
 
-    <div class="avaliacoes-livro">
-        <h2>Avaliações</h2>
-        <p>{{ livro.comentario}}</p>
-    </div>
+        <hr class="divisor">
 
+        <div class="info-icones">
+            <div class="icone-item">
+                <small>Número de Páginas</small>
+                <img src="https://img.icons8.com/ios/50/000000/open-book.png" alt="páginas">
+                <p>{{ livro.paginas }} páginas</p>
+            </div>
+            <div class="icone-item">
+                <small>Idioma</small>
+                <img src="https://img.icons8.com/ios/50/000000/globe.png" alt="idioma">
+                <p>Português</p>
+            </div>
+            <div class="icone-item">
+                <small>Editora</small>
+                <img src="https://img.icons8.com/ios/50/000000/monitor.png" alt="editora">
+                <p>{{ livro.editora }}</p>
+            </div>
+            <div class="icone-item">
+                <small>Ano de publicação</small>
+                <img src="https://img.icons8.com/ios/50/000000/calendar.png" alt="ano">
+                <p>{{ livro.ano }}</p>
+            </div>
+        </div>
+    </div>
 </section>
+
 {% endblock %}
+

@@ -1,5 +1,5 @@
 /* Books */
-.livro-container {
+/* .livro-container {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -126,4 +126,178 @@
     font-weight: 700;
     margin-bottom: 12px;
     color: #3b3b3b;
+} */
+ /* Layout Geral */
+
+ /* ========================================= */
+/* /* SEÇÃO DE LIVROS (SUBSTITUIÇÃO TOTAL) */ */
+/* ========================================= */
+
+/* Container Principal - Este força as duas colunas */
+.livro-container {
+    display: grid !important; /* !important garante que sobrescreva tudo */
+    grid-template-columns: 300px 1fr; /* Coluna da capa fixa, resto fluido */
+    gap: 40px;
+    padding: 60px 8%;
+    background-color: #ffffff; /* Fundo limpo, como na imagem 2 */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+}
+
+/* --- Coluna da Esquerda (Capa e Ações) --- */
+.coluna-esquerda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espaço entre capa, estrelas e botões */
+}
+
+.capa-livro {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.avaliacao-estrelas {
+    font-size: 1.2rem;
+    color: #f1c40f; /* Cor dourada das estrelas */
+    margin-bottom: 10px;
+}
+.avaliacao-estrelas .nota {
+    color: #666;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+/* Container de Ações */
+.acoes-usuario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-principal {
+    background-color: #8fa382; /* Verde musgo suave */
+    color: white;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-principal:hover {
+    background-color: #7d9172;
+}
+
+/* Cards de Status (Lendo, Já Li...) */
+.cards-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 10px;
+    width: 100%;
+}
+.card-item {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.card-item:hover {
+    border-color: #8fa382;
+    background-color: #f4f6f3;
+}
+
+/* --- Coluna da Direita (Sinopse e Info) --- */
+.coluna-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cabecalho-livro h1 {
+    font-size: 2.8rem;
+    color: #444;
+    margin-bottom: 5px;
+    font-weight: 300; /* Leve, igual à imagem 2 */
+}
+.badge-ebook {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #999;
+}
+.autores {
+    font-size: 1.1rem;
+    color: #777;
+    margin-top: 0;
+}
+
+/* Títulos das Seções (Sinopse) */
+.coluna-direita h2 {
+    font-size: 1.6rem;
+    color: #555;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.texto-sinopse {
+    line-height: 1.8;
+    color: #555;
+    font-size: 1.05rem;
+    max-width: 900px;
+}
+
+/* Divisor */
+.divisor {
+    border: 0;
+    border-top: 1px solid #f0f0f0;
+    margin: 30px 0;
+}
+
+/* --- Seção de Ícones Inferior (Forçando Flexbox) --- */
+.info-icones {
+    display: flex !important; /* Garante que os ícones fiquem na horizontal */
+    justify-content: space-between;
+    text-align: center;
+    gap: 10px;
+}
+
+.icone-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icone-item small {
+    color: #b0b0b0;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.icone-item img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5; /* Ícones mais suaves */
+    margin-bottom: 15px;
+}
+
+.icone-item p {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0;
 }
