@@ -8,8 +8,7 @@
 
     {% for livro in livros %}
     
-    <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}" 
-       class="card-livro">
+    <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}">
 
         {% if livro.capa %}
             <img src="{{ livro.capa }}" class="capa-lista">

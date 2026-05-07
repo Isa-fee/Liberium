@@ -23,7 +23,23 @@
   
       <div>
         <a href="{{ url_for('home.home') }}" class="link">MINHA ESTANTE</a>
-        <a href="{{ url_for('user_bp.login') }}" class="link">PERFIL</a>
+        {% if current_user.is_authenticated %}
+
+        <a href="#" class="link">
+          {{ current_user.nome }}
+        </a>
+
+        <a href="{{ url_for('user_bp.logout') }}" class="link">
+          SAIR
+        </a>
+
+        {% else %}
+
+        <a href="{{ url_for('user_bp.perfil') }}" class="link">
+          PERFIL
+        </a>
+
+        {% endif %}
       </div>
   
       <form action="/books/buscar" method="get" class="busca">

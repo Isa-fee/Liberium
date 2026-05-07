@@ -1,5 +1,5 @@
 from flask import Flask
-from extensions import db 
+from extensions import db, login_manager
 from dotenv import load_dotenv
 import os
 
@@ -7,11 +7,19 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+
     app.config['SECRET_KEY'] = 'chave-super-secreta'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///liberium.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    login_manager.init_app(app)
+
+    from models import Usuario
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Usuario.query.get(int(user_id))
 
     from controllers.home_controller import home_bp
     from controllers.books_controller import books_bp
@@ -23,8 +31,10 @@ def create_app():
 
     return app
 
+
 if __name__ == '__main__':
     app = create_app()
+
     with app.app_context():
         from models import Usuario, Livro
         db.create_all()

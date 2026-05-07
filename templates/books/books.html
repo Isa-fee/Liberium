@@ -1,72 +1,208 @@
 
 {% extends "base.html" %}
 
-{% block title %}{{ livro.titulo }} - Liberium{% endblock %}
+{% block title %}
+{{ livro.titulo or "Livro" }} - Liberium
+{% endblock %}
 
 {% block content %}
+
 <section class="livro-container">
+
+    <!-- COLUNA ESQUERDA -->
     <div class="coluna-esquerda">
+
         {% if livro.capa %}
-            <img src="{{ livro.capa }}" class="capa-livro" alt="Capa de {{ livro.titulo }}">
+
+            <img
+                src="{{ livro.capa }}"
+                class="capa-livro"
+                alt="Capa de {{ livro.titulo }}"
+            >
+
+        {% else %}
+
+            <img
+                src="{{ url_for('static', filename='img/sem-capa.png') }}"
+                class="capa-livro"
+                alt="Sem capa"
+            >
+
         {% endif %}
 
         <div class="avaliacao-estrelas">
-            ⭐ ⭐ ⭐ ⭐ ⭐ <span class="nota">({{ livro.avaliacao }})</span>
+
+            ⭐ ⭐ ⭐ ⭐ ⭐
+
+            <span class="nota">
+                ({{ livro.avaliacao or "0.0" }})
+            </span>
+
         </div>
 
         <div class="acoes-usuario">
-            <button class="btn-principal">Adicionar na estante ▾</button>
+
+            <button class="btn-principal">
+                Adicionar na estante ▾
+            </button>
+
             <div class="cards-status">
-                <div class="card-item">Lendo</div>
-                <div class="card-item">Já li</div>
-                <div class="card-item">Quero ler</div>
+
+                <div class="card-item">
+                    Lendo
+                </div>
+
+                <div class="card-item">
+                    Já li
+                </div>
+
+                <div class="card-item">
+                    Quero ler
+                </div>
+
             </div>
+
             <div class="progresso-leitura">
-                <p>Atualize seu progresso!</p>
-                <div class="input-fake">% de páginas lidas</div>
+
+                <p>
+                    Atualize seu progresso!
+                </p>
+
+                <div class="input-fake">
+                    % de páginas lidas
+                </div>
+
             </div>
+
         </div>
+
     </div>
 
+    <!-- COLUNA DIREITA -->
     <div class="coluna-direita">
+
         <div class="cabecalho-livro">
-            <h1>{{ livro.titulo }} <span class="badge-ebook">eBook</span></h1>
-            <p class="autores">por <strong>{{ livro.autores }}</strong> (Autor)</p>
+
+            <h1>
+                {{ livro.titulo or "Título desconhecido" }}
+
+                <span class="badge-ebook">
+                    eBook
+                </span>
+            </h1>
+
+            <p class="autores">
+
+                por
+
+                <strong>
+                    {{ livro.autor or "Autor desconhecido" }}
+                </strong>
+
+            </p>
+
         </div>
 
+        <!-- SINOPSE -->
         <div class="sinopse-container">
-            <h2>Sinopse</h2>
+
+            <h2>
+                Sinopse
+            </h2>
+
             <div class="texto-sinopse">
-                {{ livro.descricao | safe }}
+
+                {% if livro.descricao %}
+
+                    {{ livro.descricao | safe }}
+
+                {% else %}
+
+                    Sinopse não disponível.
+
+                {% endif %}
+
             </div>
+
         </div>
 
         <hr class="divisor">
 
+        <!-- INFORMAÇÕES -->
         <div class="info-icones">
+
             <div class="icone-item">
-                <small>Número de Páginas</small>
-                <img src="https://img.icons8.com/ios/50/000000/open-book.png" alt="páginas">
-                <p>{{ livro.paginas }} páginas</p>
+
+                <small>
+                    Número de Páginas
+                </small>
+
+                <img
+                    src="https://img.icons8.com/ios/50/000000/open-book.png"
+                    alt="páginas"
+                >
+
+                <p>
+                    {{ livro.paginas or "Não informado" }}
+                </p>
+
             </div>
+
             <div class="icone-item">
-                <small>Idioma</small>
-                <img src="https://img.icons8.com/ios/50/000000/globe.png" alt="idioma">
-                <p>Português</p>
+
+                <small>
+                    Idioma
+                </small>
+
+                <img
+                    src="https://img.icons8.com/ios/50/000000/globe.png"
+                    alt="idioma"
+                >
+
+                <p>
+                    Português
+                </p>
+
             </div>
+
             <div class="icone-item">
-                <small>Editora</small>
-                <img src="https://img.icons8.com/ios/50/000000/monitor.png" alt="editora">
-                <p>{{ livro.editora }}</p>
+
+                <small>
+                    Editora
+                </small>
+
+                <img
+                    src="https://img.icons8.com/ios/50/000000/monitor.png"
+                    alt="editora"
+                >
+
+                <p>
+                    {{ livro.editora or "Não informado" }}
+                </p>
+
             </div>
+
             <div class="icone-item">
-                <small>Ano de publicação</small>
-                <img src="https://img.icons8.com/ios/50/000000/calendar.png" alt="ano">
-                <p>{{ livro.ano }}</p>
+
+                <small>
+                    Ano de publicação
+                </small>
+
+                <img
+                    src="https://img.icons8.com/ios/50/000000/calendar.png"
+                    alt="ano"
+                >
+
+                <p>
+                    {{ livro.ano or "Não informado" }}
+                </p>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
 
 {% endblock %}
-

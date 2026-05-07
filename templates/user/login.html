@@ -4,30 +4,68 @@
 
 {% block content %}
 <section class="form-container">
+
   <div class="form-card">
+
     <h2>Bem-vindo(a)!</h2>
 
-  <form action="{{ url_for('user_bp.login') }}" method="POST">
+    <form action="{{ url_for('user_bp.login') }}" method="POST">
 
-      <input type="email" name="email" placeholder="Email" required>
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="Email" 
+        required
+      >
 
       <div class="senha-container">
-        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+
+        <input 
+          type="password" 
+          name="senha" 
+          id="senha" 
+          placeholder="Senha" 
+          required
+        >
+
       </div>
 
       <div class="checkbox-area">
-        <input type="checkbox" id="lembrar" name="lembrar">
-        <label for="lembrar">Esqueci-me da senha</label>
+
+        <input 
+          type="checkbox" 
+          id="lembrar" 
+          name="lembrar"
+        >
+
+        <label for="lembrar">
+          Lembrar-me
+        </label>
+
       </div>
 
-      <button type="submit">Continuar</button>
+      <button type="submit">
+        Continuar
+      </button>
 
       <p class="link-cadastro">
-        Não tem uma conta? <a href="{{ url_for('user_bp.register') }}">Inscrever-se</a>
+
+        Não tem uma conta?
+
+        <a href="{{ url_for('user_bp.register') }}">
+          Inscrever-se
+        </a>
+
       </p>
+
     </form>
 
-    <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-pequena">
+    <img 
+      src="{{ url_for('static', filename='img/logo.png') }}"
+      class="logo-pequena"
+    >
+
   </div>
+
 </section>
 {% endblock %}

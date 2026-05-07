@@ -4,43 +4,86 @@
 
 {% block content %}
 
+{% extends "base.html" %}
+
+{% block title %}Liberium - Perfil{% endblock %}
+
+{% block content %}
+
 <div class="content perfil-container">
 
-    <!-- Bloco topo: foto + texto lado a lado -->
+    <!-- Topo Perfil -->
     <div class="perfil-header">
-        
-        <img src="/static/img/lift.jpg" 
-             alt="Foto do usuário" 
+
+        <img src="{{ url_for('static', filename='img/lift.jpg') }}"
+             alt="Foto do usuário"
              class="perfil-foto">
 
         <div class="perfil-info">
-            <h1 class="perfil-nome">Nomedousuario</h1>
-            <p class="perfil-arroba">@dousuario</p>
 
-            <h2 class="perfil-boasvindas">Bem-vinda(o), fulaninho!</h2>
+            <h1 class="perfil-nome">
+                {{ usuario.nome }}
+            </h1>
+
+            <p class="perfil-arroba">
+                @{{ usuario.nome.lower().replace(' ', '') }}
+            </p>
+
+            <h2 class="perfil-boasvindas">
+                Bem-vindo(a), {{ usuario.nome }}!
+            </h2>
+
             <p class="perfil-msg">
-                Pronta(o) para continuar sua jornada literária? Aqui você pode acompanhar seu progresso,
+                Pronto(a) para continuar sua jornada literária?
+                Aqui você pode acompanhar seu progresso,
                 atualizar seus livros e gerenciar sua estante.
             </p>
+
         </div>
 
     </div>
 
-     <div class="perfil-acoes">
+    <!-- Cards -->
+    <div class="perfil-acoes">
 
-    <!-- Card 1 - Mini estante -->
-    <a href="{{ url_for('home.home') }}" class="acao-card card-estante">aqui uma miniatura da estante</a>
+        <!-- Estante -->
+        <a href="{{ url_for('home.home') }}"
+           class="acao-card card-estante">
 
-    <!-- Card 2 - Estatísticas -->
-    <a href="#" class="acao-card card-estatisticas">gráfico</a>
+            <h3>Minha Estante</h3>
 
-    <!-- Card 3 - Configurações -->
-    <a href="#" class="acao-card card-configuracoes">configurações</a>
+            <p>
+                Acesse seus livros e continue suas leituras.
+            </p>
+
+        </a>
+
+        <!-- Livros -->
+        <a href="{{ url_for('books_bp.listar') }}"
+           class="acao-card card-estatisticas">
+
+            <h3>Meus Livros</h3>
+
+            <p>
+                Veja todos os livros adicionados à sua coleção.
+            </p>
+
+        </a>
+
+        <!-- Logout -->
+        <a href="{{ url_for('user_bp.logout') }}"
+           class="acao-card card-configuracoes">
+
+            <h3>Sair da Conta</h3>
+
+            <p>
+                Encerrar sessão da sua conta Liberium.
+            </p>
+
+        </a>
+
+    </div>
 
 </div>
-
-
-</div>
-
 
 {% endblock %}
