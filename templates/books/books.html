@@ -1,208 +1,89 @@
-
 {% extends "base.html" %}
 
-{% block title %}
-{{ livro.titulo or "Livro" }} - Liberium
-{% endblock %}
-
 {% block content %}
-
-<section class="livro-container">
-
-    <!-- COLUNA ESQUERDA -->
-    <div class="coluna-esquerda">
-
+<main class="livro-container">
+    
+    <section class="coluna-esquerda">
         {% if livro.capa %}
-
-            <img
-                src="{{ livro.capa }}"
-                class="capa-livro"
-                alt="Capa de {{ livro.titulo }}"
-            >
-
+            <img src="{{ livro.capa }}" alt="Capa de {{ livro.titulo }}" class="capa-livro">
         {% else %}
-
-            <img
-                src="{{ url_for('static', filename='img/sem-capa.png') }}"
-                class="capa-livro"
-                alt="Sem capa"
-            >
-
+            <div class="sem-capa capa-livro" style="display: flex; align-items: center; justify-content: center; background: #eee; height: 380px;">
+                Sem capa
+            </div>
         {% endif %}
-
+        
         <div class="avaliacao-estrelas">
-
-            ⭐ ⭐ ⭐ ⭐ ⭐
-
-            <span class="nota">
-                ({{ livro.avaliacao or "0.0" }})
-            </span>
-
+            ★★★★★ <span class="nota">({{ livro.avaliacao or "4,5" }})</span>
         </div>
-
+        
         <div class="acoes-usuario">
-
-            <button class="btn-principal">
-                Adicionar na estante ▾
-            </button>
-
+            <button class="btn-principal">Adicionar na estante ▾</button>
+            
             <div class="cards-status">
-
+                <div class="card-item">Lendo</div>
                 <div class="card-item">
-                    Lendo
+                    Atualize seu progresso!<br>
+                    <small>% de páginas lidas</small>
                 </div>
-
-                <div class="card-item">
-                    Já li
+                <div class="card-item">Já li</div>
+                <div class="card-item">Quero ler</div>
+                
+                <div class="card-item card-item-duplo">
+                    Data da leitura:<br>
+                    <small>00/00/0000 ▾</small>
+                    <br><a href="#" style="color: #8fa382; font-size: 0.8rem; text-decoration: none;">Deixe sua avaliação!</a>
                 </div>
-
-                <div class="card-item">
-                    Quero ler
-                </div>
-
             </div>
-
-            <div class="progresso-leitura">
-
-                <p>
-                    Atualize seu progresso!
-                </p>
-
-                <div class="input-fake">
-                    % de páginas lidas
-                </div>
-
-            </div>
-
         </div>
+    </section>
 
-    </div>
-
-    <!-- COLUNA DIREITA -->
-    <div class="coluna-direita">
-
-        <div class="cabecalho-livro">
-
-            <h1>
-                {{ livro.titulo or "Título desconhecido" }}
-
-                <span class="badge-ebook">
-                    eBook
-                </span>
-            </h1>
-
-            <p class="autores">
-
-                por
-
-                <strong>
-                    {{ livro.autor or "Autor desconhecido" }}
-                </strong>
-
-            </p>
-
-        </div>
-
-        <!-- SINOPSE -->
-        <div class="sinopse-container">
-
-            <h2>
-                Sinopse
-            </h2>
-
-            <div class="texto-sinopse">
-
-                {% if livro.descricao %}
-
-                    {{ livro.descricao | safe }}
-
-                {% else %}
-
-                    Sinopse não disponível.
-
-                {% endif %}
-
-            </div>
-
-        </div>
+    <section class="coluna-direita">
+        
+        <header class="cabecalho-livro">
+            <h1>{{ livro.titulo or "Título desconhecido" }} <span class="badge-ebook">{{ livro.formato or "eBook" }}</span></h1>
+            <p class="autores">por {{ livro.autor or "Autor desconhecido" }} (Autor) {% if livro.tradutor %}, {{ livro.tradutor }} (Tradutor){% endif %}</p>
+        </header>
 
         <hr class="divisor">
 
-        <!-- INFORMAÇÕES -->
-        <div class="info-icones">
+        <article class="texto-sinopse">
+            {{ livro.descricao|safe or "Sinopse não disponível." }}
+        </article>
 
+        <hr class="divisor">
+
+        <footer class="info-icones">
             <div class="icone-item">
-
-                <small>
-                    Número de Páginas
-                </small>
-
-                <img
-                    src="https://img.icons8.com/ios/50/000000/open-book.png"
-                    alt="páginas"
-                >
-
-                <p>
-                    {{ livro.paginas or "Não informado" }}
-                </p>
-
+                <small>Número de Páginas</small>
+                <img src="{{ url_for('static', filename='icones/paginas.svg') }}" alt="">
+                <p>{{ livro.paginas or "Não informado" }} páginas</p>
             </div>
-
+            
             <div class="icone-item">
-
-                <small>
-                    Idioma
-                </small>
-
-                <img
-                    src="https://img.icons8.com/ios/50/000000/globe.png"
-                    alt="idioma"
-                >
-
-                <p>
-                    Português
-                </p>
-
+                <small>Idioma</small>
+                <img src="{{ url_for('static', filename='icones/globo.svg') }}" alt="">
+                <p>{{ livro.idioma or "Português" }}</p>
             </div>
-
+            
             <div class="icone-item">
-
-                <small>
-                    Editora
-                </small>
-
-                <img
-                    src="https://img.icons8.com/ios/50/000000/monitor.png"
-                    alt="editora"
-                >
-
-                <p>
-                    {{ livro.editora or "Não informado" }}
-                </p>
-
+                <small>Editora</small>
+                <img src="{{ url_for('static', filename='icones/computador.svg') }}" alt="">
+                <p>{{ livro.editora or "Não informado" }}</p>
             </div>
-
+            
             <div class="icone-item">
-
-                <small>
-                    Ano de publicação
-                </small>
-
-                <img
-                    src="https://img.icons8.com/ios/50/000000/calendar.png"
-                    alt="ano"
-                >
-
-                <p>
-                    {{ livro.ano or "Não informado" }}
-                </p>
-
+                <small>Ano de publicação</small>
+                <img src="{{ url_for('static', filename='icones/calendario.svg') }}" alt="">
+                <p>{{ livro.ano or "Não informado" }}</p>
             </div>
+            
+            <div class="icone-item">
+                <small>Classificação Indicativa</small>
+                <img src="{{ url_for('static', filename='icones/idade.svg') }}" alt="">
+                <p>{{ livro.classificacao or "Livre" }}</p>
+            </div>
+        </footer>
 
-        </div>
-
-    </div>
-
-</section>
-
+    </section>
+</main>
 {% endblock %}

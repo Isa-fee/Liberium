@@ -95,21 +95,19 @@ def buscar():
     # =========================
 
     try:
-
+        import os
         api_key = os.getenv("GOOGLE_BOOKS_API_KEY")
-
         url_google = f"https://www.googleapis.com/books/v1/volumes?q={termo}&key={api_key}&maxResults=10"
-
         resp_google = requests.get(url_google).json()
 
         for item in resp_google.get("items", []):
-
             info = item.get("volumeInfo", {})
 
             capa = None
-
             if info.get("imageLinks"):
                 capa = info["imageLinks"].get("thumbnail")
+
+            descricao = info.get("description", "")
 
             livros.append({
                 "titulo": info.get("title"),
@@ -230,8 +228,9 @@ def detalhes(origem, id):
 
             try:
                 descricao = GoogleTranslator(source='auto', target='pt').translate(descricao)
-            except:
-                pass
+            
+            except Exception as erro:
+                    print(erro)
 
         livro = {
             "titulo": dados.get(

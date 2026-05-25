@@ -1,25 +1,53 @@
+
 {% extends "base.html" %}
 
 {% block content %}
 
-<h1 class="titulo-resultados">Resultados</h1>
+<h1 class="titulo-resultados">
+    Resultados
+</h1>
 
 <div class="lista-livros">
 
     {% for livro in livros %}
-    
-    <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}">
+
+    <a
+        href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}"
+        class="card-livro"
+    >
 
         {% if livro.capa %}
-            <img src="{{ livro.capa }}" class="capa-lista">
+
+            <img
+                src="{{ livro.capa }}"
+                class="capa-lista"
+                alt="Capa de {{ livro.titulo }}"
+            >
+
         {% else %}
-            <div class="sem-capa">Sem capa</div>
+
+            <div class="sem-capa">
+                Sem capa
+            </div>
+
         {% endif %}
 
         <div class="info-livro">
-            <h4>{{ livro.titulo }}</h4>
-            <p>{{ livro.autor }}</p>
-            <p class="descricao-curta">{{ livro.descricao }}</p>
+
+            <h4>
+                {{ livro.titulo or "Título desconhecido" }}
+            </h4>
+
+            <p>
+                {{ livro.autor or "Autor desconhecido" }}
+            </p>
+
+            <p class="descricao-curta">
+
+                {{ livro.descricao or "Descrição não disponível." }}
+
+            </p>
+
         </div>
 
     </a>
@@ -27,4 +55,5 @@
     {% endfor %}
 
 </div>
+
 {% endblock %}

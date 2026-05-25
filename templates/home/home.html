@@ -6,7 +6,6 @@
 
 <div class="content">
 
-```
 <h1 class="titulo-home">Bem-vindo(a) à sua Estante Liberium!</h1>
 
 <section class="estatisticas">
@@ -61,18 +60,15 @@
         <div class="carrossel-cards">
 
             {% for livro in livros %}
-
+            
             <div class="card">
 
                 <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id) }}" class="card-link">
-
-                    {% if livro.capa %}
+                     {% if livro.capa %}
                         <img src="{{ livro.capa }}" alt="{{ livro.titulo }}">
                     {% else %}
                         <div class="sem-capa"></div>
-                    {% endif %}
-
-                    
+                    {% endif %} -->
 
                 </a>
 

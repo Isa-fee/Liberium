@@ -30,6 +30,7 @@ def home():
             "id": item.get("id"),
             "origem": "google"
         })
+    print(livros)
 
     return render_template("home/home.html", livros=livros)
 
