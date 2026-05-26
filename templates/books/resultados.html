@@ -1,58 +1,83 @@
-
 {% extends "base.html" %}
 
 {% block content %}
 
 <h1 class="titulo-resultados">
-    Resultados
+    Resultados da pesquisa
 </h1>
 
 <div class="lista-livros">
 
-    {% for livro in livros %}
+    {% if livros %}
 
-    <a
-        href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id, capa=livro.capa) }}"
-        class="card-livro"
-    >
+        {% for livro in livros %}
 
-        {% if livro.capa %}
+        <a
+            href="{{ url_for('books_bp.ver', id=livro.id) }}"
+            class="card-livro"
+        >
 
-            <img
-                src="{{ livro.capa }}"
-                class="capa-lista"
-                alt="Capa de {{ livro.titulo }}"
-            >
+            {% if livro.capa %}
 
-        {% else %}
+                <img
+                    src="{{ url_for('static', filename=livro.capa) }}">
+                    class="capa-lista"
+                    alt="Capa de {{ livro.titulo }}"
+                >
 
-            <div class="sem-capa">
-                Sem capa
+            {% else %}
+
+                <div class="sem-capa">
+                    Sem capa
+                </div>
+
+            {% endif %}
+
+            <div class="info-livro">
+
+                <h4>
+                    {{ livro.titulo or "Título desconhecido" }}
+                </h4>
+
+                <p>
+                    {{ livro.autor or "Autor desconhecido" }}
+                </p>
+
+                <p class="descricao-curta">
+
+                    {% if livro.descricao %}
+
+                        {{ livro.descricao[:200] }}...
+
+                    {% else %}
+
+                        Descrição não disponível.
+
+                    {% endif %}
+
+                </p>
+
             </div>
 
-        {% endif %}
+        </a>
 
-        <div class="info-livro">
+        {% endfor %}
 
-            <h4>
-                {{ livro.titulo or "Título desconhecido" }}
-            </h4>
+    {% else %}
+
+        <div class="nenhum-resultado">
+
+            <h3>
+                Nenhum livro encontrado
+            </h3>
 
             <p>
-                {{ livro.autor or "Autor desconhecido" }}
-            </p>
-
-            <p class="descricao-curta">
-
-                {{ livro.descricao or "Descrição não disponível." }}
-
+                Tente pesquisar utilizando outro termo.
             </p>
 
         </div>
 
-    </a>
-
-    {% endfor %}
+    {% endif %}
 
 </div>
 

@@ -1,8 +1,14 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
+from models import Livro
+from extensions import db
 import requests
 
-home_bp = Blueprint('home', __name__, template_folder='../templates')
+home_bp = Blueprint(
+    'home',
+    __name__,
+    template_folder='../templates'
+)
 
 
 @home_bp.route('/')
@@ -13,27 +19,14 @@ def index():
 @home_bp.route('/home')
 @login_required
 def home():
+    livros = Livro.query.filter_by(
+        destaque=True
+    ).limit(8).all()
 
-    url = "https://www.googleapis.com/books/v1/volumes?q=harry+potter&maxResults=8"
-
-    resposta = requests.get(url).json()
-
-    livros = []
-
-    for item in resposta.get("items", []):
-
-        info = item.get("volumeInfo", {})
-
-        livros.append({
-            "titulo": info.get("title"),
-            "capa": info.get("imageLinks", {}).get("thumbnail"),
-            "id": item.get("id"),
-            "origem": "google"
-        })
-    print(livros)
-
-    return render_template("home/home.html", livros=livros)
-
+    return render_template(
+        "home/home.html",
+        livros=livros
+    )
 
 @home_bp.route("/sobre")
 def sobre():

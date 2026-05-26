@@ -1,51 +1,22 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required, current_user
+from flask_login import login_required
 
 from extensions import db
 from models import Livro
 
-from deep_translator import GoogleTranslator
 import requests
 import os
 
-books_bp = Blueprint("books_bp", __name__, url_prefix="/books")
+books_bp = Blueprint(
+    "books_bp",
+    __name__,
+    url_prefix="/books"
+)
 
 
-@books_bp.route("/")
-@login_required
-def listar():
-
-    livros = Livro.query.all()
-
-    return render_template("books/listar.html", livros=livros)
-
-
-@books_bp.route("/add", methods=["GET", "POST"])
-@login_required
-def add():
-
-    if request.method == "POST":
-
-        titulo = request.form.get("titulo")
-        autor = request.form.get("autor")
-        descricao = request.form.get("descricao")
-
-        novo = Livro(
-            titulo=titulo,
-            autor=autor,
-            descricao=descricao,
-            usuario_id=current_user.id
-        )
-
-        db.session.add(novo)
-        db.session.commit()
-
-        flash("Livro adicionado com sucesso!", "success")
-
-        return redirect(url_for("books_bp.listar"))
-
-    return render_template("books/add.html")
-
+# ======================================
+# DETALHES DO LIVRO
+# ======================================
 
 @books_bp.route("/<int:id>")
 @login_required
@@ -53,28 +24,15 @@ def ver(id):
 
     livro = Livro.query.get_or_404(id)
 
-    return render_template("books/ver.html", livro=livro)
+    return render_template(
+        "books/books.html",
+        livro=livro
+    )
 
 
-@books_bp.route("/delete/<int:id>")
-@login_required
-def delete(id):
-
-    livro = Livro.query.get_or_404(id)
-
-    if livro.usuario_id != current_user.id:
-
-        flash("Você não tem permissão para excluir este livro.", "danger")
-
-        return redirect(url_for("books_bp.listar"))
-
-    db.session.delete(livro)
-    db.session.commit()
-
-    flash("Livro excluído!", "success")
-
-    return redirect(url_for("books_bp.listar"))
-
+# ======================================
+# BUSCA DE LIVROS
+# ======================================
 
 @books_bp.route("/buscar")
 @login_required
@@ -84,175 +42,174 @@ def buscar():
 
     if not termo:
 
-        flash("Digite algo para buscar!", "warning")
+        flash(
+            "Digite algo para buscar!",
+            "warning"
+        )
 
-        return redirect(url_for("books_bp.listar"))
+        return redirect(
+            url_for("home.home")
+        )
 
-    livros = []
+    # ======================================
+    # 1 - PROCURA NO BANCO
+    # ======================================
 
-    # =========================
-    # GOOGLE BOOKS
-    # =========================
+    livros = Livro.query.filter(
+        Livro.titulo.ilike(f"%{termo}%")
+    ).all()
+
+    # encontrou no banco
+    if livros:
+
+        return render_template(
+            "books/resultados.html",
+            livros=livros
+        )
+
+    # ======================================
+    # 2 - PROCURA NA API
+    # ======================================
 
     try:
-        import os
-        api_key = os.getenv("GOOGLE_BOOKS_API_KEY")
-        url_google = f"https://www.googleapis.com/books/v1/volumes?q={termo}&key={api_key}&maxResults=10"
-        resp_google = requests.get(url_google).json()
 
-        for item in resp_google.get("items", []):
-            info = item.get("volumeInfo", {})
+        api_key = os.getenv(
+            "GOOGLE_BOOKS_API_KEY"
+        )
+
+        url = (
+            f"https://www.googleapis.com/books/v1/volumes"
+            f"?q={termo}"
+            f"&key={api_key}"
+            f"&maxResults=10"
+        )
+
+        resposta = requests.get(url).json()
+
+        for item in resposta.get(
+            "items",
+            []
+        ):
+
+            info = item.get(
+                "volumeInfo",
+                {}
+            )
+
+            google_id = item.get("id")
+
+            # evita duplicação
+            existente = Livro.query.filter_by(
+                google_id=google_id
+            ).first()
+
+            if existente:
+                continue
 
             capa = None
+
             if info.get("imageLinks"):
-                capa = info["imageLinks"].get("thumbnail")
 
-            descricao = info.get("description", "")
+                capa = info[
+                    "imageLinks"
+                ].get(
+                    "thumbnail"
+                )
 
-            livros.append({
-                "titulo": info.get("title"),
-                "autor": ", ".join(info.get("authors", ["Autor desconhecido"])),
-                "capa": capa,
-                "id": item.get("id"),
-                "origem": "google",
-                "descricao": ""
-            })
+            isbn = None
 
-    except:
-        pass
+            for identificador in info.get(
+                "industryIdentifiers",
+                []
+            ):
 
-    # =========================
-    # OPEN LIBRARY
-    # =========================
+                if identificador.get(
+                    "type"
+                ) == "ISBN_13":
 
-    try:
+                    isbn = identificador.get(
+                        "identifier"
+                    )
 
-        url_open = f"https://openlibrary.org/search.json?q={termo}&limit=20"
+                    break
 
-        resp_open = requests.get(url_open).json()
+            novo_livro = Livro(
 
-        for item in resp_open.get("docs", []):
+                google_id=google_id,
 
-            if item.get("title") and item.get("author_name"):
+                isbn=isbn,
 
-                capa = None
+                titulo=info.get(
+                    "title",
+                    "Título desconhecido"
+                ),
 
-                if item.get("cover_i"):
-                    capa = f"https://covers.openlibrary.org/b/id/{item.get('cover_i')}-L.jpg"
+                autor=", ".join(
+                    info.get(
+                        "authors",
+                        ["Autor desconhecido"]
+                    )
+                ),
 
-                livros.append({
-                    "titulo": item.get("title"),
-                    "autor": item.get("author_name")[0],
-                    "capa": capa,
-                    "id": item.get("key"),
-                    "origem": "open"
-                })
+                descricao=info.get(
+                    "description",
+                    ""
+                ),
 
-    except:
-        pass
+                capa=capa,
 
-    return render_template("books/resultados.html", livros=livros)
+                genero="",
 
+                editora=info.get(
+                    "publisher",
+                    ""
+                ),
 
-@books_bp.route("/detalhes/<origem>/<path:id>")
-@login_required
-def detalhes(origem, id):
+                paginas=info.get(
+                    "pageCount"
+                ),
 
-    capa = request.args.get("capa")
+                ano=info.get(
+                    "publishedDate",
+                    ""
+                ),
 
-    if origem == "google":
+                idioma=info.get(
+                    "language",
+                    ""
+                ),
 
-        api_key = os.getenv("GOOGLE_BOOKS_API_KEY")
+                avaliacao=info.get(
+                    "averageRating",
+                    0
+                ),
 
-        url = f"https://www.googleapis.com/books/v1/volumes/{id}?key={api_key}"
+                origem="google",
 
-        dados = requests.get(url).json()
-
-        info = dados.get("volumeInfo", {})
-
-        descricao = info.get("description")
-
-        if descricao and len(descricao) > 30:
-
-            try:
-                descricao = GoogleTranslator(source='auto', target='pt').translate(descricao)
-            except:
-                pass
-
-        livro = {
-            "titulo": info.get("title", "Título desconhecido"),
-
-            "autor": ", ".join(
-                info.get("authors", ["Autor desconhecido"])
-            ),
-
-            "descricao": descricao,
-
-            "capa": info.get(
-                "imageLinks",
-                {}
-            ).get("thumbnail"),
-
-            "editora": info.get(
-                "publisher",
-                "Não informado"
-            ),
-
-            "paginas": info.get(
-                "pageCount",
-                "Não informado"
-            ),
-
-            "ano": info.get(
-                "publishedDate",
-                "Não informado"
-            ),
-
-            "avaliacao": info.get(
-                "averageRating",
-                "0.0"
+                destaque=False
             )
-        }
-    else:
 
-        url = f"https://openlibrary.org/{id}.json"
+            db.session.add(
+                novo_livro
+            )
 
-        dados = requests.get(url).json()
+        db.session.commit()
 
-        descricao = dados.get("description")
+    except Exception as erro:
 
-        if isinstance(descricao, dict):
-            descricao = descricao.get("value")
+        print(
+            f"Erro ao consultar Google Books: {erro}"
+        )
 
-        if descricao:
+    # ======================================
+    # 3 - BUSCA NOVAMENTE NO BANCO
+    # ======================================
 
-            try:
-                descricao = GoogleTranslator(source='auto', target='pt').translate(descricao)
-            
-            except Exception as erro:
-                    print(erro)
+    livros = Livro.query.filter(
+        Livro.titulo.ilike(f"%{termo}%")
+    ).all()
 
-        livro = {
-            "titulo": dados.get(
-                "title",
-                "Título desconhecido"
-            ),
-
-            "autor": "Autor desconhecido",
-
-            "descricao": descricao,
-
-            "capa": capa,
-
-            "editora": "Não informado",
-
-            "paginas": "Não informado",
-
-            "ano": dados.get(
-                "first_publish_date",
-                "Não informado"
-            ),
-
-            "avaliacao": "0.0"
-        }
-    return render_template("books/books.html", livro=livro)
+    return render_template(
+        "books/resultados.html",
+        livros=livros
+    )

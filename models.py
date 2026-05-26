@@ -9,15 +9,70 @@ class Usuario(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
 
-    livros = db.relationship("Livro", backref="usuario", lazy=True)
 
 
 class Livro(db.Model):
     __tablename__ = "livros"
 
     id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String(200), nullable=False)
-    autor = db.Column(db.String(150), nullable=False)
-    descricao = db.Column(db.Text)
 
-    usuario_id = db.Column(db.Integer, db.ForeignKey("usuarios.id"), nullable=False)
+    google_id = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=True
+    )
+    openlibrary_id = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=True
+    )
+    isbn = db.Column(
+        db.String(20),
+        unique=True,
+        nullable=True
+    )
+    titulo = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    autor = db.Column(db.String(255))
+    descricao = db.Column(db.Text)
+    capa = db.Column(db.String(500))
+    genero = db.Column(db.String(100))
+    editora = db.Column(db.String(150))
+    paginas = db.Column(db.Integer)
+    ano = db.Column(db.String(20))
+    idioma = db.Column(db.String(50))
+    avaliacao = db.Column(db.Float)
+    origem = db.Column(
+        db.String(20)
+    )
+    destaque = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+
+
+class Estante(db.Model):
+    __tablename__ = "estante"
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id")
+    )
+    livro_id = db.Column(
+        db.Integer,
+        db.ForeignKey("livros.id")
+    )
+    status = db.Column(
+        db.String(30)
+    )
+
+    usuario = db.relationship("Usuario", backref="estante")
+
+    livro = db.relationship("Livro", backref="usuarios_estante")

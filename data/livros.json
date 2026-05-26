@@ -1,0 +1,38 @@
+[
+    {
+        "titulo": "Harry Potter e a Pedra Filosofal",
+        "autor": "J. K. Rowling",
+        "descricao": "Harry Potter descobre, aos onze anos, que é um bruxo e recebe um convite para estudar na Escola de Magia e Bruxaria de Hogwarts. Lá ele faz amigos, aprende magia e enfrenta mistérios sobre seu passado.",
+        "capa": "img/capas/hp1.jpg",
+        "genero": "Fantasia",
+        "editora": "Rocco",
+        "paginas": 264,
+        "ano": "2000",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    },
+    {
+        "titulo": "Harry Potter e a Câmara Secreta",
+        "autor": "J. K. Rowling",
+        "descricao": "Em seu segundo ano em Hogwarts, Harry investiga uma série de ataques misteriosos que parecem estar ligados à lendária Câmara Secreta.",
+        "capa": "img/capas/hp2.jpg",
+        "genero": "Fantasia",
+        "editora": "Rocco",
+        "paginas": 287,
+        "ano": "2000",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    },
+    {
+        "titulo": "Harry Potter e o Prisioneiro de Azkaban",
+        "autor": "J. K. Rowling",
+        "descricao": "Harry descobre que um perigoso fugitivo escapou da prisão de Azkaban e acredita-se que ele esteja procurando por ele.",
+        "capa": "img/capas/hp3.jpg",
+        "genero": "Fantasia",
+        "editora": "Rocco",
+        "paginas": 348,
+        "ano": "2000",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    }
+]

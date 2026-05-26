@@ -6,87 +6,126 @@
 
 <div class="content">
 
-<h1 class="titulo-home">Bem-vindo(a) à sua Estante Liberium!</h1>
+    <h1 class="titulo-home">
+        Bem-vindo(a) à sua Estante Liberium!
+    </h1>
 
-<section class="estatisticas">
-    <h2>Suas Estatísticas</h2>
+    <section class="estatisticas">
 
-    <div class="estatisticas-container">
+        <h2>Suas Estatísticas</h2>
 
-        <div class="grafico">
-            <canvas id="generosLidos"></canvas>
-            <p>Gêneros Lidos</p>
+        <div class="estatisticas-container">
+
+            <div class="grafico">
+                <canvas id="generosLidos"></canvas>
+                <p>Gêneros Lidos</p>
+            </div>
+
+            <div class="numero-livros">
+                <h3>Livros Lidos</h3>
+                <span>30</span>
+            </div>
+
+            <div class="grafico">
+                <canvas id="livrosAndamento"></canvas>
+                <p>Livros em andamento</p>
+            </div>
+
         </div>
 
-        <div class="numero-livros">
-            <h3>Livros Lidos</h3>
-            <span>30</span>
+    </section>
+
+    <section class="meta">
+
+        <div class="meta-leitura">
+
+            <p class="t1-meta">
+                <strong>Sua meta de leitura:</strong>
+                10 livros esse mês.
+            </p>
+
+            <div class="barra-progresso">
+                <div class="progresso" style="width: 60%;"></div>
+            </div>
+
+            <p class="texto-meta">
+                Você está no caminho certo, continue lendo mais 4 livros para bater sua meta!
+            </p>
+
         </div>
 
-        <div class="grafico">
-            <canvas id="livrosAndamento"></canvas>
-            <p>Livros em andamento</p>
-        </div>
+    </section>
 
-    </div>
-</section>
+    <section class="carrossel">
 
-<section class="meta">
-    <div class="meta-leitura">
+        <h2>Sugestões de leitura</h2>
 
-        <p class="t1-meta">
-            <strong>Sua meta de leitura:</strong> 10 livros esse mês.
-        </p>
+        <div class="carrossel-container">
 
-        <div class="barra-progresso">
-            <div class="progresso" style="width: 60%;"></div>
-        </div>
+            <button class="carrossel-btn left">
+                &#10094;
+            </button>
 
-        <p class="texto-meta">
-            Você está no caminho certo, continue lendo mais 4 livros para bater sua meta!
-        </p>
+            <div class="carrossel-cards">
 
-    </div>
-</section>
+                {% if livros %}
 
-<section class="carrossel">
+                    {% for livro in livros %}
 
-    <h2>Sugestões de leitura</h2>
+                        <div class="card">
 
-    <div class="carrossel-container">
+                            <a
+                                href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                                class="card-link"
+                            >
 
-        <button class="carrossel-btn left">&#10094;</button>
+                                {% if livro.capa %}
 
-        <div class="carrossel-cards">
+                                    <img
+                                        src="{{ url_for('static', filename=livro.capa) }}">
+                                        alt="{{ livro.titulo }}"
+                                    >
 
-            {% for livro in livros %}
-            
-            <div class="card">
+                                {% else %}
 
-                <a href="{{ url_for('books_bp.detalhes', origem=livro.origem, id=livro.id) }}" class="card-link">
-                     {% if livro.capa %}
-                        <img src="{{ livro.capa }}" alt="{{ livro.titulo }}">
-                    {% else %}
-                        <div class="sem-capa"></div>
-                    {% endif %} -->
+                                    <div class="sem-capa">
+                                        Sem capa
+                                    </div>
 
-                </a>
+                                {% endif %}
+
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>
+                        Nenhum livro em destaque foi encontrado.
+                    </p>
+
+                {% endif %}
 
             </div>
 
-            {% endfor %}
+            <button class="carrossel-btn right">
+                &#10095;
+            </button>
 
         </div>
 
-        <button class="carrossel-btn right">&#10095;</button>
+    </section>
+
+    <div class="botao-estante">
+
+        <a href="#" class="btn-estante">
+            Ver minha estante
+        </a>
 
     </div>
 
-</section>
-
-<div class="botao-estante">
-    <a href="#" class="btn-estante">Ver minha estante</a>
 </div>
 
-</div>
 {% endblock %}
