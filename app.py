@@ -36,7 +36,11 @@ if __name__ == '__main__':
     app = create_app()
 
     with app.app_context():
-        from models import Usuario, Livro
+
+        db.drop_all()
         db.create_all()
+
+        from popular_banco import popular_banco
+        popular_banco()
 
     app.run(debug=True)

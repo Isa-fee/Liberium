@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 
-from extensions import db
 from models import Livro
 
 import requests
@@ -38,7 +37,7 @@ def ver(id):
 @login_required
 def buscar():
 
-    termo = request.args.get("q")
+    termo = request.args.get("q", "").strip()
 
     if not termo:
 
@@ -52,23 +51,26 @@ def buscar():
         )
 
     # ======================================
-    # 1 - PROCURA NO BANCO
+    # 1 - BUSCA NO BANCO
     # ======================================
 
-    livros = Livro.query.filter(
-        Livro.titulo.ilike(f"%{termo}%")
-    ).all()
+    todos = Livro.query.all()
 
-    # encontrou no banco
-    if livros:
+    livros = []
 
-        return render_template(
-            "books/resultados.html",
-            livros=livros
-        )
+    for livro in todos:
+
+        if termo.lower() in livro.titulo.lower():
+
+            livros.append(livro)
+
+    print("ENCONTRADOS NO BANCO:", len(livros))
+
+    # já começa os resultados com os livros do banco
+    resultados = livros.copy()
 
     # ======================================
-    # 2 - PROCURA NA API
+    # 2 - BUSCA NA API
     # ======================================
 
     try:
@@ -77,123 +79,97 @@ def buscar():
             "GOOGLE_BOOKS_API_KEY"
         )
 
-        url = (
-            f"https://www.googleapis.com/books/v1/volumes"
-            f"?q={termo}"
-            f"&key={api_key}"
-            f"&maxResults=10"
-        )
+        if api_key:
 
-        resposta = requests.get(url).json()
-
-        for item in resposta.get(
-            "items",
-            []
-        ):
-
-            info = item.get(
-                "volumeInfo",
-                {}
+            url = (
+                "https://www.googleapis.com/books/v1/volumes"
+                f"?q={termo}"
+                f"&key={api_key}"
+                "&maxResults=10"
             )
 
-            google_id = item.get("id")
+            resposta = requests.get(url).json()
 
-            # evita duplicação
-            existente = Livro.query.filter_by(
-                google_id=google_id
-            ).first()
+            titulos_existentes = {
+                livro.titulo.lower()
+                for livro in livros
+            }
 
-            if existente:
-                continue
-
-            capa = None
-
-            if info.get("imageLinks"):
-
-                capa = info[
-                    "imageLinks"
-                ].get(
-                    "thumbnail"
-                )
-
-            isbn = None
-
-            for identificador in info.get(
-                "industryIdentifiers",
+            for item in resposta.get(
+                "items",
                 []
             ):
 
-                if identificador.get(
-                    "type"
-                ) == "ISBN_13":
+                info = item.get(
+                    "volumeInfo",
+                    {}
+                )
 
-                    isbn = identificador.get(
-                        "identifier"
-                    )
-
-                    break
-
-            novo_livro = Livro(
-
-                google_id=google_id,
-
-                isbn=isbn,
-
-                titulo=info.get(
+                titulo = info.get(
                     "title",
                     "Título desconhecido"
-                ),
+                )
 
-                autor=", ".join(
-                    info.get(
-                        "authors",
-                        ["Autor desconhecido"]
+                # evita duplicados
+                if titulo.lower() in titulos_existentes:
+                    continue
+
+                capa = None
+
+                if info.get("imageLinks"):
+
+                    capa = info[
+                        "imageLinks"
+                    ].get(
+                        "thumbnail"
                     )
-                ),
 
-                descricao=info.get(
-                    "description",
-                    ""
-                ),
+                resultados.append({
 
-                capa=capa,
+                    "id": item.get("id"),
 
-                genero="",
+                    "titulo": titulo,
 
-                editora=info.get(
-                    "publisher",
-                    ""
-                ),
+                    "autor": ", ".join(
+                        info.get(
+                            "authors",
+                            ["Autor desconhecido"]
+                        )
+                    ),
 
-                paginas=info.get(
-                    "pageCount"
-                ),
+                    "descricao": info.get(
+                        "description",
+                        ""
+                    ),
 
-                ano=info.get(
-                    "publishedDate",
-                    ""
-                ),
+                    "capa": capa,
 
-                idioma=info.get(
-                    "language",
-                    ""
-                ),
+                    "editora": info.get(
+                        "publisher",
+                        ""
+                    ),
 
-                avaliacao=info.get(
-                    "averageRating",
-                    0
-                ),
+                    "paginas": info.get(
+                        "pageCount"
+                    ),
 
-                origem="google",
+                    "ano": info.get(
+                        "publishedDate",
+                        ""
+                    ),
 
-                destaque=False
-            )
+                    "idioma": info.get(
+                        "language",
+                        ""
+                    ),
 
-            db.session.add(
-                novo_livro
-            )
+                    "avaliacao": info.get(
+                        "averageRating",
+                        0
+                    ),
 
-        db.session.commit()
+                    "origem": "google"
+                })
 
     except Exception as erro:
 
@@ -201,15 +177,12 @@ def buscar():
             f"Erro ao consultar Google Books: {erro}"
         )
 
-    # ======================================
-    # 3 - BUSCA NOVAMENTE NO BANCO
-    # ======================================
-
-    livros = Livro.query.filter(
-        Livro.titulo.ilike(f"%{termo}%")
-    ).all()
+    print(
+        "TOTAL RESULTADOS:",
+        len(resultados)
+    )
 
     return render_template(
         "books/resultados.html",
-        livros=livros
+        livros=resultados
     )

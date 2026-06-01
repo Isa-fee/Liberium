@@ -8,11 +8,7 @@
 
         {% if livro.capa %}
 
-            <img
-                src="{{ url_for('static', filename=livro.capa) }}">
-                alt="Capa de {{ livro.titulo }}"
-                class="capa-livro"
-            >
+            <img src="{{ url_for('static', filename=livro.capa) }}" alt="Capa de {{ livro.titulo }}" class="capa-livro">
 
         {% else %}
 

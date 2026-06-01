@@ -12,54 +12,82 @@
 
         {% for livro in livros %}
 
-        <a
-            href="{{ url_for('books_bp.ver', id=livro.id) }}"
-            class="card-livro"
-        >
+            {% if livro.origem == "banco" %}
 
-            {% if livro.capa %}
-
-                <img
-                    src="{{ url_for('static', filename=livro.capa) }}">
-                    class="capa-lista"
-                    alt="Capa de {{ livro.titulo }}"
+                <a
+                    href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                    class="card-livro"
                 >
 
             {% else %}
 
-                <div class="sem-capa">
-                    Sem capa
-                </div>
+                <div class="card-livro">
 
             {% endif %}
 
-            <div class="info-livro">
+                {% if livro.capa %}
 
-                <h4>
-                    {{ livro.titulo or "Título desconhecido" }}
-                </h4>
+                    {% if livro.origem == "banco" %}
 
-                <p>
-                    {{ livro.autor or "Autor desconhecido" }}
-                </p>
-
-                <p class="descricao-curta">
-
-                    {% if livro.descricao %}
-
-                        {{ livro.descricao[:200] }}...
+                        <img
+                            src="{{ url_for('static', filename=livro.capa) }}"
+                            class="capa-lista"
+                            alt="Capa de {{ livro.titulo }}"
+                        >
 
                     {% else %}
 
-                        Descrição não disponível.
+                        <img
+                            src="{{ livro.capa }}"
+                            class="capa-lista"
+                            alt="Capa de {{ livro.titulo }}"
+                        >
 
                     {% endif %}
 
-                </p>
+                {% else %}
 
-            </div>
+                    <div class="sem-capa">
+                        Sem capa
+                    </div>
 
-        </a>
+                {% endif %}
+
+                <div class="info-livro">
+
+                    <h4>
+                        {{ livro.titulo }}
+                    </h4>
+
+                    <p>
+                        {{ livro.autor }}
+                    </p>
+
+                    <p class="descricao-curta">
+
+                        {% if livro.descricao %}
+
+                            {{ livro.descricao[:200] }}...
+
+                        {% else %}
+
+                            Descrição não disponível.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            {% if livro.origem == "banco" %}
+
+                </a>
+
+            {% else %}
+
+                </div>
+
+            {% endif %}
 
         {% endfor %}
 

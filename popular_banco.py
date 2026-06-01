@@ -1,12 +1,10 @@
 import json
 
-from app import create_app
 from extensions import db
 from models import Livro
 
-app = create_app()
 
-with app.app_context():
+def popular_banco():
 
     with open(
         "data/livros.json",
@@ -16,13 +14,6 @@ with app.app_context():
         livros = json.load(arquivo)
 
     for item in livros:
-
-        existe = Livro.query.filter_by(
-            titulo=item["titulo"]
-        ).first()
-
-        if existe:
-            continue
 
         livro = Livro(
             titulo=item["titulo"],
@@ -34,7 +25,8 @@ with app.app_context():
             paginas=item["paginas"],
             ano=item["ano"],
             idioma=item["idioma"],
-            avaliacao=item["avaliacao"]
+            avaliacao=item["avaliacao"],
+            origem="banco"
         )
 
         db.session.add(livro)
