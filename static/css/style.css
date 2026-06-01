@@ -907,6 +907,91 @@ body {
 }
 
 
+/* =========================
+   ESTANTE / PERFIL LAYOUT
+   ========================= */
+
+
+/* área principal */
+.pagina-estante{
+    display: flex;
+    min-height: calc(100vh - 170px);
+    width: 100%;
+    background: #f4f4f4;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.sidebar {
+    width: 20%;
+    min-width: 240px;
+    max-width: 350px;
+    background: #b7c5b0;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar img.foto-perfil {
+    width: clamp(105px, 8vw, 150px);
+    height: clamp(105px, 8vw, 150px);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.usuario {
+    font-size: 15px;
+    color: #f8f8f8;
+    margin-bottom: 35px;
+    margin-top: 20px;
+}
+
+.menu-lateral {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-lateral a {
+    text-decoration: none;
+    color: #f8f8f8;
+    font-size: 18px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    transition: .2s;
+}
+
+.menu-lateral a:hover {
+    background: rgba(255, 255, 255, 0.212);
+    /* border-bottom: white 1px solid; */
+}
+
+
+/* =========================
+   CONTEÚDO CENTRAL
+   ========================= */
+.area-estante{
+    flex: 1;
+    background: #efefef;
+    /* padding: 35px; */
+}
+
+.vazio{
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    background: #f2f2f2;
+    border-radius: 4px;
+}
+
+/* Final do css do perfil */
+
+
 /* ============================= */
 /*         RESPONSIVIDADE        */
 /* ============================= */
