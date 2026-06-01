@@ -31,3 +31,7 @@ def home():
 @home_bp.route("/sobre")
 def sobre():
     return render_template("home/sobre.html")
+
+@home_bp.route("/contato")
+def contato():
+    return render_template("home/contato.html")
