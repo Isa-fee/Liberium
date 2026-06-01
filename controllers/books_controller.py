@@ -28,6 +28,95 @@ def ver(id):
         livro=livro
     )
 
+# ======================================
+# DETALHES GOOGLE BOOKS
+# ======================================
+
+@books_bp.route("/google/<google_id>")
+@login_required
+def ver_google(google_id):
+
+    api_key = os.getenv(
+        "GOOGLE_BOOKS_API_KEY"
+    )
+
+    url = (
+        f"https://www.googleapis.com/books/v1/volumes/"
+        f"{google_id}"
+        f"?key={api_key}"
+    )
+
+    resposta = requests.get(url).json()
+
+    info = resposta.get(
+        "volumeInfo",
+        {}
+    )
+
+    capa = None
+
+    if info.get("imageLinks"):
+
+        capa = info[
+            "imageLinks"
+        ].get(
+            "thumbnail"
+        )
+
+    livro = {
+
+        "titulo": info.get(
+            "title",
+            "Título desconhecido"
+        ),
+
+        "autor": ", ".join(
+            info.get(
+                "authors",
+                ["Autor desconhecido"]
+            )
+        ),
+
+        "descricao": info.get(
+            "description",
+            "Descrição não disponível."
+        ),
+
+        "capa": capa,
+
+        "editora": info.get(
+            "publisher",
+            "Não informado"
+        ),
+
+        "paginas": info.get(
+            "pageCount",
+            "Não informado"
+        ),
+
+        "ano": info.get(
+            "publishedDate",
+            "Não informado"
+        ),
+
+        "idioma": info.get(
+            "language",
+            "Não informado"
+        ),
+
+        "avaliacao": info.get(
+            "averageRating",
+            0
+        ),
+
+        "origem": "google"
+    }
+
+    return render_template(
+        "books/books.html",
+        livro=livro
+    )
+
 
 # ======================================
 # BUSCA DE LIVROS

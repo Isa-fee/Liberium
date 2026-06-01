@@ -1,13 +1,27 @@
-# Arquivos do Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
+# Banco de dados SQLite
+liberium.db
+
+# Arquivos do SQLite
+*.db
+*.sqlite3
 
 # Ambiente virtual
-.venv/
 env/
 venv/
-ENV/
-*.env
+
+# Variáveis de ambiente
+.env
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Arquivos do Flask
+instance/
+
+# VS Code
+.vscode/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

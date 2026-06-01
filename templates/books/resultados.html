@@ -19,11 +19,14 @@
                     class="card-livro"
                 >
 
-            {% else %}
+                {% else %}
 
-                <div class="card-livro">
-
-            {% endif %}
+                <a
+                    href="{{ url_for('books_bp.ver_google', google_id=livro.id) }}"
+                    class="card-livro"
+                >
+                
+                {% endif %}
 
                 {% if livro.capa %}
 
@@ -85,7 +88,7 @@
 
             {% else %}
 
-                </div>
+                </a>
 
             {% endif %}
 
