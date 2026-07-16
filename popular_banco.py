@@ -4,6 +4,7 @@ from extensions import db
 from models import Livro
 
 
+
 def popular_banco():
 
     with open(
@@ -26,7 +27,6 @@ def popular_banco():
             ano=item["ano"],
             idioma=item["idioma"],
             avaliacao=item["avaliacao"],
-            origem="banco"
         )
 
         db.session.add(livro)

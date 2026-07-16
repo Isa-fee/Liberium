@@ -1,0 +1,116 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Minha Estante | Liberium{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estante/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-estante">
+
+    <aside class="sidebar">
+
+        <img
+            src="{{ url_for('static', filename='img/lift.jpg') }}"
+            class="foto-perfil"
+        >
+
+        <h3>{{ current_user.nome }}</h3>
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+
+        <nav class="menu-lateral">
+
+            <span class="titulo-menu">Biblioteca</span>
+
+            <a href="#">Minha Estante</a>
+
+            <a href="#">Lidos</a>
+
+            <a href="#">Lendo</a>
+
+            <a href="#">Quero ler</a>
+
+            <hr>
+
+            <span class="titulo-menu">Coleção</span>
+
+            <a href="#">Decorações</a>
+
+            <a href="#">Colecionáveis</a>
+
+            <hr>
+
+            <div class="card-moedas">
+
+                🪲
+
+                <strong>200</strong>
+
+                <span>Mini Libélulas</span>
+
+            </div>
+
+            <hr>
+
+            <a href="#">Configurações</a>
+
+        </nav>
+
+    </aside>
+
+    <section class="area-estante">
+
+        <div class="estante-container">
+
+        <div class="cabecalho-estante">
+
+            <h1>Minha Estante</h1>
+
+            <a href="{{ url_for('home.home') }}" class="btn-adicionar">
+                + Adicionar livro
+            </a>
+
+        </div>
+
+        <div class="filtros">
+
+            <button class="ativo">Todos</button>
+
+            <button>Lendo</button>
+
+            <button>Lidos</button>
+
+            <button>Quero ler</button>
+
+        </div>
+
+        <div class="estante">
+
+            <div class="linha-prateleira">
+
+                <p class="mensagem-vazia">
+                    Sua estante ainda está vazia.
+                </p>
+
+            </div>
+
+            <div class="linha-prateleira"></div>
+
+            <div class="linha-prateleira"></div>
+
+        </div>
+
+    </div>
+
+    </section>
+
+</section>
+
+{% endblock %}

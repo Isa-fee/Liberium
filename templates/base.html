@@ -1,90 +1,139 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Liberium{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta charset="utf-8">
+
+    <title>{% block title %}Liberium{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block styles %}{% endblock %}
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=barcode_scanner" />
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=barcode_scanner" />
 
 </head>
+
 <body>
 
-  {# Só mostra cabeçalho se NÃO estiver na rota index #}
-  {% if request.endpoint != 'home.index' %}
-  <header>
+{% if request.endpoint != 'home.index' %}
+
+<header>
+
     <nav class="topnav">
-      <div class="logonav">
-        <a href="{{ url_for('home.home') }}"><img src="/static/img/navlogo.png" alt="" class="navlogo"></a>
-      </div>
-  
-      <div>
-        <a href="{{ url_for('user_bp.perfil') }}" class="link">MINHA ESTANTE</a>
-        {% if current_user.is_authenticated %}
 
-        <a href="#" class="link">
-          {{ current_user.nome }}
-        </a>
+        <div class="logonav">
 
-        <a href="{{ url_for('user_bp.logout') }}" class="link">
-          SAIR
-        </a>
+            <a href="{{ url_for('home.home') }}">
 
-        {% else %}
+                <img src="{{ url_for('static', filename='img/navlogo.png') }}" class="navlogo">
 
-        <a href="{{ url_for('user_bp.perfil') }}" class="link">
-          PERFIL
-        </a>
+            </a>
 
-        {% endif %}
-      </div>
-  
-      <form action="/books/buscar" method="get" class="busca">
-        <span class="material-symbols-outlined">barcode_scanner</span>
-  
-        <input 
-          type="text" 
-          name="q" 
-          placeholder="Busque livros por título, autor, ISBN..." 
-          class="pesquisa"
-        >
-  
-        <button type="submit" style="display: none;"></button>
-      </form>
-  
+        </div>
+
+        <div>
+
+            <a href="{{ url_for('books_bp.estante') }}">
+                Minha Estante
+            </a>
+
+            <a href="{{ url_for('user_bp.perfil') }}">
+                {{ current_user.nome }}
+            </a>
+
+            {% if current_user.is_authenticated %}
+
+                <a href="{{ url_for('user_bp.logout') }}">
+                    SAIR
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('user_bp.perfil') }}">
+                    PERFIL
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <form action="{{ url_for('books_bp.buscar') }}" method="get" class="busca">
+
+            <span class="material-symbols-outlined">
+                barcode_scanner
+            </span>
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Busque livros por título, autor, ISBN..."
+                class="pesquisa"
+            >
+
+            <button type="submit" hidden></button>
+
+        </form>
+
     </nav>
-  </header>
-  {% endif %}
 
-  <main>
+</header>
+
+{% endif %}
+
+<main>
+
     {% block content %}{% endblock %}
-  </main>
 
-  {# Só mostra rodapé se NÃO estiver na rota index #}
-  {% if request.endpoint != 'home.index' %}
-  <footer class="rodape">
-  <div class="rodape-conteudo">
-    <div class="rodape-logo">
-      <img src="/static/img/navlogo.png" alt="Logo Liberium">
+</main>
+
+{% if request.endpoint != 'home.index' %}
+
+<footer class="rodape">
+
+    <div class="rodape-conteudo">
+
+        <div class="rodape-logo">
+
+            <img src="{{ url_for('static', filename='img/navlogo.png') }}">
+
+        </div>
+
+        <div class="rodape-links">
+
+            <a href="/sobre">SOBRE</a>
+            <a href="/contato">CONTATO</a>
+            <a href="#">AJUDA</a>
+            <a href="#">TUTORIAIS</a>
+
+        </div>
+
+        <div class="rodape-icones">
+
+            <a href="#"><img src="{{ url_for('static', filename='img/instagram.png') }}"></a>
+
+            <a href="#"><img src="{{ url_for('static', filename='img/tik-tok.png') }}"></a>
+
+            <a href="#"><img src="{{ url_for('static', filename='img/bluesky.png') }}"></a>
+
+        </div>
+
     </div>
-    <div class="rodape-links">
-      <a href="/sobre">SOBRE</a>
-      <a href="/contato">CONTATO</a>
-      <a href="#">AJUDA</a>
-      <a href="#">TUTORIAIS</a>
-    </div>
-    <div class="rodape-icones">
-      <a href="#"><img src="/static/img/instagram.png" alt=""></a> <!-- Instagram -->
-      <a href="#"><img src="/static/img/tik-tok.png" alt=""></a> <!-- TikTok -->
-      <a href="#"><img src="/static/img/bluesky.png" alt=""></a> <!-- Libélula / símbolo -->
-    </div>
-  </div>
-  </footer>
-  {% endif %}
-<script src="/static/js/carrossel.js"></script>
+
+</footer>
+
+{% endif %}
+
+<script src="{{ url_for('static', filename='js/carrossel.js') }}"></script>
 
 </body>
+
 </html>

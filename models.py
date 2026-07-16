@@ -16,26 +16,7 @@ class Livro(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    google_id = db.Column(
-        db.String(100),
-        unique=True,
-        nullable=True
-    )
-    openlibrary_id = db.Column(
-        db.String(100),
-        unique=True,
-        nullable=True
-    )
-    isbn = db.Column(
-        db.String(20),
-        unique=True,
-        nullable=True
-    )
-    titulo = db.Column(
-        db.String(255),
-        nullable=False
-    )
-
+    titulo = db.Column(db.String(255), nullable=False)
     autor = db.Column(db.String(255))
     descricao = db.Column(db.Text)
     capa = db.Column(db.String(500))
@@ -45,14 +26,7 @@ class Livro(db.Model):
     ano = db.Column(db.String(20))
     idioma = db.Column(db.String(50))
     avaliacao = db.Column(db.Float)
-    origem = db.Column(
-        db.String(20)
-    )
-    destaque = db.Column(
-        db.Boolean,
-        default=False
-    )
-
+    destaque = db.Column(db.Boolean, default=False)
 
 
 class Estante(db.Model):
