@@ -2,18 +2,27 @@
 
 {% block title %}Perfil | Liberium{% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/perfil/style.css')}}">
+{% endblock %}
+
 {% block content %}
 
 
 <section class="pagina-estante">
 
     <aside class="sidebar">
-        <img src="/static/img/lift.jpg" class="foto-perfil">
-
-        <p class="usuario">@liviaxxws</p>
+        <img src="{{ url_for('static', filename='img/lift.jpg') }}"
+        class="foto-perfil">
+   
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+        
+        <h1>Olá, {{ current_user.nome }} 🦋</h1>
 
         <nav class="menu-lateral">
-            <a href="#">Estante</a>
+            <a href="#">Estante teste</a>
             <a href="#">Lidos</a>
             <a href="#">Lendo</a>
             <a href="#">Quero ler</a>
@@ -25,7 +34,205 @@
     </aside>
 
     <section class="area-estante">
-        <div class="vazio"></div>
+
+        <!-- TOPO -->
+    
+        <div class="card-perfil">
+    
+            <div class="perfil-info">
+    
+                <h1>Olá, {{ current_user.nome }} 🦋</h1>
+    
+                <p class="frase">
+                    "Entre páginas e palavras,
+                    encontro meus melhores mundos."
+                </p>
+    
+                <div class="nivel-card">
+    
+                    <div class="nivel-topo">
+    
+                        <h2>NÍVEL 8</h2>
+    
+                        <span>320 XP</span>
+    
+                    </div>
+    
+                    <p>Exploradora Literária</p>
+    
+                    <div class="barra-progresso">
+    
+                        <div class="progresso"></div>
+    
+                    </div>
+    
+                    <small>Próximo nível: 480 XP</small>
+    
+                </div>
+    
+            </div>
+    
+            <div class="cards-laterais">
+    
+                <div class="mini-card">
+                    <h2>145</h2>
+                    <span>Libélulas</span>
+                </div>
+    
+                <div class="mini-card">
+                    <h2>320</h2>
+                    <span>XP</span>
+                </div>
+            </div>
+    
+            <div class="meta-card">
+    
+                <h3>SUA META DE LEITURA</h3>
+    
+                <p>15 livros esse mês.</p>
+    
+                <div class="barra-meta">
+    
+                    <div class="progresso-meta"></div>
+    
+                </div>
+    
+                <span>60%</span>
+    
+                <p class="texto-meta">
+                    Você está no caminho certo,
+                    continue lendo mais 4 livros
+                    para bater sua meta!
+                </p>
+    
+            </div>
+    
+        </div>
+    
+        <!-- ESTATÍSTICAS -->
+    
+        <div class="estatisticas">
+    
+            <div class="item">
+                <h2>30</h2>
+                <p>Livros lidos</p>
+            </div>
+    
+            <div class="item">
+                <h2>5</h2>
+                <p>Lendo</p>
+            </div>
+    
+            <div class="item">
+                <h2>15</h2>
+                <p>Quero ler</p>
+            </div>
+    
+            <div class="item">
+                <h2>18</h2>
+                <p>Resenhas</p>
+            </div>
+    
+            <div class="item">
+                <h2>42</h2>
+                <p>Avaliações</p>
+            </div>
+    
+            <div class="item">
+                <h2>8</h2>
+                <p>Amigos</p>
+            </div>
+    
+        </div>
+    
+        <!-- INSÍGNIAS -->
+    
+        <div class="bloco">
+    
+            <div class="titulo-bloco">
+    
+                <h2>MINHAS INSÍGNIAS</h2>
+    
+                <a href="#">Ver todas</a>
+    
+            </div>
+    
+            <div class="insignias">
+    
+                <div class="insignia">
+                    📖
+                    <span>Primeiro Livro</span>
+                </div>
+    
+                <div class="insignia">
+                    ✍️
+                    <span>Primeira Resenha</span>
+                </div>
+    
+                <div class="insignia">
+                    🎯
+                    <span>Meta Concluída</span>
+                </div>
+    
+                <div class="insignia">
+                    ⭐
+                    <span>5 Livros</span>
+                </div>
+    
+            </div>
+    
+        </div>
+    
+        <!-- PARTE DE BAIXO -->
+    
+        <div class="linha-inferior">
+    
+            <div class="colecao">
+    
+                <div class="titulo-bloco">
+    
+                    <h2>MINHA COLEÇÃO</h2>
+    
+                    <a href="#">Ver coleção completa</a>
+    
+                </div>
+    
+                <div class="bonecos">
+    
+                    <div class="boneco">🧙‍♂️<p>Harry Potter</p></div>
+    
+                    <div class="boneco">⚡<p>Percy Jackson</p></div>
+    
+                    <div class="boneco">🌹<p>Pequeno Príncipe</p></div>
+    
+                    <div class="boneco">📚<p>Hermione</p></div>
+    
+                </div>
+    
+            </div>
+    
+            <div class="atividade">
+    
+                <h2>ATIVIDADE RECENTE</h2>
+    
+                <ul>
+    
+                    <li>📘 Você terminou de ler "A Loucura do Mel"</li>
+    
+                    <li>✏️ Você publicou uma nova resenha</li>
+    
+                    <li>🏅 Nova insígnia conquistada</li>
+    
+                    <li>🎯 Você cumpriu sua meta mensal</li>
+    
+                </ul>
+    
+                <button>Ver todas as atividades</button>
+    
+            </div>
+    
+        </div>
+    
     </section>
 
 </section>
