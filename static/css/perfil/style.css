@@ -1,0 +1,147 @@
+.area-estante {
+    background: #f7f7f5;
+    padding: 35px;
+}
+
+.card-perfil {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 180px 280px;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.frase {
+    color: #666;
+    margin: 15px 0 25px;
+}
+
+.nivel-card,
+.meta-card,
+.mini-card {
+    background: #fafafa;
+    border: 1px solid #ececec;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.cards-laterais {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.barra-progresso,
+.barra-meta {
+    width: 100%;
+    height: 12px;
+    background: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.progresso {
+    width: 70%;
+    height: 100%;
+    background: #8fa382;
+}
+
+.meta {
+    width: 60%;
+    height: 100%;
+    background: #8fa382;
+}
+
+.estatisticas {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.bloco {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.titulo-bloco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.insignias {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.insignia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 45px;
+}
+
+.insignia span {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.linha-inferior {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.colecao,
+.atividade {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.bonecos {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+.boneco {
+    text-align: center;
+    font-size: 45px;
+}
+
+.boneco p {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.atividade ul {
+    list-style: none;
+    padding: 0;
+}
+
+.atividade li {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.atividade button {
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid #8fa382;
+    background: white;
+    color: #4d6144;
+    border-radius: 25px;
+    padding: 12px;
+    cursor: pointer;
+}
