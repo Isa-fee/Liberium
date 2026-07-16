@@ -89,6 +89,26 @@
 
 {% endif %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for categoria, mensagem in messages %}
+
+                <div class="flash {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %} 
+
 <main>
 
     {% block content %}{% endblock %}

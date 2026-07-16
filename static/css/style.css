@@ -1411,3 +1411,29 @@ body {
 
 
 
+.flash-container{
+    width:90%;
+    margin:20px auto;
+}
+
+.flash{
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.flash.success{
+    background:#dff6dd;
+    color:#35693c;
+}
+
+.flash.warning{
+    background:#fff4d5;
+    color:#8a6b00;
+}
+
+.flash.error{
+    background:#ffdede;
+    color:#9b2c2c;
+}

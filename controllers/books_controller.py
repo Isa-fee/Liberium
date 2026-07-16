@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 
-from models import Livro
+from models import Livro, Estante
+from extensions import db
 
 
 books_bp = Blueprint(
@@ -67,6 +68,70 @@ def buscar():
 @login_required
 def estante():
 
+    lendo = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="lendo"
+    ).all()
+
+    lidos = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="lido"
+    ).all()
+
+    quero_ler = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="quero ler"
+    ).all()
+
     return render_template(
-        "books/estante.html"
+        "books/estante.html",
+        lendo=lendo,
+        lidos=lidos,
+        quero_ler=quero_ler
     )
+
+# ======================================
+# ADCIONAR LIVRO
+# ======================================
+
+@books_bp.route("/adicionar-estante/<int:livro_id>", methods=["POST"])
+@login_required
+def adicionar_estante(livro_id):
+
+    status = request.form.get("status")
+
+    existe = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=livro_id
+    ).first()
+
+    if existe:
+
+        existe.status = status
+
+        flash(
+            "Status atualizado!",
+            "success"
+        )
+
+    else:
+
+        novo = Estante(
+            usuario_id=current_user.id,
+            livro_id=livro_id,
+            status=status
+        )
+
+        db.session.add(novo)
+        flash(
+        "Livro adicionado à estante!",
+        "success"
+    )
+
+    db.session.commit()
+
+    flash("Livro adicionado à estante!", "success")
+
+    return redirect(
+    url_for("books_bp.ver", id=livro_id)
+)
