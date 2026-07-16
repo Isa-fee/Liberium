@@ -1,6 +1,8 @@
 # Banco de dados SQLite
 liberium.db
 
+instance/liberium.db
+
 # Arquivos do SQLite
 *.db
 *.sqlite3
