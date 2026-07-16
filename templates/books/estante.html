@@ -27,20 +27,16 @@
 
             <span class="titulo-menu">Biblioteca</span>
 
-            <a href="#">Minha Estante</a>
-
-            <a href="#">Lidos</a>
-
-            <a href="#">Lendo</a>
-
-            <a href="#">Quero ler</a>
+            <a href="#estante">Minha Estante</a>
+            <a href="#lendo">Lendo</a>
+            <a href="#lidos">Lidos</a>
+            <a href="#quero-ler">Quero ler</a>
 
             <hr>
 
             <span class="titulo-menu">Coleção</span>
 
             <a href="#">Decorações</a>
-
             <a href="#">Colecionáveis</a>
 
             <hr>
@@ -67,45 +63,157 @@
 
         <div class="estante-container">
 
-        <div class="cabecalho-estante">
+            <div class="cabecalho-estante">
 
-            <h1>Minha Estante</h1>
+                <h1 id="estante">Minha Estante</h1>
 
-            <a href="{{ url_for('home.home') }}" class="btn-adicionar">
-                + Adicionar livro
-            </a>
-
-        </div>
-
-        <div class="filtros">
-
-            <button class="ativo">Todos</button>
-
-            <button>Lendo</button>
-
-            <button>Lidos</button>
-
-            <button>Quero ler</button>
-
-        </div>
-
-        <div class="estante">
-
-            <div class="linha-prateleira">
-
-                <p class="mensagem-vazia">
-                    Sua estante ainda está vazia.
-                </p>
+                <a href="{{ url_for('home.home') }}" class="btn-adicionar">
+                    + Adicionar livro
+                </a>
 
             </div>
 
-            <div class="linha-prateleira"></div>
+            <!-- ===================== -->
+            <!-- PRATELEIRA LENDO -->
+            <!-- ===================== -->
 
-            <div class="linha-prateleira"></div>
+            <section id="lendo" class="bloco-prateleira">
+
+                <div class="linha-prateleira">
+            
+                    {% if lendo %}
+            
+                        {% for item in lendo %}
+            
+                            <a
+                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                class="livro-link"
+                            >
+            
+                                <img
+                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    class="livro-estante"
+                                    alt="{{ item.livro.titulo }}"
+                                >
+            
+                            </a>
+            
+                        {% endfor %}
+            
+                    {% else %}
+            
+                        <p class="mensagem-vazia">
+                            Nenhum livro sendo lido.
+                        </p>
+            
+                    {% endif %}
+            
+                </div>
+            
+                <div class="placa-prateleira">
+                    LENDO
+                </div>
+            
+            </section>
+            <!-- ===================== -->
+            <!-- PRATELEIRA LIDOS -->
+            <!-- ===================== -->
+
+            <section id="lidos" class="bloco-prateleira">
+
+                <div class="linha-prateleira">
+            
+                    {% if lidos %}
+            
+                        {% for item in lidos %}
+            
+                            <a
+                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                class="livro-link"
+                            >
+            
+                                <img
+                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    class="livro-estante"
+                                    alt="{{ item.livro.titulo }}"
+                                >
+            
+                            </a>
+            
+                        {% endfor %}
+            
+                    {% else %}
+            
+                        <p class="mensagem-vazia">
+                            Nenhum foi lido ainda.
+                        </p>
+            
+                    {% endif %}
+            
+                </div>
+            
+                <div class="placa-prateleira">
+                    LIDOS
+                </div>
+            
+            </section>
+
+            <!-- ===================== -->
+            <!-- PRATELEIRA QUERO LER -->
+            <!-- ===================== -->
+
+            <section id="quero-ler" class="bloco-prateleira">
+
+                <div class="linha-prateleira">
+            
+                    {% if quero_ler %}
+            
+                        {% for item in quero_ler %}
+            
+                            <a
+                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                class="livro-link"
+                            >
+            
+                                <img
+                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    class="livro-estante"
+                                    alt="{{ item.livro.titulo }}"
+                                >
+            
+                            </a>
+            
+                        {% endfor %}
+            
+                    {% else %}
+            
+                        <p class="mensagem-vazia">
+                            Nenhum livro na lista de desejos
+                        </p>
+            
+                    {% endif %}
+            
+                </div>
+            
+                <div class="placa-prateleira">
+                    QUERO LER
+                </div>
+            
+            </section>
+
+            <div class="loja">
+
+                <p>
+                    Personalize e decore sua estante como quiser!
+                </p>
+
+                <a href="#" class="irloja">
+                    Loja de decorações
+                </a>
+
+            </div>
 
         </div>
-
-    </div>
 
     </section>
 

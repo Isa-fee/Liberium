@@ -143,6 +143,11 @@
 
 .estante-container{
 
+    border-radius: 15px;
+    border: 1px solid #8fa382;
+    padding-top: 20px;
+    padding-bottom: 30px;
+
     max-width:1200px;
 
     margin:auto;
@@ -156,6 +161,7 @@
     justify-content:space-between;
 
     align-items:center;
+    padding: 10px;
 
     margin-bottom:25px;
 
@@ -189,6 +195,7 @@
     display:flex;
 
     gap:15px;
+    padding: 10px;
 
     margin-bottom:30px;
 
@@ -221,31 +228,34 @@
 .estante{
 
     display:flex;
-
     flex-direction:column;
-
-    gap:30px;
 
 }
 
+
+
+/* .bloco-prateleira{
+
+    margin-bottom:60px;
+
+} */
+
 .linha-prateleira{
 
-    height:180px;
-
-    background:#5c3920;
-
-    border-radius:8px;
-
-    padding:15px 20px;
-
     display:flex;
-
     align-items:flex-end;
 
     gap:18px;
 
-    position:relative;
+    min-height:210px;
 
+    padding:20px 25px;
+
+    background:#5c3920;
+
+    overflow-x:auto;
+
+    position:relative;
 }
 
 .linha-prateleira::after{
@@ -262,7 +272,7 @@
 
     height:10px;
 
-    background:#442813;
+    background:#7e4a24;
 
 }
 
@@ -283,5 +293,65 @@
     border-radius:4px;
 
     transition:.2s;
+
+}
+
+.loja{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.loja .irloja{
+
+    background:#8fa382;
+    padding: 10px;
+
+    color:white;
+
+    border:none;
+    border-radius:30px;
+
+}
+.livro-link{
+    text-decoration: none;
+    display: inline-block;
+
+}
+
+.livro-estante{
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+.livro-estante:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 12px 25px rgba(0,0,0,.18);
+
+}
+
+.placa-prateleira{
+
+    background:#5c3920;
+
+    color:white;
+    border-bottom: 1px solid #835435;
+
+    text-align:center;
+
+    padding:10px;
+
+    font-size:.95rem;
+
+    font-weight:600;
+
+    letter-spacing:2px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.12);
 
 }
