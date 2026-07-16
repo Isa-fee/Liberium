@@ -39,9 +39,36 @@
 
         <div class="acoes-usuario">
 
-            <button class="btn-principal">
-                Adicionar à estante ▾
-            </button>
+            <form
+                action="{{ url_for('books_bp.adicionar_estante', livro_id=livro.id) }}"
+                method="POST"
+            >
+
+            <select
+                name="status"
+                class="btn-principal"
+                onchange="this.form.submit()"
+            >
+
+                <option selected disabled>
+                    Adicionar à estante
+                </option>
+
+                <option value="lendo">
+                    📖 Estou lendo
+                </option>
+
+                <option value="quero ler">
+                    ⭐ Quero ler
+                </option>
+
+                <option value="lido">
+                    ✅ Já li
+                </option>
+
+            </select>
+
+        </form>
 
             <div class="cards-status">
 

@@ -12,41 +12,18 @@
 
         {% for livro in livros %}
 
-            {% if livro.origem == "banco" %}
-
-                <a
-                    href="{{ url_for('books_bp.ver', id=livro.id) }}"
-                    class="card-livro"
-                >
-
-                {% else %}
-
-                <a
-                    href="{{ url_for('books_bp.ver_google', google_id=livro.id) }}"
-                    class="card-livro"
-                >
-                
-                {% endif %}
+            <a
+                href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                class="card-livro"
+            >
 
                 {% if livro.capa %}
 
-                    {% if livro.origem == "banco" %}
-
-                        <img
-                            src="{{ url_for('static', filename=livro.capa) }}"
-                            class="capa-lista"
-                            alt="Capa de {{ livro.titulo }}"
-                        >
-
-                    {% else %}
-
-                        <img
-                            src="{{ livro.capa }}"
-                            class="capa-lista"
-                            alt="Capa de {{ livro.titulo }}"
-                        >
-
-                    {% endif %}
+                    <img
+                        src="{{ url_for('static', filename=livro.capa) }}"
+                        class="capa-lista"
+                        alt="Capa de {{ livro.titulo }}"
+                    >
 
                 {% else %}
 
@@ -82,15 +59,7 @@
 
                 </div>
 
-            {% if livro.origem == "banco" %}
-
-                </a>
-
-            {% else %}
-
-                </a>
-
-            {% endif %}
+            </a>
 
         {% endfor %}
 
