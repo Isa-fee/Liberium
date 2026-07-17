@@ -22,7 +22,7 @@
         <h1>Olá, {{ current_user.nome }} 🦋</h1>
 
         <nav class="menu-lateral">
-            <a href="#">Estante teste</a>
+            <a href="{{ url_for('books_bp.estante') }}">Estante</a>
             <a href="#">Lidos</a>
             <a href="#">Lendo</a>
             <a href="#">Quero ler</a>
