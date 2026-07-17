@@ -1,131 +1,162 @@
 {% extends "base.html" %}
 
+{% block title %}{{ livro.titulo }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/books/style.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <main class="livro-container">
 
-    <section class="coluna-esquerda">
+    <!-- ================= COLUNA ESQUERDA ================= -->
+
+    <aside class="coluna-esquerda">
 
         {% if livro.capa %}
 
-            <img src="{{ url_for('static', filename=livro.capa) }}" alt="Capa de {{ livro.titulo }}" class="capa-livro">
+            <img
+                src="{{ url_for('static', filename=livro.capa) }}"
+                alt="{{ livro.titulo }}"
+                class="capa-livro"
+            >
 
         {% else %}
 
-            <div
-                class="sem-capa capa-livro"
-                style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    background:#eee;
-                    height:380px;
-                "
-            >
+            <div class="sem-capa capa-livro">
                 Sem capa
             </div>
 
         {% endif %}
 
         <div class="avaliacao-estrelas">
-
             ★★★★★
-
             <span class="nota">
-                ({{ livro.avaliacao or "Sem avaliação" }})
+                ({{ livro.avaliacao or "Sem avaliações" }})
             </span>
-
         </div>
 
-        <div class="acoes-usuario">
+        <!-- BOTÃO ESTANTE -->
 
-            <form
-                action="{{ url_for('books_bp.adicionar_estante', livro_id=livro.id) }}"
-                method="POST"
-            >
+        <div class="dropdown-estante">
 
-            <select
-                name="status"
-                class="btn-principal"
-                onchange="this.form.submit()"
-            >
+            <button class="btn-estante">
+                Adicionar na estante ▾
+            </button>
 
-                <option selected disabled>
-                    Adicionar à estante
-                </option>
+            <div class="menu-estante">
 
-                <option value="lendo">
-                    📖 Estou lendo
-                </option>
+                <form action="{{ url_for('books_bp.adicionar_estante', livro_id=livro.id) }}"
+                    method="POST">
 
-                <option value="quero ler">
-                    ⭐ Quero ler
-                </option>
+                    <button name="status" value="lendo">
+                        📖 Estou lendo
+                    </button>
 
-                <option value="lido">
-                    ✅ Já li
-                </option>
+                    <button name="status" value="quero ler">
+                        ⭐ Quero ler
+                    </button>
 
-            </select>
+                    <button name="status" value="lido">
+                        ✅ Já li
+                    </button>
 
-        </form>
-
-            <div class="cards-status">
-
-                <div class="card-item">
-                    Lendo
-                </div>
-
-                <div class="card-item">
-
-                    Atualize seu progresso!
-
-                    <br>
-
-                    <small>
-                        % de páginas lidas
-                    </small>
-
-                </div>
-
-                <div class="card-item">
-                    Já li
-                </div>
-
-                <div class="card-item">
-                    Quero ler
-                </div>
-
-                <div class="card-item card-item-duplo">
-
-                    Data da leitura:
-
-                    <br>
-
-                    <small>
-                        00/00/0000 ▾
-                    </small>
-
-                    <br>
-
-                    <a
-                        href="#"
-                        style="
-                            color:#8fa382;
-                            font-size:0.8rem;
-                            text-decoration:none;
-                        "
-                    >
-                        Deixe sua avaliação!
-                    </a>
-
-                </div>
+                </form>
 
             </div>
 
         </div>
 
-    </section>
+        <!-- CARD DO USUÁRIO -->
+
+        {% if item_estante %}
+
+        <div class="painel-leitura">
+
+            <h3>Seu progresso</h3>
+
+            <p class="status-atual">
+
+                Status:
+
+                <strong>
+
+                    {{ item_estante.status|capitalize }}
+
+                </strong>
+
+            </p>
+
+            {% if item_estante.status == "lendo" %}
+
+            <div class="progresso-box">
+
+                <label>
+
+                    Progresso
+
+                </label>
+
+                {% if item_estante %}
+                    <div class="barra">
+                        <div
+                            class="progresso"
+                            style="width: {{ item_estante.progresso }}%;"
+                        ></div>
+                    </div>
+                {% else %}
+                    <div class="barra">
+                        <div
+                            class="progresso"
+                            style="width: 0%;"
+                        ></div>
+                    </div>
+                {% endif %}
+
+                <p>
+
+                    {{ item_estante.progresso or 0 }}%
+
+                </p>
+
+                <button class="btn-secundario">
+
+                    Atualizar progresso
+
+                </button>
+
+            </div>
+
+            {% endif %}
+
+            {% if item_estante.status == "lido" %}
+
+            <div class="avaliacao-usuario">
+
+                <button class="btn-secundario">
+
+                    Avaliar livro
+
+                </button>
+
+                <button class="btn-secundario">
+
+                    Escrever resenha
+
+                </button>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </aside>
+
+    <!-- ================= COLUNA DIREITA ================= -->
 
     <section class="coluna-direita">
 
@@ -133,142 +164,103 @@
 
             <h1>
 
-                {{ livro.titulo or "Título desconhecido" }}
-
-                {% if livro.genero %}
-
-                    <span class="badge-ebook">
-                        {{ livro.genero }}
-                    </span>
-
-                {% endif %}
+                {{ livro.titulo }}
 
             </h1>
 
             <p class="autores">
 
-                por {{ livro.autor or "Autor desconhecido" }}
+                por {{ livro.autor }}
 
             </p>
 
+            {% if livro.genero %}
+
+            <span class="badge-genero">
+
+                {{ livro.genero }}
+
+            </span>
+
+            {% endif %}
+
         </header>
 
-        <hr class="divisor">
+        <section class="sinopse">
 
-        <article class="texto-sinopse">
+            <h2>Sinopse</h2>
 
-            {{ livro.descricao or "Sinopse não disponível." }}
+            <p>
 
-        </article>
+                {{ livro.descricao or "Sinopse não disponível." }}
 
-        <hr class="divisor">
+            </p>
 
-        <footer class="info-icones">
+        </section>
 
-            <div class="icone-item">
+        <section class="informacoes">
 
-                <small>
-                    Número de páginas
-                </small>
+            <div class="info">
 
-                <img
-                    src="{{ url_for('static', filename='icones/paginas.svg') }}"
-                    alt=""
-                >
+                <small>Páginas</small>
 
-                <p>
+                <strong>
 
-                    {% if livro.paginas %}
+                    {{ livro.paginas or "-" }}
 
-                        {{ livro.paginas }} páginas
-
-                    {% else %}
-
-                        Não informado
-
-                    {% endif %}
-
-                </p>
+                </strong>
 
             </div>
 
-            <div class="icone-item">
+            <div class="info">
 
-                <small>
-                    Idioma
-                </small>
+                <small>Idioma</small>
 
-                <img
-                    src="{{ url_for('static', filename='icones/globo.svg') }}"
-                    alt=""
-                >
+                <strong>
 
-                <p>
+                    {{ livro.idioma or "-" }}
 
-                    {{ livro.idioma or "Não informado" }}
-
-                </p>
+                </strong>
 
             </div>
 
-            <div class="icone-item">
+            <div class="info">
 
-                <small>
-                    Editora
-                </small>
+                <small>Editora</small>
 
-                <img
-                    src="{{ url_for('static', filename='icones/computador.svg') }}"
-                    alt=""
-                >
+                <strong>
 
-                <p>
+                    {{ livro.editora or "-" }}
 
-                    {{ livro.editora or "Não informado" }}
-
-                </p>
+                </strong>
 
             </div>
 
-            <div class="icone-item">
+            <div class="info">
 
-                <small>
-                    Ano de publicação
-                </small>
+                <small>Ano</small>
 
-                <img
-                    src="{{ url_for('static', filename='icones/calendario.svg') }}"
-                    alt=""
-                >
+                <strong>
 
-                <p>
+                    {{ livro.ano or "-" }}
 
-                    {{ livro.ano or "Não informado" }}
-
-                </p>
+                </strong>
 
             </div>
 
-            <div class="icone-item">
+            <div class="info">
 
-                <small>
-                    Gênero
-                </small>
+                <small>Gênero</small>
 
-                <img
-                    src="{{ url_for('static', filename='icones/idade.svg') }}"
-                    alt=""
-                >
+                <strong>
 
-                <p>
+                    {{ livro.genero or "-" }}
 
-                    {{ livro.genero or "Não informado" }}
-
-                </p>
+                </strong>
 
             </div>
 
-        </footer>
+        </section>
 
     </section>
 

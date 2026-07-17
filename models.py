@@ -31,22 +31,61 @@ class Livro(db.Model):
 
 class Estante(db.Model):
     __tablename__ = "estante"
+
     id = db.Column(
         db.Integer,
         primary_key=True
     )
+
     usuario_id = db.Column(
         db.Integer,
-        db.ForeignKey("usuarios.id")
+        db.ForeignKey("usuarios.id"),
+        nullable=False
     )
+
     livro_id = db.Column(
         db.Integer,
-        db.ForeignKey("livros.id")
+        db.ForeignKey("livros.id"),
+        nullable=False
     )
+
+    # quero ler | lendo | lido
     status = db.Column(
-        db.String(30)
+        db.String(20),
+        nullable=False,
+        default="quero ler"
     )
 
-    usuario = db.relationship("Usuario", backref="estante")
+    # porcentagem de leitura
+    progresso = db.Column(
+        db.Integer,
+        default=0
+    )
 
-    livro = db.relationship("Livro", backref="usuarios_estante")
+    # quando terminou a leitura
+    data_leitura = db.Column(
+        db.Date,
+        nullable=True
+    )
+
+    # nota de 1 a 5 estrelas
+    nota = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    # resenha do usuário
+    resenha = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    livro = db.relationship(
+        "Livro",
+        backref="estantes"
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="estantes"
+    )
