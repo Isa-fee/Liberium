@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
+from datetime import date
 
 from models import Livro, Estante
 from extensions import db
@@ -22,11 +23,16 @@ def ver(id):
 
     livro = Livro.query.get_or_404(id)
 
+    item_estante = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=id
+    ).first()
+
     return render_template(
         "books/books.html",
-        livro=livro
+        livro=livro,
+        item_estante=item_estante
     )
-
 
 # ======================================
 # BUSCA DE LIVROS
@@ -119,7 +125,10 @@ def adicionar_estante(livro_id):
         novo = Estante(
             usuario_id=current_user.id,
             livro_id=livro_id,
-            status=status
+            status=status,
+            progresso=0,
+            nota=None,
+            resenha=""
         )
 
         db.session.add(novo)
@@ -135,3 +144,46 @@ def adicionar_estante(livro_id):
     return redirect(
     url_for("books_bp.ver", id=livro_id)
 )
+
+
+@books_bp.route("/progresso/<int:id>", methods=["POST"])
+@login_required
+def atualizar_progresso(id):
+
+    item = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=id
+    ).first_or_404()
+
+    item.progresso = int(request.form["progresso"])
+
+    db.session.commit()
+
+    flash(
+        "Progresso atualizado!",
+        "success"
+    )
+
+    return redirect(url_for("books_bp.ver", id=id))
+
+
+@books_bp.route("/avaliar/<int:id>", methods=["POST"])
+@login_required
+def avaliar(id):
+
+    item = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=id
+    ).first_or_404()
+
+    item.nota = int(request.form["nota"])
+    item.resenha = request.form["resenha"]
+
+    db.session.commit()
+
+    flash(
+        "Avaliação salva!",
+        "success"
+    )
+
+    return redirect(url_for("books_bp.ver", id=id))
