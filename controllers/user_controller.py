@@ -3,9 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
-from models import Usuario
-from models import Estante
-
+from models import Usuario, Estante, UsuarioInsignia
+from utils.insignias import verificar_insignias
 
 user_bp = Blueprint("user_bp", __name__, url_prefix="/user")
 
@@ -38,6 +37,8 @@ def register():
 
         db.session.add(novo_usuario)
         db.session.commit()
+
+        verificar_insignias(novo_usuario)
 
         flash("Cadastro realizado com sucesso!", "success")
 
@@ -91,24 +92,35 @@ def perfil():
         status="lido"
     ).count()
 
+
     livros_lendo = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="lendo"
     ).count()
+
 
     quero_ler = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="quero ler"
     ).count()
 
+
     total_livros = Estante.query.filter_by(
         usuario_id=current_user.id
     ).count()
+
+
+    # Buscar insígnias conquistadas pelo usuário
+    insignias = UsuarioInsignia.query.filter_by(
+        usuario_id=current_user.id
+    ).all()
+
 
     return render_template(
         "user/perfil.html",
         livros_lidos=livros_lidos,
         livros_lendo=livros_lendo,
         quero_ler=quero_ler,
-        total_livros=total_livros
+        total_livros=total_livros,
+        insignias=insignias
     )

@@ -139,6 +139,14 @@ class Insignia(db.Model):
 class UsuarioInsignia(db.Model):
     __tablename__ = "usuario_insignias"
 
+    __table_args__ = (
+        db.UniqueConstraint(
+            "usuario_id",
+            "insignia_id",
+            name="uq_usuario_insignia"
+        ),
+    )
+
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -146,17 +154,20 @@ class UsuarioInsignia(db.Model):
 
     usuario_id = db.Column(
         db.Integer,
-        db.ForeignKey("usuarios.id")
+        db.ForeignKey("usuarios.id"),
+        nullable=False
     )
 
     insignia_id = db.Column(
         db.Integer,
-        db.ForeignKey("insignias.id")
+        db.ForeignKey("insignias.id"),
+        nullable=False
     )
+
 
     usuario = db.relationship(
         "Usuario",
-        backref="insignias"
+        backref="conquistas"
     )
 
     insignia = db.relationship(

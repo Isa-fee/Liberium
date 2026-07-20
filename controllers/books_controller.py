@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from datetime import date
 from utils.gamificacao import (adicionar_xp, adicionar_libelulas)
+from utils.insignias import verificar_insignias
 
 from models import Livro, Estante
 from extensions import db
@@ -165,6 +166,7 @@ def adicionar_estante(livro_id):
 
         mensagem = "Livro adicionado à estante!"
     db.session.commit()
+    verificar_insignias(current_user)
 
     flash(mensagem, "success")
 
@@ -212,6 +214,8 @@ def atualizar_progresso(id):
 
     db.session.commit()
 
+    verificar_insignias(current_user)
+
     flash("Progresso atualizado!", "success")
 
     return redirect(url_for("books_bp.ver", id=id))
@@ -244,6 +248,8 @@ def avaliar(id):
     item.resenha = request.form.get("resenha", "").strip()
 
     db.session.commit()
+
+    verificar_insignias(current_user)
 
     flash("Avaliação salva!", "success")
 

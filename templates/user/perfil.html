@@ -135,43 +135,79 @@
 
         </div>
     
-        <!-- INSÍGNIAS -->
-    
-        <div class="bloco">
-    
-            <div class="titulo-bloco">
-    
-                <h2>MINHAS INSÍGNIAS</h2>
-    
-                <a href="#">Ver todas</a>
-    
-            </div>
-    
-            <div class="insignias">
-    
-                <div class="insignia">
-                    📖
-                    <span>Primeiro Livro</span>
+            <!-- ==========================
+                COLEÇÃO DE INSÍGNIAS
+            =========================== -->
+
+        <section class="colecao-insignias">
+
+            <h2>Minhas Insígnias 🏅</h2>
+
+
+            {% if insignias %}
+
+                <div class="lista-insignias">
+
+
+                    {% for item in insignias %}
+
+                        <div class="card-insignia">
+
+
+                            <div class="icone-insignia">
+
+                                {{ item.insignia.emoji }}
+
+                            </div>
+
+
+                            <div class="info-insignia">
+
+                                <h3>
+                                    {{ item.insignia.nome }}
+                                </h3>
+
+
+                                <p>
+                                    {{ item.insignia.descricao }}
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
                 </div>
-    
-                <div class="insignia">
-                    ✍️
-                    <span>Primeira Resenha</span>
+
+
+            {% else %}
+
+
+                <div class="sem-insignias">
+
+                    <span>🔒</span>
+
+                    <h3>
+                        Nenhuma insígnia conquistada ainda
+                    </h3>
+
+                    <p>
+                        Continue adicionando livros,
+                        lendo e participando do Liberium
+                        para desbloquear conquistas! 📚🦋
+                    </p>
+
                 </div>
-    
-                <div class="insignia">
-                    🎯
-                    <span>Meta Concluída</span>
-                </div>
-    
-                <div class="insignia">
-                    ⭐
-                    <span>5 Livros</span>
-                </div>
-    
-            </div>
-    
-        </div>
+
+
+            {% endif %}
+
+
+        </section>
     
         <!-- PARTE DE BAIXO -->
     

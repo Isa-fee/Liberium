@@ -1,6 +1,7 @@
 from flask import Flask
 from extensions import db, login_manager
 from dotenv import load_dotenv
+from utils.insignias import criar_insignias
 import os
 
 load_dotenv()
@@ -39,6 +40,8 @@ if __name__ == '__main__':
 
         db.drop_all()
         db.create_all()
+
+        criar_insignias()
 
         from popular_banco import popular_banco
         popular_banco()
