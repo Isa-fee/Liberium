@@ -141,7 +141,7 @@
 
         <section class="colecao-insignias">
 
-            <h2>Minhas Insígnias 🏅</h2>
+            <h2>Minhas Insígnias </h2>
 
 
             {% if insignias %}
@@ -156,7 +156,8 @@
 
                             <div class="icone-insignia">
 
-                                {{ item.insignia.emoji }}
+                                <img src="{{ url_for('static', filename='img/gamificacao/' + item.insignia.imagem) }}"
+                                alt="{{ item.insignia.nome }}">
 
                             </div>
 
