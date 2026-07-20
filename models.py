@@ -32,6 +32,14 @@ class Livro(db.Model):
 class Estante(db.Model):
     __tablename__ = "estante"
 
+    __table_args__ = (
+        db.UniqueConstraint(
+            "usuario_id",
+            "livro_id",
+            name="uq_usuario_livro"
+        ),
+    )
+
     id = db.Column(
         db.Integer,
         primary_key=True
