@@ -8,49 +8,49 @@ INSIGNIAS = [
     {
         "nome": "Primeiro Livro",
         "descricao": "Adicionar o primeiro livro à estante.",
-        "emoji": "🥉"
+        "imagem": "Primeiro Livro.png"
     },
 
     {
         "nome": "Primeira Resenha",
         "descricao": "Publicar a primeira resenha.",
-        "emoji": "🥉"
+        "imagem": "Primeira Resenha.png"
     },
 
     {
         "nome": "Primeira Avaliação",
         "descricao": "Avaliar o primeiro livro.",
-        "emoji": "🥉"
+        "imagem": "5 Livros.png"
     },
 
     {
         "nome": "5 Livros",
         "descricao": "Concluir cinco livros.",
-        "emoji": "📚"
+        "imagem": "5 Livros.png"
     },
 
     {
         "nome": "10 Livros",
         "descricao": "Concluir dez livros.",
-        "emoji": "📚"
+        "imagem": "10 Livros.png"
     },
 
     {
         "nome": "25 Livros",
         "descricao": "Concluir vinte e cinco livros.",
-        "emoji": "🥇"
+        "imagem": "25 Livros.png"
     },
 
     {
         "nome": "50 Livros",
         "descricao": "Concluir cinquenta livros.",
-        "emoji": "🏆"
+        "imagem": "50 Livros.png"
     },
 
     {
         "nome": "100 Livros",
         "descricao": "Concluir cem livros.",
-        "emoji": "👑"
+        "imagem": "100 Livros.png"
     }
 
 ]
@@ -71,7 +71,7 @@ def criar_insignias():
             insignia = Insignia(
                 nome=item["nome"],
                 descricao=item["descricao"],
-                emoji=item["emoji"]
+                imagem=item["imagem"]
             )
 
             db.session.add(insignia)
@@ -116,7 +116,8 @@ def desbloquear_insignia(usuario, nome):
 
     db.session.commit()
 
-    flash(f"🏅 Nova insígnia conquistada: {insignia.emoji} {insignia.nome}!",
+    flash(
+    f"Nova insígnia conquistada: {insignia.nome}!",
     "success")
 
 

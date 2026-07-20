@@ -145,3 +145,31 @@
     padding: 12px;
     cursor: pointer;
 }
+
+.icone-insignia img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.card-insignia {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.icone-insignia {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.icone-insignia img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

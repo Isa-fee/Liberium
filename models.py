@@ -132,9 +132,7 @@ class Insignia(db.Model):
         nullable=False
     )
 
-    emoji = db.Column(
-        db.String(20)
-    )
+    imagem = db.Column(db.String(150), nullable=False)
 
 class UsuarioInsignia(db.Model):
     __tablename__ = "usuario_insignias"
