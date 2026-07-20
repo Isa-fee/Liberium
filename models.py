@@ -70,6 +70,10 @@ class Estante(db.Model):
         default=0
     )
 
+    pagina_atual = db.Column(
+    db.Integer,
+    default=0)
+
     # quando terminou a leitura
     data_leitura = db.Column(
         db.Date,

@@ -355,3 +355,38 @@
     box-shadow:0 4px 10px rgba(0,0,0,.12);
 
 }
+
+
+
+
+.livro-card{
+    position:relative;
+    display:inline-block;
+}
+
+.btn-remover{
+
+    position:absolute;
+
+    top:8px;
+    right:8px;
+
+    width:28px;
+    height:28px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#d9534f;
+    color:white;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    transition:.2s;
+}
+
+.livro-card:hover .btn-remover{
+    opacity:1;
+}

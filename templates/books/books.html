@@ -120,11 +120,33 @@
 
                 </p>
 
-                <button class="btn-secundario">
+                <form action="{{ url_for('books_bp.atualizar_progresso', id=livro.id) }}" method="POST" class="form-progresso" >
 
-                    Atualizar progresso
+                    <label for="pagina">
+                        Página atual
+                    </label>
 
-                </button>
+                    <input
+                        type="number"
+                        id="pagina"
+                        name="pagina"
+                        min="0"
+                        max="{{ livro.paginas }}"
+                        value="{{ item_estante.pagina_atual or 0 }}"
+                    >
+
+                    <small>
+                        de {{ livro.paginas }} páginas
+                    </small>
+
+                    <button
+                        type="submit"
+                        class="btn-secundario"
+                    >
+                        Atualizar progresso
+                    </button>
+
+                </form>
 
             </div>
 
@@ -134,17 +156,58 @@
 
             <div class="avaliacao-usuario">
 
-                <button class="btn-secundario">
+                <form
+                    action="{{ url_for('books_bp.avaliar', id=livro.id) }}"
+                    method="POST"
+                >
 
-                    Avaliar livro
+                    <label>Sua nota</label>
 
-                </button>
+                    <select name="nota">
 
-                <button class="btn-secundario">
+                        <option value="1"
+                            {% if item_estante.nota == 1 %}selected{% endif %}>
+                            ★☆☆☆☆
+                        </option>
 
-                    Escrever resenha
+                        <option value="2"
+                            {% if item_estante.nota == 2 %}selected{% endif %}>
+                            ★★☆☆☆
+                        </option>
 
-                </button>
+                        <option value="3"
+                            {% if item_estante.nota == 3 %}selected{% endif %}>
+                            ★★★☆☆
+                        </option>
+
+                        <option value="4"
+                            {% if item_estante.nota == 4 %}selected{% endif %}>
+                            ★★★★☆
+                        </option>
+
+                        <option value="5"
+                            {% if item_estante.nota == 5 %}selected{% endif %}>
+                            ★★★★★
+                        </option>
+
+                    </select>
+
+                    <label>Sua resenha</label>
+
+                    <textarea
+                        name="resenha"
+                        rows="6"
+                        placeholder="Escreva sua opinião sobre o livro..."
+                    >{{ item_estante.resenha or "" }}</textarea>
+
+                    <button
+                        type="submit"
+                        class="btn-secundario"
+                    >
+                        Salvar avaliação
+                    </button>
+
+                </form>
 
             </div>
 
