@@ -60,6 +60,7 @@ O Liberium possui uma identidade visual com inspiração natural, acolhedora e m
   --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
 }
 
+---
 
 ## Como executar o projeto (Windows)
 
