@@ -111,14 +111,23 @@ def adicionar_estante(livro_id):
         livro_id=livro_id
     ).first()
 
+    livro = Livro.query.get_or_404(livro_id)
+
     if existe:
 
         existe.status = status
+        
+        if status == "lido":
+            existe.progresso = 100
+            existe.pagina_atual = existe.livro.paginas
+            existe.data_leitura = date.today()
 
-        flash(
-            "Status atualizado!",
-            "success"
-        )
+        elif status == "quero ler":
+            existe.progresso = 0
+            existe.pagina_atual = 0
+            existe.data_leitura = None
+
+        mensagem = "Status atualizado!"
 
     else:
 
@@ -126,24 +135,23 @@ def adicionar_estante(livro_id):
             usuario_id=current_user.id,
             livro_id=livro_id,
             status=status,
-            progresso=0,
+            progresso=100 if status == "lido" else 0,
+            pagina_atual=livro.paginas if status == "lido" else 0,
+            data_leitura=date.today() if status == "lido" else None,
             nota=None,
             resenha=""
         )
 
         db.session.add(novo)
-        flash(
-        "Livro adicionado à estante!",
-        "success"
-    )
+        mensagem = "Livro adicionado à estante!"
 
     db.session.commit()
 
-    flash("Livro adicionado à estante!", "success")
+    flash(mensagem, "success")
 
     return redirect(
-    url_for("books_bp.ver", id=livro_id)
-)
+        url_for("books_bp.ver", id=livro_id)
+    )
 
 
 @books_bp.route("/progresso/<int:id>", methods=["POST"])
@@ -155,14 +163,34 @@ def atualizar_progresso(id):
         livro_id=id
     ).first_or_404()
 
-    item.progresso = int(request.form["progresso"])
+    pagina = int(request.form["pagina"])
+
+    if pagina < 0:
+        pagina = 0
+
+    if pagina > item.livro.paginas:
+        pagina = item.livro.paginas
+
+    item.pagina_atual = pagina
+
+    item.progresso = round(
+        (pagina / item.livro.paginas) * 100
+    )
+
+    if item.progresso == 0:
+        item.status = "quero ler"
+
+    elif item.progresso < 100:
+        item.status = "lendo"
+
+    else:
+        item.status = "lido"
+        if item.data_leitura is None:
+            item.data_leitura = date.today()
 
     db.session.commit()
 
-    flash(
-        "Progresso atualizado!",
-        "success"
-    )
+    flash("Progresso atualizado!", "success")
 
     return redirect(url_for("books_bp.ver", id=id))
 
@@ -176,14 +204,39 @@ def avaliar(id):
         livro_id=id
     ).first_or_404()
 
-    item.nota = int(request.form["nota"])
-    item.resenha = request.form["resenha"]
+    nota = int(request.form["nota"])
+
+    if nota < 1 or nota > 5:
+        flash("A nota deve ser entre 1 e 5.", "danger")
+        return redirect(url_for("books_bp.ver", id=id))
+
+    item.nota = nota
+    item.resenha = request.form.get("resenha", "").strip()
 
     db.session.commit()
 
+    flash("Avaliação salva!", "success")
+
+    return redirect(url_for("books_bp.ver", id=id))
+
+
+
+
+@books_bp.route("/remover-estante/<int:livro_id>", methods=["POST"])
+@login_required
+def remover_estante(livro_id):
+
+    item = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=livro_id
+    ).first_or_404()
+
+    db.session.delete(item)
+    db.session.commit()
+
     flash(
-        "Avaliação salva!",
+        "Livro removido da estante!",
         "success"
     )
 
-    return redirect(url_for("books_bp.ver", id=id))
+    return redirect(url_for("books_bp.estante"))

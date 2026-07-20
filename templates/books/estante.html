@@ -127,18 +127,36 @@
             
                         {% for item in lidos %}
             
-                            <a
-                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
-                                class="livro-link"
-                            >
-            
-                                <img
-                                    src="{{ url_for('static', filename=item.livro.capa) }}"
-                                    class="livro-estante"
-                                    alt="{{ item.livro.titulo }}"
+                            <div class="livro-card">
+
+                                <a
+                                    href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                    class="livro-link"
                                 >
-            
-                            </a>
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.livro.capa) }}"
+                                        class="livro-estante"
+                                        alt="{{ item.livro.titulo }}"
+                                    >
+
+                                </a>
+
+                                <form
+                                    action="{{ url_for('books_bp.remover_estante', livro_id=item.livro.id) }}"
+                                    method="POST"
+                                >
+
+                                    <button
+                                        class="btn-remover"
+                                        onclick="return confirm('Remover este livro da estante?')"
+                                    >
+                                        ✖
+                                    </button>
+
+                                </form>
+
+                            </div>
             
                         {% endfor %}
             
