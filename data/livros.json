@@ -526,6 +526,126 @@
         "ano": "2020",
         "idioma": "Português",
         "avaliacao": 4.7
+    },
+    {
+        "titulo": "O Nome do Vento",
+        "autor": "Patrick Rothfuss",
+        "descricao": "Kvothe narra sua trajetória desde a infância até se tornar uma lenda viva, enfrentando magia, perdas e mistérios.",
+        "capa": "img/capas/nome_do_vento.jpg",
+        "genero": "Fantasia",
+        "editora": "Arqueiro",
+        "paginas": 656,
+        "ano": "2007",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    },
+    {
+        "titulo": "A Menina que Roubava Livros",
+        "autor": "Markus Zusak",
+        "descricao": "Durante a Segunda Guerra Mundial, Liesel descobre o poder das palavras enquanto vive em uma pequena cidade alemã.",
+        "capa": "img/capas/menina_roubava_livros.jpg",
+        "genero": "Drama",
+        "editora": "Intrínseca",
+        "paginas": 480,
+        "ano": "2005",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    },
+    {
+        "titulo": "Maze Runner: Correr ou Morrer",
+        "autor": "James Dashner",
+        "descricao": "Thomas acorda em um lugar cercado por um gigantesco labirinto e precisa descobrir a verdade sobre aquele mundo.",
+        "capa": "img/capas/maze_runner.jpg",
+        "genero": "Ficção Científica",
+        "editora": "V&R Editoras",
+        "paginas": 426,
+        "ano": "2009",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "Prova de Fogo",
+        "autor": "James Dashner",
+        "descricao": "Thomas e seus amigos deixam o labirinto para enfrentar desafios ainda mais perigosos em um mundo devastado.",
+        "capa": "img/capas/prova_de_fogo.jpg",
+        "genero": "Ficção Científica",
+        "editora": "V&R Editoras",
+        "paginas": 432,
+        "ano": "2010",
+        "idioma": "Português",
+        "avaliacao": 4.6
+    },
+    {
+        "titulo": "A Cura Mortal",
+        "autor": "James Dashner",
+        "descricao": "No capítulo final da trilogia, Thomas precisa tomar decisões difíceis para salvar seus amigos e descobrir a verdade.",
+        "capa": "img/capas/cura_mortal.jpg",
+        "genero": "Ficção Científica",
+        "editora": "V&R Editoras",
+        "paginas": 368,
+        "ano": "2011",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "Cidades de Papel",
+        "autor": "John Green",
+        "descricao": "Quentin embarca em uma jornada para encontrar Margo, sua misteriosa vizinha desaparecida.",
+        "capa": "img/capas/cidades_de_papel.jpg",
+        "genero": "Romance",
+        "editora": "Intrínseca",
+        "paginas": 368,
+        "ano": "2008",
+        "idioma": "Português",
+        "avaliacao": 4.5
+    },
+    {
+        "titulo": "Quem é Você, Alasca?",
+        "autor": "John Green",
+        "descricao": "Miles Halter entra em um internato e conhece Alasca Young, uma garota que mudará sua vida.",
+        "capa": "img/capas/quem_e_voce_alasca.jpg",
+        "genero": "Romance",
+        "editora": "WMF Martins Fontes",
+        "paginas": 240,
+        "ano": "2005",
+        "idioma": "Português",
+        "avaliacao": 4.6
+    },
+    {
+        "titulo": "O Menino do Pijama Listrado",
+        "autor": "John Boyne",
+        "descricao": "A amizade entre Bruno e Shmuel surge em meio aos horrores da Segunda Guerra Mundial.",
+        "capa": "img/capas/menino_pijama_listrado.jpg",
+        "genero": "Drama",
+        "editora": "Seguinte",
+        "paginas": 192,
+        "ano": "2006",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "A Rainha Vermelha",
+        "autor": "Victoria Aveyard",
+        "descricao": "Mare Barrow descobre possuir poderes especiais em uma sociedade dividida pelo sangue.",
+        "capa": "img/capas/rainha_vermelha.jpg",
+        "genero": "Fantasia",
+        "editora": "Seguinte",
+        "paginas": 424,
+        "ano": "2015",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "Trono de Vidro",
+        "autor": "Sarah J. Maas",
+        "descricao": "Celaena Sardothien recebe a chance de conquistar sua liberdade participando de uma competição mortal.",
+        "capa": "img/capas/trono_de_vidro.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera",
+        "paginas": 392,
+        "ano": "2012",
+        "idioma": "Português",
+        "avaliacao": 4.8
     }
 
 ]
