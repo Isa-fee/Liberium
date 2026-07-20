@@ -4,6 +4,8 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
 from models import Usuario
+from models import Estante
+
 
 user_bp = Blueprint("user_bp", __name__, url_prefix="/user")
 
@@ -84,7 +86,29 @@ def logout():
 @login_required
 def perfil():
 
+    livros_lidos = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="lido"
+    ).count()
+
+    livros_lendo = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="lendo"
+    ).count()
+
+    quero_ler = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        status="quero ler"
+    ).count()
+
+    total_livros = Estante.query.filter_by(
+        usuario_id=current_user.id
+    ).count()
+
     return render_template(
         "user/perfil.html",
-        usuario=current_user
+        livros_lidos=livros_lidos,
+        livros_lendo=livros_lendo,
+        quero_ler=quero_ler,
+        total_livros=total_livros
     )
