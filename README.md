@@ -58,7 +58,8 @@ O Liberium possui uma identidade visual com inspiração natural, acolhedora e m
   --branco-floral: #f5f5f5;    /* fundo principal */
   --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
   --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
-}```
+}
+```
 
 ---
 
