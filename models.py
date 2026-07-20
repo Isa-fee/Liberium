@@ -9,7 +9,19 @@ class Usuario(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
 
+    # GAMIFICAÇÃO
 
+    xp = db.Column(db.Integer, default=20)
+
+    nivel = db.Column(
+        db.String(50),
+        default="Leitor Iniciante"
+    )
+
+    libelulas = db.Column(
+        db.Integer,
+        default=5
+    )
 
 class Livro(db.Model):
     __tablename__ = "livros"
@@ -100,4 +112,53 @@ class Estante(db.Model):
     usuario = db.relationship(
         "Usuario",
         backref="estantes"
+    )
+
+class Insignia(db.Model):
+    __tablename__ = "insignias"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    nome = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    descricao = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    emoji = db.Column(
+        db.String(20)
+    )
+
+class UsuarioInsignia(db.Model):
+    __tablename__ = "usuario_insignias"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id")
+    )
+
+    insignia_id = db.Column(
+        db.Integer,
+        db.ForeignKey("insignias.id")
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="insignias"
+    )
+
+    insignia = db.relationship(
+        "Insignia"
     )

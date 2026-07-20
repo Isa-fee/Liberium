@@ -52,13 +52,13 @@
     
                     <div class="nivel-topo">
     
-                        <h2>NÍVEL 8</h2>
+                        <h2>{{ current_user.nivel }}</h2>
     
-                        <span>320 XP</span>
+                        <span>{{ current_user.xp }} XP</span>
     
                     </div>
     
-                    <p>Exploradora Literária</p>
+                    <p>{{ current_user.xp }} pontos acumulados</p>
     
                     <div class="barra-progresso">
     
@@ -66,7 +66,7 @@
     
                     </div>
     
-                    <small>Próximo nível: 480 XP</small>
+                    <small>Continue lendo para subir de nível!</small>
     
                 </div>
     
@@ -75,12 +75,12 @@
             <div class="cards-laterais">
     
                 <div class="mini-card">
-                    <h2>145</h2>
+                    <h2>{{ current_user.libelulas }}</h2>
                     <span>Libélulas</span>
                 </div>
     
                 <div class="mini-card">
-                    <h2>320</h2>
+                    <h2>{{ current_user.xp }}</h2>
                     <span>XP</span>
                 </div>
             </div>

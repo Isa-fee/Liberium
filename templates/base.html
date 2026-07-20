@@ -154,6 +154,28 @@
 
 <script src="{{ url_for('static', filename='js/carrossel.js') }}"></script>
 
+<script>
+
+    setTimeout(() => {
+
+        const flashes = document.querySelectorAll(".flash");
+
+        flashes.forEach((flash) => {
+
+            flash.style.transition = "opacity 2s ease";
+
+            flash.style.opacity = "0";
+
+            setTimeout(() => {
+                flash.remove();
+            }, 2000);
+
+        });
+
+    }, 10000);
+
+</script>
+
 </body>
 
 </html>

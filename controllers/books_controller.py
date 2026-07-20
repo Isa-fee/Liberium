@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from datetime import date
+from utils.gamificacao import (adicionar_xp, adicionar_libelulas)
 
 from models import Livro, Estante
 from extensions import db
@@ -131,6 +132,10 @@ def adicionar_estante(livro_id):
 
     else:
 
+        total = Estante.query.filter_by(
+            usuario_id=current_user.id
+        ).count()
+
         novo = Estante(
             usuario_id=current_user.id,
             livro_id=livro_id,
@@ -143,8 +148,22 @@ def adicionar_estante(livro_id):
         )
 
         db.session.add(novo)
-        mensagem = "Livro adicionado à estante!"
 
+        # XP por adicionar qualquer livro
+        adicionar_xp(current_user, 5, "adicionar um livro à estante")
+        adicionar_libelulas(current_user, 1, "adicionar um livro à estante")
+        if status == "lido":
+
+            adicionar_xp(current_user, 100, "concluir um livro")
+            adicionar_libelulas(current_user, 10, "concluir um livro")
+
+        # Bônus pelo primeiro livro
+        if total == 0:
+
+            adicionar_xp(current_user, 20, "adicionar seu primeiro livro")
+            adicionar_libelulas(current_user, 5, "adicionar seu primeiro livro")
+
+        mensagem = "Livro adicionado à estante!"
     db.session.commit()
 
     flash(mensagem, "success")
@@ -184,6 +203,9 @@ def atualizar_progresso(id):
         item.status = "lendo"
 
     else:
+        if item.status != "lido":
+            adicionar_xp(current_user, 100)
+            adicionar_libelulas(current_user, 10)
         item.status = "lido"
         if item.data_leitura is None:
             item.data_leitura = date.today()
@@ -209,6 +231,14 @@ def avaliar(id):
     if nota < 1 or nota > 5:
         flash("A nota deve ser entre 1 e 5.", "danger")
         return redirect(url_for("books_bp.ver", id=id))
+
+    if item.nota is None:
+        adicionar_xp(current_user, 15, "avaliar um livro")
+        adicionar_libelulas(current_user, 2, "avaliar um livro")
+
+    if item.resenha == "" and request.form.get("resenha", "").strip():
+        adicionar_xp(current_user, 50, "escrever uma resenha")
+        adicionar_libelulas(current_user, 5, "escrever uma resenha")
 
     item.nota = nota
     item.resenha = request.form.get("resenha", "").strip()
