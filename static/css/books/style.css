@@ -231,3 +231,8 @@
 .dropdown-estante:hover .menu-estante{
     display:block;
 }
+
+
+#meu-texto {
+    white-space: pre-wrap;
+  }
