@@ -4,6 +4,20 @@ O **Liberium** é uma aplicação web criada para incentivar o hábito da leitur
 
 ---
 
+## Tecnologias Utilizadas
+
+- Python
+- Flask
+- Flask-Login
+- Flask-SQLAlchemy
+- SQLite
+- HTML5
+- CSS3
+- JavaScript
+- Jinja2
+
+---
+
 ## Funcionalidades
 
 ### Gerenciamento de Livros
@@ -45,3 +59,49 @@ O Liberium possui uma identidade visual com inspiração natural, acolhedora e m
   --marrom-cafe: #442b1a;      /* títulos, textos importantes e detalhes */
   --verde-musgo: #36503c;      /* contraste elegante, ótimo para cabeçalhos e rodapés */
 }
+
+
+## Como executar o projeto (Windows)
+
+### 1. Clone e abra o repositório
+
+```bash
+git clone https://github.com/Isa-fee/Liberium.git
+cd Liberium
+```
+
+### 2. Crie um ambiente virtual
+
+No Prompt de Comando (CMD):
+
+```bash
+python -m venv env
+```
+
+### 3. Ative o ambiente virtual
+
+No CMD:
+
+```bash
+.\env\scripts\activate
+```
+
+### 4. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Execute a aplicação
+
+```bash
+python app.py
+```
+
+### 6. Acesse no navegador
+
+```
+http://127.0.0.1:5000
+```
+
+---
