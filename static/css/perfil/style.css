@@ -147,8 +147,8 @@
 }
 
 .icone-insignia img {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
 }
 
@@ -160,8 +160,8 @@
 
 
 .icone-insignia {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
