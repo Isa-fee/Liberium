@@ -1,6 +1,7 @@
 from extensions import db
 from flask_login import UserMixin
 
+
 class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
 
@@ -170,4 +171,136 @@ class UsuarioInsignia(db.Model):
 
     insignia = db.relationship(
         "Insignia"
+    )
+
+
+# COLECIONÁVEIS
+
+
+class ItemColecionavel(db.Model):
+    __tablename__ = "itens_colecionaveis"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    nome = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+    descricao = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    # decoracao ou boneco
+    tipo = db.Column(
+        db.String(30),
+        nullable=False
+    )
+
+    preco = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    # caminho da imagem dentro de static/
+    imagem = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    # permite retirar um item da loja sem apagá-lo
+    ativo = db.Column(
+        db.Boolean,
+        default=True,
+        nullable=False
+    )
+
+class UsuarioColecionavel(db.Model):
+    __tablename__ = "usuarios_colecionaveis"
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "usuario_id",
+            "item_id",
+            name="uq_usuario_item_colecionavel"
+        ),
+    )
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    item_id = db.Column(
+        db.Integer,
+        db.ForeignKey("itens_colecionaveis.id"),
+        nullable=False
+    )
+
+    
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="colecao"
+    )
+
+    item = db.relationship(
+        "ItemColecionavel",
+        backref="proprietarios"
+    )
+
+class DecoracaoEstante(db.Model):
+    __tablename__ = "decoracoes_estante"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    usuario_item_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios_colecionaveis.id"),
+        nullable=False
+    )
+
+    # lendo | lidos | quero ler
+    prateleira = db.Column(
+        db.String(30),
+        nullable=False
+    )
+
+    # posição dentro da prateleira
+    posicao = db.Column(
+        db.Integer,
+        nullable=False,
+        default=0
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="decoracoes_estante"
+    )
+
+    usuario_item = db.relationship(
+        "UsuarioColecionavel",
+        backref=db.backref(
+            "decoracao_estante",
+            uselist=False
+        )
     )
