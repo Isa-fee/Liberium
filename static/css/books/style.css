@@ -61,6 +61,128 @@
     background-color: #7d9172;
 }
 
+
+.painel-leitura {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background: #f8faf7;
+    border: 1px solid #dfe5dc;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.painel-leitura h3 {
+    margin: 0 0 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e3e7e1;
+    color: #3f3f3f;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.status-atual {
+    margin: 0 0 22px;
+    color: #777;
+    font-size: 0.95rem;
+}
+
+.status-atual strong {
+    color: #7d9571;
+    font-weight: 700;
+}
+
+.progresso-box {
+    width: 100%;
+}
+
+.progresso-box > label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4b4b4b;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.barra {
+    width: 100%;
+    height: 9px;
+    background: #e6e9e3;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progresso {
+    height: 100%;
+    background: #8fa382;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.progresso-box > p {
+    margin: 6px 0 20px;
+    text-align: right;
+    color: #7d9571;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.form-progresso {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-progresso label {
+    color: #4b4b4b;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.form-progresso input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #d8ddd5;
+    border-radius: 10px;
+    background: white;
+    color: #444;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+}
+
+.form-progresso input:focus {
+    outline: none;
+    border-color: #8fa382;
+    box-shadow: 0 0 0 2px rgba(143, 163, 130, 0.12);
+}
+
+.form-progresso small {
+    margin-top: -2px;
+    color: #999;
+    font-size: 0.75rem;
+}
+
+.btn-secundario {
+    width: 100%;
+    margin-top: 8px;
+    padding: 11px;
+    border: none;
+    border-radius: 25px;
+    background: #8fa382;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-secundario:hover {
+    background: #7d9172;
+    transform: translateY(-1px);
+}
+
 /* Cards de Status (Lendo, Já Li...) */
 .cards-status {
     display: grid;
@@ -236,3 +358,207 @@
 #meu-texto {
     white-space: pre-wrap;
   }
+
+
+/* ============================= */
+/*       AVALIAÇÃO DO LIVRO      */
+/* ============================= */
+
+.avaliacao-usuario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.minha-avaliacao {
+    text-align: center;
+}
+
+.minha-nota {
+    color: #f1c40f;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+}
+
+.btn-avaliar {
+    width: 100%;
+    background: #8fa382;
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-avaliar:hover {
+    background: #7d9172;
+}
+
+/* ============================= */
+/*            MODAL              */
+/* ============================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.modal-overlay.aberto {
+    display: flex;
+}
+
+.modal-avaliacao {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.modal-cabecalho h2 {
+    margin: 0;
+    color: #444;
+    font-size: 1.5rem;
+}
+
+.fechar-modal {
+    border: none;
+    background: transparent;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.fechar-modal:hover {
+    color: #444;
+}
+
+/* ============================= */
+/*            FORM               */
+/* ============================= */
+
+.form-avaliacao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-avaliacao label {
+    color: #444;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.estrelas-avaliacao {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 5px 0 15px;
+}
+
+.estrela {
+    border: none;
+    background: transparent;
+    color: #f1c40f;
+    font-size: 2.3rem;
+    cursor: pointer;
+    padding: 2px;
+    transition: 0.15s;
+}
+
+.estrela:hover {
+    transform: scale(1.15);
+}
+
+.form-avaliacao textarea {
+    width: 100%;
+    min-height: 150px;
+    resize: vertical;
+    box-sizing: border-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 12px;
+    padding: 13px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    background: #fafafa;
+    outline: none;
+}
+
+.form-avaliacao textarea:focus {
+    border-color: #8fa382;
+}
+
+.data-avaliacao {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.data-avaliacao input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: 'Raleway', sans-serif;
+    color: #666;
+    background: #f3f3f3;
+}
+
+.acoes-modal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-cancelar,
+.btn-salvar-avaliacao {
+    border-radius: 22px;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background: transparent;
+    border: 1px solid #8fa382;
+    color: #6c7f62;
+}
+
+.btn-cancelar:hover {
+    background: #eef3ea;
+}
+
+.btn-salvar-avaliacao {
+    background: #8fa382;
+    border: 1px solid #8fa382;
+    color: white;
+}
+
+.btn-salvar-avaliacao:hover {
+    background: #7d9172;
+}
