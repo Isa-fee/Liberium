@@ -1,5 +1,6 @@
 from extensions import db
 from flask_login import UserMixin
+from datetime import date
 
 
 class Usuario(UserMixin, db.Model):
@@ -173,6 +174,18 @@ class UsuarioInsignia(db.Model):
         "Insignia"
     )
 
+class MetaLeitura(db.Model):
+    __tablename__ = "metas_leitura"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    quantidade = db.Column(
 
 # COLECIONÁVEIS
 
@@ -206,6 +219,35 @@ class ItemColecionavel(db.Model):
         nullable=False
     )
 
+    progresso = db.Column(
+        db.Integer,
+        default=0
+    )
+
+    mes = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    ano = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    data_inicio = db.Column(
+        db.Date,
+        nullable=False,
+        default=date.today
+    )
+
+    concluida = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    recompensa_recebida = db.Column(
+        db.Boolean,
+        default=False
     # caminho da imagem dentro de static/
     imagem = db.Column(
         db.String(255),
@@ -294,6 +336,7 @@ class DecoracaoEstante(db.Model):
 
     usuario = db.relationship(
         "Usuario",
+        backref="metas_leitura"
         backref="decoracoes_estante"
     )
 

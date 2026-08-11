@@ -47,12 +47,14 @@
     width: 70%;
     height: 100%;
     background: #8fa382;
+    border-radius: 20px;
 }
 
-.meta {
-    width: 60%;
+.progresso-meta {
     height: 100%;
     background: #8fa382;
+    border-radius: 20px;
+    transition: width 0.5s ease;
 }
 
 .estatisticas {
