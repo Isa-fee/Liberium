@@ -33,7 +33,8 @@ def ver(id):
     return render_template(
         "books/books.html",
         livro=livro,
-        item_estante=item_estante
+        item_estante=item_estante,
+        hoje=date.today()
     )
 
 # ======================================
@@ -236,6 +237,11 @@ def avaliar(id):
         flash("A nota deve ser entre 1 e 5.", "danger")
         return redirect(url_for("books_bp.ver", id=id))
 
+    data_leitura = request.form.get("data_leitura")
+
+    if data_leitura:
+        data_leitura = date.fromisoformat(data_leitura)
+
     if item.nota is None:
         adicionar_xp(current_user, 15, "avaliar um livro")
         adicionar_libelulas(current_user, 2, "avaliar um livro")
@@ -246,6 +252,7 @@ def avaliar(id):
 
     item.nota = nota
     item.resenha = request.form.get("resenha", "").strip()
+    item.data_leitura = data_leitura
 
     db.session.commit()
 
@@ -254,9 +261,6 @@ def avaliar(id):
     flash("Avaliação salva!", "success")
 
     return redirect(url_for("books_bp.ver", id=id))
-
-
-
 
 @books_bp.route("/remover-estante/<int:livro_id>", methods=["POST"])
 @login_required
