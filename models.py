@@ -1,5 +1,6 @@
 from extensions import db
 from flask_login import UserMixin
+from datetime import date
 
 class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
@@ -170,4 +171,56 @@ class UsuarioInsignia(db.Model):
 
     insignia = db.relationship(
         "Insignia"
+    )
+
+class MetaLeitura(db.Model):
+    __tablename__ = "metas_leitura"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    quantidade = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    progresso = db.Column(
+        db.Integer,
+        default=0
+    )
+
+    mes = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    ano = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    data_inicio = db.Column(
+        db.Date,
+        nullable=False,
+        default=date.today
+    )
+
+    concluida = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    recompensa_recebida = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="metas_leitura"
     )

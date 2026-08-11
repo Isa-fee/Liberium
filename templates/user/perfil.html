@@ -86,25 +86,96 @@
             </div>
     
             <div class="meta-card">
-    
+
                 <h3>SUA META DE LEITURA</h3>
-    
-                <p>15 livros esse mês.</p>
-    
-                <div class="barra-meta">
-    
-                    <div class="progresso-meta"></div>
-    
-                </div>
-    
-                <span>60%</span>
-    
-                <p class="texto-meta">
-                    Você está no caminho certo,
-                    continue lendo mais 4 livros
-                    para bater sua meta!
-                </p>
-    
+            
+                {% if meta %}
+            
+                    <p>
+                        {{ meta.quantidade }} livros esse mês.
+                    </p>
+            
+                    <div class="barra-meta">
+            
+                        <div
+                            class="progresso-meta"
+                            style="width: {{ percentual_meta }}%;"
+                        ></div>
+            
+                    </div>
+            
+                    <span>
+                        {{ percentual_meta }}%
+                    </span>
+            
+                    {% if meta.concluida %}
+            
+                        <p class="texto-meta">
+                            🎯 Parabéns!
+                            Você cumpriu sua meta de
+                            {{ meta.quantidade }} livros!
+                        </p>
+            
+                    {% endif %}
+            
+                    <form
+                        action="{{ url_for('user_bp.definir_meta') }}"
+                        method="POST"
+                        class="form-meta"
+                    >
+            
+                        <label for="quantidade">
+                            Alterar meta:
+                        </label>
+            
+                        <input
+                            type="number"
+                            id="quantidade"
+                            name="quantidade"
+                            min="1"
+                            value="{{ meta.quantidade }}"
+                            required
+                        >
+            
+                        <button type="submit">
+                            Salvar
+                        </button>
+            
+                    </form>
+            
+                {% else %}
+            
+                    <p>
+                        Você ainda não definiu sua meta de leitura.
+                    </p>
+            
+                    <form
+                        action="{{ url_for('user_bp.definir_meta') }}"
+                        method="POST"
+                        class="form-meta"
+                    >
+            
+                        <label for="quantidade">
+                            Quantos livros você quer ler este mês?
+                        </label>
+            
+                        <input
+                            type="number"
+                            id="quantidade"
+                            name="quantidade"
+                            min="1"
+                            placeholder="Ex.: 15"
+                            required
+                        >
+            
+                        <button type="submit">
+                            Definir meta
+                        </button>
+            
+                    </form>
+            
+                {% endif %}
+            
             </div>
     
         </div>

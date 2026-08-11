@@ -3,8 +3,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
-from models import Usuario, Estante, UsuarioInsignia
+from models import Usuario, Estante, UsuarioInsignia, MetaLeitura
 from utils.insignias import verificar_insignias
+from utils.gamificacao import atualizar_meta_leitura
 
 user_bp = Blueprint("user_bp", __name__, url_prefix="/user")
 
@@ -86,35 +87,62 @@ def logout():
 @user_bp.route("/perfil")
 @login_required
 def perfil():
+    from datetime import date
 
     livros_lidos = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="lido"
     ).count()
 
-
     livros_lendo = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="lendo"
     ).count()
-
 
     quero_ler = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="quero ler"
     ).count()
 
-
     total_livros = Estante.query.filter_by(
         usuario_id=current_user.id
     ).count()
 
-
-    # Buscar insígnias conquistadas pelo usuário
     insignias = UsuarioInsignia.query.filter_by(
         usuario_id=current_user.id
     ).all()
 
+    hoje = date.today()
+
+    # Buscar a meta do mês atual
+    meta = MetaLeitura.query.filter_by(
+        usuario_id=current_user.id,
+        mes=hoje.month,
+        ano=hoje.year
+    ).first()
+
+    percentual_meta = 0
+    livros_restantes = 0
+
+    if meta:
+
+        meta = atualizar_meta_leitura(current_user)
+
+        if meta.quantidade > 0:
+
+            percentual_meta = round(
+                (meta.progresso / meta.quantidade) * 100
+            )
+
+        if percentual_meta > 100:
+            percentual_meta = 100
+
+        livros_restantes = max(
+            meta.quantidade - meta.progresso,
+            0
+        )
+
+        db.session.commit()
 
     return render_template(
         "user/perfil.html",
@@ -122,5 +150,93 @@ def perfil():
         livros_lendo=livros_lendo,
         quero_ler=quero_ler,
         total_livros=total_livros,
-        insignias=insignias
+        insignias=insignias,
+        meta=meta,
+        percentual_meta=percentual_meta,
+        livros_restantes=livros_restantes
+    )
+
+@user_bp.route("/meta", methods=["POST"])
+@login_required
+def definir_meta():
+
+    from datetime import date
+
+    quantidade = request.form.get(
+        "quantidade",
+        type=int
+    )
+
+    if not quantidade or quantidade < 1:
+
+        flash(
+            "Digite uma quantidade válida de livros.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.perfil")
+        )
+
+    hoje = date.today()
+
+    meta = MetaLeitura.query.filter_by(
+        usuario_id=current_user.id,
+        mes=hoje.month,
+        ano=hoje.year
+    ).order_by(
+        MetaLeitura.id.desc()
+    ).first()
+
+    # Se já existe uma meta
+    if meta:
+
+        # Se a meta foi concluída,
+        # cria uma nova meta
+        if meta.concluida:
+
+            nova_meta = MetaLeitura(
+                usuario_id=current_user.id,
+                quantidade=quantidade,
+                progresso=0,
+                mes=hoje.month,
+                ano=hoje.year,
+                data_inicio=hoje,
+                concluida=False,
+                recompensa_recebida=False
+            )
+
+            db.session.add(nova_meta)
+
+        else:
+
+            # Meta ainda não concluída:
+            # apenas altera a quantidade
+            meta.quantidade = quantidade
+
+    else:
+
+        # Primeira meta do mês
+        meta = MetaLeitura(
+            usuario_id=current_user.id,
+            quantidade=quantidade,
+            progresso=0,
+            mes=hoje.month,
+            ano=hoje.year,
+            data_inicio=hoje,
+            concluida=False,
+            recompensa_recebida=False
+        )
+
+        db.session.add(meta)
+
+    db.session.commit()
+
+    flash(
+        f"Meta de {quantidade} livros definida!",
+        "success"
+    )
+
+    return redirect(
+        url_for("user_bp.perfil")
     )
