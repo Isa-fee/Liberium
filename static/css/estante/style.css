@@ -141,17 +141,18 @@
 
 }
 
-.estante-container{
-
+.estante-container {
     border-radius: 15px;
     border: 1px solid #8fa382;
+
     padding-top: 20px;
     padding-bottom: 30px;
 
-    max-width:1200px;
+    max-width: 1200px;
 
-    margin:auto;
+    margin: auto;
 
+    overflow: hidden;
 }
 
 .cabecalho-estante{
@@ -166,6 +167,15 @@
     margin-bottom:25px;
 
 }
+.titulo-estante {
+    cursor: pointer;
+    transition: .2s;
+}
+
+.titulo-estante:hover {
+    opacity: .75;
+}
+
 .cabecalho-estante h1{
 
     font-size:2.6rem;
@@ -240,22 +250,184 @@
 
 } */
 
-.linha-prateleira{
+/* =========================================
+   PRATELEIRAS
+========================================= */
 
-    display:flex;
-    align-items:flex-end;
+.bloco-prateleira {
+    transition: all 0.5s ease;
+}
 
-    gap:18px;
 
-    min-height:210px;
+/* =========================================
+   ESTADO NORMAL
+========================================= */
 
-    padding:20px 25px;
+.linha-prateleira {
+    display: flex;
+    align-items: flex-end;
 
-    background:#5c3920;
+    gap: 18px;
 
-    overflow-x:auto;
+    min-height: 210px;
 
-    position:relative;
+    padding: 20px 25px;
+
+    background: #5c3920;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    position: relative;
+
+    transition:
+        min-height 0.5s ease,
+        padding 0.5s ease;
+}
+
+
+/* =========================================
+   LIVROS NO ESTADO NORMAL
+========================================= */
+
+.livro-link,
+.livro-card {
+    flex: 0 0 auto;
+}
+
+.livro-estante {
+    height: 145px;
+    width: auto;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    transition:
+        height 0.4s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* =========================================
+   EFEITO AO PASSAR O MOUSE
+========================================= */
+
+.livro-estante:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 12px 25px rgba(0,0,0,.18);
+}
+
+
+/* =========================================
+   PRATELEIRA EXPANDIDA
+========================================= */
+
+.bloco-prateleira.expandida .linha-prateleira {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-content: flex-start;
+
+    align-items: flex-end;
+
+    justify-content: flex-start;
+
+    overflow-x: hidden;
+
+    overflow-y: visible;
+
+    min-height: 500px;
+
+    gap: 30px;
+
+    padding: 35px;
+
+}
+
+
+/* =========================================
+   CAPAS MAIORES NO MODO EXPANDIDO
+========================================= */
+
+.bloco-prateleira.expandida .livro-estante {
+
+    height: 220px;
+
+}
+
+
+/* =========================================
+   PRATELEIRAS MINIMIZADAS
+========================================= */
+
+.bloco-prateleira.minimizada .linha-prateleira {
+
+    min-height: 0;
+
+    height: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+}
+
+
+/* =========================================
+   PLACA DA PRATELEIRA
+========================================= */
+
+.placa-prateleira {
+
+    background: #5c3920;
+
+    color: white;
+
+    border-bottom: 1px solid #835435;
+
+    text-align: center;
+
+    padding: 10px;
+
+    font-size: .95rem;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,.12);
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        padding 0.3s ease;
+}
+
+
+/* placa da prateleira aberta */
+
+.bloco-prateleira.expandida .placa-prateleira {
+
+    padding: 14px;
+
+}
+
+
+/* placa das minimizadas */
+
+.bloco-prateleira.minimizada .placa-prateleira {
+
+    padding: 8px;
+
 }
 
 .linha-prateleira::after{
@@ -284,17 +456,7 @@
 
 }
 
-.livro-estante{
 
-    height:145px;
-
-    width:auto;
-
-    border-radius:4px;
-
-    transition:.2s;
-
-}
 
 .loja{
     display: flex;
@@ -319,13 +481,7 @@
 
 }
 
-.livro-estante{
 
-    transition:.25s;
-
-    cursor:pointer;
-
-}
 
 .livro-estante:hover{
 
@@ -359,9 +515,10 @@
 
 
 
-.livro-card{
-    position:relative;
-    display:inline-block;
+.livro-card {
+    position: relative;
+    display: block;
+    flex: 0 0 auto;
 }
 
 .btn-remover{

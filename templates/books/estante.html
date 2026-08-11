@@ -28,9 +28,9 @@
             <span class="titulo-menu">Biblioteca</span>
 
             <a href="{{ url_for('user_bp.perfil') }}">Perfil</a>
-            <a href="#lendo">Lendo</a>
-            <a href="#lidos">Lidos</a>
-            <a href="#quero-ler">Quero ler</a>
+            <a href="#lendo" class="link-prateleira">Lendo</a>
+            <a href="#lidos" class="link-prateleira">Lidos</a>
+            <a href="#quero-ler" class="link-prateleira">Quero ler</a>
 
             <hr>
 
@@ -65,7 +65,7 @@
 
             <div class="cabecalho-estante">
 
-                <h1 id="estante">Minha Estante</h1>
+                <h1 id="estante" class="titulo-estante">Minha Estante</h1>
 
                 <a href="{{ url_for('home.home') }}" class="btn-adicionar">
                     + Adicionar livro
@@ -236,5 +236,7 @@
     </section>
 
 </section>
+
+<script src="{{ url_for('static', filename='js/estante.js') }}"></script>
 
 {% endblock %}
