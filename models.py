@@ -358,3 +358,49 @@ class MetaLeitura(db.Model):
         "Usuario",
         backref="metas_leitura"
     )
+
+class Atividade(db.Model):
+    __tablename__ = "atividades"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    livro_id = db.Column(
+        db.Integer,
+        db.ForeignKey("livros.id"),
+        nullable=True
+    )
+
+    tipo = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    mensagem = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="atividades"
+    )
+
+    livro = db.relationship(
+        "Livro",
+        backref="atividades"
+    )

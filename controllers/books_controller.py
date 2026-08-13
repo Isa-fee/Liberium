@@ -4,6 +4,7 @@ from datetime import date
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
+from utils.atividades import registrar_atividade
 
 from models import Livro, Estante
 from extensions import db
@@ -134,7 +135,13 @@ def adicionar_estante(livro_id):
         )
 
         db.session.add(novo)
-
+        registrar_atividade(
+            current_user,
+            "adicionar",
+            f'Você adicionou "{livro.titulo}" à sua estante.',
+            livro
+        )
+        
         # XP por adicionar qualquer livro
         adicionar_xp(
             current_user,

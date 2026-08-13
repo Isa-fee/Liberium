@@ -4,6 +4,7 @@ from datetime import date
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
+from utils.atividades import registrar_atividade
 
 from models import Estante
 from extensions import db
@@ -95,19 +96,16 @@ def atualizar_progresso(id):
     # ==================================
 
     elif item.progresso < 100:
-
         item.status = "lendo"
-
-        # Aqui depois entraremos com:
-        #
-        # 📖 Você começou a ler "Livro"
-        #
-        # somente quando realmente mudar
-        # de "quero ler" para "lendo".
 
         if status_anterior == "quero ler":
 
-            pass
+            registrar_atividade(
+                current_user,
+                "inicio_leitura",
+                f'Você começou a ler "{item.livro.titulo}".',
+                item.livro
+            )
 
     # ==================================
     # CONCLUIU
@@ -116,6 +114,13 @@ def atualizar_progresso(id):
     else:
 
         if item.status != "lido":
+
+            registrar_atividade(
+                current_user,
+                "conclusao",
+                f'Você terminou de ler "{item.livro.titulo}".',
+                item.livro
+            )
 
             adicionar_xp(
                 current_user,
@@ -132,7 +137,6 @@ def atualizar_progresso(id):
         item.status = "lido"
 
         if item.data_leitura is None:
-
             item.data_leitura = date.today()
 
     db.session.commit()
@@ -156,10 +160,7 @@ def atualizar_progresso(id):
 # AVALIAR LIVRO / ESCREVER RESENHA
 # ======================================
 
-@estante_bp.route(
-    "/avaliar/<int:id>",
-    methods=["POST"]
-)
+@estante_bp.route("/avaliar/<int:id>", methods=["POST"])
 @login_required
 def avaliar(id):
 
@@ -168,9 +169,7 @@ def avaliar(id):
         livro_id=id
     ).first_or_404()
 
-    nota = int(
-        request.form["nota"]
-    )
+    nota = int(request.form["nota"])
 
     if nota < 1 or nota > 5:
 
@@ -180,27 +179,26 @@ def avaliar(id):
         )
 
         return redirect(
-            url_for(
-                "books_bp.ver",
-                id=id
-            )
+            url_for("books_bp.ver", id=id)
         )
 
-    data_leitura = request.form.get(
-        "data_leitura"
-    )
+    data_leitura = request.form.get("data_leitura")
 
     if data_leitura:
+        data_leitura = date.fromisoformat(data_leitura)
 
-        data_leitura = date.fromisoformat(
-            data_leitura
-        )
-
-    # ==================================
+    # ======================================
     # PRIMEIRA AVALIAÇÃO
-    # ==================================
+    # ======================================
 
     if item.nota is None:
+
+        registrar_atividade(
+            current_user,
+            "avaliacao",
+            f'Você avaliou "{item.livro.titulo}" com {nota} estrelas.',
+            item.livro
+        )
 
         adicionar_xp(
             current_user,
@@ -214,19 +212,23 @@ def avaliar(id):
             "avaliar um livro"
         )
 
-    # ==================================
+    # ======================================
     # PRIMEIRA RESENHA
-    # ==================================
+    # ======================================
 
     resenha_nova = request.form.get(
         "resenha",
         ""
     ).strip()
 
-    if (
-        item.resenha == ""
-        and resenha_nova
-    ):
+    if not item.resenha and resenha_nova:
+
+        registrar_atividade(
+            current_user,
+            "resenha",
+            f'Você escreveu uma resenha para "{item.livro.titulo}".',
+            item.livro
+        )
 
         adicionar_xp(
             current_user,
@@ -240,11 +242,21 @@ def avaliar(id):
             "escrever uma resenha"
         )
 
+    # ======================================
+    # SALVAR AVALIAÇÃO
+    # ======================================
+
     item.nota = nota
+
     item.resenha = resenha_nova
+
     item.data_leitura = data_leitura
 
     db.session.commit()
+
+    # ======================================
+    # VERIFICAR INSÍGNIAS
+    # ======================================
 
     verificar_insignias(current_user)
 
@@ -254,13 +266,8 @@ def avaliar(id):
     )
 
     return redirect(
-        url_for(
-            "books_bp.ver",
-            id=id
-        )
+        url_for("books_bp.ver", id=id)
     )
-
-
 # ======================================
 # REMOVER DA ESTANTE
 # ======================================
