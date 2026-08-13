@@ -1,7 +1,7 @@
 import json
 
 from extensions import db
-from models import Livro
+from models import Livro, ItemColecionavel
 
 
 
@@ -34,3 +34,30 @@ def popular_banco():
     db.session.commit()
 
     print("Livros importados com sucesso!")
+
+
+
+def popular_colecionaveis():
+
+    with open(
+        "data/colecionaveis.json",
+        encoding="utf-8"
+    ) as arquivo:
+
+        itens = json.load(arquivo)
+
+    for item in itens:
+
+        colecionavel = ItemColecionavel(
+            nome=item["nome"],
+            descricao=item["descricao"],
+            tipo=item["tipo"],
+            preco=item["preco"],
+            imagem=item["imagem"]
+        )
+
+        db.session.add(colecionavel)
+
+    db.session.commit()
+
+    print("Colecionáveis importados com sucesso!")
