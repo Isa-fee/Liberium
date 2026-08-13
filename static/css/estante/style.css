@@ -554,3 +554,28 @@
     object-fit: contain;
     margin: 0 auto 5px;
 }
+
+
+.decoracao-estante {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    width: 100px;
+    height: 160px;
+
+    flex-shrink: 0;
+}
+
+.item-decoracao-estante {
+    width: 90px;
+    height: 90px;
+
+    object-fit: contain;
+
+    transition: transform 0.2s ease;
+}
+
+.item-decoracao-estante:hover {
+    transform: translateY(-5px);
+}

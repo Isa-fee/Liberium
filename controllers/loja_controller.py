@@ -105,13 +105,13 @@ def colecao():
     ).all()
 
     decoracoes = [
-        compra.item
+        compra
         for compra in compras
         if compra.item.tipo == "decoracao"
     ]
 
     bonecos = [
-        compra.item
+        compra
         for compra in compras
         if compra.item.tipo == "boneco"
     ]

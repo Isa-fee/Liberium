@@ -54,7 +54,7 @@
 
             <div class="grid-colecao">
 
-                {% for item in decoracoes %}
+                {% for compra in decoracoes %}
 
                     <div class="item-colecao">
 
@@ -63,21 +63,21 @@
                             <img
                                 src="{{ url_for(
                                     'static',
-                                    filename=item.imagem
+                                    filename=compra.item.imagem
                                 ) }}"
-                                alt="{{ item.nome }}"
+                                alt="{{ compra.item.nome }}"
                             >
 
                         </div>
 
 
                         <h3>
-                            {{ item.nome }}
+                            {{ compra.item.nome }}
                         </h3>
 
 
                         <p>
-                            {{ item.descricao }}
+                            {{ compra.item.descricao }}
                         </p>
 
 
@@ -86,12 +86,54 @@
                         </span>
 
 
-                        <button
-                            class="btn-decorar"
-                            type="button"
+                        <form
+                            action="{{ url_for(
+                                'estante_bp.decorar_estante',
+                                usuario_item_id=compra.id
+                            ) }}"
+                            method="POST"
                         >
-                            Decorar estante
-                        </button>
+
+                            <select
+                                name="prateleira"
+                                required
+                            >
+
+                                <option value="">
+                                    Escolher prateleira
+                                </option>
+
+                                <option value="lendo">
+                                    Lendo
+                                </option>
+
+                                <option value="lidos">
+                                    Lidos
+                                </option>
+
+                                <option value="quero ler">
+                                    Quero ler
+                                </option>
+
+                            </select>
+
+
+                            <input
+                                type="number"
+                                name="posicao"
+                                min="0"
+                                value="0"
+                            >
+
+
+                            <button
+                                class="btn-decorar"
+                                type="submit"
+                            >
+                                Decorar estante
+                            </button>
+
+                        </form>
 
                     </div>
 
@@ -139,7 +181,7 @@
 
             <div class="grid-colecao">
 
-                {% for item in bonecos %}
+                {% for compra in bonecos %}
 
                     <div class="item-colecao">
 
@@ -148,21 +190,21 @@
                             <img
                                 src="{{ url_for(
                                     'static',
-                                    filename=item.imagem
+                                    filename=compra.item.imagem
                                 ) }}"
-                                alt="{{ item.nome }}"
+                                alt="{{ compra.item.nome }}"
                             >
 
                         </div>
 
 
                         <h3>
-                            {{ item.nome }}
+                            {{ compra.item.nome }}
                         </h3>
 
 
                         <p>
-                            {{ item.descricao }}
+                            {{ compra.item.descricao }}
                         </p>
 
 
@@ -170,12 +212,55 @@
                             ✓ Adquirido
                         </span>
 
-                        <button
-                            class="btn-decorar"
-                            type="button"
+
+                        <form
+                            action="{{ url_for(
+                                'estante_bp.decorar_estante',
+                                usuario_item_id=compra.id
+                            ) }}"
+                            method="POST"
                         >
-                            Decorar estante
-                        </button>
+
+                            <select
+                                name="prateleira"
+                                required
+                            >
+
+                                <option value="">
+                                    Escolher prateleira
+                                </option>
+
+                                <option value="lendo">
+                                    Lendo
+                                </option>
+
+                                <option value="lidos">
+                                    Lidos
+                                </option>
+
+                                <option value="quero ler">
+                                    Quero ler
+                                </option>
+
+                            </select>
+
+
+                            <input
+                                type="number"
+                                name="posicao"
+                                min="0"
+                                value="0"
+                            >
+
+
+                            <button
+                                class="btn-decorar"
+                                type="submit"
+                            >
+                                Colocar na estante
+                            </button>
+
+                        </form>
 
                     </div>
 
