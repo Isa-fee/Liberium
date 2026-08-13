@@ -1,7 +1,7 @@
 [
     {
         "nome": "Caneca de Café",
-        "descricao": "Uma caneca perfeita para acompanhar a leitura.",
+        "descricao": "O par perfeito para uma boa leitura.",
         "tipo": "decoracao",
         "preco": 12,
         "imagem": "img/decoracoes/caneca.png"
@@ -14,12 +14,103 @@
         "preco": 20,
         "imagem": "img/decoracoes/luminaria.png"
     },
-
     {
-        "nome": "Boneco Harry",
-        "descricao": "Colecionável inspirado em Harry Potter.",
+        "nome": "Vaso de Planta",
+        "descricao": "Toque minimalista e elegante.",
+        "tipo": "decoracao",
+        "preco": 10,
+        "imagem": "img/decoracoes/vaso.png"
+    },
+    {
+        "nome": "Vaso de Flor",
+        "descricao": "Vida e cor para a estante.",
+        "tipo": "decoracao",
+        "preco": 10,
+        "imagem": "img/decoracoes/vasoflor.png"
+    }
+    ,
+    {
+        "nome": "Cachorro Amarelo",
+        "descricao": "Alegria canina na prateleira.",
+        "tipo": "decoracao",
+        "preco": 30,
+        "imagem": "img/decoracoes/cachorroamarelo.png"
+    },
+    {
+        "nome": "Cachorro Branco",
+        "descricao": "Um toque de fofura e elegância.",
+        "tipo": "decoracao",
+        "preco": 35,
+        "imagem": "img/decoracoes/cachorrobranco.png"
+    },
+    {
+        "nome": "Cachorro Marrom",
+        "descricao": "O companheiro fiel das leituras.",
+        "tipo": "decoracao",
+        "preco": 35,
+        "imagem": "img/decoracoes/cachorromarrom.png"
+    },
+    {
+        "nome": "Globo",
+        "descricao": "Para mentes que amam explorar.",
+        "tipo": "decoracao",
+        "preco": 25,
+        "imagem": "img/decoracoes/globo.png"
+    },
+    {
+        "nome": "Raposa",
+        "descricao": "Aconchego e astúcia da floresta.",
+        "tipo": "decoracao",
+        "preco": 25,
+        "imagem": "img/decoracoes/raposa.png"
+    },
+    {
+        "nome": "Gato Branco",
+        "descricao": "Serenidade e charme felino.",
+        "tipo": "decoracao",
+        "preco": 30,
+        "imagem": "img/decoracoes/gatobranco.png"
+    },
+    {
+        "nome": "Gato Laranja",
+        "descricao": "Uma dose de fofura e preguiça.",
+        "tipo": "decoracao",
+        "preco": 25,
+        "imagem": "img/decoracoes/gatolaranja.png"
+    },
+    {
+        "nome": "Gato Marrom",
+        "descricao": "Um pequeno guardião para os livros.",
+        "tipo": "decoracao",
+        "preco": 25,
+        "imagem": "img/decoracoes/gatomarrom.png"
+    },
+    {
+        "nome": "Alladin",
+        "descricao": "O jovem sonhadore sua princesa da Arábia.",
         "tipo": "boneco",
         "preco": 50,
-        "imagem": "img/bonecos/bonecoharry.png"
+        "imagem": "img/bonecos/alladin.png"
+    },
+    {
+        "nome": "A Bela e a Fera",
+        "descricao": "A beleza de um clássico inesquecível.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/belaefera.png"
+    },
+    {
+        "nome": "Enrolados",
+        "descricao": "A luz e os sonhos de Rapunzel.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/enrolados.png"
+    },
+    {
+        "nome": "A Princesa e o Sapo",
+        "descricao": "Determinação e magia em Nova Orleans.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/princesaesapo.png"
     }
 ]
