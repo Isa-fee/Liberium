@@ -6,7 +6,7 @@ from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 
-from models import Estante
+from models import Estante, DecoracaoEstante, UsuarioColecionavel
 from extensions import db
 
 
@@ -40,13 +40,110 @@ def estante():
         status="quero ler"
     ).all()
 
+    decoracoes_lendo = DecoracaoEstante.query.filter_by(
+    usuario_id=current_user.id,
+    prateleira="lendo"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    decoracoes_lidos = DecoracaoEstante.query.filter_by(
+        usuario_id=current_user.id,
+        prateleira="lidos"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    decoracoes_quero_ler = DecoracaoEstante.query.filter_by(
+        usuario_id=current_user.id,
+        prateleira="quero ler"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
     return render_template(
         "books/estante.html",
         lendo=lendo,
         lidos=lidos,
-        quero_ler=quero_ler
+        quero_ler=quero_ler,
+        decoracoes_lendo=decoracoes_lendo,
+        decoracoes_lidos=decoracoes_lidos,
+        decoracoes_quero_ler=decoracoes_quero_ler
     )
 
+# ======================================
+# DECORAR
+# ======================================
+
+@estante_bp.route(
+    "/decorar/<int:usuario_item_id>",
+    methods=["POST"]
+)
+@login_required
+def decorar_estante(usuario_item_id):
+
+    compra = UsuarioColecionavel.query.filter_by(
+        id=usuario_item_id,
+        usuario_id=current_user.id
+    ).first_or_404()
+
+    ja_esta_na_estante = DecoracaoEstante.query.filter_by(
+        usuario_id=current_user.id,
+        usuario_item_id=compra.id
+    ).first()
+
+    if ja_esta_na_estante:
+
+        flash(
+            "Este item já está na sua estante!",
+            "warning"
+        )
+
+        return redirect(
+            url_for("loja_bp.colecao")
+        )
+
+    prateleira = request.form.get("prateleira")
+    posicao = request.form.get("posicao", 0)
+
+    if prateleira not in [
+        "lendo",
+        "lidos",
+        "quero ler"
+    ]:
+
+        flash(
+            "Prateleira inválida.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("loja_bp.colecao")
+        )
+
+    try:
+        posicao = int(posicao)
+    except (TypeError, ValueError):
+        posicao = 0
+
+    decoracao = DecoracaoEstante(
+        usuario_id=current_user.id,
+        usuario_item_id=compra.id,
+        prateleira=prateleira,
+        posicao=posicao
+    )
+
+    db.session.add(decoracao)
+    db.session.commit()
+
+    flash(
+        f"{compra.item.nome} foi colocado na estante!",
+        "success"
+    )
+
+    return redirect(
+        url_for("estante_bp.estante")
+    )
 
 # ======================================
 # ATUALIZAR PROGRESSO
