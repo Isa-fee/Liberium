@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
-from models import Usuario, Estante, UsuarioInsignia, MetaLeitura
+from models import Usuario, Estante, UsuarioInsignia, MetaLeitura, Atividade
 from utils.insignias import verificar_insignias
 from utils.gamificacao import atualizar_meta_leitura
 
@@ -87,6 +87,7 @@ def logout():
 @user_bp.route("/perfil")
 @login_required
 def perfil():
+
     from datetime import date
 
     livros_lidos = Estante.query.filter_by(
@@ -108,13 +109,30 @@ def perfil():
         usuario_id=current_user.id
     ).count()
 
+    # ======================================
+    # ATIVIDADES RECENTES
+    # ======================================
+
+    atividades = Atividade.query.filter_by(
+        usuario_id=current_user.id
+    ).order_by(
+        Atividade.data_criacao.desc()
+    ).limit(5).all()
+
+    # ======================================
+    # INSÍGNIAS
+    # ======================================
+
     insignias = UsuarioInsignia.query.filter_by(
         usuario_id=current_user.id
     ).all()
 
     hoje = date.today()
 
-    # Buscar a meta do mês atual
+    # ======================================
+    # META DO MÊS ATUAL
+    # ======================================
+
     meta = MetaLeitura.query.filter_by(
         usuario_id=current_user.id,
         mes=hoje.month,
@@ -144,6 +162,10 @@ def perfil():
 
         db.session.commit()
 
+    # ======================================
+    # ENVIAR DADOS PARA O PERFIL
+    # ======================================
+
     return render_template(
         "user/perfil.html",
         livros_lidos=livros_lidos,
@@ -153,7 +175,8 @@ def perfil():
         insignias=insignias,
         meta=meta,
         percentual_meta=percentual_meta,
-        livros_restantes=livros_restantes
+        livros_restantes=livros_restantes,
+        atividades=atividades
     )
 
 @user_bp.route("/meta", methods=["POST"])

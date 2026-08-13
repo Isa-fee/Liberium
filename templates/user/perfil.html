@@ -306,31 +306,76 @@
     
             </div>
     
+           <!-- ==========================
+                ATIVIDADE RECENTE
+            =========================== -->
+
             <div class="atividade">
-    
+
                 <h2>ATIVIDADE RECENTE</h2>
-    
-                <ul>
-    
-                    <li>📘 Você terminou de ler "A Loucura do Mel"</li>
-    
-                    <li>✏️ Você publicou uma nova resenha</li>
-    
-                    <li>🏅 Nova insígnia conquistada</li>
-    
-                    <li>🎯 Você cumpriu sua meta mensal</li>
-    
-                </ul>
-    
-                <button>Ver todas as atividades</button>
-    
+
+                {% if atividades %}
+
+                    <ul>
+
+                        {% for atividade in atividades %}
+
+                            <li>
+
+                                {% if atividade.tipo == "adicionar" %}
+
+                                    📚
+
+                                {% elif atividade.tipo == "inicio_leitura" %}
+
+                                    📖
+
+                                {% elif atividade.tipo == "conclusao" %}
+
+                                    ✅
+
+                                {% elif atividade.tipo == "avaliacao" %}
+
+                                    ⭐
+
+                                {% elif atividade.tipo == "resenha" %}
+
+                                    📝
+
+                                {% elif atividade.tipo == "insignia" %}
+
+                                    🏅
+
+                                {% elif atividade.tipo == "meta" %}
+
+                                    🎯
+
+                                {% else %}
+
+                                    📌
+
+                                {% endif %}
+
+                                {{ atividade.mensagem }}
+
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                {% else %}
+
+                    <p class="atividade-vazia">
+                        Nenhuma atividade recente ainda.
+                        📚 Comece adicionando um livro à sua estante!
+                    </p>
+
+                {% endif %}
             </div>
-    
         </div>
-    
     </section>
 
 </section>
-
 
 {% endblock %}
