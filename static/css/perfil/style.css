@@ -1,3 +1,107 @@
+.sidebar{
+
+    background:#d7e2cf;
+
+    padding:35px 20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+
+.foto-perfil{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-bottom:15px;
+
+}
+
+.sidebar h3{
+
+    margin:0;
+
+    color:#4b3323;
+
+    font-size:28px;
+
+}
+
+
+.usuario{
+
+    color:#8d8d8d;
+
+    margin-top:5px;
+
+    margin-bottom:30px;
+
+}
+
+.menu-lateral{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.titulo-menu{
+
+    color:#6c5338;
+
+    font-weight:bold;
+
+    font-size:.9rem;
+
+    text-transform:uppercase;
+
+    margin:18px 0 12px;
+
+}
+
+.menu-lateral a{
+
+    text-decoration:none;
+
+    color:#4b3323;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    transition:.2s;
+
+}
+
+.menu-lateral a:hover{
+
+    background:white;
+
+}
+
+
+.menu-lateral hr{
+
+    border:none;
+
+    border-top:1px solid rgba(0,0,0,.1);
+
+    margin:20px 0;
+
+}
 .area-estante {
     background: #f7f7f5;
     padding: 35px;
@@ -120,8 +224,11 @@
 .boneco {
     text-align: center;
     font-size: 45px;
+    
 }
-
+.boneco > img {
+    width: 150px;
+}
 .boneco p {
     font-size: 14px;
     margin-top: 8px;
@@ -174,4 +281,26 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.btn-loja {
+    padding: 11px 20px;
+
+    background: #8fa382;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 25px;
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.btn-loja:hover {
+    background: #6f8564;
+
+    transform: translateY(-2px);
 }

@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
-from models import Usuario, Estante, UsuarioInsignia, MetaLeitura, Atividade
+from models import Usuario, Estante, UsuarioInsignia, MetaLeitura, Atividade, UsuarioColecionavel
 from utils.insignias import verificar_insignias
 from utils.gamificacao import atualizar_meta_leitura
 
@@ -161,7 +161,15 @@ def perfil():
         )
 
         db.session.commit()
+    # ======================================
+    # MINHA COLEÇÃO
+    # ======================================
 
+    colecao = UsuarioColecionavel.query.filter_by(
+        usuario_id=current_user.id
+    ).order_by(
+        UsuarioColecionavel.data_aquisicao.desc()
+    ).limit(4).all()
     # ======================================
     # ENVIAR DADOS PARA O PERFIL
     # ======================================
@@ -176,7 +184,8 @@ def perfil():
         meta=meta,
         percentual_meta=percentual_meta,
         livros_restantes=livros_restantes,
-        atividades=atividades
+        atividades=atividades,
+        colecao=colecao
     )
 
 @user_bp.route("/meta", methods=["POST"])
