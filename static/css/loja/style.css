@@ -167,20 +167,6 @@
 }
 
 
-/* ================================
-   PREÇO
-================================ */
-
-.item-loja span {
-    display: inline-block;
-
-    margin-bottom: 15px;
-
-    color: #5b3923;
-
-    font-size: 1rem;
-    font-weight: bold;
-}
 
 
 /* ================================
@@ -259,4 +245,42 @@
         width: 110px;
         height: 110px;
     }
+}
+
+
+.preco-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    color: #5b3923;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.preco-item img {
+    width: 45px;
+    height: 45px;
+
+    object-fit: contain;
+    margin: 0;
+}
+
+.btn-adquirido {
+    width: 100%;
+
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #6a8b6f;
+
+    color: white;
+
+    font-size: .95rem;
+    font-weight: 600;
+
+    cursor: default;
 }

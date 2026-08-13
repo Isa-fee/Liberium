@@ -37,15 +37,15 @@
             <span class="titulo-menu">Coleção</span>
 
             <a href="{{ url_for('loja_bp.loja') }}">Loja de decorações</a>
-            <a href="#">Minha coleção</a>
+            <a href="{{ url_for('loja_bp.colecao') }}">Minha coleção</a>
 
             <hr>
 
             <div class="card-moedas">
 
-                🪲
+                <img src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}" alt="Mini Libélula" class="icone-libelula">
 
-                <strong>200</strong>
+                <strong>{{ current_user.libelulas }}</strong>
 
                 <span>Mini Libélulas</span>
 
