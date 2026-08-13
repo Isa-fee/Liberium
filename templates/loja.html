@@ -20,80 +20,127 @@
     <section class="secao-loja">
 
         <h2>Decorações</h2>
-
+    
         <div class="grid-itens">
-
+    
             {% for item in decoracoes %}
-
+    
                 <div class="item-loja">
-
+    
                     <img
                         src="{{ url_for('static', filename=item.imagem) }}"
                         alt="{{ item.nome }}"
                     >
-
+    
                     <h3>{{ item.nome }}</h3>
-
+    
                     <p>{{ item.descricao }}</p>
-
-                    <span>
-                        🦋 {{ item.preco }}
+    
+                    <span class="preco-item">
+                        <img
+                            src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}"
+                            alt="Mini Libélulas"
+                        >
+                        {{ item.preco }}
                     </span>
-
-                    <button>
-                        Comprar
-                    </button>
-
+    
+                    {% if item.id in ids_comprados %}
+    
+                        <button
+                            type="button"
+                            class="btn-adquirido"
+                            disabled
+                        >
+                            ✓ Adquirido
+                        </button>
+    
+                    {% else %}
+    
+                        <form
+                            action="{{ url_for('loja_bp.comprar', item_id=item.id) }}"
+                            method="POST"
+                        >
+                            <button type="submit">
+                                Comprar
+                            </button>
+                        </form>
+    
+                    {% endif %}
+    
                 </div>
-
+    
             {% else %}
-
+    
                 <p>Nenhuma decoração disponível.</p>
-
+    
             {% endfor %}
-
+    
         </div>
-
+    
     </section>
 
 
     <section class="secao-loja">
 
         <h2>Colecionáveis</h2>
-
+    
         <div class="grid-itens">
-
+    
             {% for item in bonecos %}
-
+    
                 <div class="item-loja">
-
+    
                     <img
                         src="{{ url_for('static', filename=item.imagem) }}"
                         alt="{{ item.nome }}"
                     >
-
+    
                     <h3>{{ item.nome }}</h3>
-
+    
                     <p>{{ item.descricao }}</p>
-
-                    <span>
-                        🦋 {{ item.preco }}
+    
+                    <span class="preco-item">
+                        <img
+                            src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}"
+                            alt="Mini Libélulas"
+                        >
+                        {{ item.preco }}
                     </span>
-
-                    <button>
-                        Comprar
-                    </button>
-
+    
+    
+                    {% if item.id in ids_comprados %}
+    
+                        <button
+                            type="button"
+                            class="btn-adquirido"
+                            disabled
+                        >
+                            ✓ Adquirido
+                        </button>
+    
+                    {% else %}
+    
+                        <form
+                            action="{{ url_for('loja_bp.comprar', item_id=item.id) }}"
+                            method="POST"
+                        >
+                            <button type="submit">
+                                Comprar
+                            </button>
+                        </form>
+    
+                    {% endif %}
+    
                 </div>
-
+    
             {% else %}
-
+    
                 <p>Nenhum colecionável disponível.</p>
-
+    
             {% endfor %}
-
+    
         </div>
-
+    
     </section>
 
 </section>

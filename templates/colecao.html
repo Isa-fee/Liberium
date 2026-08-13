@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Minha Coleção | Liberium{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/colecao/style.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-colecao">
+
+    <div class="cabecalho-colecao">
+
+        <div>
+            <h1>Minha Coleção</h1>
+
+            <p>
+                Todos os itens que você conquistou na Loja.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('loja_bp.loja') }}"
+            class="btn-loja"
+        >
+            Ir para a loja
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- DECORAÇÕES -->
+    <!-- ========================= -->
+
+    <section class="secao-colecao">
+
+        <div class="titulo-secao">
+
+            <h2>Decorações</h2>
+
+            <span>
+                {{ decoracoes|length }} itens
+            </span>
+
+        </div>
+
+
+        {% if decoracoes %}
+
+            <div class="grid-colecao">
+
+                {% for item in decoracoes %}
+
+                    <div class="item-colecao">
+
+                        <div class="imagem-item">
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=item.imagem
+                                ) }}"
+                                alt="{{ item.nome }}"
+                            >
+
+                        </div>
+
+
+                        <h3>
+                            {{ item.nome }}
+                        </h3>
+
+
+                        <p>
+                            {{ item.descricao }}
+                        </p>
+
+
+                        <span class="status-adquirido">
+                            ✓ Adquirido
+                        </span>
+
+
+                        <button
+                            class="btn-decorar"
+                            type="button"
+                        >
+                            Decorar estante
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="colecao-vazia">
+
+                <p>
+                    Você ainda não possui nenhuma decoração.
+                </p>
+
+                <a href="{{ url_for('loja_bp.loja') }}">
+                    Visitar a loja
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- COLECIONÁVEIS -->
+    <!-- ========================= -->
+
+    <section class="secao-colecao">
+
+        <div class="titulo-secao">
+
+            <h2>Colecionáveis</h2>
+
+            <span>
+                {{ bonecos|length }} itens
+            </span>
+
+        </div>
+
+
+        {% if bonecos %}
+
+            <div class="grid-colecao">
+
+                {% for item in bonecos %}
+
+                    <div class="item-colecao">
+
+                        <div class="imagem-item">
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=item.imagem
+                                ) }}"
+                                alt="{{ item.nome }}"
+                            >
+
+                        </div>
+
+
+                        <h3>
+                            {{ item.nome }}
+                        </h3>
+
+
+                        <p>
+                            {{ item.descricao }}
+                        </p>
+
+
+                        <span class="status-adquirido">
+                            ✓ Adquirido
+                        </span>
+
+                        <button
+                            class="btn-decorar"
+                            type="button"
+                        >
+                            Decorar estante
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="colecao-vazia">
+
+                <p>
+                    Você ainda não possui nenhum colecionável.
+                </p>
+
+                <a href="{{ url_for('loja_bp.loja') }}">
+                    Visitar a loja
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</section>
+
+{% endblock %}

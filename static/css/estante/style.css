@@ -297,7 +297,7 @@
 }
 
 .livro-estante {
-    height: 145px;
+    height: 175px;
     width: auto;
 
     border-radius: 4px;
@@ -546,4 +546,11 @@
 
 .livro-card:hover .btn-remover{
     opacity:1;
+}
+
+.icone-libelula {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin: 0 auto 5px;
 }
