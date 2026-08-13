@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Loja | Liberium{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loja/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-loja">
+
+    <h1>Loja de Decorações</h1>
+
+    <p>
+        Personalize sua estante com itens especiais!
+    </p>
+
+
+    <section class="secao-loja">
+
+        <h2>Decorações</h2>
+
+        <div class="grid-itens">
+
+            {% for item in decoracoes %}
+
+                <div class="item-loja">
+
+                    <img
+                        src="{{ url_for('static', filename=item.imagem) }}"
+                        alt="{{ item.nome }}"
+                    >
+
+                    <h3>{{ item.nome }}</h3>
+
+                    <p>{{ item.descricao }}</p>
+
+                    <span>
+                        🦋 {{ item.preco }}
+                    </span>
+
+                    <button>
+                        Comprar
+                    </button>
+
+                </div>
+
+            {% else %}
+
+                <p>Nenhuma decoração disponível.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <section class="secao-loja">
+
+        <h2>Colecionáveis</h2>
+
+        <div class="grid-itens">
+
+            {% for item in bonecos %}
+
+                <div class="item-loja">
+
+                    <img
+                        src="{{ url_for('static', filename=item.imagem) }}"
+                        alt="{{ item.nome }}"
+                    >
+
+                    <h3>{{ item.nome }}</h3>
+
+                    <p>{{ item.descricao }}</p>
+
+                    <span>
+                        🦋 {{ item.preco }}
+                    </span>
+
+                    <button>
+                        Comprar
+                    </button>
+
+                </div>
+
+            {% else %}
+
+                <p>Nenhum colecionável disponível.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</section>
+
+{% endblock %}

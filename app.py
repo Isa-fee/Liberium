@@ -25,10 +25,12 @@ def create_app():
     from controllers.home_controller import home_bp
     from controllers.books_controller import books_bp
     from controllers.user_controller import user_bp
+    from controllers.loja_controller import loja_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(books_bp)
     app.register_blueprint(user_bp)
+    app.register_blueprint(loja_bp)
 
     return app
 
@@ -43,7 +45,9 @@ if __name__ == '__main__':
 
         criar_insignias()
 
-        from popular_banco import popular_banco
+        from popular_banco import (popular_banco, popular_colecionaveis)
+
         popular_banco()
+        popular_colecionaveis() 
 
     app.run(debug=True)
