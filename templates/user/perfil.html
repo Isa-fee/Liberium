@@ -19,7 +19,7 @@
             @{{ current_user.nome|lower|replace(' ', '') }}
         </p>
         
-        <h1>Olá, {{ current_user.nome }} 🦋</h1>
+        <h1>{{ current_user.nome }}</h1>
 
         <nav class="menu-lateral">
             <a href="{{ url_for('estante_bp.estante') }}">Estante</a>
@@ -286,22 +286,53 @@
     
                 <div class="titulo-bloco">
     
-                    <h2>MINHA COLEÇÃO</h2>
+                    <h2>Meus Itens Colecionáveis</h2>
     
-                    <a href="#">Ver coleção completa</a>
+                    <a href="{{ url_for('loja_bp.colecao') }}" class="btn-loja">
+                        Ver coleção completa
+                    </a>
     
                 </div>
     
                 <div class="bonecos">
-    
-                    <div class="boneco">🧙‍♂️<p>Harry Potter</p></div>
-    
-                    <div class="boneco">⚡<p>Percy Jackson</p></div>
-    
-                    <div class="boneco">🌹<p>Pequeno Príncipe</p></div>
-    
-                    <div class="boneco">📚<p>Hermione</p></div>
-    
+
+                    {% if colecao %}
+                
+                        {% for compra in colecao %}
+                
+                            <div class="boneco">
+                
+                                <img
+                                    src="{{ url_for('static', filename=compra.item.imagem) }}"
+                                    alt="{{ compra.item.nome }}"
+                                >
+                
+                                <p>
+                                    {{ compra.item.nome }}
+                                </p>
+                
+                            </div>
+                
+                        {% endfor %}
+                
+                    {% else %}
+                
+                        <div class="colecao-vazia-perfil">
+                
+                            <span>🛍️</span>
+                
+                            <p>
+                                Sua coleção ainda está vazia.
+                            </p>
+                
+                            <a href="{{ url_for('loja_bp.loja') }}">
+                                Visitar a loja
+                            </a>
+                
+                        </div>
+                
+                    {% endif %}
+                
                 </div>
     
             </div>
