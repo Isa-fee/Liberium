@@ -59,7 +59,7 @@
 
                 <p>{{ item_estante.progresso or 0 }}%</p>
 
-                <form action="{{ url_for('books_bp.atualizar_progresso', id=livro.id) }}" method="POST" class="form-progresso">
+                <form action="{{ url_for('estante_bp.atualizar_progresso', id=livro.id) }}" method="POST" class="form-progresso">
                     <label for="pagina">Página atual</label>
                     <input type="number" id="pagina" name="pagina" min="0" max="{{ livro.paginas }}" value="{{ item_estante.pagina_atual or 0 }}">
                     <small>de {{ livro.paginas }} páginas</small>
@@ -96,7 +96,7 @@
                         <button type="button" class="fechar-modal" id="fechar-modal-avaliacao" aria-label="Fechar">×</button>
                     </div>
 
-                    <form action="{{ url_for('books_bp.avaliar', id=livro.id) }}" method="POST" class="form-avaliacao">
+                    <form action="{{ url_for('estante_bp.avaliar', id=livro.id) }}" method="POST" class="form-avaliacao">
 
                         <label>Que nota você dá para este livro?</label>
 
