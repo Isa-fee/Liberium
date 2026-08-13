@@ -1,0 +1,25 @@
+[
+    {
+        "nome": "Caneca de Café",
+        "descricao": "Uma caneca perfeita para acompanhar a leitura.",
+        "tipo": "decoracao",
+        "preco": 12,
+        "imagem": "img/decoracoes/caneca.png"
+    },
+
+    {
+        "nome": "Luminária",
+        "descricao": "Ilumina sua estante.",
+        "tipo": "decoracao",
+        "preco": 20,
+        "imagem": "img/decoracoes/luminaria.png"
+    },
+
+    {
+        "nome": "Boneco Harry",
+        "descricao": "Colecionável inspirado em Harry Potter.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecoharry.png"
+    }
+]
