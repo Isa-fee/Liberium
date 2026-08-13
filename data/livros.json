@@ -802,7 +802,8 @@
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
-    },
+    }
+    ,
     {
         "titulo": "Entre Beijos e Segredos",
         "autor": "Natália Tilcailo",
@@ -828,6 +829,288 @@
         "idioma": "Português",
         "avaliacao": 4.8
     }
+    ,
+    {
+        "titulo": "O Príncipe Cruel",
+        "autor": "Holly Black",
+        "descricao":"Jude foi levada ainda criança para o mundo das fadas e cresceu na corte, onde precisa aprender a sobreviver entre criaturas poderosas e perigosas. Determinada a conquistar seu lugar naquele universo, ela desafia o príncipe Cardan e acaba envolvida em intrigas, alianças e conspirações.",
+        "capa": "img/capas/principecruel.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera",
+        "paginas": 322 ,
+        "ano": "2018",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    }
+    ,
+    {
+        "titulo": "O Rei Perverso",
+        "autor": "Holly Black",
+        "descricao":"Jude está cada vez mais envolvida nas disputas pelo poder no mundo das fadas. Enquanto tenta manter o controle sobre o reino e proteger aqueles que ama, ela precisa lidar com traições, alianças perigosas e seus sentimentos complicados por Cardan.",
+        "capa": "img/capas/oreiperverso.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera",
+        "paginas": 304 ,
+        "ano": "2019",
+        "idioma": "Português",
+        "avaliacao": 4.7
 
+    }
+    ,
+    {
+        
+        "titulo": "A Rainha do Nada",
+        "autor": "Holly Black",
+        "descricao": "Jude foi exilada do mundo das fadas e tenta encontrar uma maneira de recuperar seu lugar em Elfhame. Quando uma ameaça coloca o reino em perigo, ela precisa retornar e enfrentar antigos inimigos, alianças inesperadas e seu destino ao lado de Cardan.",
+        "capa": "img/capas/arainhadonada.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera",
+        "paginas": 294,
+        "ano": "2020",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    ,
+    {
+
+        "titulo": "Como o Rei de Elfhame Aprendeu a Odiar Histórias",
+        "autor": "Holly Black",
+        "descricao": "O livro apresenta histórias sobre Cardan antes, durante e depois dos acontecimentos da trilogia O Povo do Ar, revelando mais sobre seu passado, sua personalidade e sua relação com Jude.",
+        "capa": "img/capas/comoreideelfhame.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera",
+        "paginas": 192,
+        "ano": "2021",
+        "idioma": "Português",
+        "avaliacao": 4.6
+
+    }
+    ,
+    {
+        "titulo": "As Irmãs Blue",
+        "autor": "Coco Mellors",
+        "descricao": "Quatro irmãs. Agora, três... Precisam lidar com a perda e as memórias deixadas pela irmã e retornar para a casa de sua família em Nova York nesta história inesquecível de luto, identidade e complexidades familiares.",
+        "capa": "img/capas/asirmasblue.jpg",
+        "genero": "Ficção",
+        "editora": "Astral Cultural",
+        "paginas": 400,
+        "ano": "2024",
+        "idioma": "Português",
+        "avaliacao": 4.6
+    }
+    ,
+    {
+        "titulo": "Corte de Espinhos e Rosas",
+        "autor": "Sarah J. Maas",
+        "descricao": "Após matar um lobo misterioso durante uma caçada, Feyre é levada para uma terra mágica além da muralha. Lá, ela descobre que o mundo das fadas é muito mais perigoso e complexo do que imaginava, enquanto se aproxima de seu misterioso captor, Tamlin.",
+        "capa": "img/capas/cortedeespinhos.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 434,
+        "ano": "2015",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    ,
+    {
+        "titulo": "Corte de Névoa e Fúria",
+        "autor": "Sarah J. Maas",
+        "descricao": "O aguardado segundo volume da saga iniciada em Corte de espinhos e rosas, da mesma autora da série Trono de vidro. Nessa continuação, Feyre, a jovem humana que morreu nas garras de Amarantha, assume seu lugar como Quebradora da Maldição e dona dos poderes de sete Grão-Feéricos.",
+        "capa": "img/capas/cortedenevoa.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 807,
+        "ano": "2016",
+        "idioma": "Português",
+        "avaliacao": 4.9   
+    }
+    ,
+    {
+        "titulo": "Corte de asas e ruína ",
+        "autor": "Sarah J. Maas",
+        "descricao": "Em Corte de asas e ruína, a guerra se aproxima, um conflito que promete devastar Prythian. Em meio à Corte Primaveril, em um perigoso jogo de intrigas e mentiras, a Grã-Senhora da Corte Noturna esconde seu laço de parceria e sua verdadeira lealdade.",
+        "capa": "img/capas/cortedeasas.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 886,
+        "ano": "2017",
+        "idioma": "Português",
+        "avaliacao": 4.9   
+    }
+    ,
+    {
+        "titulo": "Corte de chamas prateadas  ",
+        "autor": "Sarah J. Maas",
+        "descricao": "Nestha Archeron sempre foi orgulhosa, irritável e lenta em perdoar. Ter sido Feita pelo Caldeirão não tornou sua personalidade mais doce. Mas o que poucos sabem é que, por trás da fachada de força, Nestha carrega uma dor que a está corroendo: o arrependimento por não ter feito nada para ajudar a família quando caíram na pobreza e por não ter sido capaz de salvar o pai.",
+        "capa":"img/capas/cortechamas.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 714,
+        "ano": "2021",
+        "idioma": "Português",
+        "avaliacao": 4.8  
+    }
+    ,
+    {
+        "titulo": "Cidade da Lua Crescente",
+        "autor": "Sarah J. Maas",
+        "descricao": "Bryce Quinlan vive uma vida aparentemente perfeita em Crescent City, até que uma tragédia muda tudo. Determinada a descobrir a verdade e vingar sua melhor amiga, ela se une ao misterioso anjo Hunt Athalar e mergulha em uma investigação cheia de magia, criaturas sobrenaturais e segredos.",
+        "capa": "img/capas/cidadedalua.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 912,
+        "ano": "2020",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    ,
+    {
+        "titulo": "Cidade da Lua Crescente: Casa de céu e sopro",
+        "autor": "Sarah J. Maas",
+        "descricao":"Bryce Quinlan e Hunt Athalar fizeram um pacto. Enquanto processam os eventos da última primavera, eles irão manter as coisas... platônicas... até o solstício. Eles salvaram a Cidade da Lua Crescente, mas com tanto frenesi acontecendo ultimamente, eles desejam, mais do que qualquer coisa, uma oportunidade de relaxar.",
+        "capa": "img/capas/casadeceu.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 1113,
+        "ano": "2022",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    ,
+    {
+        "titulo": "Cidade da Lua Crescente: Casa de chama e sombra",
+        "autor": "Sarah J. Maas",
+        "descricao":"Por essa Bryce Quinlan realmente não esperava. Ela nunca imaginou que fosse sair de Midgard, mas os malditos asteri a forçaram a literalmente procurar pelas portas do Inferno. Mas o Inferno está... diferente? Uma grama imaculada e uma linda cidade não eram exatamente o que ela estava esperando encontrar por lá. Isso sem falar dos habitantes do lugar, que são tão belos quanto letais. Onde Bryce foi parar?",
+        "capa": "img/capas/casadechama.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 1123,
+        "ano": "2024",
+        "idioma": "Português",
+        "avaliacao": 4.7  
+    }
+    ,
+    {
+        "titulo": "Os Instrumentos Mortais: Cidade dos Ossos",
+        "autor": "Cassandra Clare",
+        "descricao": "Clary Fray presencia um assassinato cometido por jovens que ninguém mais consegue enxergar. Ao descobrir que eles são Caçadores de Sombras, seres responsáveis por proteger o mundo dos demônios, Clary se vê envolvida em uma realidade sobrenatural que também guarda segredos sobre sua própria origem.",
+        "capa": "img/capas/cidadedosossos.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 527,
+        "ano": "2013",
+        "idioma": "Português",
+        "avaliacao": 4.6
+    }
+    ,
+    {
+        "titulo": "Instrumentos Mortais: Cidade das Cinzas",
+        "autor": "Cassandra Clare",
+        "descricao": "Clary tenta se adaptar ao mundo dos Caçadores de Sombras enquanto novas ameaças surgem. Com o retorno de Valentim e conflitos entre os seres do Submundo, Clary e seus aliados precisam enfrentar perigos que podem destruir o equilíbrio entre os mundos.",
+        "capa": "img/capas/cidadedascinzas.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 448,
+        "ano": "2014",
+        "idioma": "Português",
+        "avaliacao": 4.7
+
+    }
+    ,
+    {
+        "titulo": "Instrumentos Mortais: Cidade de Vidro",
+        "autor": "Cassandra Clare",
+        "descricao": "Clary viaja para a cidade de Alicante, o centro do mundo dos Caçadores de Sombras, em busca de uma maneira de salvar sua mãe. Enquanto isso, uma guerra contra Valentim se aproxima e segredos sobre o passado de sua família começam a ser revelados.",
+        "capa": "img/capas/cidadedevidro.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 476,
+        "ano": "2014",
+        "idioma": "Português",
+        "avaliacao": 4.8 
+    }
+    ,
+    {
+        "titulo": "Instrumentos Mortais: Cidade dos Anjos Caídos",
+        "autor": "Cassandra Clare",
+        "descricao": "Após os acontecimentos da guerra, Clary e seus amigos tentam reconstruir suas vidas. Porém, uma série de assassinatos misteriosos envolvendo Caçadores de Sombras ameaça a paz recém-conquistada, enquanto novas complicações surgem na vida de Jace.",
+        "capa": "cidadedosanjoscaidos.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 364,
+        "ano": "2014",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    }
+    ,
+    {
+        "titulo": "Instrumentos Mortais: Cidade das Almas Perdidas",
+        "autor": "Cassandra Clare",
+        "descricao": "Jace desapareceu e está ligado a Valentim de uma maneira que ninguém consegue compreender. Determinada a encontrá-lo, Clary se arrisca em uma missão perigosa e precisa descobrir se ainda existe uma maneira de recuperar o verdadeiro Jace.",
+        "capa": "img/capas/cidadedasalmasperdidas.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 434,
+        "ano": "2014",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    ,
+    {
+        "titulo": "Instrumentos Mortais: Cidade do Fogo Celestial",
+        "autor": "Cassandra Clare",
+        "descricao": "Clary e seus amigos enfrentam sua maior ameaça quando um inimigo poderoso inicia uma guerra contra os Caçadores de Sombras. Para sobreviver e proteger aqueles que amam, eles precisam enfrentar batalhas, perdas e revelações que mudarão para sempre o mundo dos Caçadores de Sombras.",
+        "capa": "img/capas/cidadedofogocelestial.jpg",
+        "genero": "Fantasia",
+        "editora": "Galera Record",
+        "paginas": 532,
+        "ano": "2014",
+        "idioma": "Português",
+        "avaliacao": 4.8
+
+    }
+    ,
+    {
+        "titulo": "Caraval",
+        "autor": "Stephanie Garber",
+        "descricao": "Scarlett Dragna sempre sonhou em conhecer o lendário Mestre Lenda e assistir ao Caraval, um espetáculo mágico onde nada é exatamente o que parece. Quando finalmente recebe um convite, sua irmã Donatella é levada para participar do jogo. Scarlett precisa entrar no Caraval e encontrar a irmã antes que os cinco dias do jogo terminem, enquanto tenta descobrir o que é realidade e o que é parte da magia.",
+        "capa": "img/capas/caraval.jpg",
+        "genero": "Fantasia",
+        "editora": "Novo Conceito",
+        "paginas": 352,
+        "ano": "2022",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    }
+    ,
+    {
+        "titulo": "Lendário",
+        "autor": "Stephanie Garber",
+        "descricao": "Depois dos acontecimentos de Caraval, Donatella finalmente está livre de seu pai, mas ainda precisa cumprir um acordo perigoso. Para descobrir o verdadeiro nome do Mestre Lenda, Tella precisa voltar ao Caraval e enfrentar novos segredos, perigos e desafios. Enquanto isso, Scarlett tenta entender os acontecimentos envolvendo Julian e o misterioso mundo de Valenda.",
+        "capa": "img/capas/lendario.jpg",
+        "genero": "Fantasia",
+        "editora": "Novo Conceito",
+        "paginas": 384,
+        "ano": "2022",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    }
+    ,
+    {
+        "titulo": "Finale",
+        "autor": "Stephanie Garber",
+        "descricao": "Os Arcanos foram libertados, Lenda reivindicou o trono e Tella descobre que o rapaz por quem se apaixonou pode não ser quem ela imaginava. Com vidas, impérios e corações em jogo, Tella precisa decidir em quem confiar, enquanto Scarlett enfrenta uma missão que parece impossível. Sem mais um Caraval para guiá-los, os personagens precisam encarar o jogo mais importante de suas vidas.",
+        "capa": "img/capas/finale.jpg",
+        "genero": "Fantasia",
+        "editora": "Gutenberg",
+        "paginas": 400,
+        "ano": "2022",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    }
+    
+
+
+        
 
 ]
