@@ -49,9 +49,7 @@
                 Quero ler
             </a>
 
-
             <hr>
-
 
             <span class="titulo-menu">
                 Coleção
@@ -65,9 +63,7 @@
                 Minha coleção
             </a>
 
-
             <hr>
-
 
             <!-- ============================= -->
             <!-- MOEDAS -->
@@ -91,9 +87,7 @@
 
             </div>
 
-
             <hr>
-
 
             <a href="#">
                 Configurações
@@ -147,53 +141,62 @@
 
                 <div class="linha-prateleira">
 
+                    {% if itens_lendo %}
 
-                    {% if lendo or decoracoes_lendo %}
+                        {% for item in itens_lendo %}
+
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
+
+                            {% if item.tipo == "livro" %}
+
+                                <div class="livro-card">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=item.objeto.livro.capa
+                                            ) }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+
+                                    </a>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- LIVROS -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% for item in lendo %}
+                            {% else %}
 
-                            <a
-                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
-                                class="livro-link"
-                            >
+                                <div class="decoracao-estante">
 
-                                <img
-                                    src="{{ url_for('static', filename=item.livro.capa) }}"
-                                    class="livro-estante"
-                                    alt="{{ item.livro.titulo }}"
-                                >
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
+                                    >
 
-                            </a>
+                                </div>
+
+                            {% endif %}
 
                         {% endfor %}
-
-
-                        <!-- ============================= -->
-                        <!-- DECORAÇÕES -->
-                        <!-- ============================= -->
-
-                        {% for decoracao in decoracoes_lendo %}
-
-                            <div class="decoracao-estante">
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=decoracao.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ decoracao.usuario_item.item.nome }}"
-                                >
-
-                            </div>
-
-                        {% endfor %}
-
 
                     {% else %}
 
@@ -202,7 +205,6 @@
                         </p>
 
                     {% endif %}
-
 
                 </div>
 
@@ -225,80 +227,84 @@
 
                 <div class="linha-prateleira">
 
+                    {% if itens_lidos %}
 
-                    {% if lidos or decoracoes_lidos %}
+                        {% for item in itens_lidos %}
+
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
+
+                            {% if item.tipo == "livro" %}
+
+                                <div class="livro-card">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=item.objeto.livro.capa
+                                            ) }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+
+                                    </a>
+
+                                    <!-- ============================= -->
+                                    <!-- REMOVER LIVRO -->
+                                    <!-- ============================= -->
+
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_estante',
+                                            livro_id=item.objeto.livro.id
+                                        ) }}"
+                                        method="POST"
+                                    >
+
+                                        <button
+                                            class="btn-remover"
+                                            type="submit"
+                                            onclick="return confirm('Remover este livro da estante?')"
+                                        >
+                                            ✖
+                                        </button>
+
+                                    </form>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- LIVROS -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% for item in lidos %}
+                            {% else %}
 
-                            <div class="livro-card">
-
-                                <a
-                                    href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
-                                    class="livro-link"
-                                >
+                                <div class="decoracao-estante">
 
                                     <img
-                                        src="{{ url_for('static', filename=item.livro.capa) }}"
-                                        class="livro-estante"
-                                        alt="{{ item.livro.titulo }}"
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
                                     >
 
-                                </a>
+                                </div>
 
-
-                                <!-- ============================= -->
-                                <!-- REMOVER LIVRO -->
-                                <!-- ============================= -->
-
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_estante',
-                                        livro_id=item.livro.id
-                                    ) }}"
-                                    method="POST"
-                                >
-
-                                    <button
-                                        class="btn-remover"
-                                        type="submit"
-                                        onclick="return confirm('Remover este livro da estante?')"
-                                    >
-                                        ✖
-                                    </button>
-
-                                </form>
-
-                            </div>
+                            {% endif %}
 
                         {% endfor %}
-
-
-                        <!-- ============================= -->
-                        <!-- DECORAÇÕES -->
-                        <!-- ============================= -->
-
-                        {% for decoracao in decoracoes_lidos %}
-
-                            <div class="decoracao-estante">
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=decoracao.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ decoracao.usuario_item.item.nome }}"
-                                >
-
-                            </div>
-
-                        {% endfor %}
-
 
                     {% else %}
 
@@ -307,7 +313,6 @@
                         </p>
 
                     {% endif %}
-
 
                 </div>
 
@@ -330,53 +335,62 @@
 
                 <div class="linha-prateleira">
 
+                    {% if itens_quero_ler %}
 
-                    {% if quero_ler or decoracoes_quero_ler %}
+                        {% for item in itens_quero_ler %}
+
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
+
+                            {% if item.tipo == "livro" %}
+
+                                <div class="livro-card">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=item.objeto.livro.capa
+                                            ) }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+
+                                    </a>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- LIVROS -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% for item in quero_ler %}
+                            {% else %}
 
-                            <a
-                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
-                                class="livro-link"
-                            >
+                                <div class="decoracao-estante">
 
-                                <img
-                                    src="{{ url_for('static', filename=item.livro.capa) }}"
-                                    class="livro-estante"
-                                    alt="{{ item.livro.titulo }}"
-                                >
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
+                                    >
 
-                            </a>
+                                </div>
+
+                            {% endif %}
 
                         {% endfor %}
-
-
-                        <!-- ============================= -->
-                        <!-- DECORAÇÕES -->
-                        <!-- ============================= -->
-
-                        {% for decoracao in decoracoes_quero_ler %}
-
-                            <div class="decoracao-estante">
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=decoracao.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ decoracao.usuario_item.item.nome }}"
-                                >
-
-                            </div>
-
-                        {% endfor %}
-
 
                     {% else %}
 
@@ -385,7 +399,6 @@
                         </p>
 
                     {% endif %}
-
 
                 </div>
 

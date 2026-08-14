@@ -18,31 +18,121 @@ estante_bp = Blueprint(
 
 
 # ======================================
+# CALCULAR PRÓXIMA POSIÇÃO
+# ======================================
+
+def proxima_posicao(usuario_id, prateleira):
+
+    ultimo_livro = Estante.query.filter_by(
+        usuario_id=usuario_id,
+        status=prateleira
+    ).order_by(
+        Estante.posicao.desc()
+    ).first()
+
+    ultima_decoracao = DecoracaoEstante.query.filter_by(
+        usuario_id=usuario_id,
+        prateleira=prateleira
+    ).order_by(
+        DecoracaoEstante.posicao.desc()
+    ).first()
+
+    maior_posicao = -1
+
+    if ultimo_livro:
+        maior_posicao = max(
+            maior_posicao,
+            ultimo_livro.posicao
+        )
+
+    if ultima_decoracao:
+        maior_posicao = max(
+            maior_posicao,
+            ultima_decoracao.posicao
+        )
+
+    return maior_posicao + 1
+
+
+# ======================================
 # VISUALIZAR ESTANTE
 # ======================================
+
+def montar_prateleira(livros, decoracoes):
+
+    itens = []
+
+    # ------------------------------
+    # LIVROS
+    # ------------------------------
+
+    for livro in livros:
+
+        itens.append({
+            "tipo": "livro",
+            "objeto": livro,
+            "posicao": livro.posicao
+        })
+
+    # ------------------------------
+    # DECORAÇÕES
+    # ------------------------------
+
+    for decoracao in decoracoes:
+
+        itens.append({
+            "tipo": "decoracao",
+            "objeto": decoracao,
+            "posicao": decoracao.posicao
+        })
+
+    # ------------------------------
+    # ORDENAR TUDO JUNTO
+    # ------------------------------
+
+    itens.sort(
+        key=lambda item: item["posicao"]
+    )
+
+    return itens
+
 
 @estante_bp.route("/estante")
 @login_required
 def estante():
 
+    # ==================================
+    # LIVROS
+    # ==================================
+
     lendo = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="lendo"
+    ).order_by(
+        Estante.posicao
     ).all()
 
     lidos = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="lido"
+    ).order_by(
+        Estante.posicao
     ).all()
 
     quero_ler = Estante.query.filter_by(
         usuario_id=current_user.id,
         status="quero ler"
+    ).order_by(
+        Estante.posicao
     ).all()
 
+    # ==================================
+    # DECORAÇÕES
+    # ==================================
+
     decoracoes_lendo = DecoracaoEstante.query.filter_by(
-    usuario_id=current_user.id,
-    prateleira="lendo"
+        usuario_id=current_user.id,
+        prateleira="lendo"
     ).order_by(
         DecoracaoEstante.posicao
     ).all()
@@ -61,15 +151,32 @@ def estante():
         DecoracaoEstante.posicao
     ).all()
 
+    # ==================================
+    # MONTAR PRATELEIRAS
+    # ==================================
+
+    itens_lendo = montar_prateleira(
+        lendo,
+        decoracoes_lendo
+    )
+
+    itens_lidos = montar_prateleira(
+        lidos,
+        decoracoes_lidos
+    )
+
+    itens_quero_ler = montar_prateleira(
+        quero_ler,
+        decoracoes_quero_ler
+    )
+
     return render_template(
         "books/estante.html",
-        lendo=lendo,
-        lidos=lidos,
-        quero_ler=quero_ler,
-        decoracoes_lendo=decoracoes_lendo,
-        decoracoes_lidos=decoracoes_lidos,
-        decoracoes_quero_ler=decoracoes_quero_ler
+        itens_lendo=itens_lendo,
+        itens_lidos=itens_lidos,
+        itens_quero_ler=itens_quero_ler
     )
+
 
 # ======================================
 # DECORAR
@@ -87,6 +194,10 @@ def decorar_estante(usuario_item_id):
         usuario_id=current_user.id
     ).first_or_404()
 
+    # ==================================
+    # VERIFICAR SE JÁ ESTÁ NA ESTANTE
+    # ==================================
+
     ja_esta_na_estante = DecoracaoEstante.query.filter_by(
         usuario_id=current_user.id,
         usuario_item_id=compra.id
@@ -103,8 +214,11 @@ def decorar_estante(usuario_item_id):
             url_for("loja_bp.colecao")
         )
 
+    # ==================================
+    # PEGAR PRATELEIRA
+    # ==================================
+
     prateleira = request.form.get("prateleira")
-    posicao = request.form.get("posicao", 0)
 
     if prateleira not in [
         "lendo",
@@ -121,10 +235,18 @@ def decorar_estante(usuario_item_id):
             url_for("loja_bp.colecao")
         )
 
-    try:
-        posicao = int(posicao)
-    except (TypeError, ValueError):
-        posicao = 0
+    # ==================================
+    # CALCULAR POSIÇÃO
+    # ==================================
+
+    posicao = proxima_posicao(
+        current_user.id,
+        prateleira
+    )
+
+    # ==================================
+    # CRIAR DECORAÇÃO
+    # ==================================
 
     decoracao = DecoracaoEstante(
         usuario_id=current_user.id,
@@ -144,6 +266,7 @@ def decorar_estante(usuario_item_id):
     return redirect(
         url_for("estante_bp.estante")
     )
+
 
 # ======================================
 # ATUALIZAR PROGRESSO
@@ -193,9 +316,18 @@ def atualizar_progresso(id):
     # ==================================
 
     elif item.progresso < 100:
+
         item.status = "lendo"
 
         if status_anterior == "quero ler":
+
+            # Livro mudou de prateleira.
+            # Coloca no final da nova prateleira.
+
+            item.posicao = proxima_posicao(
+                current_user.id,
+                "lendo"
+            )
 
             registrar_atividade(
                 current_user,
@@ -231,9 +363,20 @@ def atualizar_progresso(id):
                 "concluir um livro"
             )
 
+        # Se mudou para "lido",
+        # coloca no final da prateleira.
+
+        if item.status != "lido":
+
+            item.posicao = proxima_posicao(
+                current_user.id,
+                "lido"
+            )
+
         item.status = "lido"
 
         if item.data_leitura is None:
+
             item.data_leitura = date.today()
 
     db.session.commit()
@@ -257,7 +400,10 @@ def atualizar_progresso(id):
 # AVALIAR LIVRO / ESCREVER RESENHA
 # ======================================
 
-@estante_bp.route("/avaliar/<int:id>", methods=["POST"])
+@estante_bp.route(
+    "/avaliar/<int:id>",
+    methods=["POST"]
+)
 @login_required
 def avaliar(id):
 
@@ -266,7 +412,9 @@ def avaliar(id):
         livro_id=id
     ).first_or_404()
 
-    nota = int(request.form["nota"])
+    nota = int(
+        request.form["nota"]
+    )
 
     if nota < 1 or nota > 5:
 
@@ -276,13 +424,21 @@ def avaliar(id):
         )
 
         return redirect(
-            url_for("books_bp.ver", id=id)
+            url_for(
+                "books_bp.ver",
+                id=id
+            )
         )
 
-    data_leitura = request.form.get("data_leitura")
+    data_leitura = request.form.get(
+        "data_leitura"
+    )
 
     if data_leitura:
-        data_leitura = date.fromisoformat(data_leitura)
+
+        data_leitura = date.fromisoformat(
+            data_leitura
+        )
 
     # ======================================
     # PRIMEIRA AVALIAÇÃO
@@ -344,9 +500,7 @@ def avaliar(id):
     # ======================================
 
     item.nota = nota
-
     item.resenha = resenha_nova
-
     item.data_leitura = data_leitura
 
     db.session.commit()
@@ -363,8 +517,13 @@ def avaliar(id):
     )
 
     return redirect(
-        url_for("books_bp.ver", id=id)
+        url_for(
+            "books_bp.ver",
+            id=id
+        )
     )
+
+
 # ======================================
 # REMOVER DA ESTANTE
 # ======================================

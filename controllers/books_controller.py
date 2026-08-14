@@ -6,7 +6,7 @@ from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 
-from models import Livro, Estante
+from models import Livro, Estante, DecoracaoEstante
 from extensions import db
 
 
@@ -97,7 +97,52 @@ def adicionar_estante(livro_id):
 
     if existe:
 
+        status_anterior = existe.status
+
+        # Se mudou de prateleira,
+        # coloca o livro no final da nova prateleira
+        if status_anterior != status:
+
+            # Define o nome da prateleira
+            nova_prateleira = status
+
+            # Pega a maior posição entre os livros
+            ultimo_livro = Estante.query.filter_by(
+                usuario_id=current_user.id,
+                status=nova_prateleira
+            ).order_by(
+                Estante.posicao.desc()
+            ).first()
+
+            # Pega a maior posição entre as decorações
+            ultima_decoracao = DecoracaoEstante.query.filter_by(
+                usuario_id=current_user.id,
+                prateleira=nova_prateleira
+            ).order_by(
+                DecoracaoEstante.posicao.desc()
+            ).first()
+
+            maior_posicao = -1
+
+            if ultimo_livro:
+                maior_posicao = max(
+                    maior_posicao,
+                    ultimo_livro.posicao
+                )
+
+            if ultima_decoracao:
+                maior_posicao = max(
+                    maior_posicao,
+                    ultima_decoracao.posicao
+                )
+
+            existe.posicao = maior_posicao + 1
+
         existe.status = status
+
+        # ==================================
+        # STATUS LIDO
+        # ==================================
 
         if status == "lido":
 
@@ -105,11 +150,28 @@ def adicionar_estante(livro_id):
             existe.pagina_atual = existe.livro.paginas
             existe.data_leitura = date.today()
 
+        # ==================================
+        # STATUS QUERO LER
+        # ==================================
+
         elif status == "quero ler":
 
             existe.progresso = 0
             existe.pagina_atual = 0
             existe.data_leitura = None
+
+        # ==================================
+        # STATUS LENDO
+        # ==================================
+
+        elif status == "lendo":
+
+            # Se estava em outra prateleira e agora começou a ler,
+            # mantém o progresso atual.
+            if existe.progresso == 100:
+                existe.progresso = 0
+                existe.pagina_atual = 0
+                existe.data_leitura = None
 
         mensagem = "Status atualizado!"
 
@@ -123,26 +185,87 @@ def adicionar_estante(livro_id):
             usuario_id=current_user.id
         ).count()
 
+        # ==================================
+        # CALCULAR PRÓXIMA POSIÇÃO
+        # ==================================
+
+        ultimo_livro = Estante.query.filter_by(
+            usuario_id=current_user.id,
+            status=status
+        ).order_by(
+            Estante.posicao.desc()
+        ).first()
+
+        ultima_decoracao = DecoracaoEstante.query.filter_by(
+            usuario_id=current_user.id,
+            prateleira=status
+        ).order_by(
+            DecoracaoEstante.posicao.desc()
+        ).first()
+
+        maior_posicao = -1
+
+        if ultimo_livro:
+            maior_posicao = max(
+                maior_posicao,
+                ultimo_livro.posicao
+            )
+
+        if ultima_decoracao:
+            maior_posicao = max(
+                maior_posicao,
+                ultima_decoracao.posicao
+            )
+
+        proxima_posicao = maior_posicao + 1
+
+        # ==================================
+        # CRIAR LIVRO
+        # ==================================
+
         novo = Estante(
             usuario_id=current_user.id,
             livro_id=livro_id,
             status=status,
+
             progresso=100 if status == "lido" else 0,
-            pagina_atual=livro.paginas if status == "lido" else 0,
-            data_leitura=date.today() if status == "lido" else None,
+
+            pagina_atual=(
+                livro.paginas
+                if status == "lido"
+                else 0
+            ),
+
+            data_leitura=(
+                date.today()
+                if status == "lido"
+                else None
+            ),
+
             nota=None,
-            resenha=""
+            resenha="",
+
+            # posição dentro da prateleira
+            posicao=proxima_posicao
         )
 
         db.session.add(novo)
+
+        # ==================================
+        # ATIVIDADE
+        # ==================================
+
         registrar_atividade(
             current_user,
             "adicionar",
             f'Você adicionou "{livro.titulo}" à sua estante.',
             livro
         )
-        
-        # XP por adicionar qualquer livro
+
+        # ==================================
+        # XP POR ADICIONAR LIVRO
+        # ==================================
+
         adicionar_xp(
             current_user,
             5,
@@ -155,7 +278,10 @@ def adicionar_estante(livro_id):
             "adicionar um livro à estante"
         )
 
-        # Se já adicionou como lido
+        # ==================================
+        # SE JÁ ADICIONOU COMO LIDO
+        # ==================================
+
         if status == "lido":
 
             adicionar_xp(
@@ -170,7 +296,10 @@ def adicionar_estante(livro_id):
                 "concluir um livro"
             )
 
-        # Bônus pelo primeiro livro
+        # ==================================
+        # BÔNUS PELO PRIMEIRO LIVRO
+        # ==================================
+
         if total == 0:
 
             adicionar_xp(
@@ -186,6 +315,10 @@ def adicionar_estante(livro_id):
             )
 
         mensagem = "Livro adicionado à estante!"
+
+    # ==================================
+    # SALVAR
+    # ==================================
 
     db.session.commit()
 

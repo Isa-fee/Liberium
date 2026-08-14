@@ -77,6 +77,12 @@ class Estante(db.Model):
         nullable=False,
         default="quero ler"
     )
+    # posição do livro dentro da prateleira
+    posicao = db.Column(
+        db.Integer,
+        nullable=False,
+        default=0
+    )
 
     # porcentagem de leitura
     progresso = db.Column(
