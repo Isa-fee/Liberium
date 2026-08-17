@@ -350,6 +350,11 @@ class MetaLeitura(db.Model):
         default=date.today
     )
 
+    data_fim = db.Column(
+    db.Date,
+    nullable=False
+    )
+
     concluida = db.Column(
         db.Boolean,
         default=False
