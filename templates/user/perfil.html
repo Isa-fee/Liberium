@@ -81,100 +81,293 @@
                     <span>XP</span>
                 </div>
             </div>
-    
-            <div class="meta-card">
 
-                <h3>SUA META DE LEITURA</h3>
-            
-                {% if meta %}
-            
-                    <p>
-                        {{ meta.quantidade }} livros esse mês.
+        <div class="meta-card">
+
+            <h3>SUA META DE LEITURA</h3>
+        
+            {% if meta %}
+        
+                <p>
+                    {{ meta.quantidade }} livro{% if meta.quantidade != 1 %}s{% endif %}
+                    para ler este mês.
+                </p>
+        
+                <div class="barra-meta">
+                    <div
+                        class="progresso-meta"
+                        style="width: {{ percentual_meta }}%;"
+                    ></div>
+                </div>
+        
+                <span>
+                    {{ meta.progresso }} de {{ meta.quantidade }} livros
+                </span>
+        
+                {% if meta.concluida %}
+        
+                    <p class="texto-meta">
+                        🎉 Parabéns! Você concluiu sua meta de leitura!
                     </p>
-            
-                    <div class="barra-meta">
-            
-                        <div
-                            class="progresso-meta"
-                            style="width: {{ percentual_meta }}%;"
-                        ></div>
-            
-                    </div>
-            
-                    <span>
-                        {{ percentual_meta }}%
-                    </span>
-            
-                    {% if meta.concluida %}
-            
-                        <p class="texto-meta">
-                            🎯 Parabéns!
-                            Você cumpriu sua meta de
-                            {{ meta.quantidade }} livros!
-                        </p>
-            
-                    {% endif %}
-            
-                    <form
-                        action="{{ url_for('user_bp.definir_meta') }}"
-                        method="POST"
-                        class="form-meta"
-                    >
-            
-                        <label for="quantidade">
-                            Alterar meta:
-                        </label>
-            
-                        <input
-                            type="number"
-                            id="quantidade"
-                            name="quantidade"
-                            min="1"
-                            value="{{ meta.quantidade }}"
-                            required
-                        >
-            
-                        <button type="submit">
-                            Salvar
-                        </button>
-            
-                    </form>
-            
+        
                 {% else %}
-            
+        
                     <p>
-                        Você ainda não definiu sua meta de leitura.
+                        {% if livros_restantes == 1 %}
+                            Falta 1 livro para concluir sua meta.
+                        {% else %}
+                            Faltam {{ livros_restantes }} livros para concluir sua meta.
+                        {% endif %}
                     </p>
-            
-                    <form
-                        action="{{ url_for('user_bp.definir_meta') }}"
-                        method="POST"
-                        class="form-meta"
-                    >
-            
-                        <label for="quantidade">
-                            Quantos livros você quer ler este mês?
-                        </label>
-            
-                        <input
-                            type="number"
-                            id="quantidade"
-                            name="quantidade"
-                            min="1"
-                            placeholder="Ex.: 15"
-                            required
-                        >
-            
-                        <button type="submit">
-                            Definir meta
-                        </button>
-            
-                    </form>
-            
+        
                 {% endif %}
+        
+                <button
+                    type="button"
+                    class="btn-meta"
+                    id="abrir-modal-meta"
+                >
+                    Editar meta
+                </button>
+        
+            {% else %}
+        
+                <p>
+                    Você ainda não definiu sua meta de leitura.
+                </p>
+        
+                <button
+                    type="button"
+                    class="btn-meta"
+                    id="abrir-modal-meta"
+                >
+                    Definir meta
+                </button>
+        
+            {% endif %}
+        
+            </div>
+        </div>
+
+        <div class="modal-meta-overlay" id="modal-meta" aria-hidden="true">
+            <div class="modal-meta" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-meta">
+                <div class="modal-meta-cabecalho">
+                    <h2 id="titulo-modal-meta">
+
+                        {% if meta %}
+                            Editar meta de leitura
+                        {% else %}
+                            Criar meta de leitura
+                        {% endif %}
+
+                    </h2>
+
+                    <button
+                        type="button"
+                        class="fechar-modal-meta"
+                        id="fechar-modal-meta"
+                        aria-label="Fechar"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <form
+                    action="{{ url_for('user_bp.definir_meta') }}"
+                    method="POST"
+                    class="form-meta-modal"
+                >
+
+                    <!-- ==========================
+                        PERÍODO
+                    =========================== -->
+
+                    <label for="periodo-meta">
+                        Por quanto tempo será sua meta?
+                    </label>
+
+                    <select
+                        id="periodo-meta"
+                        name="periodo"
+                        required
+                    >
+
+                        <option value="1_mes">
+                            1 mês
+                        </option>
+
+                        <option value="3_meses">
+                            3 meses
+                        </option>
+
+                        <option value="6_meses">
+                            6 meses
+                        </option>
+
+                        <option value="1_ano">
+                            1 ano
+                        </option>
+
+                        <option value="personalizado">
+                            Personalizado
+                        </option>
+
+                    </select>
+
+
+                    <!-- ==========================
+                        DATA DE INÍCIO
+                    =========================== -->
+
+                    <label for="data-inicio-meta">
+                        Data de início
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data-inicio-meta"
+                        name="data_inicio"
+                        value="{{ meta.data_inicio.strftime('%Y-%m-%d') if meta else hoje.strftime('%Y-%m-%d') }}"
+                        required
+                    >
+
+
+                    <!-- ==========================
+                        DATA FINAL PERSONALIZADA
+                    =========================== -->
+
+                    <div
+                        class="campo-data-fim"
+                        id="campo-data-fim"
+                    >
+
+                        <label for="data-fim-meta">
+                            Data de término
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data-fim-meta"
+                            name="data_fim"
+                            value="{{ meta.data_fim.strftime('%Y-%m-%d') if meta else '' }}"
+                        >
+
+                    </div>
+
+
+                    <!-- ==========================
+                        QUANTIDADE
+                    =========================== -->
+
+                    <label for="quantidade-meta">
+                        Quantos livros você quer ler?
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantidade-meta"
+                        name="quantidade"
+                        min="1"
+                        value="{{ meta.quantidade if meta else 5 }}"
+                        required
+                    >
+
+
+                    <!-- ==========================
+                        BOTÕES
+                    =========================== -->
+
+                    <div class="acoes-modal-meta">
+
+                        <button
+                            type="button"
+                            class="btn-cancelar-meta"
+                            id="cancelar-modal-meta"
+                        >
+                            Cancelar
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn-salvar-meta"
+                        >
+
+                            {% if meta %}
+                                Salvar alterações
+                            {% else %}
+                                Criar meta
+                            {% endif %}
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div
+        class="modal-meta-overlay"
+        id="modal-excluir-meta"
+        aria-hidden="true"
+        >
+
+        <div
+            class="modal-meta"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titulo-excluir-meta"
+        >
+
+            <div class="modal-meta-cabecalho">
+
+                <h2 id="titulo-excluir-meta">
+                    Excluir meta?
+                </h2>
+
+                <button
+                    type="button"
+                    class="fechar-modal-meta"
+                    id="fechar-excluir-meta"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <p class="texto-excluir-meta">
+                Tem certeza que deseja excluir sua meta de leitura?
+                Essa ação não poderá ser desfeita.
+            </p>
+
+
+            <div class="acoes-meta">
+
+                <button
+                    type="button"
+                    class="btn-meta"
+                    id="abrir-modal-meta"
+                >
+                    Editar meta
+                </button>
+            
+                <button
+                    type="button"
+                    class="btn-excluir-meta"
+                    id="abrir-excluir-meta"
+                >
+                    Excluir
+                </button>
             
             </div>
-    
+
+        </div>
+
         </div>
     
         <!-- ESTATÍSTICAS -->
@@ -408,5 +601,285 @@
     </section>
 
 </section>
+
+<script>
+
+    // ==========================================
+// MODAL CRIAR / EDITAR META
+// ==========================================
+
+const modalMeta = document.getElementById("modal-meta");
+
+const abrirModalMeta =
+    document.getElementById("abrir-modal-meta");
+
+const fecharModalMeta =
+    document.getElementById("fechar-modal-meta");
+
+const cancelarModalMeta =
+    document.getElementById("cancelar-modal-meta");
+
+
+// ==========================================
+// ELEMENTOS DO FORMULÁRIO
+// ==========================================
+
+const periodoMeta =
+    document.getElementById("periodo-meta");
+
+const campoDataFim =
+    document.getElementById("campo-data-fim");
+
+const dataInicioMeta =
+    document.getElementById("data-inicio-meta");
+
+const dataFimMeta =
+    document.getElementById("data-fim-meta");
+
+
+// ==========================================
+// ABRIR MODAL
+// ==========================================
+
+function abrirMeta() {
+
+    if (!modalMeta) return;
+
+    modalMeta.classList.add("aberto");
+
+    modalMeta.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    atualizarPeriodo();
+}
+
+
+// ==========================================
+// FECHAR MODAL
+// ==========================================
+
+function fecharMeta() {
+
+    if (!modalMeta) return;
+
+    modalMeta.classList.remove("aberto");
+
+    modalMeta.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+}
+
+
+// ==========================================
+// MOSTRAR / ESCONDER DATA FINAL
+// ==========================================
+
+function atualizarPeriodo() {
+
+    if (!periodoMeta || !campoDataFim) return;
+
+    if (periodoMeta.value === "personalizado") {
+
+        campoDataFim.style.display = "flex";
+
+        if (dataFimMeta) {
+            dataFimMeta.required = true;
+        }
+
+    } else {
+
+        campoDataFim.style.display = "none";
+
+        if (dataFimMeta) {
+            dataFimMeta.required = false;
+        }
+    }
+}
+
+
+// ==========================================
+// EVENTOS DO MODAL
+// ==========================================
+
+if (abrirModalMeta) {
+
+    abrirModalMeta.addEventListener(
+        "click",
+        abrirMeta
+    );
+
+}
+
+
+if (fecharModalMeta) {
+
+    fecharModalMeta.addEventListener(
+        "click",
+        fecharMeta
+    );
+
+}
+
+
+if (cancelarModalMeta) {
+
+    cancelarModalMeta.addEventListener(
+        "click",
+        fecharMeta
+    );
+
+}
+
+
+if (periodoMeta) {
+
+    periodoMeta.addEventListener(
+        "change",
+        atualizarPeriodo
+    );
+
+}
+
+
+if (modalMeta) {
+
+    modalMeta.addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === modalMeta) {
+                fecharMeta();
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// MODAL EXCLUIR
+// ==========================================
+
+const modalExcluirMeta =
+    document.getElementById("modal-excluir-meta");
+
+const abrirExcluirMeta =
+    document.getElementById("abrir-excluir-meta");
+
+const fecharExcluirMeta =
+    document.getElementById("fechar-excluir-meta");
+
+const cancelarExcluirMeta =
+    document.getElementById("cancelar-excluir-meta");
+
+
+function abrirExclusaoMeta() {
+
+    if (!modalExcluirMeta) return;
+
+    modalExcluirMeta.classList.add("aberto");
+
+    modalExcluirMeta.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+}
+
+
+function fecharExclusaoMeta() {
+
+    if (!modalExcluirMeta) return;
+
+    modalExcluirMeta.classList.remove("aberto");
+
+    modalExcluirMeta.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+}
+
+
+if (abrirExcluirMeta) {
+
+    abrirExcluirMeta.addEventListener(
+        "click",
+        abrirExclusaoMeta
+    );
+
+}
+
+
+if (fecharExcluirMeta) {
+
+    fecharExcluirMeta.addEventListener(
+        "click",
+        fecharExclusaoMeta
+    );
+
+}
+
+
+if (cancelarExcluirMeta) {
+
+    cancelarExcluirMeta.addEventListener(
+        "click",
+        fecharExclusaoMeta
+    );
+
+}
+
+
+if (modalExcluirMeta) {
+
+    modalExcluirMeta.addEventListener(
+        "click",
+        function(event) {
+
+            if (event.target === modalExcluirMeta) {
+                fecharExclusaoMeta();
+            }
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// ESC FECHA OS MODAIS
+// ==========================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key !== "Escape") return;
+
+        if (
+            modalMeta &&
+            modalMeta.classList.contains("aberto")
+        ) {
+
+            fecharMeta();
+
+        }
+
+        if (
+            modalExcluirMeta &&
+            modalExcluirMeta.classList.contains("aberto")
+        ) {
+
+            fecharExclusaoMeta();
+
+        }
+
+    }
+);
+
+</script>
 
 {% endblock %}

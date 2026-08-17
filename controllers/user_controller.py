@@ -189,8 +189,9 @@ def perfil():
         percentual_meta=percentual_meta,
         livros_restantes=livros_restantes,
         atividades=atividades,
-        colecao=colecao
-    )
+        colecao=colecao,
+        hoje=hoje
+)
 
 @user_bp.route("/configuracoes", methods=["GET", "POST"])
 @login_required
@@ -265,9 +266,9 @@ def configuracoes():
                 )
                 return redirect(url_for("user_bp.configuracoes"))
 
-            if len(nova_senha) < 6:
+            if len(nova_senha) < 3:
                 flash(
-                    "A nova senha deve ter pelo menos 6 caracteres.",
+                    "A nova senha deve ter pelo menos 3 caracteres.",
                     "danger"
                 )
                 return redirect(url_for("user_bp.configuracoes"))
@@ -360,12 +361,22 @@ def configuracoes():
 @login_required
 def definir_meta():
 
-    from datetime import date
+    from datetime import date, timedelta
+    import calendar
 
     quantidade = request.form.get(
         "quantidade",
         type=int
     )
+
+    periodo = request.form.get("periodo")
+
+    data_inicio_str = request.form.get("data_inicio")
+    data_fim_str = request.form.get("data_fim")
+
+    # ==========================================
+    # VALIDA QUANTIDADE
+    # ==========================================
 
     if not quantidade or quantidade < 1:
 
@@ -378,30 +389,217 @@ def definir_meta():
             url_for("user_bp.perfil")
         )
 
+    # ==========================================
+    # DATA DE INÍCIO
+    # ==========================================
+
     hoje = date.today()
 
-    meta = MetaLeitura.query.filter_by(
-        usuario_id=current_user.id,
-        mes=hoje.month,
-        ano=hoje.year
+    if data_inicio_str:
+
+        try:
+
+            data_inicio = date.fromisoformat(
+                data_inicio_str
+            )
+
+        except ValueError:
+
+            flash(
+                "Data de início inválida.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.perfil")
+            )
+
+    else:
+
+        data_inicio = hoje
+
+    # ==========================================
+    # CALCULA DATA DE FIM
+    # ==========================================
+
+    if periodo == "1_mes":
+
+        # Um mês a partir da data inicial
+        mes = data_inicio.month + 1
+        ano = data_inicio.year
+
+        if mes > 12:
+            mes = 1
+            ano += 1
+
+        ultimo_dia = calendar.monthrange(
+            ano,
+            mes
+        )[1]
+
+        dia = min(
+            data_inicio.day,
+            ultimo_dia
+        )
+
+        data_fim = date(
+            ano,
+            mes,
+            dia
+        ) - timedelta(days=1)
+
+    elif periodo == "3_meses":
+
+        mes = data_inicio.month + 3
+        ano = data_inicio.year
+
+        while mes > 12:
+            mes -= 12
+            ano += 1
+
+        ultimo_dia = calendar.monthrange(
+            ano,
+            mes
+        )[1]
+
+        dia = min(
+            data_inicio.day,
+            ultimo_dia
+        )
+
+        data_fim = date(
+            ano,
+            mes,
+            dia
+        ) - timedelta(days=1)
+
+    elif periodo == "6_meses":
+
+        mes = data_inicio.month + 6
+        ano = data_inicio.year
+
+        while mes > 12:
+            mes -= 12
+            ano += 1
+
+        ultimo_dia = calendar.monthrange(
+            ano,
+            mes
+        )[1]
+
+        dia = min(
+            data_inicio.day,
+            ultimo_dia
+        )
+
+        data_fim = date(
+            ano,
+            mes,
+            dia
+        ) - timedelta(days=1)
+
+    elif periodo == "1_ano":
+
+        try:
+
+            data_fim = data_inicio.replace(
+                year=data_inicio.year + 1
+            ) - timedelta(days=1)
+
+        except ValueError:
+
+            # Caso seja 29 de fevereiro
+            data_fim = data_inicio.replace(
+                year=data_inicio.year + 1,
+                day=28
+            ) - timedelta(days=1)
+
+    elif periodo == "personalizado":
+
+        if not data_fim_str:
+
+            flash(
+                "Escolha uma data de término.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.perfil")
+            )
+
+        try:
+
+            data_fim = date.fromisoformat(
+                data_fim_str
+            )
+
+        except ValueError:
+
+            flash(
+                "Data de término inválida.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.perfil")
+            )
+
+    else:
+
+        flash(
+            "Escolha um período válido para sua meta.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.perfil")
+        )
+
+    # ==========================================
+    # VALIDAÇÃO DO PERÍODO
+    # ==========================================
+
+    if data_fim < data_inicio:
+
+        flash(
+            "A data de término deve ser posterior à data de início.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.perfil")
+        )
+
+    # ==========================================
+    # PROCURA META ATIVA
+    # ==========================================
+
+    meta = MetaLeitura.query.filter(
+        MetaLeitura.usuario_id == current_user.id,
+        MetaLeitura.data_inicio <= hoje,
+        MetaLeitura.data_fim >= hoje
     ).order_by(
         MetaLeitura.id.desc()
     ).first()
 
-    # Se já existe uma meta
+    # ==========================================
+    # SE JÁ EXISTE META
+    # ==========================================
+
     if meta:
 
         # Se a meta foi concluída,
-        # cria uma nova meta
+        # permite criar uma nova.
         if meta.concluida:
 
             nova_meta = MetaLeitura(
                 usuario_id=current_user.id,
                 quantidade=quantidade,
                 progresso=0,
-                mes=hoje.month,
-                ano=hoje.year,
-                data_inicio=hoje,
+                mes=data_inicio.month,
+                ano=data_inicio.year,
+                data_inicio=data_inicio,
+                data_fim=data_fim,
                 concluida=False,
                 recompensa_recebida=False
             )
@@ -410,30 +608,78 @@ def definir_meta():
 
         else:
 
-            # Meta ainda não concluída:
-            # apenas altera a quantidade
+            # Edita a meta atual
             meta.quantidade = quantidade
+            meta.data_inicio = data_inicio
+            meta.data_fim = data_fim
+            meta.mes = data_inicio.month
+            meta.ano = data_inicio.year
+
+    # ==========================================
+    # PRIMEIRA META
+    # ==========================================
 
     else:
 
-        # Primeira meta do mês
-        meta = MetaLeitura(
+        nova_meta = MetaLeitura(
             usuario_id=current_user.id,
             quantidade=quantidade,
             progresso=0,
-            mes=hoje.month,
-            ano=hoje.year,
-            data_inicio=hoje,
+            mes=data_inicio.month,
+            ano=data_inicio.year,
+            data_inicio=data_inicio,
+            data_fim=data_fim,
             concluida=False,
             recompensa_recebida=False
         )
 
-        db.session.add(meta)
+        db.session.add(nova_meta)
 
     db.session.commit()
 
     flash(
-        f"Meta de {quantidade} livros definida!",
+        f"Meta de {quantidade} livros criada com sucesso!",
+        "success"
+    )
+
+    return redirect(
+        url_for("user_bp.perfil")
+    )
+
+
+@user_bp.route("/meta/excluir", methods=["POST"])
+@login_required
+def excluir_meta():
+
+    from datetime import date
+
+    hoje = date.today()
+
+    meta = MetaLeitura.query.filter(
+        MetaLeitura.usuario_id == current_user.id,
+        MetaLeitura.data_inicio <= hoje,
+        MetaLeitura.data_fim >= hoje
+    ).order_by(
+        MetaLeitura.id.desc()
+    ).first()
+
+    if not meta:
+
+        flash(
+            "Você não possui uma meta de leitura ativa.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.perfil")
+        )
+
+    db.session.delete(meta)
+
+    db.session.commit()
+
+    flash(
+        "Meta de leitura excluída.",
         "success"
     )
 

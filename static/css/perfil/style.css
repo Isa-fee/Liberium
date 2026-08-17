@@ -500,6 +500,234 @@
     transform: translateY(-1px);
 }
 
+/* =========================================================
+   MODAL META
+   ========================================================= */
+
+   .modal-meta-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.modal-meta-overlay.aberto {
+    display: flex;
+}
+
+
+.modal-meta {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.modal-meta-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.modal-meta-cabecalho h2 {
+    margin: 0;
+    color: #444;
+    font-size: 1.5rem;
+}
+
+.fechar-modal-meta {
+    border: none;
+    background: transparent;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.fechar-modal-meta:hover {
+    color: #444;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+.form-meta-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-meta-modal label {
+    color: #444;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   INPUTS E SELECT
+   ========================================================= */
+
+.form-meta-modal input,
+.form-meta-modal select {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    background: #fafafa;
+    outline: none;
+    transition: 0.2s;
+}
+
+.form-meta-modal input:focus,
+.form-meta-modal select:focus {
+    border-color: #8fa382;
+    box-shadow:
+        0 0 0 3px rgba(143, 163, 130, 0.15);
+}
+
+
+/* =========================================================
+   DATA PERSONALIZADA
+   ========================================================= */
+
+.campo-data-fim {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+
+.btn-meta {
+    border: none;
+    background: #8fa382;
+    color: white;
+    border-radius: 22px;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.btn-meta:hover {
+    background: #7d9172;
+}
+
+.acoes-modal-meta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-cancelar-meta,
+.btn-salvar-meta {
+    border-radius: 22px;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-cancelar-meta {
+    background: transparent;
+    border: 1px solid #8fa382;
+    color: #6c7f62;
+}
+
+.btn-cancelar-meta:hover {
+    background: #eef3ea;
+}
+
+.btn-salvar-meta {
+    background: #8fa382;
+    border: 1px solid #8fa382;
+    color: white;
+}
+
+.btn-salvar-meta:hover {
+    background: #7d9172;
+}
+
+
+/* =========================================================
+   EXCLUSÃO
+   ========================================================= */
+
+.texto-excluir-meta {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.btn-confirmar-exclusao {
+    border: 1px solid #b87979;
+    background: #b87979;
+    color: white;
+    border-radius: 22px;
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.btn-confirmar-exclusao:hover {
+    background: #9f6262;
+}
+
+.acoes-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-excluir-meta {
+    border: none;
+    background: transparent;
+    color: #a06f6f;
+    padding: 9px 13px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-excluir-meta:hover {
+    background: #f8eeee;
+    color: #8d5555;
+}
 
 /* =========================================================
    ESTATÍSTICAS

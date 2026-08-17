@@ -26,3 +26,7 @@ instance/
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
+
+# Fotos de perfil enviadas pelos usuários
+static/img/perfis/*
+!static/img/perfis/.gitkeep
