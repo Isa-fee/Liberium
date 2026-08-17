@@ -17,7 +17,7 @@
     <aside class="sidebar">
 
         <img
-            src="{{ url_for('static', filename='img/lift.jpg') }}"
+            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/lift.jpg') }}"
             class="foto-perfil"
         >
 
@@ -89,9 +89,7 @@
 
             <hr>
 
-            <a href="#">
-                Configurações
-            </a>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
 
         </nav>
 
