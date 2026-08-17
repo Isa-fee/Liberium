@@ -12,7 +12,7 @@
 <section class="pagina-estante">
 
     <aside class="sidebar">
-        <img src="{{ url_for('static', filename='img/lift.jpg') }}"
+        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/lift.jpg') }}"
         class="foto-perfil">
    
         <p class="usuario">
@@ -25,7 +25,7 @@
             <a href="{{ url_for('estante_bp.estante') }}">Estante</a>
             <a href="#">Gráficos</a>
             <a href="#">Resenhas</a>
-            <a href="#">Configurações</a>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
             <a href="{{ url_for('user_bp.logout') }}">Sair</a>
         </nav>
     </aside>

@@ -10,7 +10,7 @@ class Usuario(UserMixin, db.Model):
     nome = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
-
+    foto = db.Column(db.String(255), nullable=True)
     # GAMIFICAÇÃO
 
     xp = db.Column(db.Integer, default=20)

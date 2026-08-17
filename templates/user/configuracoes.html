@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações | Liberium{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/configuracoes/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-configuracoes">
+
+    <aside class="sidebar-config">
+
+        <img
+            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/lift.jpg') }}"
+            class="foto-config"
+            alt="Foto de perfil"
+        >
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+
+        <h1>{{ current_user.nome }}</h1>
+
+        <nav class="menu-lateral">
+
+            <a href="{{ url_for('estante_bp.estante') }}">
+                Estante
+            </a>
+
+            <a href="#">
+                Gráficos
+            </a>
+
+            <a href="#">
+                Resenhas
+            </a>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}" class="ativo">
+                Configurações
+            </a>
+
+            <a href="{{ url_for('user_bp.logout') }}">
+                Sair
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <section class="area-configuracoes">
+
+        <div class="cabecalho-config">
+
+            <div>
+                <p class="subtitulo">MEU PERFIL</p>
+
+                <h2>Configurações</h2>
+
+                <p>
+                    Atualize suas informações pessoais e personalize seu perfil.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form
+            action="{{ url_for('user_bp.configuracoes') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            class="form-configuracoes"
+        >
+
+            <!-- =========================
+                 FOTO
+            ========================== -->
+
+            <section class="card-config foto-card">
+
+                <div class="titulo-card">
+                    <h3>Foto de perfil</h3>
+
+                    <p>
+                        Escolha uma imagem para representar seu perfil.
+                    </p>
+                </div>
+
+                <div class="foto-area">
+
+                    <img
+                        src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/lift.jpg') }}"
+                        class="foto-preview"
+                        id="fotoPreview"
+                        alt="Foto de perfil"
+                    >
+
+                    <div class="foto-acoes">
+
+                        <label for="foto" class="btn-foto">
+                            Escolher foto
+                        </label>
+
+                        <input
+                            type="file"
+                            id="foto"
+                            name="foto"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            hidden
+                        >
+
+                        <span>
+                            JPG, JPEG, PNG ou WEBP
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 INFORMAÇÕES PESSOAIS
+            ========================== -->
+
+            <section class="card-config">
+
+                <div class="titulo-card">
+
+                    <h3>Informações pessoais</h3>
+
+                    <p>
+                        Altere seu nome ou endereço de e-mail.
+                    </p>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="nome">
+                        Nome
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        value="{{ current_user.nome }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ current_user.email }}"
+                        required
+                    >
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SENHA
+            ========================== -->
+
+            <section class="card-config">
+
+                <div class="titulo-card">
+
+                    <h3>Alterar senha</h3>
+
+                    <p>
+                        Deixe os campos vazios caso não queira alterar sua senha.
+                    </p>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="senha_atual">
+                        Senha atual
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senha_atual"
+                        name="senha_atual"
+                        placeholder="Digite sua senha atual"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="nova_senha">
+                        Nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="nova_senha"
+                        name="nova_senha"
+                        placeholder="Digite sua nova senha"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="confirmar_senha">
+                        Confirmar nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmar_senha"
+                        name="confirmar_senha"
+                        placeholder="Digite novamente sua nova senha"
+                    >
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 BOTÕES
+            ========================== -->
+
+            <div class="acoes-form">
+
+                <a
+                    href="{{ url_for('user_bp.perfil') }}"
+                    class="btn-cancelar"
+                >
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-salvar"
+                >
+                    Salvar alterações
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</section>
+
+
+<script>
+
+    const inputFoto = document.getElementById("foto");
+    const fotoPreview = document.getElementById("fotoPreview");
+
+    inputFoto.addEventListener("change", function () {
+
+        const arquivo = this.files[0];
+
+        if (arquivo) {
+
+            const leitor = new FileReader();
+
+            leitor.onload = function (e) {
+                fotoPreview.src = e.target.result;
+            };
+
+            leitor.readAsDataURL(arquivo);
+        }
+
+    });
+
+</script>
+
+{% endblock %}

@@ -1,5 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+import os
+import uuid
+
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
@@ -186,6 +190,170 @@ def perfil():
         livros_restantes=livros_restantes,
         atividades=atividades,
         colecao=colecao
+    )
+
+@user_bp.route("/configuracoes", methods=["GET", "POST"])
+@login_required
+def configuracoes():
+
+    if request.method == "POST":
+
+        nome = request.form.get("nome", "").strip()
+        email = request.form.get("email", "").strip().lower()
+
+        senha_atual = request.form.get("senha_atual", "")
+        nova_senha = request.form.get("nova_senha", "")
+        confirmar_senha = request.form.get("confirmar_senha", "")
+
+        # Validar nome
+        if not nome:
+            flash("O nome não pode ficar vazio.", "danger")
+            return redirect(url_for("user_bp.configuracoes"))
+
+        # Validar e-mail
+        if not email:
+            flash("O e-mail não pode ficar vazio.", "danger")
+            return redirect(url_for("user_bp.configuracoes"))
+
+        usuario_existente = Usuario.query.filter(
+            Usuario.email == email,
+            Usuario.id != current_user.id
+        ).first()
+
+        if usuario_existente:
+            flash(
+                "Este e-mail já está sendo usado por outro usuário.",
+                "danger"
+            )
+            return redirect(url_for("user_bp.configuracoes"))
+
+        # Alterar senha
+        quer_alterar_senha = (
+            senha_atual or nova_senha or confirmar_senha
+        )
+
+        if quer_alterar_senha:
+
+            if not senha_atual:
+                flash(
+                    "Digite sua senha atual para alterar a senha.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            if not check_password_hash(
+                current_user.senha,
+                senha_atual
+            ):
+                flash(
+                    "A senha atual está incorreta.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            if not nova_senha:
+                flash(
+                    "Digite uma nova senha.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            if nova_senha != confirmar_senha:
+                flash(
+                    "As novas senhas não coincidem.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            if len(nova_senha) < 6:
+                flash(
+                    "A nova senha deve ter pelo menos 6 caracteres.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            current_user.senha = generate_password_hash(nova_senha)
+
+        # Atualizar nome e e-mail
+        current_user.nome = nome
+        current_user.email = email
+
+        # Alterar foto
+        foto = request.files.get("foto")
+
+        if foto and foto.filename:
+
+            extensoes_permitidas = {
+                "jpg",
+                "jpeg",
+                "png",
+                "webp"
+            }
+
+            nome_original = secure_filename(foto.filename)
+
+            extensao = nome_original.rsplit(
+                ".",
+                1
+            )[-1].lower()
+
+            if extensao not in extensoes_permitidas:
+                flash(
+                    "Formato de imagem inválido. "
+                    "Use JPG, JPEG, PNG ou WEBP.",
+                    "danger"
+                )
+                return redirect(url_for("user_bp.configuracoes"))
+
+            pasta_perfis = os.path.join(
+                current_app.static_folder,
+                "img",
+                "perfis"
+            )
+
+            os.makedirs(
+                pasta_perfis,
+                exist_ok=True
+            )
+
+            novo_nome = f"{uuid.uuid4().hex}.{extensao}"
+
+            caminho_arquivo = os.path.join(
+                pasta_perfis,
+                novo_nome
+            )
+
+            foto.save(caminho_arquivo)
+
+            # Apagar foto anterior
+            if current_user.foto:
+
+                foto_anterior = os.path.join(
+                    current_app.static_folder,
+                    current_user.foto
+                )
+
+                if (
+                    os.path.isfile(foto_anterior)
+                    and current_user.foto.startswith("img/perfis/")
+                ):
+                    os.remove(foto_anterior)
+
+            current_user.foto = f"img/perfis/{novo_nome}"
+
+        db.session.commit()
+
+        flash(
+            "Perfil atualizado com sucesso!",
+            "success"
+        )
+
+        return redirect(
+            url_for("user_bp.configuracoes")
+        )
+
+    return render_template(
+        "user/configuracoes.html"
     )
 
 @user_bp.route("/meta", methods=["POST"])

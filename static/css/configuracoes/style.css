@@ -1,0 +1,364 @@
+:root {
+    --verde-principal: #71866b;
+    --verde-claro: #dfe9d9;
+    --verde-sidebar: #e5eddf;
+    --branco: #ffffff;
+    --fundo: #f5f7f3;
+    --marrom: #4b3323;
+    --cinza: #858b82;
+    --borda: #dfe4dc;
+}
+
+.pagina-configuracoes {
+    min-height: calc(100vh - 100px);
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    background: var(--fundo);
+}
+
+/* Sidebar */
+
+.sidebar-config {
+    background: linear-gradient(180deg, #e7efe2 0%, #dbe7d5 100%);
+    padding: 38px 22px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(80, 105, 75, 0.08);
+}
+
+.foto-config {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 7px 18px rgba(60, 80, 55, 0.15);
+    margin-bottom: 12px;
+}
+
+.sidebar-config .usuario {
+    color: #82907c;
+    font-size: 13px;
+    margin: 0 0 5px;
+}
+
+.sidebar-config h1 {
+    margin: 0 0 28px;
+    color: var(--marrom);
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.menu-lateral {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.menu-lateral a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #52604d;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 12px;
+    transition: 0.25s ease;
+}
+
+.menu-lateral a:hover {
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--verde-principal);
+    transform: translateX(3px);
+}
+
+.menu-lateral a.ativo {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--verde-principal);
+    font-weight: 700;
+}
+
+/* Área principal */
+
+.area-configuracoes {
+    background: var(--fundo);
+    padding: 35px 42px 50px;
+    min-width: 0;
+}
+
+.cabecalho-config {
+    margin-bottom: 22px;
+}
+
+.subtitulo {
+    margin: 0 0 5px;
+    color: var(--verde-principal);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.cabecalho-config h2 {
+    margin: 0;
+    color: #30362e;
+    font-size: 28px;
+    font-weight: 750;
+}
+
+.cabecalho-config p:last-child {
+    margin: 8px 0 0;
+    color: var(--cinza);
+    font-size: 13px;
+}
+
+/* Cards */
+
+.form-configuracoes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 850px;
+}
+
+.card-config {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 8px 25px rgba(65, 79, 59, 0.08);
+    border: 1px solid rgba(110, 130, 100, 0.07);
+}
+
+.titulo-card {
+    margin-bottom: 22px;
+}
+
+.titulo-card h3 {
+    margin: 0 0 5px;
+    color: #343b31;
+    font-size: 17px;
+}
+
+.titulo-card p {
+    margin: 0;
+    color: #888f85;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Foto */
+
+.foto-area {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.foto-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #edf3e9;
+    box-shadow: 0 6px 18px rgba(60, 80, 55, 0.10);
+}
+
+.foto-acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.btn-foto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--verde-principal);
+    color: white;
+    padding: 10px 17px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-foto:hover {
+    background: #5f7559;
+    transform: translateY(-1px);
+}
+
+.foto-acoes span {
+    color: #999f97;
+    font-size: 10px;
+}
+
+/* Campos */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 17px;
+}
+
+.campo:last-child {
+    margin-bottom: 0;
+}
+
+.campo label {
+    color: #596154;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.campo input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--borda);
+    background: #fafbf9;
+    border-radius: 10px;
+    padding: 12px 13px;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    color: #4b5148;
+    transition: 0.2s ease;
+}
+
+.campo input:focus {
+    border-color: #91a88a;
+    background: var(--branco);
+    box-shadow: 0 0 0 3px rgba(143, 163, 130, 0.15);
+}
+
+.campo input::placeholder {
+    color: #aeb3ac;
+}
+
+/* Botões */
+
+.acoes-form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-cancelar,
+.btn-salvar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    padding: 11px 20px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-cancelar {
+    background: #e9ede7;
+    color: #687067;
+}
+
+.btn-cancelar:hover {
+    background: #dfe5dc;
+}
+
+.btn-salvar {
+    background: var(--verde-principal);
+    color: white;
+}
+
+.btn-salvar:hover {
+    background: #5f7559;
+    box-shadow: 0 5px 12px rgba(80, 105, 75, 0.15);
+}
+
+/* Responsividade */
+
+@media (max-width: 900px) {
+    .pagina-configuracoes {
+        grid-template-columns: 200px minmax(0, 1fr);
+    }
+
+    .area-configuracoes {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 650px) {
+    .pagina-configuracoes {
+        display: block;
+    }
+
+    .sidebar-config {
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid #d8e1d3;
+    }
+
+    .foto-config {
+        width: 85px;
+        height: 85px;
+    }
+
+    .sidebar-config h1 {
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .menu-lateral {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .menu-lateral a {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .area-configuracoes {
+        padding: 20px 15px 35px;
+    }
+
+    .cabecalho-config h2 {
+        font-size: 24px;
+    }
+
+    .card-config {
+        padding: 20px;
+    }
+
+    .foto-area {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .foto-acoes {
+        align-items: center;
+    }
+
+    .acoes-form {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .btn-cancelar,
+    .btn-salvar {
+        width: 100%;
+    }
+}
