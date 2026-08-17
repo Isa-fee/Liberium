@@ -17,6 +17,13 @@
                 Personalize sua estante com itens especiais!
             </p>
         </div>
+        <div class="saldo-libelulas">
+            <img src="{{ url_for('static', filename='img/gamificacao/libelula.png') }}" 
+                 alt="Libélula" 
+                 class="icone-libelula">
+        
+                <span>{{ current_user.libelulas }}</span>
+        </div>
         <a href="{{ url_for('loja_bp.colecao') }}" class="btn-colecao"> Minha coleção </a>
     </div>
 

@@ -28,7 +28,51 @@
     color: #6c5338;
     font-size: 1.05rem;
 }
+.acoes-estante {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
+/* Quantidade de libélulas */
+.saldo-libelulas {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    background-color: #a0b294;
+    color: white;
+
+    padding: 10px 16px;
+    border-radius: 25px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    /* Faz parecer uma informação, não um botão */
+    cursor: default;
+    user-select: none;
+}
+
+.icone-libelula {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Botão Minha coleção */
+.btn-colecao {
+    display: inline-flex;
+    align-items: center;
+
+    background-color: #91a685;
+    color: white;
+
+    padding: 10px 18px;
+    border-radius: 25px;
+
+    text-decoration: none;
+    font-weight: 600;
+}
 
 /* ================================
    SEÇÕES
@@ -137,6 +181,11 @@
     transform: scale(1.05);
 }
 
+.icone-libelula {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
 
 /* ================================
    NOME
