@@ -28,6 +28,7 @@ def create_app():
     from controllers.user_controller import user_bp
     from controllers.loja_controller import loja_bp
     from controllers.clubes_controller import clubes_bp
+    from controllers.amigos_controller import amigos_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(books_bp)
@@ -35,6 +36,7 @@ def create_app():
     app.register_blueprint(user_bp)
     app.register_blueprint(loja_bp)
     app.register_blueprint(clubes_bp)
+    app.register_blueprint(amigos_bp)
 
     return app
 

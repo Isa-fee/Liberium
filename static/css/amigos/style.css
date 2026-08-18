@@ -1,70 +1,186 @@
+
+
 /* =========================================
    PÁGINA DE AMIGOS
 ========================================= */
 
 .pagina-amigos {
-    min-height: 100vh;
-    padding: 45px;
+    min-height: calc(100vh - 100px);
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
     background: #f8f7f5;
+
 }
 
 
+.conteudo {
+
+    background: radial-gradient( circle at 95% 5%,  rgba(143, 163, 130, 0.10), transparent 25%),var(--fundo);
+    padding: 35px 42px 50px;
+    min-width: 0;
+}
+
+/* =========================================================
+   MENU LATERAL
+   ========================================================= */
+
+   .sidebar{
+    margin: 0px;
+
+    background:#d7e2cf;
+    padding:35px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+
+.foto-perfil{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
+}
+
+.sidebar h3{
+    margin:0;
+    color:#4b3323;
+    font-size:28px;
+}
+
+
+.usuario{
+    color:#8d8d8d;
+    margin-top:5px;
+    margin-bottom:35px;
+}
+
+.menu-lateral{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+.titulo-menu{
+    color:#6c5338;
+    font-weight:bold;
+    font-size:.9rem;
+    text-transform:uppercase;
+    margin:18px 0 12px;
+}
+
+.menu-lateral a{
+    text-decoration:none;
+    color:#4b3323;
+    padding:10px;
+    border-radius:8px;
+    transition:.2s;
+}
+
+.menu-lateral a:hover{
+    background:white;
+}
+
+.menu-lateral hr{
+    border:none;
+    border-top:1px solid rgba(0,0,0,.1);
+    margin:20px 0;
+}
+
+.card-moedas{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:10px;
+}
+
+.icone-libelula {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin: 0 auto 5px;
+}
+
+
+
 /* =========================================
-   CABEÇALHO
+   NAVEGAÇÃO
 ========================================= */
 
-.cabecalho-amigos {
+.navegacao-amigos {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+
+    gap: 35px;
+
     margin-bottom: 30px;
+
+    border-bottom: 1px solid #ddd6ce;
 }
 
-.cabecalho-amigos h1 {
-    margin: 0;
-    color: #5b3923;
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 34px;
-}
+.aba-amigos {
+    position: relative;
 
-.cabecalho-amigos p {
-    margin-top: 8px;
-    color: #7b6b5c;
-    font-family: "Raleway", sans-serif;
-}
+    padding: 13px 5px;
 
-
-/* =========================================
-   BOTÃO ENCONTRAR
-========================================= */
-
-.btn-encontrar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 12px 22px;
-
-    background: #8fa382;
-    color: white;
-
-    border-radius: 25px;
+    color: #8a7c6d;
 
     text-decoration: none;
-    font-family: "Raleway", sans-serif;
+
+    font-size: 14px;
     font-weight: 600;
 
     transition: 0.2s;
 }
 
-.btn-encontrar:hover {
-    background: #788d6c;
-    transform: translateY(-2px);
+.aba-amigos:hover {
+    color: #5b3923;
+}
+
+.aba-amigos.ativa {
+    color: #5b3923;
+}
+
+.aba-amigos.ativa::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -1px;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #8fa382;
+
+    border-radius: 3px 3px 0 0;
 }
 
 
 /* =========================================
-   BARRA DE PESQUISA
+   LAYOUT
+========================================= */
+
+.layout-amigos {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) 330px;
+
+    gap: 30px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   BUSCA
 ========================================= */
 
 .barra-pesquisa {
@@ -72,137 +188,157 @@
     align-items: center;
 
     width: 100%;
-    max-width: 650px;
 
-    margin-bottom: 40px;
-
-    background: white;
-
-    border: 1px solid #ded8d0;
-    border-radius: 14px;
+    margin-bottom: 32px;
 
     padding: 0 18px;
 
     box-sizing: border-box;
+
+    background: white;
+
+    border: 1px solid #ded8d0;
+
+    border-radius: 14px;
+
+    box-shadow: 0 2px 8px rgba(91, 57, 35, 0.03);
 }
 
 .icone-pesquisa {
-    font-size: 25px;
     color: #8fa382;
+
+    font-size: 26px;
+
     margin-right: 10px;
 }
 
 .barra-pesquisa input {
     width: 100%;
 
+    padding: 16px 5px;
+
     border: none;
     outline: none;
 
-    padding: 15px 5px;
-
     background: transparent;
+
+    color: #5b3923;
 
     font-family: "Raleway", sans-serif;
     font-size: 14px;
-
-    color: #5b3923;
 }
 
 .barra-pesquisa input::placeholder {
-    color: #a59b91;
+    color: #aaa096;
 }
 
 
 /* =========================================
-   TÍTULO DA SEÇÃO
+   CABEÇALHO DAS SEÇÕES
 ========================================= */
 
-.titulo-secao {
-    margin-bottom: 20px;
+.cabecalho-secao {
+    margin-bottom: 18px;
 }
 
-.titulo-secao h2 {
+.cabecalho-secao h1,
+.cabecalho-secao h2 {
     margin: 0;
 
     color: #5b3923;
 
     font-family: "Tenor Sans", sans-serif;
-    font-size: 24px;
 }
 
-.titulo-secao p {
-    margin-top: 6px;
+.cabecalho-secao h1 {
+    font-size: 26px;
+}
+
+.cabecalho-secao h2 {
+    font-size: 23px;
+}
+
+.cabecalho-secao p {
+    margin: 6px 0 0;
 
     color: #8a7c6d;
 
-    font-family: "Raleway", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 
 /* =========================================
-   GRID DE AMIGOS
+   LISTA DE AMIGOS
 ========================================= */
 
-.grid-amigos {
-    display: grid;
+.lista-amigos {
+    display: flex;
 
-    grid-template-columns:
-        repeat(auto-fill, minmax(320px, 1fr));
+    flex-direction: column;
 
-    gap: 22px;
+    gap: 14px;
 }
 
 
 /* =========================================
-   CARD DO AMIGO
+   CARD AMIGO
 ========================================= */
 
 .card-amigo {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 18px 20px;
+
     background: white;
 
-    border: 1px solid #e1ddd7;
-    border-radius: 18px;
+    border: 1px solid #e2ddd7;
 
-    padding: 22px;
+    border-radius: 16px;
 
-    box-shadow: 0 3px 12px rgba(91, 57, 35, 0.04);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: 0.2s;
 }
 
 .card-amigo:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 8px 24px rgba(91, 57, 35, 0.09);
+        0 7px 20px rgba(91, 57, 35, 0.07);
 }
 
 
 /* =========================================
-   TOPO DO CARD
+   PERFIL DO AMIGO
 ========================================= */
 
-.topo-card {
+.perfil-amigo {
     display: flex;
     align-items: center;
 
-    gap: 15px;
+    gap: 14px;
 
-    margin-bottom: 18px;
+    flex: 1;
 }
 
 .foto-amigo {
-    width: 68px;
-    height: 68px;
+    width: 62px;
+    height: 62px;
 
     border-radius: 50%;
 
     object-fit: cover;
 
-    border: 3px solid #d7e2cf;
+    border: 3px solid #dce5d7;
+}
+
+.dados-amigo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
 }
 
 .dados-amigo h3 {
@@ -211,46 +347,343 @@
     color: #5b3923;
 
     font-family: "Tenor Sans", sans-serif;
-    font-size: 19px;
+
+    font-size: 17px;
 }
 
 .username {
-    margin: 5px 0 0;
+    color: #968a7e;
 
-    color: #918477;
+    font-size: 12px;
+}
 
-    font-family: "Raleway", sans-serif;
-    font-size: 13px;
+.nivel-amigo {
+    width: fit-content;
+
+    padding: 4px 8px;
+
+    background: #f0f4ed;
+
+    color: #6f8564;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    font-weight: 600;
 }
 
 
 /* =========================================
-   NÍVEL
+   LIVRO DO AMIGO
 ========================================= */
 
-.nivel-amigo {
-    display: inline-flex;
+.livro-amigo {
+    display: flex;
     align-items: center;
 
-    gap: 7px;
+    gap: 9px;
 
-    padding: 6px 11px;
+    min-width: 210px;
 
-    background: #f1f4ee;
+    padding: 10px 12px;
 
-    border-radius: 20px;
+    background: #faf8f5;
 
-    color: #6f8564;
+    border-radius: 10px;
+}
 
-    font-family: "Raleway", sans-serif;
+.icone-livro {
+    font-size: 20px;
+}
+
+.livro-amigo div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.livro-amigo small {
+    color: #9a8e82;
+
+    font-size: 10px;
+}
+
+.livro-amigo strong {
+    color: #5b3923;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   BOTÃO PERFIL
+========================================= */
+
+.btn-perfil {
+    padding: 9px 17px;
+
+    border: 1px solid #8fa382;
+
+    border-radius: 22px;
+
+    color: #5b3923;
+
+    background: transparent;
+
+    text-decoration: none;
+
     font-size: 12px;
     font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-perfil:hover {
+    background: #8fa382;
+
+    color: white;
+}
+
+
+/* =========================================
+   SUGESTÕES
+========================================= */
+
+.secao-sugestoes {
+    margin-top: 40px;
+}
+
+.grid-sugestoes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(150px, 1fr));
+
+    gap: 15px;
+}
+
+.card-sugestao {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 20px 15px;
+
+    background: white;
+
+    border: 1px solid #e2ddd7;
+
+    border-radius: 15px;
+}
+
+.foto-sugestao {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #dce5d7;
+
+    margin-bottom: 10px;
+}
+
+.card-sugestao h3 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 15px;
+}
+
+.card-sugestao p {
+    margin: 4px 0 13px;
+
+    color: #9a8e82;
+
+    font-size: 11px;
+}
+
+.btn-adicionar {
+    width: 100%;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: #8fa382;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-adicionar:hover {
+    background: #788d6c;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar-amigos {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    position: sticky;
+
+    top: 25px;
+}
+
+
+/* =========================================
+   MEU PERFIL
+========================================= */
+
+.card-meu-perfil {
+    padding: 24px;
+
+    background: white;
+
+    border: 1px solid #e2ddd7;
+
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.titulo-card {
+    text-align: left;
 
     margin-bottom: 18px;
 }
 
-.icone-nivel {
-    color: #8fa382;
+.titulo-card h2 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 19px;
+}
+
+.foto-meu-perfil {
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 4px solid #dce5d7;
+}
+
+.card-meu-perfil h3 {
+    margin: 12px 0 3px;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 20px;
+}
+
+.meu-username {
+    margin: 0;
+
+    color: #968a7e;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   ESTATÍSTICAS
+========================================= */
+
+.estatisticas {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    margin-top: 20px;
+
+    border-top: 1px solid #eee8e1;
+
+    padding-top: 17px;
+}
+
+.estatistica {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.estatistica + .estatistica {
+    border-left: 1px solid #eee8e1;
+}
+
+.estatistica strong {
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 20px;
+}
+
+.estatistica span {
+    color: #968a7e;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   CARDS DA SIDEBAR
+========================================= */
+
+.card-sidebar {
+    padding: 21px;
+
+    background: white;
+
+    border: 1px solid #e2ddd7;
+
+    border-radius: 18px;
+}
+
+.card-sidebar h2 {
+    margin: 0 0 17px;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 18px;
 }
 
 
@@ -260,97 +693,161 @@
 
 .livro-atual {
     display: flex;
+
+    gap: 13px;
+
     align-items: center;
-
-    gap: 12px;
-
-    padding: 13px;
-
-    background: #faf8f5;
-
-    border-radius: 12px;
-
-    margin-bottom: 20px;
 }
 
-.icone-livro {
+.capa-livro {
+    width: 55px;
+    height: 78px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background: #eee8df;
+}
+
+.capa-livro img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.capa-placeholder {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
     font-size: 22px;
 }
 
-.livro-atual div {
-    display: flex;
-    flex-direction: column;
+.dados-livro h3 {
+    margin: 0;
 
-    gap: 3px;
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.3;
 }
 
-.livro-atual small {
-    color: #9a8e82;
+.dados-livro p {
+    margin: 5px 0 0;
 
-    font-family: "Raleway", sans-serif;
+    color: #968a7e;
+
     font-size: 11px;
 }
 
-.livro-atual strong {
-    color: #5b3923;
+.sem-leitura {
+    display: flex;
 
-    font-family: "Raleway", sans-serif;
-    font-size: 13px;
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 12px;
 }
 
-.sem-livro strong {
-    color: #8e8378;
-    font-weight: 500;
+.sem-leitura span {
+    font-size: 28px;
+}
+
+.sem-leitura p {
+    margin: 8px 0 0;
+
+    color: #968a7e;
+
+    font-size: 12px;
+
+    line-height: 1.5;
 }
 
 
 /* =========================================
-   AÇÕES
+   AÇÕES RÁPIDAS
 ========================================= */
 
-.acoes-amigo {
+.acao-rapida {
     display: flex;
-    gap: 10px;
-}
 
-.btn-perfil,
-.btn-estante {
-    flex: 1;
+    align-items: center;
 
-    padding: 10px;
+    gap: 11px;
 
-    border-radius: 22px;
+    padding: 12px 0;
 
-    text-align: center;
+    border-top: 1px solid #eee8e1;
+
+    color: inherit;
 
     text-decoration: none;
-
-    font-family: "Raleway", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-
-    transition: 0.2s;
 }
 
-.btn-perfil {
-    background: #8fa382;
-    color: white;
+.acao-rapida:first-of-type {
+    border-top: none;
 }
 
-.btn-perfil:hover {
-    background: #788d6c;
+.acao-rapida > span:first-child {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+
+    background: #f0f4ed;
+
+    border-radius: 10px;
+
+    font-size: 17px;
 }
 
-.btn-estante {
-    border: 1px solid #8fa382;
+.acao-rapida div {
+    display: flex;
 
+    flex-direction: column;
+
+    gap: 3px;
+
+    flex: 1;
+}
+
+.acao-rapida strong {
     color: #5b3923;
 
-    background: transparent;
+    font-size: 12px;
 }
 
-.btn-estante:hover {
-    background: #f1f4ee;
+.acao-rapida small {
+    color: #968a7e;
+
+    font-size: 10px;
+}
+
+.seta {
+    color: #8fa382;
+
+    font-size: 17px;
+}
+
+.acao-rapida:hover .seta {
+    transform: translateX(3px);
 }
 
 
@@ -359,28 +856,21 @@
 ========================================= */
 
 .estado-vazio {
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-
-    text-align: center;
-
-    max-width: 500px;
-
-    margin: 70px auto;
-
-    padding: 50px 30px;
+    padding: 45px 25px;
 
     background: white;
 
-    border: 1px solid #e1ddd7;
-    border-radius: 20px;
+    border: 1px solid #e2ddd7;
+
+    border-radius: 18px;
+
+    text-align: center;
 }
 
 .icone-vazio {
-    font-size: 45px;
-    margin-bottom: 15px;
+    font-size: 40px;
+
+    margin-bottom: 12px;
 }
 
 .estado-vazio h2 {
@@ -389,16 +879,37 @@
     color: #5b3923;
 
     font-family: "Tenor Sans", sans-serif;
+
+    font-size: 21px;
 }
 
 .estado-vazio p {
+    max-width: 450px;
+
+    margin: 10px auto 20px;
+
     color: #8a7c6d;
 
-    font-family: "Raleway", sans-serif;
+    font-size: 13px;
 
     line-height: 1.6;
+}
 
-    margin: 10px 0 25px;
+.btn-principal {
+    display: inline-block;
+
+    padding: 11px 20px;
+
+    background: #8fa382;
+
+    border-radius: 22px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 600;
 }
 
 
@@ -406,24 +917,67 @@
    RESPONSIVIDADE
 ========================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
 
-    .pagina-amigos {
-        padding: 25px;
-    }
-
-    .cabecalho-amigos {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .grid-amigos {
+    .layout-amigos {
         grid-template-columns: 1fr;
     }
 
-    .acoes-amigo {
+    .sidebar-amigos {
+        position: static;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .card-meu-perfil {
+        grid-row: span 2;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .pagina-amigos {
+        padding: 25px 18px;
+    }
+
+    .navegacao-amigos {
+        gap: 18px;
+
+        overflow-x: auto;
+    }
+
+    .aba-amigos {
+        white-space: nowrap;
+    }
+
+    .card-amigo {
         flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .livro-amigo {
+        width: 100%;
+
+        min-width: unset;
+
+        box-sizing: border-box;
+    }
+
+    .btn-perfil {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+
+    .sidebar-amigos {
+        display: flex;
     }
 
 }
