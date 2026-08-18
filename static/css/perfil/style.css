@@ -672,7 +672,7 @@
     background: #e8ebe6;
 }
 
-.estatisticas .item::before {
+/* .estatisticas .item::before {
     font-size: 25px;
     width: 42px;
     height: 42px;
@@ -698,8 +698,38 @@
 
 .estatisticas .item:nth-child(4)::before {
     content: "📚";
+} */
+.estatisticas .item::before {
+    content: "";
+
+    width: 42px;
+    height: 42px;
+
+    /* border-radius: 50%; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 42px;
 }
 
+.estatisticas .item:nth-child(1)::before {
+    background-image: url("/static/img/icones/livros-lidos.png");
+}
+
+.estatisticas .item:nth-child(2)::before {
+    background-image: url("/static/img/icones/lendo.png");
+}
+
+.estatisticas .item:nth-child(3)::before {
+    background-image: url("/static/img/icones/quero-ler.png");
+}
+
+.estatisticas .item:nth-child(4)::before {
+    background-image: url("/static/img/icones/estante.png");
+}
 .estatisticas .item h2 {
     margin: 0;
     color: #30362e;
