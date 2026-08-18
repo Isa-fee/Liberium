@@ -49,22 +49,9 @@
                 Biblioteca
             </span>
 
-            <a href="{{ url_for('user_bp.perfil') }}">
-                Perfil
-            </a>
-
-            <a href="#lendo" class="link-prateleira">
-                Lendo
-            </a>
-
-            <a href="#lidos" class="link-prateleira">
-                Lidos
-            </a>
-
-            <a href="#quero-ler" class="link-prateleira">
-                Quero ler
-            </a>
-
+            <a href="{{ url_for('estante_bp.estante') }}">Estante</a>
+            <a href="#">Gráficos</a>
+            <a href="#">Resenhas</a>
             <hr>
 
             <span class="titulo-menu">
@@ -79,6 +66,11 @@
                 Minha coleção
             </a>
 
+            <hr>
+            <span class="titulo-menu">
+                Perfil
+            </span>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
             <hr>
 
             <!-- ============================= -->
@@ -102,10 +94,6 @@
                 </span>
 
             </div>
-
-            <hr>
-
-            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
 
         </nav>
 
