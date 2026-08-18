@@ -1,0 +1,429 @@
+/* =========================================
+   PÁGINA DE AMIGOS
+========================================= */
+
+.pagina-amigos {
+    min-height: 100vh;
+    padding: 45px;
+    background: #f8f7f5;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.cabecalho-amigos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.cabecalho-amigos h1 {
+    margin: 0;
+    color: #5b3923;
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 34px;
+}
+
+.cabecalho-amigos p {
+    margin-top: 8px;
+    color: #7b6b5c;
+    font-family: "Raleway", sans-serif;
+}
+
+
+/* =========================================
+   BOTÃO ENCONTRAR
+========================================= */
+
+.btn-encontrar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    background: #8fa382;
+    color: white;
+
+    border-radius: 25px;
+
+    text-decoration: none;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-encontrar:hover {
+    background: #788d6c;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   BARRA DE PESQUISA
+========================================= */
+
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    max-width: 650px;
+
+    margin-bottom: 40px;
+
+    background: white;
+
+    border: 1px solid #ded8d0;
+    border-radius: 14px;
+
+    padding: 0 18px;
+
+    box-sizing: border-box;
+}
+
+.icone-pesquisa {
+    font-size: 25px;
+    color: #8fa382;
+    margin-right: 10px;
+}
+
+.barra-pesquisa input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    padding: 15px 5px;
+
+    background: transparent;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+
+    color: #5b3923;
+}
+
+.barra-pesquisa input::placeholder {
+    color: #a59b91;
+}
+
+
+/* =========================================
+   TÍTULO DA SEÇÃO
+========================================= */
+
+.titulo-secao {
+    margin-bottom: 20px;
+}
+
+.titulo-secao h2 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 24px;
+}
+
+.titulo-secao p {
+    margin-top: 6px;
+
+    color: #8a7c6d;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   GRID DE AMIGOS
+========================================= */
+
+.grid-amigos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(320px, 1fr));
+
+    gap: 22px;
+}
+
+
+/* =========================================
+   CARD DO AMIGO
+========================================= */
+
+.card-amigo {
+    background: white;
+
+    border: 1px solid #e1ddd7;
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow: 0 3px 12px rgba(91, 57, 35, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card-amigo:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 24px rgba(91, 57, 35, 0.09);
+}
+
+
+/* =========================================
+   TOPO DO CARD
+========================================= */
+
+.topo-card {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.foto-amigo {
+    width: 68px;
+    height: 68px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid #d7e2cf;
+}
+
+.dados-amigo h3 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 19px;
+}
+
+.username {
+    margin: 5px 0 0;
+
+    color: #918477;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   NÍVEL
+========================================= */
+
+.nivel-amigo {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 11px;
+
+    background: #f1f4ee;
+
+    border-radius: 20px;
+
+    color: #6f8564;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    margin-bottom: 18px;
+}
+
+.icone-nivel {
+    color: #8fa382;
+}
+
+
+/* =========================================
+   LIVRO ATUAL
+========================================= */
+
+.livro-atual {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px;
+
+    background: #faf8f5;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+}
+
+.icone-livro {
+    font-size: 22px;
+}
+
+.livro-atual div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.livro-atual small {
+    color: #9a8e82;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 11px;
+}
+
+.livro-atual strong {
+    color: #5b3923;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+}
+
+.sem-livro strong {
+    color: #8e8378;
+    font-weight: 500;
+}
+
+
+/* =========================================
+   AÇÕES
+========================================= */
+
+.acoes-amigo {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-perfil,
+.btn-estante {
+    flex: 1;
+
+    padding: 10px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-perfil {
+    background: #8fa382;
+    color: white;
+}
+
+.btn-perfil:hover {
+    background: #788d6c;
+}
+
+.btn-estante {
+    border: 1px solid #8fa382;
+
+    color: #5b3923;
+
+    background: transparent;
+}
+
+.btn-estante:hover {
+    background: #f1f4ee;
+}
+
+
+/* =========================================
+   ESTADO VAZIO
+========================================= */
+
+.estado-vazio {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    max-width: 500px;
+
+    margin: 70px auto;
+
+    padding: 50px 30px;
+
+    background: white;
+
+    border: 1px solid #e1ddd7;
+    border-radius: 20px;
+}
+
+.icone-vazio {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.estado-vazio h2 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+}
+
+.estado-vazio p {
+    color: #8a7c6d;
+
+    font-family: "Raleway", sans-serif;
+
+    line-height: 1.6;
+
+    margin: 10px 0 25px;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .pagina-amigos {
+        padding: 25px;
+    }
+
+    .cabecalho-amigos {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .grid-amigos {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes-amigo {
+        flex-direction: column;
+    }
+
+}
