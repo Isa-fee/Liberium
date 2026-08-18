@@ -46,14 +46,16 @@ if __name__ == '__main__':
 
     with app.app_context():
 
-        db.drop_all()
+        # db.drop_all()
         db.create_all()
 
         criar_insignias()
 
-        from popular_banco import (popular_banco, popular_colecionaveis)
+        from popular_banco import (popular_banco, popular_colecionaveis, popular_usuarios_teste)
 
         popular_banco()
-        popular_colecionaveis() 
+        popular_colecionaveis()
+        popular_usuarios_teste()
+
 
     app.run(debug=True)
