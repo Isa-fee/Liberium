@@ -465,39 +465,49 @@
 
         </div>
     
-            <!-- ==========================
-                COLEÇÃO DE INSÍGNIAS
-            =========================== -->
+        <!-- ==========================
+            COLEÇÃO DE INSÍGNIAS
+        =========================== -->
 
         <section class="colecao-insignias">
 
-            <h2>Minhas Insígnias </h2>
+            <div class="titulo-insignias">
+
+                <h2>Minhas Insígnias</h2>
+
+            </div>
 
 
             {% if insignias %}
 
                 <div class="lista-insignias">
 
-
                     {% for item in insignias %}
 
-                        <div class="card-insignia">
-
+                        <div
+                            class="card-insignia {% if loop.index > 3 %}insignia-extra{% endif %}"
+                            {% if loop.index > 3 %}style="display: none;"{% endif %}
+                        >
 
                             <div class="icone-insignia">
 
-                                <img src="{{ url_for('static', filename='img/gamificacao/' + item.insignia.imagem) }}"
-                                alt="{{ item.insignia.nome }}">
+                                <img
+                                    src="{{ url_for('static', filename='img/gamificacao/' + item.insignia.imagem) }}"
+                                    alt="{{ item.insignia.nome }}"
+                                >
 
                             </div>
 
 
-                            <div class="info-insignia">
+                            <!-- ==========================
+                                INFORMAÇÕES AO PASSAR O MOUSE
+                            =========================== -->
+
+                            <div class="tooltip-insignia">
 
                                 <h3>
                                     {{ item.insignia.nome }}
                                 </h3>
-
 
                                 <p>
                                     {{ item.insignia.descricao }}
@@ -505,18 +515,35 @@
 
                             </div>
 
-
                         </div>
 
-
                     {% endfor %}
-
 
                 </div>
 
 
-            {% else %}
+                <!-- ==========================
+                    BOTÃO VER TODAS
+                =========================== -->
 
+                {% if insignias|length > 3 %}
+
+                    <div class="acoes-insignias">
+
+                        <button
+                            type="button"
+                            class="btn-insignias"
+                            id="btn-ver-insignias"
+                        >
+                            Ver todas as insígnias
+                        </button>
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
 
                 <div class="sem-insignias">
 
@@ -534,9 +561,7 @@
 
                 </div>
 
-
             {% endif %}
-
 
         </section>
     
@@ -674,8 +699,8 @@
 <script>
 
     // ==========================================
-// MODAL CRIAR / EDITAR META
-// ==========================================
+    // MODAL CRIAR / EDITAR META
+    // ==========================================
 
 const modalMeta = document.getElementById("modal-meta");
 
@@ -948,6 +973,61 @@ document.addEventListener(
 
     }
 );
+
+// ==========================================
+// INSÍGNIAS
+// ==========================================
+
+const btnVerInsignias =
+    document.getElementById("btn-ver-insignias");
+
+const insigniasExtras =
+    document.querySelectorAll(".insignia-extra");
+
+
+if (btnVerInsignias) {
+
+    btnVerInsignias.addEventListener("click", function () {
+
+        const mostrandoTodas =
+            btnVerInsignias.classList.contains("mostrar-todas");
+
+
+        if (!mostrandoTodas) {
+
+            insigniasExtras.forEach(function (insignia) {
+
+                insignia.style.display = "flex";
+
+            });
+
+            btnVerInsignias.textContent =
+                "Ocultar insígnias";
+
+            btnVerInsignias.classList.add(
+                "mostrar-todas"
+            );
+
+        } else {
+
+            insigniasExtras.forEach(function (insignia) {
+
+                insignia.style.display = "none";
+
+            });
+
+            btnVerInsignias.textContent =
+                "Ver todas as insígnias";
+
+            btnVerInsignias.classList.remove(
+                "mostrar-todas"
+            );
+
+        }
+
+    });
+
+}
 
 </script>
 
