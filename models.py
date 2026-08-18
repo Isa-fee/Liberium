@@ -25,6 +25,51 @@ class Usuario(UserMixin, db.Model):
         default=5
     )
 
+class Amizade(db.Model):
+    __tablename__ = "amizades"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    amigo_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # pendente | aceita | recusada
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="pendente"
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        foreign_keys=[usuario_id],
+        backref="solicitacoes_enviadas"
+    )
+
+    amigo = db.relationship(
+        "Usuario",
+        foreign_keys=[amigo_id],
+        backref="solicitacoes_recebidas"
+    )
+
 class Livro(db.Model):
     __tablename__ = "livros"
 

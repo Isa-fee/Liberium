@@ -912,6 +912,132 @@
     font-weight: 600;
 }
 
+/* =========================================
+   SOLICITAÇÕES DE AMIZADE
+========================================= */
+
+.secao-solicitacoes {
+    margin-top: 35px;
+}
+
+.lista-solicitacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card-solicitacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 20px;
+
+    background: white;
+
+    border: 1px solid #e2ddd7;
+
+    border-radius: 16px;
+
+    transition: 0.2s;
+}
+
+.card-solicitacao:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 20px rgba(91, 57, 35, 0.07);
+}
+
+.perfil-solicitacao {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.foto-solicitacao {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid #dce5d7;
+}
+
+.dados-solicitacao h3 {
+    margin: 0;
+
+    color: #5b3923;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 16px;
+}
+
+.dados-solicitacao p {
+    margin: 5px 0 0;
+
+    color: #968a7e;
+
+    font-size: 12px;
+}
+
+.acoes-solicitacao {
+    display: flex;
+
+    gap: 8px;
+}
+
+.acoes-solicitacao form {
+    margin: 0;
+}
+
+.btn-aceitar,
+.btn-recusar {
+    padding: 9px 15px;
+
+    border-radius: 20px;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-aceitar {
+    border: none;
+
+    background: #8fa382;
+
+    color: white;
+}
+
+.btn-aceitar:hover {
+    background: #788d6c;
+}
+
+.btn-recusar {
+    border: 1px solid #d8d0c8;
+
+    background: transparent;
+
+    color: #6c5338;
+}
+
+.btn-recusar:hover {
+    background: #f8f7f5;
+}
+
 
 /* =========================================
    RESPONSIVIDADE
@@ -981,3 +1107,6 @@
     }
 
 }
+
+
+
