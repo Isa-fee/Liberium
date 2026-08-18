@@ -11,15 +11,39 @@
 <section class="pagina-loja">
 
     <div class="topo">
+
         <div class="titulo">
             <h1>Loja de Decorações</h1>
             <p>
                 Personalize sua estante com itens especiais!
             </p>
         </div>
-        <a href="{{ url_for('loja_bp.colecao') }}" class="btn-colecao"> Minha coleção </a>
-    </div>
 
+        <div class="acoes-loja">
+
+            <div class="saldo-libelulas">
+                <img
+                    src="{{ url_for('static', filename='img/gamificacao/libelula.png') }}"
+                    alt="Libélula"
+                    class="icone-libelula"
+                >
+
+                <span class="texto-libelulas">
+                    Minhas Libélulas:
+                    <strong>{{ current_user.libelulas }}</strong>
+                </span>
+            </div>
+
+            <a
+                href="{{ url_for('loja_bp.colecao') }}"
+                class="btn-colecao"
+            >
+                Minha coleção
+            </a>
+
+        </div>
+
+    </div>
 
     <section class="secao-loja">
 

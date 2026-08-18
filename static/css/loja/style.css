@@ -9,35 +9,196 @@
 }
 
 /* ================================
-   CABEÇALHO
+   CABEÇALHO DA LOJA
 ================================ */
 
-.pagina-loja h1 {
+.topo {
     max-width: 1200px;
-    margin: 0 auto 8px;
+/*     margin: 0 auto 8px; */
+    margin: 0 auto 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+/* ================================
+   TÍTULO
+================================ */
+
+.titulo {
+    flex: 1;
+}
+
+.titulo h1 {
+    margin: 0 0 8px;
+
     color: #5b3923;
+
     font-size: 2.6rem;
 }
 
 .pagina-loja > p {
     max-width: 1200px;
     margin: 0 auto 40px;
+  
+.titulo p {
+    margin: 0;
+
     color: #6c5338;
+
     font-size: 1.05rem;
 }
 
 /* ================================
-   SEÇÕES
+   AÇÕES DO TOPO
+================================ */
+
+.acoes-loja {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+
+/* ================================
+   MINHAS LIBÉLULAS
+================================ */
+
+.saldo-libelulas {
+    width: 180px;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    background-color: #8fa382;
+
+    color: white;
+
+    border-radius: 25px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: default;
+
+    user-select: none;
+
+}
+
+
+/* ================================
+   ÍCONE DA LIBÉLULA
+================================ */
+
+.saldo-libelulas .icone-libelula {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    margin-left: 5px;
+
+    flex-shrink: 0;
+}
+
+
+/* ================================
+   TEXTO DAS LIBÉLULAS
+================================ */
+
+.texto-libelulas {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    white-space: nowrap;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.texto-libelulas strong {
+    font-size: 16px; 
+} 
+
+
+/* ================================
+   BOTÃO MINHA COLEÇÃO
+================================ */
+
+.btn-colecao {
+    width: 180px;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background-color: #8fa382;
+
+    color: white;
+
+    border-radius: 25px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.btn-colecao:hover {
+    background: #6f8564;
+
+    transform: translateY(-2px);
+}
+
+
+/* ================================
+   SEÇÕES DA LOJA
 ================================ */
 
 .secao-loja {
     max-width: 1200px;
+
     margin: 0 auto 45px;
     background: white;
     border: 1px solid #8fa382;
+
     border-radius: 15px;
     overflow: hidden;
 }
+
+
+/* ================================
+   TÍTULO DA SEÇÃO
+================================ */
 
 .secao-loja h2 {
     margin: 0;
@@ -45,8 +206,10 @@
     background: #5c3920;
     color: white;
     font-size: 1rem;
+
     font-weight: 600;
     letter-spacing: 2px;
+
     text-transform: uppercase;
     text-align: center;
 }
@@ -69,11 +232,14 @@
 .item-loja {
     position: relative;
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
     padding: 20px;
     background: #f8f7f5;
     border: 1px solid #d7e2cf;
+
     border-radius: 14px;
     text-align: center;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
@@ -86,10 +252,10 @@
 }
 
 /* ================================
-   IMAGEM
+   IMAGENS DOS ITENS
 ================================ */
 
-.item-loja img {
+.item-loja > img {
     width: 170px;
     height: 170px;
     object-fit: contain;
@@ -97,12 +263,12 @@
     transition: transform .25s ease;
 }
 
-.item-loja:hover img {
+.item-loja:hover > img {
     transform: scale(1.05);
 }
 
 /* ================================
-   NOME
+   NOME DO ITEM
 ================================ */
 
 .item-loja h3 {
@@ -121,8 +287,38 @@
     margin: 0 0 15px;
     color: #6c5338;
     font-size: .9rem;
+
     line-height: 1.4;
 }
+
+
+/* ================================
+   PREÇO DO ITEM
+================================ */
+  
+.preco-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #5b3923;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+
+/* ================================
+   MINI LIBÉLULA DO PREÇO
+================================ */
+  
+.preco-item img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    margin: 0;
+}
+
 
 /* ================================
    BOTÃO COMPRAR
@@ -132,10 +328,12 @@
     width: 100%;
     padding: 10px 15px;
     border: none;
+
     border-radius: 25px;
     background: #8fa382;
     color: white;
     font-size: .95rem;
+
     font-weight: 600;
     cursor: pointer;
     transition:
@@ -148,6 +346,36 @@
     transform: scale(1.02);
 }
 
+ /* ================================
+   ITEM JÁ ADQUIRIDO
+================================ */
+
+.item-loja .btn-adquirido {
+    width: 100%;
+
+    padding: 10px 15px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #6a8b6f;
+
+    color: white;
+
+    font-size: .95rem;
+
+    font-weight: 600;
+
+    cursor: default;
+}
+
+.item-loja .btn-adquirido:hover {
+    background: #6a8b6f;
+
+    transform: none;
+}
+  
 /* ================================
    NÃO SEI ONDE SE ENCAIXA KKKKKK
 ================================ */
@@ -218,22 +446,6 @@
     transform: translateY(-2px);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ================================
    RESPONSIVIDADE
 ================================ */
@@ -279,4 +491,97 @@
     }
 }
 
+/* ================================
+   TABLETS / TELAS MENORES
+================================ */
 
+@media (max-width: 700px) {
+
+    .topo {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .titulo {
+        text-align: center;
+    }
+
+    .acoes-loja {
+        justify-content: center;
+    }
+}
+
+
+/* ================================
+   CELULAR
+================================ */
+
+@media (max-width: 600px) {
+
+    .pagina-loja {
+        padding: 20px;
+    }
+
+    .titulo h1 {
+        font-size: 2rem;
+    }
+
+    .titulo p {
+        font-size: .95rem;
+    }
+
+    .acoes-loja {
+        width: 100%;
+    }
+
+    .saldo-libelulas,
+    .btn-colecao {
+        flex: 1;
+
+        width: auto;
+    }
+
+    .grid-itens {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 15px;
+
+        padding: 20px;
+    }
+
+    .item-loja {
+        padding: 15px;
+    }
+
+    .item-loja > img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .preco-item img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+/* ================================
+   CELULARES MUITO PEQUENOS
+================================ */
+
+@media (max-width: 400px) {
+
+    .acoes-loja {
+        flex-direction: column;
+    }
+
+    .saldo-libelulas,
+    .btn-colecao {
+        width: 100%;
+    }
+
+    .grid-itens {
+        grid-template-columns: 1fr;
+    }
+}
