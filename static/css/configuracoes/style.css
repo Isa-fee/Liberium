@@ -16,71 +16,89 @@
     background: var(--fundo);
 }
 
-/* Sidebar */
 
-.sidebar-config {
-    background: linear-gradient(180deg, #e7efe2 0%, #dbe7d5 100%);
-    padding: 38px 22px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid rgba(80, 105, 75, 0.08);
+/* =========================================================
+   MENU LATERAL
+   ========================================================= */
+
+   .sidebar{
+    background:#d7e2cf;
+    padding:35px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
-.foto-config {
-    width: 112px;
-    height: 112px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 7px 18px rgba(60, 80, 55, 0.15);
-    margin-bottom: 12px;
+
+.foto-perfil{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
 }
 
-.sidebar-config .usuario {
-    color: #82907c;
-    font-size: 13px;
-    margin: 0 0 5px;
+.sidebar h3{
+    margin:0;
+    color:#4b3323;
+    font-size:28px;
 }
 
-.sidebar-config h1 {
-    margin: 0 0 28px;
-    color: var(--marrom);
-    font-size: 25px;
-    font-weight: 700;
-    text-align: center;
+
+.usuario{
+    color:#8d8d8d;
+    margin-top:5px;
+    margin-bottom:35px;
 }
 
-.menu-lateral {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+.menu-lateral{
+    width:100%;
+    display:flex;
+    flex-direction:column;
 }
 
-.menu-lateral a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #52604d;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 12px 15px;
-    border-radius: 12px;
-    transition: 0.25s ease;
+.titulo-menu{
+    color:#6c5338;
+    font-weight:bold;
+    font-size:.9rem;
+    text-transform:uppercase;
+    margin:18px 0 12px;
 }
 
-.menu-lateral a:hover {
-    background: rgba(255, 255, 255, 0.75);
-    color: var(--verde-principal);
-    transform: translateX(3px);
+.menu-lateral a{
+    text-decoration:none;
+    color:#4b3323;
+    padding:10px;
+    border-radius:8px;
+    transition:.2s;
 }
 
-.menu-lateral a.ativo {
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--verde-principal);
-    font-weight: 700;
+.menu-lateral a:hover{
+    background:white;
+}
+
+.menu-lateral hr{
+    border:none;
+    border-top:1px solid rgba(0,0,0,.1);
+    margin:20px 0;
+}
+
+.card-moedas{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:10px;
+}
+
+.icone-libelula {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin: 0 auto 5px;
 }
 
 /* Área principal */

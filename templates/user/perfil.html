@@ -11,8 +11,8 @@
 
 <section class="pagina-estante">
 
-    <aside class="sidebar">
-        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/lift.jpg') }}"
+    <!-- <aside class="sidebar">
+        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
         class="foto-perfil">
    
         <p class="usuario">
@@ -28,6 +28,87 @@
             <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
             <a href="{{ url_for('user_bp.logout') }}">Sair</a>
         </nav>
+    </aside> -->
+
+    <aside class="sidebar">
+
+        <img
+            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+            class="foto-perfil"
+        >
+
+        <h3>{{ current_user.nome }}</h3>
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+
+        <nav class="menu-lateral">
+
+            <span class="titulo-menu">
+                Biblioteca
+            </span>
+
+            <a href="{{ url_for('user_bp.perfil') }}">
+                Perfil
+            </a>
+
+            <a href="#lendo" class="link-prateleira">
+                Lendo
+            </a>
+
+            <a href="#lidos" class="link-prateleira">
+                Lidos
+            </a>
+
+            <a href="#quero-ler" class="link-prateleira">
+                Quero ler
+            </a>
+
+            <hr>
+
+            <span class="titulo-menu">
+                Coleção
+            </span>
+
+            <a href="{{ url_for('loja_bp.loja') }}">
+                Loja de decorações
+            </a>
+
+            <a href="{{ url_for('loja_bp.colecao') }}">
+                Minha coleção
+            </a>
+
+            <hr>
+
+            <!-- ============================= -->
+            <!-- MOEDAS -->
+            <!-- ============================= -->
+
+            <div class="card-moedas">
+
+                <img
+                    src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}"
+                    alt="Mini Libélula"
+                    class="icone-libelula"
+                >
+
+                <strong>
+                    {{ current_user.libelulas }}
+                </strong>
+
+                <span>
+                    Mini Libélulas
+                </span>
+
+            </div>
+
+            <hr>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+
+        </nav>
+
     </aside>
 
     <section class="area-estante">
@@ -122,13 +203,25 @@
         
                 {% endif %}
         
-                <button
-                    type="button"
-                    class="btn-meta"
-                    id="abrir-modal-meta"
-                >
-                    Editar meta
-                </button>
+                <div class="acoes-meta">
+
+                    <button
+                        type="button"
+                        class="btn-meta"
+                        id="abrir-modal-meta"
+                    >
+                        Editar meta
+                    </button>
+                
+                    <button
+                        type="button"
+                        class="btn-meta"
+                        id="abrir-excluir-meta"
+                    >
+                        Excluir
+                    </button>
+                
+                </div>
         
             {% else %}
         
@@ -310,60 +403,68 @@
 
         </div>
 
-        <div
-        class="modal-meta-overlay"
-        id="modal-excluir-meta"
-        aria-hidden="true"
-        >
 
         <div
-            class="modal-meta"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="titulo-excluir-meta"
+            class="modal-meta-overlay"
+            id="modal-excluir-meta"
+            aria-hidden="true"
         >
 
-            <div class="modal-meta-cabecalho">
+            <div
+                class="modal-meta"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="titulo-excluir-meta"
+            >
 
-                <h2 id="titulo-excluir-meta">
-                    Excluir meta?
-                </h2>
+                <div class="modal-meta-cabecalho">
 
-                <button
-                    type="button"
-                    class="fechar-modal-meta"
-                    id="fechar-excluir-meta"
-                    aria-label="Fechar"
-                >
-                    ×
-                </button>
+                    <h2 id="titulo-excluir-meta">
+                        Excluir meta?
+                    </h2>
 
-            </div>
+                    <button
+                        type="button"
+                        class="fechar-modal-meta"
+                        id="fechar-excluir-meta"
+                        aria-label="Fechar"
+                    >
+                        ×
+                    </button>
 
-            <p class="texto-excluir-meta">
-                Tem certeza que deseja excluir sua meta de leitura?
-                Essa ação não poderá ser desfeita.
-            </p>
+                </div>
 
+                <p class="texto-excluir-meta">
+                    Tem certeza que deseja excluir sua meta de leitura?
+                    Essa ação não poderá ser desfeita.
+                </p>
 
-            <div class="acoes-meta">
+                <div class="acoes-meta">
 
-                <button
-                    type="button"
-                    class="btn-meta"
-                    id="abrir-modal-meta"
-                >
-                    Editar meta
-                </button>
-            
-                <button
-                    type="button"
-                    class="btn-excluir-meta"
-                    id="abrir-excluir-meta"
-                >
-                    Excluir
-                </button>
-            
+                    <button
+                        type="button"
+                        class="btn-cancelar-meta"
+                        id="cancelar-excluir-meta"
+                    >
+                        Cancelar
+                    </button>
+
+                    <form
+                        action="{{ url_for('user_bp.excluir_meta') }}"
+                        method="POST"
+                    >
+
+                        <button
+                            type="submit"
+                            class="btn-excluir-meta"
+                        >
+                            Excluir meta
+                        </button>
+
+                    </form>
+
+                </div>
+
             </div>
 
         </div>

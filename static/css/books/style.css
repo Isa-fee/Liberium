@@ -219,11 +219,13 @@
     margin-bottom: 5px;
     font-weight: 300;
 }
+
 .badge-ebook {
     font-size: 1.1rem;
     font-weight: 300;
     color: #999;
 }
+
 .autores {
     font-size: 1.1rem;
     color: #777;
@@ -237,6 +239,7 @@
     margin-bottom: 15px;
     font-weight: 600;
 }
+
 .texto-sinopse {
     line-height: 1.8;
     color: #555;
@@ -306,59 +309,39 @@
 }
 
 .menu-estante{
-
     position:absolute;
-
     top:105%;
     left:0;
-
     width:100%;
-
     background:white;
-
     border-radius:12px;
-
     box-shadow:0 10px 25px rgba(0,0,0,.15);
-
     display:none;
-
     overflow:hidden;
-
     z-index:100;
 }
 
 .menu-estante button{
-
     width:100%;
-
     border:none;
-
     background:white;
-
     padding:14px;
-
     text-align:left;
-
     cursor:pointer;
-
     transition:.2s;
 }
 
 .menu-estante button:hover{
-
     background:#eef3ea;
-
 }
 
 .dropdown-estante:hover .menu-estante{
     display:block;
 }
 
-
 #meu-texto {
     white-space: pre-wrap;
   }
-
 
 /* ============================= */
 /*       AVALIAÇÃO DO LIVRO      */

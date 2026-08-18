@@ -8,7 +8,6 @@
     background: #f8f7f5;
 }
 
-
 /* ================================
    CABEÇALHO
 ================================ */
@@ -16,7 +15,6 @@
 .pagina-loja h1 {
     max-width: 1200px;
     margin: 0 auto 8px;
-
     color: #5b3923;
     font-size: 2.6rem;
 }
@@ -24,11 +22,9 @@
 .pagina-loja > p {
     max-width: 1200px;
     margin: 0 auto 40px;
-
     color: #6c5338;
     font-size: 1.05rem;
 }
-
 
 /* ================================
    SEÇÕES
@@ -37,33 +33,23 @@
 .secao-loja {
     max-width: 1200px;
     margin: 0 auto 45px;
-
     background: white;
-
     border: 1px solid #8fa382;
     border-radius: 15px;
-
     overflow: hidden;
 }
 
 .secao-loja h2 {
     margin: 0;
-
     padding: 14px 22px;
-
     background: #5c3920;
-
     color: white;
-
     font-size: 1rem;
     font-weight: 600;
-
     letter-spacing: 2px;
     text-transform: uppercase;
-
     text-align: center;
 }
-
 
 /* ================================
    GRID DOS ITENS
@@ -71,17 +57,10 @@
 
 .grid-itens {
     display: grid;
-
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(180px, 1fr)
-    );
-
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 25px;
-
     padding: 30px;
 }
-
 
 /* ================================
    CARD DO ITEM
@@ -89,34 +68,22 @@
 
 .item-loja {
     position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     padding: 20px;
-
     background: #f8f7f5;
-
     border: 1px solid #d7e2cf;
     border-radius: 14px;
-
     text-align: center;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
 .item-loja:hover {
     transform: translateY(-6px);
-
     border-color: #8fa382;
-
     box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
 }
-
 
 /* ================================
    IMAGEM
@@ -125,11 +92,8 @@
 .item-loja img {
     width: 170px;
     height: 170px;
-
     object-fit: contain;
-
     margin-bottom: 15px;
-
     transition: transform .25s ease;
 }
 
@@ -137,16 +101,13 @@
     transform: scale(1.05);
 }
 
-
 /* ================================
    NOME
 ================================ */
 
 .item-loja h3 {
     margin: 5px 0 8px;
-
     color: #5b3923;
-
     font-size: 1.1rem;
 }
 
@@ -157,17 +118,11 @@
 
 .item-loja p {
     min-height: 42px;
-
     margin: 0 0 15px;
-
     color: #6c5338;
-
     font-size: .9rem;
     line-height: 1.4;
 }
-
-
-
 
 /* ================================
    BOTÃO COMPRAR
@@ -175,21 +130,14 @@
 
 .item-loja button {
     width: 100%;
-
     padding: 10px 15px;
-
     border: none;
     border-radius: 25px;
-
     background: #8fa382;
-
     color: white;
-
     font-size: .95rem;
     font-weight: 600;
-
     cursor: pointer;
-
     transition:
         background .2s ease,
         transform .2s ease;
@@ -197,56 +145,12 @@
 
 .item-loja button:hover {
     background: #6f8564;
-
     transform: scale(1.02);
 }
 
-
 /* ================================
-   RESPONSIVIDADE
+   NÃO SEI ONDE SE ENCAIXA KKKKKK
 ================================ */
-
-@media (max-width: 900px) {
-
-    .pagina-loja {
-        padding: 30px;
-    }
-
-    .grid-itens {
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(160px, 1fr)
-        );
-    }
-}
-
-
-@media (max-width: 600px) {
-
-    .pagina-loja {
-        padding: 20px;
-    }
-
-    .pagina-loja h1 {
-        font-size: 2rem;
-    }
-
-    .grid-itens {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        padding: 20px;
-    }
-
-    .item-loja {
-        padding: 15px;
-    }
-
-    .item-loja img {
-        width: 110px;
-        height: 110px;
-    }
-}
-
 
 .preco-item {
     display: flex;
@@ -313,3 +217,66 @@
 
     transform: translateY(-2px);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 900px) {
+
+    .pagina-loja {
+        padding: 30px;
+    }
+
+    .grid-itens {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(160px, 1fr)
+        );
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .pagina-loja {
+        padding: 20px;
+    }
+
+    .pagina-loja h1 {
+        font-size: 2rem;
+    }
+
+    .grid-itens {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .item-loja {
+        padding: 15px;
+    }
+
+    .item-loja img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+

@@ -1,172 +1,105 @@
 .pagina-estante{
-
     display:grid;
-
     grid-template-columns:240px 1fr;
-
     min-height:100vh;
-
 }
 
 .sidebar{
-
     background:#d7e2cf;
-
     padding:35px 20px;
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
 }
 
 
 .foto-perfil{
-
     width:120px;
-
     height:120px;
-
     border-radius:50%;
-
     object-fit:cover;
-
     margin-bottom:15px;
-
 }
 
 .sidebar h3{
-
     margin:0;
-
     color:#4b3323;
-
     font-size:28px;
-
 }
 
-
 .usuario{
-
     color:#8d8d8d;
-
     margin-top:5px;
-
     margin-bottom:35px;
-
 }
 
 .menu-lateral{
-
     width:100%;
-
     display:flex;
-
     flex-direction:column;
-
 }
 
 .titulo-menu{
-
     color:#6c5338;
-
     font-weight:bold;
-
     font-size:.9rem;
-
     text-transform:uppercase;
-
     margin:18px 0 12px;
-
 }
 
 .menu-lateral a{
-
     text-decoration:none;
-
     color:#4b3323;
-
     padding:10px;
-
     border-radius:8px;
-
     transition:.2s;
-
 }
 
 .menu-lateral a:hover{
-
     background:white;
-
 }
 
-
 .menu-lateral hr{
-
     border:none;
-
     border-top:1px solid rgba(0,0,0,.1);
-
     margin:20px 0;
-
 }
 
 .card-moedas{
-
     background:white;
-
     border-radius:12px;
-
     padding:18px;
-
     text-align:center;
-
     display:flex;
-
     flex-direction:column;
-
     gap:6px;
-
     margin-top:10px;
-
 }
 
 .area-estante{
-
     padding:45px;
-
     background:#f8f7f5;
-
 }
 
 .estante-container {
     border-radius: 15px;
     border: 1px solid #8fa382;
-
     padding-top: 20px;
     padding-bottom: 30px;
-
     max-width: 1200px;
-
     margin: auto;
-
     overflow: hidden;
 }
 
 .cabecalho-estante{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
     padding: 10px;
-
     margin-bottom:25px;
 
 }
+
 .titulo-estante {
     cursor: pointer;
     transition: .2s;
@@ -177,78 +110,44 @@
 }
 
 .cabecalho-estante h1{
-
     font-size:2.6rem;
-
     color:#5b3923;
-
 }
 
 .btn-adicionar{
-
     background:#8fa382;
-
     color:white;
-
     text-decoration:none;
-
     padding:10px 18px;
-
     border-radius:25px;
-
     font-weight:600;
-
 }
 
 .filtros{
-
     display:flex;
-
     gap:15px;
     padding: 10px;
-
     margin-bottom:30px;
-
 }
 
 .filtros button{
-
     background:white;
-
     border:1px solid #cfcfcf;
-
     padding:8px 18px;
-
     border-radius:30px;
-
     cursor:pointer;
-
 }
 
 .filtros .ativo{
-
     background:#8fa382;
-
     color:white;
-
     border:none;
-
 }
 
 .estante{
-
     display:flex;
     flex-direction:column;
-
 }
-
-
-
-/* .bloco-prateleira{
-
-    margin-bottom:60px;
-
-} */
 
 /* =========================================
    PRATELEIRAS
@@ -266,21 +165,13 @@
 .linha-prateleira {
     display: flex;
     align-items: flex-end;
-
     gap: 18px;
-
     min-height: 210px;
-
     padding: 20px 25px;
-
     background: #5c3920;
-
     overflow-x: auto;
-
     overflow-y: hidden;
-
     position: relative;
-
     transition:
         min-height 0.5s ease,
         padding 0.5s ease;
@@ -299,17 +190,13 @@
 .livro-estante {
     height: 175px;
     width: auto;
-
     border-radius: 4px;
-
     cursor: pointer;
-
     transition:
         height 0.4s ease,
         transform 0.25s ease,
         box-shadow 0.25s ease;
 }
-
 
 /* =========================================
    EFEITO AO PASSAR O MOUSE
@@ -317,37 +204,24 @@
 
 .livro-estante:hover {
     transform: translateY(-8px);
-
     box-shadow: 0 12px 25px rgba(0,0,0,.18);
 }
-
 
 /* =========================================
    PRATELEIRA EXPANDIDA
 ========================================= */
 
 .bloco-prateleira.expandida .linha-prateleira {
-
     display: flex;
-
     flex-wrap: wrap;
-
     align-content: flex-start;
-
     align-items: flex-end;
-
     justify-content: flex-start;
-
     overflow-x: hidden;
-
     overflow-y: visible;
-
     min-height: 500px;
-
     gap: 30px;
-
     padding: 35px;
-
 }
 
 
@@ -356,9 +230,7 @@
 ========================================= */
 
 .bloco-prateleira.expandida .livro-estante {
-
     height: 220px;
-
 }
 
 
@@ -367,46 +239,29 @@
 ========================================= */
 
 .bloco-prateleira.minimizada .linha-prateleira {
-
     min-height: 0;
-
     height: 0;
-
     padding-top: 0;
     padding-bottom: 0;
-
     overflow: hidden;
-
     opacity: 0;
 }
-
 
 /* =========================================
    PLACA DA PRATELEIRA
 ========================================= */
 
 .placa-prateleira {
-
     background: #5c3920;
-
     color: white;
-
     border-bottom: 1px solid #835435;
-
     text-align: center;
-
     padding: 10px;
-
     font-size: .95rem;
-
     font-weight: 600;
-
     letter-spacing: 2px;
-
     box-shadow: 0 4px 10px rgba(0,0,0,.12);
-
     cursor: pointer;
-
     transition:
         background 0.25s ease,
         padding 0.3s ease;
@@ -416,9 +271,7 @@
 /* placa da prateleira aberta */
 
 .bloco-prateleira.expandida .placa-prateleira {
-
     padding: 14px;
-
 }
 
 
@@ -431,32 +284,19 @@
 }
 
 .linha-prateleira::after{
-
     content:"";
-
     position:absolute;
-
     bottom:0;
-
     left:0;
-
     width:100%;
-
     height:10px;
-
     background:#7e4a24;
-
 }
 
 .mensagem-vazia{
-
     color:white;
-
     font-size:18px;
-
 }
-
-
 
 .loja{
     display: flex;
@@ -465,55 +305,34 @@
 }
 
 .loja .irloja{
-
     background:#8fa382;
     padding: 10px;
-
     color:white;
-
     border:none;
     border-radius:30px;
-
 }
+
 .livro-link{
     text-decoration: none;
     display: inline-block;
-
 }
 
-
-
 .livro-estante:hover{
-
     transform:translateY(-8px);
-
     box-shadow:0 12px 25px rgba(0,0,0,.18);
-
 }
 
 .placa-prateleira{
-
     background:#5c3920;
-
     color:white;
     border-bottom: 1px solid #835435;
-
     text-align:center;
-
     padding:10px;
-
     font-size:.95rem;
-
     font-weight:600;
-
     letter-spacing:2px;
-
     box-shadow:0 4px 10px rgba(0,0,0,.12);
-
 }
-
-
-
 
 .livro-card {
     position: relative;
@@ -522,25 +341,17 @@
 }
 
 .btn-remover{
-
     position:absolute;
-
     top:8px;
     right:8px;
-
     width:28px;
     height:28px;
-
     border:none;
     border-radius:50%;
-
     background:#d9534f;
     color:white;
-
     cursor:pointer;
-
     opacity:0;
-
     transition:.2s;
 }
 
@@ -556,13 +367,10 @@
 }
 
 
-
 .item-decoracao-estante {
     width: 90px;
     height: 90px;
-
     object-fit: contain;
-
     transition: transform 0.2s ease;
 }
 
@@ -571,15 +379,9 @@
 }
 
 .decoracao-estante {
-
     width: 80px;
-
     height: 120px;
-
     object-fit: contain;
-
     margin: 0 10px;
-
     align-self: flex-end;
-
 }
