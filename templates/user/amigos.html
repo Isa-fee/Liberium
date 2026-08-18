@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amigos/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="pagina-amigos">
+
+    <!-- CABEÇALHO -->
+    <div class="cabecalho-amigos">
+
+        <div>
+            <h1>Meus Amigos</h1>
+            <p>
+                Conecte-se com leitores e compartilhe histórias.
+            </p>
+        </div>
+
+        <a href="#" class="btn-encontrar">
+            + Encontrar leitores
+        </a>
+
+    </div>
+
+
+    <!-- BUSCA -->
+    <div class="barra-pesquisa">
+
+        <span class="icone-pesquisa">⌕</span>
+
+        <input
+            type="text"
+            placeholder="Buscar amigos pelo nome ou usuário..."
+        >
+
+    </div>
+
+
+    <!-- LISTA DE AMIGOS -->
+    <section class="secao-amigos">
+
+        <div class="titulo-secao">
+
+            <div>
+                <h2>Meus amigos</h2>
+                <p>{{ amigos|length }} leitores conectados com você</p>
+            </div>
+
+        </div>
+
+
+        {% if amigos %}
+
+        <div class="grid-amigos">
+
+            {% for amigo in amigos %}
+
+            <div class="card-amigo">
+
+                <!-- PERFIL -->
+                <div class="topo-card">
+
+                    <img
+                        src="{{ url_for('static', filename='img/perfil_padrao.png') }}"
+                        alt="Foto de {{ amigo.nome }}"
+                        class="foto-amigo"
+                    >
+
+                    <div class="dados-amigo">
+
+                        <h3>{{ amigo.nome }}</h3>
+
+                        <p class="username">
+                            @{{ amigo.username }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NÍVEL -->
+                <div class="nivel-amigo">
+
+                    <span class="icone-nivel">✦</span>
+
+                    <span>
+                        {{ amigo.nivel or "Leitor Iniciante" }}
+                    </span>
+
+                </div>
+
+
+                <!-- LIVRO ATUAL -->
+                {% if amigo.livro_atual %}
+
+                <div class="livro-atual">
+
+                    <span class="icone-livro">📖</span>
+
+                    <div>
+
+                        <small>Lendo atualmente</small>
+
+                        <strong>
+                            {{ amigo.livro_atual.titulo }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <div class="livro-atual sem-livro">
+
+                    <span class="icone-livro">📚</span>
+
+                    <div>
+
+                        <small>Lendo atualmente</small>
+
+                        <strong>
+                            Nenhum livro no momento
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- AÇÕES -->
+                <div class="acoes-amigo">
+
+                    <a
+                        href="{{ url_for(
+                            'amigos_bp.perfil_usuario',
+                            usuario_id=amigo.id
+                        ) }}"
+                        class="btn-perfil"
+                    >
+                        Ver perfil
+                    </a>
+
+                    <a href="#" class="btn-estante">
+                        Ver estante
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <!-- ESTADO VAZIO -->
+        <div class="estado-vazio">
+
+            <div class="icone-vazio">👥</div>
+
+            <h2>Você ainda não tem amigos</h2>
+
+            <p>
+                Encontre outros leitores e comece a compartilhar
+                suas histórias favoritas.
+            </p>
+
+            <a href="#" class="btn-encontrar">
+                Encontrar leitores
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+
+{% endblock %}
