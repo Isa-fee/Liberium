@@ -42,136 +42,88 @@
     background: var(--fundo);
 }
 
-
 /* =========================================================
-   SIDEBAR
+   MENU LATERAL
    ========================================================= */
 
-.sidebar {
-    background: linear-gradient(180deg, #e7efe2 0%, #dbe7d5 100%);
-    padding: 38px 22px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid rgba(80, 105, 75, 0.08);
-    position: relative;
+.sidebar{
+    background:#d7e2cf;
+    padding:35px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 
-/* detalhe decorativo */
+.foto-perfil{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
+}
 
-.sidebar::before {
-    content: "";
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    top: -60px;
-    left: -60px;
-    pointer-events: none;
+.sidebar h3{
+    margin:0;
+    color:#4b3323;
+    font-size:28px;
 }
 
 
-/* FOTO */
-
-.foto-perfil {
-    width: 112px;
-    height: 112px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid rgba(255, 255, 255, 0.85);
-    box-shadow:0 7px 18px rgba(60, 80, 55, 0.15);
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 1;
+.usuario{
+    color:#8d8d8d;
+    margin-top:5px;
+    margin-bottom:35px;
 }
 
-
-/* usuário */
-
-.usuario {
-    color: #82907c;
-    font-size: 13px;
-    margin: 0 0 5px;
-    letter-spacing: 0.3px;
+.menu-lateral{
+    width:100%;
+    display:flex;
+    flex-direction:column;
 }
 
-
-/* nome */
-
-.sidebar h1 {
-    margin: 0 0 28px;
-    color: var(--marrom);
-    font-size: 25px;
-    font-weight: 700;
+.titulo-menu{
+    color:#6c5338;
+    font-weight:bold;
+    font-size:.9rem;
+    text-transform:uppercase;
+    margin:18px 0 12px;
 }
 
-
-/* =========================================================
-   MENU
-   ========================================================= */
-
-.menu-lateral {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    position: relative;
-    z-index: 2;
+.menu-lateral a{
+    text-decoration:none;
+    color:#4b3323;
+    padding:10px;
+    border-radius:8px;
+    transition:.2s;
 }
 
-
-.menu-lateral a {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #52604d;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 12px 15px;
-    border-radius: 12px;
-    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+.menu-lateral a:hover{
+    background:white;
 }
 
-
-/* Ícones automáticos */
-
-.menu-lateral a::before {
-    font-size: 19px;
-    width: 22px;
-    display: inline-flex;
-    justify-content: center;
+.menu-lateral hr{
+    border:none;
+    border-top:1px solid rgba(0,0,0,.1);
+    margin:20px 0;
 }
 
-
-.menu-lateral a:nth-child(1)::before {
-    content: "📖";
+.card-moedas{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:10px;
 }
 
-.menu-lateral a:nth-child(2)::before {
-    content: "📊";
-}
-
-.menu-lateral a:nth-child(3)::before {
-    content: "💬";
-}
-
-.menu-lateral a:nth-child(4)::before {
-    content: "⚙";
-}
-
-.menu-lateral a:nth-child(5)::before {
-    content: "↪";
-}
-
-
-.menu-lateral a:hover {
-    background: rgba(255, 255, 255, 0.75);
-    color: var(--verde-principal);
-    transform: translateX(3px);
+.icone-libelula {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin: 0 auto 5px;
 }
 
 
@@ -184,7 +136,6 @@
     padding: 35px 42px 50px;
     min-width: 0;
 }
-
 
 /* =========================================================
    CARD SUPERIOR
@@ -215,7 +166,6 @@
     letter-spacing: -0.4px;
 }
 
-
 .frase {
     color: #858b82;
     font-size: 14px;
@@ -223,30 +173,22 @@
     margin: 9px 0 20px;
 }
 
-
 /* =========================================================
    NÍVEL
    ========================================================= */
 
 .nivel-card {
     background:
-        linear-gradient(
-            135deg,
-            #fbfcfa,
-            #f5f8f2
-        );
-
+        linear-gradient(135deg, #fbfcfa,  #f5f8f2);
     border: 1px solid #e7ece3;
     border-radius: 16px;
     padding: 18px 20px;
     transition: 0.25s ease;
 }
 
-
 .nivel-card:hover {
     box-shadow: 0 8px 20px rgba(70, 90, 65, 0.08);
 }
-
 
 .nivel-topo {
     display: flex;
@@ -255,7 +197,6 @@
     gap: 10px;
 }
 
-
 .nivel-topo h2 {
     color: #514071;
     font-size: 18px;
@@ -263,20 +204,17 @@
     font-weight: 700;
 }
 
-
 .nivel-topo span {
     color: var(--verde-principal);
     font-weight: 700;
     font-size: 14px;
 }
 
-
 .nivel-card > p {
     margin: 7px 0;
     color: #777;
     font-size: 13px;
 }
-
 
 /* =========================================================
    BARRA XP
@@ -291,7 +229,6 @@
     margin: 13px 0 8px;
 }
 
-
 .progresso {
     width: 70%;
     height: 100%;
@@ -305,12 +242,10 @@
     transition: width 0.7s ease;
 }
 
-
 .nivel-card small {
     color: #8a9086;
     font-size: 11px;
 }
-
 
 /* =========================================================
    CARDS LATERAIS
@@ -321,7 +256,6 @@
     flex-direction: column;
     gap: 14px;
 }
-
 
 .mini-card {
     flex: 1;
@@ -337,7 +271,6 @@
     transition: 0.25s ease;
 }
 
-
 .mini-card::after {
     content: "✦";
     position: absolute;
@@ -347,12 +280,10 @@
     font-size: 28px;
 }
 
-
 .mini-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--sombra);
 }
-
 
 .mini-card h2 {
     margin: 0;
@@ -360,13 +291,11 @@
     font-size: 24px;
 }
 
-
 .mini-card span {
     color: #858c82;
     font-size: 12px;
     margin-top: 3px;
 }
-
 
 /* =========================================================
    META
@@ -380,7 +309,6 @@
     box-shadow: 0 4px 15px rgba(60, 80, 55, 0.04);
 }
 
-
 .meta-card h3 {
     margin: 0 0 7px;
     color: #343b31;
@@ -388,13 +316,11 @@
     letter-spacing: 0.3px;
 }
 
-
 .meta-card > p {
     color: #777;
     font-size: 13px;
     margin: 0 0 13px;
 }
-
 
 .barra-meta {
     width: 100%;
@@ -404,7 +330,6 @@
     overflow: hidden;
     margin: 10px 0 7px;
 }
-
 
 .progresso-meta {
     height: 100%;
@@ -418,7 +343,6 @@
     transition: width 0.6s ease;
 }
 
-
 .meta-card > span {
     display: block;
     color: var(--verde-principal);
@@ -426,7 +350,6 @@
     font-weight: 700;
     margin-bottom: 13px;
 }
-
 
 /* =========================================================
    MENSAGEM META CONCLUÍDA
@@ -440,7 +363,6 @@
     font-size: 12px !important;
     line-height: 1.4;
 }
-
 
 /* =========================================================
    FORMULÁRIO META
@@ -460,7 +382,6 @@
     margin-bottom: 2px;
 }
 
-
 .form-meta input {
     width: 100%;
     box-sizing: border-box;
@@ -474,13 +395,11 @@
     transition: 0.2s;
 }
 
-
 .form-meta input:focus {
     border-color: #91a88a;
     box-shadow:
         0 0 0 3px rgba(143, 163, 130, 0.15);
 }
-
 
 .form-meta button {
     border: none;
@@ -494,7 +413,6 @@
     transition: 0.2s;
 }
 
-
 .form-meta button:hover {
     background: #5f7559;
     transform: translateY(-1px);
@@ -504,7 +422,7 @@
    MODAL META
    ========================================================= */
 
-   .modal-meta-overlay {
+.modal-meta-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
@@ -519,7 +437,6 @@
     display: flex;
 }
 
-
 .modal-meta {
     width: 100%;
     max-width: 440px;
@@ -529,7 +446,6 @@
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
 }
-
 
 /* =========================================================
    CABEÇALHO
@@ -560,7 +476,6 @@
     color: #444;
 }
 
-
 /* =========================================================
    FORMULÁRIO
    ========================================================= */
@@ -577,7 +492,6 @@
     font-weight: 600;
     margin-top: 5px;
 }
-
 
 /* =========================================================
    INPUTS E SELECT
@@ -605,7 +519,6 @@
         0 0 0 3px rgba(143, 163, 130, 0.15);
 }
 
-
 /* =========================================================
    DATA PERSONALIZADA
    ========================================================= */
@@ -616,11 +529,9 @@
     gap: 10px;
 }
 
-
 /* =========================================================
    BOTÕES
    ========================================================= */
-
 
 .btn-meta {
     border: none;
@@ -676,7 +587,6 @@
 .btn-salvar-meta:hover {
     background: #7d9172;
 }
-
 
 /* =========================================================
    EXCLUSÃO
@@ -744,7 +654,6 @@
     border: 1px solid rgba(110, 130, 100, 0.07);
 }
 
-
 .estatisticas .item {
     display: flex;
     align-items: center;
@@ -754,7 +663,6 @@
     position: relative;
 }
 
-
 .estatisticas .item:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -763,7 +671,6 @@
     height: 45px;
     background: #e8ebe6;
 }
-
 
 .estatisticas .item::before {
     font-size: 25px;
@@ -775,7 +682,6 @@
     justify-content: center;
     background: #edf4ea;
 }
-
 
 .estatisticas .item:nth-child(1)::before {
     content: "📖";
@@ -794,20 +700,17 @@
     content: "📚";
 }
 
-
 .estatisticas .item h2 {
     margin: 0;
     color: #30362e;
     font-size: 20px;
 }
 
-
 .estatisticas .item p {
     margin: 3px 0 0;
     color: #858b83;
     font-size: 11px;
 }
-
 
 /* =========================================================
    INSÍGNIAS
@@ -835,7 +738,6 @@
     border: 1px solid rgba(110, 130, 100, 0.07);
 }
 
-
 .card-insignia {
     display: flex;
     align-items: center;
@@ -851,7 +753,6 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 18px rgba(60, 80, 55, 0.08);
 }
-
 
 .icone-insignia {
     width: 62px;
@@ -937,7 +838,6 @@
     border: 1px solid rgba(110, 130, 100, 0.07);
 }
 
-
 /* =========================================================
    TÍTULOS
    ========================================================= */
@@ -956,7 +856,6 @@
     font-size: 16px;
 }
 
-
 .btn-loja {
     display: inline-flex;
     align-items: center;
@@ -972,13 +871,11 @@
     transition: 0.2s ease;
 }
 
-
 .btn-loja:hover {
     background: #6f8564;
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(80, 105, 75, 0.15);
 }
-
 
 /* =========================================================
    COLEÇÃO
@@ -1004,7 +901,6 @@
     transform: translateY(-3px);
 }
 
-
 .boneco > img {
     width: 105px;
     height: 105px;
@@ -1012,7 +908,6 @@
     display: block;
     margin: 0 auto;
 }
-
 
 .boneco p {
     font-size: 11px;
@@ -1050,7 +945,6 @@
     font-size: 12px;
 }
 
-
 /* =========================================================
    ATIVIDADE
    ========================================================= */
@@ -1060,13 +954,11 @@
     margin-bottom: 12px;
 }
 
-
 .atividade ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
 
 .atividade li {
     padding: 12px 4px;
@@ -1077,17 +969,14 @@
     transition: 0.2s ease;
 }
 
-
 .atividade li:last-child {
     border-bottom: none;
 }
-
 
 .atividade li:hover {
     padding-left: 5px;
     color: #3f493c;
 }
-
 
 .atividade-vazia {
     color: #888;
@@ -1139,7 +1028,6 @@
 
     .cards-laterais {
         display: grid;
-
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -1165,9 +1053,7 @@
 
     .sidebar {
         padding: 20px;
-
         border-right: none;
-
         border-bottom: 1px solid #d8e1d3;
     }
 
@@ -1178,25 +1064,19 @@
 
     .sidebar h1 {
         font-size: 21px;
-
         margin-bottom: 15px;
     }
 
     .menu-lateral {
         flex-direction: row;
-
         flex-wrap: wrap;
-
         justify-content: center;
-
         gap: 5px;
     }
 
     .menu-lateral a {
         width: auto;
-
         padding: 8px 10px;
-
         font-size: 11px;
     }
 
@@ -1210,7 +1090,6 @@
 
     .estatisticas {
         grid-template-columns: repeat(2, 1fr);
-
         padding: 12px;
     }
 
@@ -1237,7 +1116,6 @@
 
     .titulo-bloco {
         align-items: flex-start;
-
         flex-direction: column;
     }
 }
