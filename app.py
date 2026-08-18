@@ -27,12 +27,14 @@ def create_app():
     from controllers.estante_controller import estante_bp
     from controllers.user_controller import user_bp
     from controllers.loja_controller import loja_bp
+    from controllers.clubes_controller import clubes_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(books_bp)
     app.register_blueprint(estante_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(loja_bp)
+    app.register_blueprint(clubes_bp)
 
     return app
 

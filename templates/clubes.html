@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Clubes de Leitura | Liberium
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clubes.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="clubes-conteudo">
+
+    <!-- ==========================================
+         CABEÇALHO
+    =========================================== -->
+
+    <div class="clubes-titulo">
+
+        <div>
+            <h1>Clubes de leitura</h1>
+
+            <p>
+                Encontre pessoas que estão vivendo as mesmas histórias que você.
+            </p>
+        </div>
+
+        <a href="#" class="botao-criar-clube">
+            + Criar clube
+        </a>
+
+    </div>
+    <div class="filtros-clubes">
+
+        <button class="filtro-clube ativo">
+            Todos os gêneros
+        </button>
+
+        <button class="filtro-clube">
+            Mais populares
+        </button>
+
+        <button class="filtro-clube">
+            Romance
+        </button>
+
+        <button class="filtro-clube">
+            Fantasia
+        </button>
+
+        <button class="filtro-clube">
+            Suspense
+        </button>
+
+    </div>
+
+    <div class="titulo-secao-clubes">
+
+        <div>
+            <span>PARA VOCÊ</span>
+
+            <h2>Clubes em destaque</h2>
+        </div>
+
+        <a href="#">
+            Ver todos
+        </a>
+
+    </div>
+
+
+    <div class="clubes-grid">
+
+
+        <!-- CLUBE 1 - FANTASIA -->
+
+        <article class="clube-card">
+
+            <div class="clube-imagem">
+
+                <img
+                    src="{{ url_for('static', filename='img/clubes/fantasia.jpg') }}"
+                    alt="Clube dos Fantasiosos"
+                >
+
+                <button
+                    class="favoritar-clube"
+                    aria-label="Favoritar clube">
+                </button>
+
+            </div>
+
+            <div class="clube-detalhes">
+
+                <span class="clube-genero">
+                    FANTASIA
+                </span>
+
+                <h3>
+                    Clube dos Fantasiosos
+                </h3>
+
+                <p class="quantidade-membros">
+                    128 membros
+                </p>
+
+                <div class="leitura-atual">
+
+                    <img
+                        src="{{ url_for('static', filename='img/capas/o-principe-cruel.jpg') }}"
+                        alt="O Príncipe Cruel"
+                    >
+
+                    <div>
+                        <span>Atualmente lendo</span>
+
+                        <strong>
+                            O Príncipe Cruel
+                        </strong>
+                    </div>
+
+                </div>
+
+                <a href="#" class="botao-entrar">
+                    Entrar no clube
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLUBE 2 - ROMANCE -->
+
+        <article class="clube-card">
+
+            <div class="clube-imagem">
+
+                <img
+                    src="{{ url_for('static', filename='img/clubes/romance.jpg') }}"
+                    alt="Romance e Café"
+                >
+
+                <button
+                    class="favoritar-clube"
+                    aria-label="Favoritar clube">
+                </button>
+
+            </div>
+
+            <div class="clube-detalhes">
+
+                <span class="clube-genero">
+                    ROMANCE
+                </span>
+
+                <h3>
+                    Romance & Café
+                </h3>
+
+                <p class="quantidade-membros">
+                    94 membros
+                </p>
+
+                <div class="leitura-atual">
+
+                    <img
+                        src="{{ url_for('static', filename='img/capas/livro-romance.jpg') }}"
+                        alt="Livro atualmente lido"
+                    >
+
+                    <div>
+                        <span>Atualmente lendo</span>
+
+                        <strong>
+                            A seleção do clube
+                        </strong>
+                    </div>
+
+                </div>
+
+                <a href="#" class="botao-entrar">
+                    Entrar no clube
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLUBE 3 - SUSPENSE -->
+
+        <article class="clube-card">
+
+            <div class="clube-imagem">
+
+                <img
+                    src="{{ url_for('static', filename='img/clubes/suspense.jpg') }}"
+                    alt="Suspenseiros Anônimos"
+                >
+
+                <button
+                    class="favoritar-clube"
+                    aria-label="Favoritar clube">
+                </button>
+
+            </div>
+
+            <div class="clube-detalhes">
+
+                <span class="clube-genero">
+                    SUSPENSE
+                </span>
+
+                <h3>
+                    Suspenseiros Anônimos
+                </h3>
+
+                <p class="quantidade-membros">
+                    76 membros
+                </p>
+
+                <div class="leitura-atual">
+
+                    <img
+                        src="{{ url_for('static', filename='img/capas/livro-suspense.jpg') }}"
+                        alt="Livro atualmente lido"
+                    >
+
+                    <div>
+                        <span>Atualmente lendo</span>
+
+                        <strong>
+                            O livro da semana
+                        </strong>
+                    </div>
+
+                </div>
+
+                <a href="#" class="botao-entrar">
+                    Entrar no clube
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLUBE 4 - DISTOPIA -->
+
+        <article class="clube-card">
+
+            <div class="clube-imagem">
+
+                <img
+                    src="{{ url_for('static', filename='img/clubes/distopia.jpg') }}"
+                    alt="Jovens Distópicos"
+                >
+
+                <button
+                    class="favoritar-clube"
+                    aria-label="Favoritar clube">
+                </button>
+
+            </div>
+
+            <div class="clube-detalhes">
+
+                <span class="clube-genero">
+                    DISTOPIA
+                </span>
+
+                <h3>
+                    Jovens Distópicos
+                </h3>
+
+                <p class="quantidade-membros">
+                    63 membros
+                </p>
+
+                <div class="leitura-atual">
+
+                    <img
+                        src="{{ url_for('static', filename='img/capas/livro-distopia.jpg') }}"
+                        alt="Livro atualmente lido"
+                    >
+
+                    <div>
+                        <span>Atualmente lendo</span>
+
+                        <strong>
+                            Leitura coletiva
+                        </strong>
+                    </div>
+
+                </div>
+
+                <a href="#" class="botao-entrar">
+                    Entrar no clube
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- ==========================================
+         ENCONTRAR CLUBE ATRAVÉS DE UM LIVRO
+    =========================================== -->
+
+    <section class="encontrar-clube">
+
+        <div class="encontrar-texto">
+
+            <span>
+                NÃO SABE POR ONDE COMEÇAR?
+            </span>
+
+            <h2>
+                Está procurando um livro?
+            </h2>
+
+            <p>
+                Pesquise pelo livro que você quer ler.
+                Se ele estiver sendo lido por algum clube,
+                você poderá conhecer a comunidade e participar.
+            </p>
+
+        </div>
+
+        <a href="#" class="botao-encontrar">
+            Pesquisar livros
+        </a>
+
+    </section>
+
+</section>
+
+{% endblock %}
