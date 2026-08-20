@@ -155,7 +155,13 @@
                 </div>
 
 
-                <a href="#" class="botao-entrar">
+                <!-- <a href="#" class="botao-entrar">
+                    Entrar no clube
+                </a> -->
+                <a
+                    href="{{ url_for('clubes.ver_clube', clube_id=clube.id) }}"
+                    class="botao-entrar"
+                >
                     Entrar no clube
                 </a>
 

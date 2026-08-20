@@ -19,7 +19,7 @@ def listar_clubes():
     clubes = Clube.query.all()
 
     return render_template(
-        'clubes.html',
+        'clubes/clubes.html',
         clubes=clubes
     )
 
@@ -98,5 +98,16 @@ def criar_clube():
         )
 
     return render_template(
-        'criar_clube.html'
+        'clubes/criar_clube.html'
+    )
+    
+@clubes_bp.route('/<int:clube_id>')
+@login_required
+def ver_clube(clube_id):
+
+    clube = Clube.query.get_or_404(clube_id)
+
+    return render_template(
+        'clubes/clube.html',
+        clube=clube
     )
