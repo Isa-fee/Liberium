@@ -460,3 +460,54 @@ class Atividade(db.Model):
         "Livro",
         backref="atividades"
     )
+
+class Clube(db.Model):
+    __tablename__ = "clubes"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    nome = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+    descricao = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    genero = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    imagem = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    quantidade_membros = db.Column(
+        db.Integer,
+        default=1,
+        nullable=False
+    )
+
+    data_criacao = db.Column(
+        db.Date,
+        default=date.today,
+        nullable=False
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="clubes_criados"
+    )
