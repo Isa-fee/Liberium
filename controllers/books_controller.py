@@ -335,3 +335,178 @@ def adicionar_estante(livro_id):
             id=livro_id
         )
     )
+
+
+# ======================================
+# CATÁLOGO DE LIVROS
+# ======================================
+
+@books_bp.route("/")
+@login_required
+def catalogo():
+
+    busca = request.args.get("q", "").strip()
+    genero = request.args.get("genero", "").strip()
+    idioma = request.args.get("idioma", "").strip()
+    ano = request.args.get("ano", "").strip()
+    avaliacao = request.args.get("avaliacao", "").strip()
+    ordenar = request.args.get("ordenar", "recentes")
+
+    # --------------------------------------
+    # BUSCA BASE
+    # --------------------------------------
+
+    consulta = Livro.query
+
+    # --------------------------------------
+    # BUSCA POR TÍTULO OU AUTOR
+    # --------------------------------------
+
+    if busca:
+
+        consulta = consulta.filter(
+            db.or_(
+                Livro.titulo.ilike(f"%{busca}%"),
+                Livro.autor.ilike(f"%{busca}%")
+            )
+        )
+
+    # --------------------------------------
+    # FILTRO DE GÊNERO
+    # --------------------------------------
+
+    if genero:
+
+        consulta = consulta.filter(
+            Livro.genero == genero
+        )
+
+    # --------------------------------------
+    # FILTRO DE IDIOMA
+    # --------------------------------------
+
+    if idioma:
+
+        consulta = consulta.filter(
+            Livro.idioma == idioma
+        )
+
+    # --------------------------------------
+    # FILTRO DE ANO
+    # --------------------------------------
+
+    if ano:
+
+        consulta = consulta.filter(
+            Livro.ano == ano
+        )
+
+    # --------------------------------------
+    # FILTRO DE AVALIAÇÃO
+    # --------------------------------------
+
+    if avaliacao:
+
+        try:
+            nota_minima = float(avaliacao)
+
+            consulta = consulta.filter(
+                Livro.avaliacao >= nota_minima
+            )
+
+        except ValueError:
+            pass
+
+    # --------------------------------------
+    # ORDENAÇÃO
+    # --------------------------------------
+
+    if ordenar == "avaliacao":
+
+        consulta = consulta.order_by(
+            Livro.avaliacao.desc()
+        )
+
+    elif ordenar == "az":
+
+        consulta = consulta.order_by(
+            Livro.titulo.asc()
+        )
+
+    elif ordenar == "za":
+
+        consulta = consulta.order_by(
+            Livro.titulo.desc()
+        )
+
+    elif ordenar == "antigos":
+
+        consulta = consulta.order_by(
+            Livro.ano.asc()
+        )
+
+    else:
+
+        # Mais recentes
+        consulta = consulta.order_by(
+            Livro.ano.desc()
+        )
+
+    livros = consulta.all()
+
+    # --------------------------------------
+    # OPÇÕES DOS FILTROS
+    # --------------------------------------
+
+    generos = db.session.query(
+        Livro.genero
+    ).filter(
+        Livro.genero.isnot(None),
+        Livro.genero != ""
+    ).distinct().order_by(
+        Livro.genero
+    ).all()
+
+    idiomas = db.session.query(
+        Livro.idioma
+    ).filter(
+        Livro.idioma.isnot(None),
+        Livro.idioma != ""
+    ).distinct().order_by(
+        Livro.idioma
+    ).all()
+
+    anos = db.session.query(
+        Livro.ano
+    ).filter(
+        Livro.ano.isnot(None),
+        Livro.ano != ""
+    ).distinct().order_by(
+        Livro.ano.desc()
+    ).all()
+
+    # --------------------------------------
+    # LIVROS QUE JÁ ESTÃO NA ESTANTE
+    # --------------------------------------
+
+    livros_na_estante = {
+        item.livro_id
+        for item in Estante.query.filter_by(
+            usuario_id=current_user.id
+        ).all()
+    }
+
+    return render_template(
+        "books/catalogo.html",
+        livros=livros,
+        generos=[g[0] for g in generos],
+        idiomas=[i[0] for i in idiomas],
+        anos=[a[0] for a in anos],
+        livros_na_estante=livros_na_estante,
+        busca=busca,
+        genero=genero,
+        idioma=idioma,
+        ano=ano,
+        avaliacao=avaliacao,
+        ordenar=ordenar
+    )
