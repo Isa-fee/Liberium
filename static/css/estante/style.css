@@ -385,3 +385,24 @@
     margin: 0 10px;
     align-self: flex-end;
 }
+
+/* =========================================
+   ARRASTAR LIVROS E DECORAÇÕES
+========================================= */
+
+.item-arrastavel {
+    cursor: grab;
+}
+
+.item-arrastavel.arrastando {
+    opacity: 0.45;
+    cursor: grabbing;
+}
+
+.livro-card.item-arrastavel {
+    user-select: none;
+}
+
+.decoracao-estante.item-arrastavel {
+    user-select: none;
+}
