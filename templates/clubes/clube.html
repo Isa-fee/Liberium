@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ clube.nome }} | Liberium
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clube/clube.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="clube-conteudo">
+    <div class="clube-topo">
+        <a
+            href="{{ url_for('clubes.listar_clubes') }}"
+            class="btn-voltar"
+        >
+            ← Voltar para clubes
+        </a>
+    </div>
+
+    <div class="clube-header">
+
+        <div class="clube-header-principal">
+            <div class="clube-avatar">
+                {% if clube.imagem %}
+                    <img
+                        src="{{ url_for('static', filename=clube.imagem) }}"
+                        alt="{{ clube.nome }}"
+                    >
+                {% else %}
+                    <div class="clube-avatar-sem-imagem">
+                        {{ clube.nome[0] if clube.nome else '?' }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="clube-informacoes">
+
+                <div class="clube-titulo">
+
+                    <h1>
+                        {{ clube.nome }}
+                    </h1>
+
+                    <span class="clube-status">
+                        Clube ativo
+                    </span>
+
+                </div>
+
+                <p class="clube-meta">
+                    {{ clube.quantidade_membros }} membros
+                    {% if clube.data_criacao %}
+                        • Criado em
+                        {{ clube.data_criacao.strftime('%d/%m/%Y') }}
+                    {% endif %}
+                </p>
+
+                <p class="clube-descricao">
+
+                    {{ clube.descricao or
+                    'Este clube ainda não possui uma descrição.' }}
+
+                </p>
+
+                <!-- LEITURA ATUAL -->
+                {% if clube.livro_atual %}
+
+                <div class="leitura-atual">
+                    <span class="leitura-label">
+                        Leitura atual
+                    </span>
+                    <strong>
+                        {{ clube.livro_atual.titulo }}
+                    </strong>
+                    <small>
+                        {{ clube.livro_atual.autor }}
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- AÇÕES VISUAIS -->
+        <div class="clube-acoes">
+            <button
+                type="button"
+                class="btn-primario"
+                onclick="copiarLink()"
+            >
+                + Convidar amigos
+            </button>
+
+        </div>
+
+    </div>
+
+    <nav class="clube-abas">
+
+        <button
+            type="button"
+            class="aba-btn ativo"
+            onclick="abrirAba(event, 'aba-livro')"
+        >
+            Sobre o livro
+        </button>
+
+        <button
+            type="button"
+            class="aba-btn"
+            onclick="abrirAba(event, 'aba-discussao')"
+        >
+            Discussões
+        </button>
+
+        <button
+            type="button"
+            class="aba-btn"
+            onclick="abrirAba(event, 'aba-participantes')"
+        >
+            Participantes
+        </button>
+    </nav>
+
+    <div class="clube-grid">
+        <main class="clube-principal">
+            <section
+                id="aba-livro"
+                class="aba-conteudo ativo"
+            >
+                <div class="card-clube">
+                    <h2>
+                        Sobre o livro
+                    </h2>
+
+                    {% if clube.livro_atual %}
+
+                    <div class="livro-container">
+
+                        <div class="livro-capa">
+
+                            {% if clube.livro_atual.capa %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=clube.livro_atual.capa
+                                    ) }}"
+                                    alt="{{ clube.livro_atual.titulo }}"
+                                >
+                            {% else %}
+                                <div class="livro-sem-capa">
+                                    Sem capa
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="livro-informacoes">
+
+                            <h3>
+                                {{ clube.livro_atual.titulo }}
+                            </h3>
+
+                            <p class="livro-autor">
+                                {{ clube.livro_atual.autor }}
+                            </p>
+                            {% if clube.livro_atual.genero %}
+
+                            <span class="livro-genero">
+                                {{ clube.livro_atual.genero }}
+                            </span>
+
+                            {% endif %}
+
+                            {% if clube.livro_atual.sinopse %}
+
+                            <p class="livro-sinopse">
+                                {{ clube.livro_atual.sinopse }}
+                            </p>
+
+                            {% endif %}
+
+                            <ul class="livro-especificacoes">
+                                {% if clube.livro_atual.total_paginas %}
+                                <li>
+                                    <strong>Páginas:</strong>
+                                    {{ clube.livro_atual.total_paginas }}
+                                </li>
+                                {% endif %}
+
+                                {% if clube.livro_atual.editora %}
+                                <li>
+                                    <strong>Editora:</strong>
+                                    {{ clube.livro_atual.editora }}
+                                </li>
+                                {% endif %}
+
+                                {% if clube.livro_atual.ano_publicacao %}
+                                <li>
+                                    <strong>Publicação:</strong>
+                                    {{ clube.livro_atual.ano_publicacao }}
+                                </li>
+                                {% endif %}
+
+                                {% if clube.livro_atual.isbn %}
+                                <li>
+                                    <strong>ISBN:</strong>
+                                    {{ clube.livro_atual.isbn }}
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="livro-acoes">
+                        <button
+                            type="button"
+                            class="btn-secundario"
+                        >
+                            Ver no catálogo
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-primario"
+                        >
+                            Adicionar à estante
+                        </button>
+                    </div>
+
+                    {% else %}
+                    <div class="sem-livro">
+                        <h3>
+                            Nenhum livro selecionado
+                        </h3>
+                        <p>
+                            Este clube ainda não possui uma
+                            leitura atual.
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </section>
+
+            <section
+                id="aba-discussao"
+                class="aba-conteudo"
+            >
+                <div class="card-clube">
+                    <div class="card-cabecalho">
+                        <div>
+                            <h2>
+                                Comentários e discussões
+                            </h2>
+                            <p>
+                                Aqui aparecerão os comentários
+                                dos participantes sobre a leitura.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-primario"
+                        >
+                            + Novo comentário
+                        </button>
+
+                    </div>
+                    <div class="sem-comentarios">
+                        <h3>
+                            Nenhum comentário ainda
+                        </h3>
+                        <p>
+                            Os comentários dos participantes
+                            aparecerão aqui.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+            <section
+                id="aba-participantes"
+                class="aba-conteudo"
+            >
+                <div class="card-clube">
+                    <div class="card-cabecalho">
+                        <div>
+                            <h2>
+                                Participantes
+                            </h2>
+                            <p>
+                                Pessoas que fazem parte deste clube.
+                            </p>
+                        </div>
+                    </div>
+
+                    {% if clube.membros %}
+                    <div class="lista-participantes">
+                        {% for membro in clube.membros %}
+                        <div class="participante">
+                            <div class="participante-avatar">
+                                {% if membro.usuario.nome %}
+                                    {{ membro.usuario.nome[0] }}
+                                {% else %}
+                                    ?
+                                {% endif %}
+                            </div>
+
+                            <div class="participante-info">
+                                <strong>
+                                    {{ membro.usuario.nome }}
+                                </strong>
+                                {% if membro.usuario_id == clube.usuario_id %}
+                                    <span>
+                                        Criador
+                                    </span>
+                                {% else %}
+                                    <span>
+                                        Membro
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="sem-participantes">
+                        <p>
+                            Ainda não há participantes para mostrar.
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </main>
+
+        <aside class="clube-sidebar">
+            <div class="card-clube progresso-card">
+                <h3>
+                    Progresso da leitura
+                </h3>
+                <p class="card-subtitulo">
+                    Acompanhe seu progresso durante a leitura.
+                </p>
+
+                {% if clube.livro_atual %}
+                    <p class="sem-progresso">
+                        O progresso individual aparecerá aqui.
+                    </p>
+                    <div class="barra-progresso">
+                        <div class="barra-progresso-preenchida"></div>
+                    </div>
+                    <button
+                        type="button"
+                        class="btn-secundario btn-largura"
+                    >
+                        Atualizar progresso
+                    </button>
+
+                {% else %}
+                    <p class="sem-progresso">
+                        Este clube ainda não possui
+                        uma leitura atual.
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="card-clube">
+                <div class="sidebar-cabecalho">
+                    <div>
+                        <h3>
+                            Participantes
+                        </h3>
+                        <span>
+                            {{ clube.quantidade_membros }} membros
+                        </span>
+                    </div>
+                </div>
+
+                {% if clube.membros %}
+                <div class="sidebar-membros">
+                    {% for membro in clube.membros %}
+                    <div class="sidebar-membro">
+                        <div class="membro-avatar">
+                            {% if membro.usuario.nome %}
+                                {{ membro.usuario.nome[0] }}
+                            {% else %}
+                                ?
+                            {% endif %}
+                        </div>
+
+                        <div class="membro-info">
+                            <strong>
+                                {{ membro.usuario.nome }}
+                            </strong>
+                            {% if membro.usuario_id == clube.usuario_id %}
+                                <span>
+                                    Criador
+                                </span>
+                            {% else %}
+                                <span>
+                                    Membro
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <button
+                    type="button"
+                    class="btn-secundario btn-largura"
+                    onclick="copiarLink()"
+                >
+                    + Convidar amigos
+                </button>
+            </div>
+        </aside>
+    </div>
+    <div class="dica-clube">
+        <div>
+            <strong>
+                Dica do clube
+            </strong>
+            <p>
+                Anote suas partes favoritas para compartilhar
+                durante a leitura.
+            </p>
+        </div>
+        <button
+            type="button"
+            class="btn-secundario"
+        >
+            Criar anotação
+        </button>
+    </div>
+</section>
+<script>
+function abrirAba(event, idAba) {
+    document
+        .querySelectorAll('.aba-conteudo')
+        .forEach(function(aba) {
+
+            aba.classList.remove('ativo');
+
+        });
+
+    document
+        .querySelectorAll('.aba-btn')
+        .forEach(function(botao) {
+
+            botao.classList.remove('ativo');
+        });
+
+    document
+        .getElementById(idAba)
+        .classList.add('ativo');
+
+    event.currentTarget.classList.add('ativo');
+}
+function copiarLink() {
+
+    navigator.clipboard
+        .writeText(window.location.href)
+        .then(function() {
+
+            alert('Link do clube copiado!');
+
+        });
+
+}
+</script>
+
+{% endblock %}
