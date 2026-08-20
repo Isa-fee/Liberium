@@ -649,3 +649,25 @@ def remover_estante(livro_id):
             "estante_bp.estante"
         )
     )
+
+# ======================================
+# MINHAS RESENHAS
+# ======================================
+
+@estante_bp.route("/minhas-resenhas")
+@login_required
+def minhas_resenhas():
+
+    resenhas = Estante.query.filter(
+        Estante.usuario_id == current_user.id,
+        Estante.nota.isnot(None),
+        Estante.resenha.isnot(None),
+        Estante.resenha != ""
+    ).order_by(
+        Estante.id.desc()
+    ).all()
+
+    return render_template(
+        "books/minhas_resenhas.html",
+        resenhas=resenhas
+    )
