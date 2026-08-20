@@ -1038,6 +1038,58 @@
     background: #f8f7f5;
 }
 
+/* =========================================
+   MINI ESTANTE DO USUÁRIO
+========================================= */
+
+.mini-estante {
+    display: block;
+    text-decoration: none;
+    background: #5c3920;
+    border-radius: 14px;
+    padding: 25px;
+    margin-top: 20px;
+    border: 1px solid #835435;
+    transition: .25s;
+}
+
+.mini-estante:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.12);
+}
+
+.mini-livros {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 170px;
+    overflow: hidden;
+    padding: 10px 5px 0;
+}
+
+.mini-livros img {
+    height: 145px;
+    width: auto;
+    max-width: 95px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    transition: .2s;
+}
+
+.mini-livros img:hover {
+    transform: translateY(-6px);
+}
+
+.mini-estante > span {
+    display: block;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.2);
+    color: white;
+    text-align: center;
+    font-weight: 600;
+}
 
 /* =========================================
    RESPONSIVIDADE

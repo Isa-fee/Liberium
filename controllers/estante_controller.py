@@ -177,6 +177,94 @@ def estante():
         itens_quero_ler=itens_quero_ler
     )
 
+# ======================================
+# VISUALIZAR ESTANTE DE OUTRO USUÁRIO
+# ======================================
+
+@estante_bp.route("/estante/<int:usuario_id>")
+@login_required
+def estante_usuario(usuario_id):
+
+    from models import Usuario
+
+    usuario = Usuario.query.get_or_404(usuario_id)
+
+    # ==================================
+    # LIVROS
+    # ==================================
+
+    lendo = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="lendo"
+    ).order_by(
+        Estante.posicao
+    ).all()
+
+    lidos = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="lido"
+    ).order_by(
+        Estante.posicao
+    ).all()
+
+    quero_ler = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="quero ler"
+    ).order_by(
+        Estante.posicao
+    ).all()
+
+    # ==================================
+    # DECORAÇÕES
+    # ==================================
+
+    decoracoes_lendo = DecoracaoEstante.query.filter_by(
+        usuario_id=usuario.id,
+        prateleira="lendo"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    decoracoes_lidos = DecoracaoEstante.query.filter_by(
+        usuario_id=usuario.id,
+        prateleira="lidos"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    decoracoes_quero_ler = DecoracaoEstante.query.filter_by(
+        usuario_id=usuario.id,
+        prateleira="quero ler"
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    # ==================================
+    # MONTAR PRATELEIRAS
+    # ==================================
+
+    itens_lendo = montar_prateleira(
+        lendo,
+        decoracoes_lendo
+    )
+
+    itens_lidos = montar_prateleira(
+        lidos,
+        decoracoes_lidos
+    )
+
+    itens_quero_ler = montar_prateleira(
+        quero_ler,
+        decoracoes_quero_ler
+    )
+
+    return render_template(
+        "books/estante_usuario.html",
+        usuario=usuario,
+        itens_lendo=itens_lendo,
+        itens_lidos=itens_lidos,
+        itens_quero_ler=itens_quero_ler
+    )
 
 # ======================================
 # DECORAR

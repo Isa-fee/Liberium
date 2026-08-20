@@ -15,9 +15,10 @@ from flask_login import (
 from models import (
     Usuario,
     Amizade,
-    Estante
+    Estante,
+    DecoracaoEstante
 )
-
+from controllers.estante_controller import montar_prateleira
 from extensions import db
 
 
@@ -59,6 +60,11 @@ def amigos():
             amigo = amizade.usuario
 
         amigos.append(amigo)
+    for amigo in amigos:
+        amigo.leitura_atual = Estante.query.filter_by(
+            usuario_id=amigo.id,
+            status="lendo"
+        ).first()
 
 
     # -----------------------------------------------------
@@ -320,46 +326,106 @@ def recusar_amizade(amizade_id):
     )
 
 
-# =========================================================
-# PERFIL PÚBLICO
-# =========================================================
+@amigos_bp.route("/solicitacoes")
+@login_required
+def solicitacoes():
 
-@amigos_bp.route(
-    "/perfil/<int:usuario_id>"
-)
+    solicitacoes = Amizade.query.filter_by(
+        amigo_id=current_user.id,
+        status="pendente"
+    ).all()
+
+    return render_template(
+        "user/solicitacoes.html",
+        solicitacoes=solicitacoes
+    )
+
+@amigos_bp.route("/encontrar")
+@login_required
+def encontrar_leitores():
+
+    busca = request.args.get(
+        "busca",
+        ""
+    ).strip()
+
+    resultados = []
+
+    if busca:
+
+        resultados = Usuario.query.filter(
+            Usuario.nome.ilike(f"%{busca}%"),
+            Usuario.id != current_user.id
+        ).all()
+
+    return render_template(
+        "user/encontrar_leitores.html",
+        resultados=resultados,
+        busca=busca
+    )
+    
+
+@amigos_bp.route("/perfil/<int:usuario_id>")
 @login_required
 def perfil_usuario(usuario_id):
 
-    usuario = Usuario.query.get_or_404(
-        usuario_id
-    )
+    usuario = Usuario.query.get_or_404(usuario_id)
 
-    # Livros do usuário
+    livros_lidos = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="lido"
+    ).all()
+
+    livros_lendo = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="lendo"
+    ).order_by(
+        Estante.posicao
+    ).all()
+
+    quantidade_amigos = Amizade.query.filter(
+        Amizade.status == "aceita",
+        (
+            (Amizade.usuario_id == usuario.id) |
+            (Amizade.amigo_id == usuario.id)
+        )
+    ).count()
+
     estante = Estante.query.filter_by(
         usuario_id=usuario.id
     ).all()
 
-    livros_lidos = [
-        item for item in estante
-        if item.status == "lido"
-    ]
-
-    leitura_atual = next(
-        (
-            item for item in estante
-            if item.status == "lendo"
-        ),
-        None
-    )
-
     return render_template(
         "user/perfil_amigo.html",
-
         usuario=usuario,
-
-        estante=estante,
-
         livros_lidos=livros_lidos,
+        livros_lendo=livros_lendo,
+        quantidade_amigos=quantidade_amigos,
+        estante=estante
+    )
 
-        leitura_atual=leitura_atual
+@amigos_bp.route("/estante/<int:usuario_id>")
+@login_required
+def estante_amigo(usuario_id):
+
+    usuario = Usuario.query.get_or_404(usuario_id)
+
+    livros = Estante.query.filter_by(
+        usuario_id=usuario.id
+    ).order_by(
+        Estante.posicao
+    ).all()
+
+    decoracoes = DecoracaoEstante.query.filter_by(
+        usuario_id=usuario.id
+    ).order_by(
+        DecoracaoEstante.posicao
+    ).all()
+
+    lendo = montar_prateleira(livros, decoracoes)
+
+    return render_template(
+        "user/estante_amigo.html",
+        usuario=usuario,
+        lendo=lendo
     )

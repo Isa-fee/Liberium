@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estante/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-estante">
+
+    <aside class="sidebar">
+
+        <img
+            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+            class="foto-perfil"
+        >
+
+        <h3>{{ current_user.nome }}</h3>
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+
+        <nav class="menu-lateral">
+
+            <a href="{{ url_for('estante_bp.estante') }}">
+                Minha Estante
+            </a>
+
+            <a href="#">
+                Clubes de leitura
+            </a>
+
+            <hr>
+
+            <span class="titulo-menu">
+                Coleção
+            </span>
+
+            <a href="{{ url_for('loja_bp.loja') }}">
+                Loja de decorações
+            </a>
+
+            <a href="{{ url_for('loja_bp.colecao') }}">
+                Minha coleção
+            </a>
+
+            <hr>
+
+            <span class="titulo-menu">
+                Perfil
+            </span>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="area-estante">
+
+        <div class="estante-container">
+
+            <!-- =========================================
+                 CABEÇALHO
+            ========================================== -->
+
+            <div class="cabecalho-estante">
+
+                <div>
+
+                    <a
+                        href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=usuario.id) }}"
+                        class="btn-adicionar"
+                    >
+                        ← Voltar para o perfil
+                    </a>
+
+                    <h1>
+                        Estante de {{ usuario.nome }}
+                    </h1>
+
+                    <p>
+                        Esta é a estante pública de {{ usuario.nome }}.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="estante">
+
+
+                <!-- =========================================
+                     LENDO
+                ========================================== -->
+
+                <div class="bloco-prateleira">
+
+                    <div class="placa-prateleira">
+                        LENDO
+                    </div>
+
+                    <div class="linha-prateleira">
+
+                        {% if itens_lendo %}
+
+                            {% for item in itens_lendo %}
+
+                                {% if item.tipo == "livro" %}
+
+                                    <div class="livro-card">
+
+                                        {% if item.objeto.livro.capa %}
+
+                                            <img
+                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                class="livro-estante"
+                                                alt="{{ item.objeto.livro.titulo }}"
+                                                title="{{ item.objeto.livro.titulo }}"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="livro-estante mensagem-vazia">
+                                                📖
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.objeto.usuario_item.item.imagem) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
+                                        title="{{ item.objeto.usuario_item.item.nome }}"
+                                    >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <span class="mensagem-vazia">
+                                Nenhum livro nesta prateleira.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     LIDOS
+                ========================================== -->
+
+                <div class="bloco-prateleira">
+
+                    <div class="placa-prateleira">
+                        LIDOS
+                    </div>
+
+                    <div class="linha-prateleira">
+
+                        {% if itens_lidos %}
+
+                            {% for item in itens_lidos %}
+
+                                {% if item.tipo == "livro" %}
+
+                                    <div class="livro-card">
+
+                                        {% if item.objeto.livro.capa %}
+
+                                            <img
+                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                class="livro-estante"
+                                                alt="{{ item.objeto.livro.titulo }}"
+                                                title="{{ item.objeto.livro.titulo }}"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="livro-estante mensagem-vazia">
+                                                📖
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.objeto.usuario_item.item.imagem) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
+                                        title="{{ item.objeto.usuario_item.item.nome }}"
+                                    >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <span class="mensagem-vazia">
+                                Nenhum livro nesta prateleira.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     QUERO LER
+                ========================================== -->
+
+                <div class="bloco-prateleira">
+
+                    <div class="placa-prateleira">
+                        QUERO LER
+                    </div>
+
+                    <div class="linha-prateleira">
+
+                        {% if itens_quero_ler %}
+
+                            {% for item in itens_quero_ler %}
+
+                                {% if item.tipo == "livro" %}
+
+                                    <div class="livro-card">
+
+                                        {% if item.objeto.livro.capa %}
+
+                                            <img
+                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                class="livro-estante"
+                                                alt="{{ item.objeto.livro.titulo }}"
+                                                title="{{ item.objeto.livro.titulo }}"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="livro-estante mensagem-vazia">
+                                                📖
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.objeto.usuario_item.item.imagem) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
+                                        title="{{ item.objeto.usuario_item.item.nome }}"
+                                    >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <span class="mensagem-vazia">
+                                Nenhum livro nesta prateleira.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 ELOGIO
+            ========================================== -->
+
+            <div class="secao-comentario">
+
+                <h2>
+                    💬 Gostou da estante?
+                </h2>
+
+                <p>
+                    Deixe um elogio para {{ usuario.nome }}!
+                </p>
+
+                <button
+                    type="button"
+                    class="btn-adicionar"
+                >
+                    🌿 Enviar elogio
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</section>
+
+{% endblock %}

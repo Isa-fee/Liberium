@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amigos/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="pagina-amigos">
+
+    <aside class="sidebar">
+        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-perfil">
+        <h3>{{ current_user.nome }}</h3>
+        <p class="usuario">@{{ current_user.nome|lower|replace(' ', '') }}</p>
+
+        <nav class="menu-lateral">
+            <a href="{{ url_for('estante_bp.estante') }}">Minha Estante</a>
+            <a href="#">Clubes de leitura</a>
+            <hr>
+            <span class="titulo-menu">Coleção</span>
+            <a href="{{ url_for('loja_bp.loja') }}">Loja de decorações</a>
+            <a href="{{ url_for('loja_bp.colecao') }}">Minha coleção</a>
+            <hr>
+            <span class="titulo-menu">Perfil</span>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+        </nav>
+    </aside>
+
+    <div class="conteudo">
+
+        <div class="navegacao-amigos">
+            <a href="{{ url_for('amigos_bp.amigos') }}" class="aba-amigos">Amigos</a>
+            <a href="{{ url_for('amigos_bp.solicitacoes') }}" class="aba-amigos">Solicitações</a>
+            <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="aba-amigos ativa">Encontrar leitores</a>
+        </div>
+
+        <div class="layout-amigos">
+            <main class="conteudo-amigos">
+
+                <div class="cabecalho-secao">
+                    <h1>Encontrar leitores</h1>
+                    <p>Descubra novos leitores para compartilhar sua jornada literária.</p>
+                </div>
+
+                <form method="GET" action="{{ url_for('amigos_bp.encontrar_leitores') }}" class="barra-pesquisa">
+                    <span class="icone-pesquisa">⌕</span>
+                    <input type="text" name="busca" value="{{ busca }}" placeholder="Buscar leitores pelo nome...">
+                </form>
+
+                {% if busca %}
+                    {% if resultados %}
+                    <div class="lista-amigos">
+
+                        {% for usuario in resultados %}
+                        <div class="card-amigo">
+
+                            <div class="perfil-amigo">
+                                <img src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}" class="foto-amigo">
+
+                                <div class="dados-amigo">
+                                    <h3>{{ usuario.nome }}</h3>
+                                    <span class="username">Leitor do Liberium</span>
+                                    <span class="nivel-amigo">{{ usuario.nivel }}</span>
+                                </div>
+                            </div>
+
+                            <a href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=usuario.id) }}" class="btn-perfil">
+                                Ver perfil
+                            </a>
+
+                            <form method="POST" action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=usuario.id) }}">
+                                <button class="btn-adicionar">Adicionar</button>
+                            </form>
+
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+                    <div class="estado-vazio">
+                        <div class="icone-vazio">🔎</div>
+                        <h2>Nenhum leitor encontrado</h2>
+                        <p>Tente pesquisar outro nome.</p>
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}
