@@ -265,6 +265,100 @@ def estante_usuario(usuario_id):
         itens_lidos=itens_lidos,
         itens_quero_ler=itens_quero_ler
     )
+# REORDENAR ESTANTE
+# ======================================
+
+@estante_bp.route(
+    "/estante/reordenar",
+    methods=["POST"]
+)
+
+@login_required
+def reordenar_estante():
+
+    dados = request.get_json()
+
+    if not dados:
+        return {
+            "sucesso": False,
+            "erro": "Dados inválidos."
+        }, 400
+
+    prateleira = dados.get("prateleira")
+    ordem = dados.get("ordem")
+
+    if prateleira not in [
+        "lendo",
+        "lidos",
+        "quero ler"
+    ]:
+        return {
+            "sucesso": False,
+            "erro": "Prateleira inválida."
+        }, 400
+
+    if not isinstance(ordem, list):
+        return {
+            "sucesso": False,
+            "erro": "Ordem inválida."
+        }, 400
+
+    # ======================================
+    # ATUALIZAR POSIÇÕES
+    # ======================================
+
+    for item in ordem:
+
+        item_id = item.get("id")
+        tipo = item.get("tipo")
+        posicao = item.get("posicao")
+
+        if item_id is None or posicao is None:
+            continue
+
+        # ==================================
+        # LIVRO
+        # ==================================
+
+        if tipo == "livro":
+
+            livro = Estante.query.filter_by(
+                id=item_id,
+                usuario_id=current_user.id
+            ).first()
+
+            if not livro:
+                continue
+
+            # Livro NÃO pode mudar de prateleira.
+            if livro.status != prateleira:
+                continue
+
+            livro.posicao = posicao
+
+        # ==================================
+        # DECORAÇÃO
+        # ==================================
+
+        elif tipo == "decoracao":
+
+            decoracao = DecoracaoEstante.query.filter_by(
+                id=item_id,
+                usuario_id=current_user.id
+            ).first()
+
+            if not decoracao:
+                continue
+
+            # Decoração PODE mudar de prateleira.
+            decoracao.prateleira = prateleira
+            decoracao.posicao = posicao
+
+    db.session.commit()
+
+    return {
+        "sucesso": True
+    }
 
 # ======================================
 # DECORAR
