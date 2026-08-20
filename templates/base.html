@@ -34,16 +34,24 @@
 
             <a href="{{ url_for('home.home') }}">
 
-                <img src="{{ url_for('static', filename='img/navlogo.png') }}" class="navlogo">
+                <img
+                    src="{{ url_for('static', filename='img/navlogo.png') }}"
+                    class="navlogo"
+                >
 
             </a>
 
         </div>
 
+
         <div>
 
             <a href="{{ url_for('estante_bp.estante') }}">
                 Minha Estante
+            </a>
+
+            <a href="{{ url_for('books_bp.catalogo') }}">
+                Livros
             </a>
 
             <a href="{{ url_for('user_bp.perfil') }}">
@@ -66,7 +74,12 @@
 
         </div>
 
-        <form action="{{ url_for('books_bp.buscar') }}" method="get" class="busca">
+
+        <form
+            action="{{ url_for('books_bp.buscar') }}"
+            method="get"
+            class="busca"
+        >
 
             <span class="material-symbols-outlined">
                 barcode_scanner
