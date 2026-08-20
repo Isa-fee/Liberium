@@ -1,0 +1,420 @@
+/* =========================================================
+   LIBERIUM — MINHAS RESENHAS
+   ========================================================= */
+
+.pagina-resenhas {
+    min-height: calc(100vh - 100px);
+    background: #f5f7f3;
+    padding: 45px 7%;
+    color: #3f493c;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.cabecalho-resenhas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.subtitulo-resenhas {
+    color: #8fa382;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.cabecalho-resenhas h1 {
+    margin: 6px 0 8px;
+    color: #3f493c;
+    font-size: 32px;
+    font-weight: 750;
+}
+
+.cabecalho-resenhas p {
+    margin: 0;
+    color: #858b83;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   CONTADOR
+   ========================================================= */
+
+.contador-resenhas {
+    min-width: 100px;
+    background: white;
+    border: 1px solid #e4e9e1;
+    border-radius: 18px;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(65, 79, 59, 0.07);
+}
+
+.contador-resenhas strong {
+    display: block;
+    color: #71866b;
+    font-size: 28px;
+}
+
+.contador-resenhas span {
+    color: #858b83;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   LISTA
+   ========================================================= */
+
+.lista-resenhas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card-resenha {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 25px;
+
+    background: white;
+
+    border: 1px solid rgba(110, 130, 100, 0.08);
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(65, 79, 59, 0.07);
+
+    transition: 0.25s ease;
+}
+
+.card-resenha:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 35px rgba(65, 79, 59, 0.12);
+}
+
+
+/* =========================================================
+   CAPA
+   ========================================================= */
+
+.capa-resenha {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.capa-resenha img {
+    width: 125px;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.sem-capa {
+    width: 125px;
+    height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf2ea;
+
+    border-radius: 10px;
+
+    font-size: 40px;
+}
+
+
+/* =========================================================
+   CONTEÚDO
+   ========================================================= */
+
+.conteudo-resenha {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CABEÇALHO DO CARD
+   ========================================================= */
+
+.cabecalho-card-resenha {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.cabecalho-card-resenha h2 {
+    margin: 0;
+
+    color: #343b31;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.autor-resenha {
+    margin: 5px 0 0;
+
+    color: #858b83;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BOTÃO VER LIVRO
+   ========================================================= */
+
+.btn-ver-livro {
+    flex-shrink: 0;
+
+    padding: 8px 15px;
+
+    border-radius: 20px;
+
+    background: #91a687;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.btn-ver-livro:hover {
+    background: #71866b;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NOTA
+   ========================================================= */
+
+.nota-resenha {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+
+    margin-top: 12px;
+}
+
+.estrela {
+    color: #d8ddd5;
+    font-size: 19px;
+}
+
+.estrela.preenchida {
+    color: #e7b84b;
+}
+
+.nota-numero {
+    margin-left: 7px;
+
+    color: #858b83;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TEXTO DA RESENHA
+   ========================================================= */
+
+.texto-resenha {
+    position: relative;
+
+    margin-top: 20px;
+
+    padding: 15px 25px;
+
+    background: #f8faf6;
+
+    border-left: 3px solid #a8bb9d;
+
+    border-radius: 0 12px 12px 0;
+}
+
+.texto-resenha p {
+    margin: 0;
+    color: #626a60;
+    font-size: 14px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+.aspas {
+    position: absolute;
+
+    top: 2px;
+    left: 8px;
+
+    color: #a8bb9d;
+
+    font-family: Georgia, serif;
+
+    font-size: 30px;
+}
+
+.aspas.final {
+    position: static;
+
+    display: inline-block;
+
+    margin-left: 3px;
+}
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+.data-resenha {
+    margin-top: 15px;
+
+    color: #999f98;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PÁGINA VAZIA
+   ========================================================= */
+
+.resenhas-vazias {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(65, 79, 59, 0.07);
+}
+
+.icone-vazio {
+    font-size: 50px;
+
+    margin-bottom: 15px;
+}
+
+.resenhas-vazias h2 {
+    margin: 0 0 8px;
+
+    color: #50574c;
+
+    font-size: 20px;
+}
+
+.resenhas-vazias p {
+    margin: 0 auto 22px;
+
+    max-width: 450px;
+
+    color: #888;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.btn-explorar {
+    display: inline-block;
+
+    background: #8fa382;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 10px 20px;
+
+    border-radius: 22px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.btn-explorar:hover {
+    background: #71866b;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .pagina-resenhas {
+        padding: 25px 15px;
+    }
+
+    .cabecalho-resenhas {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contador-resenhas {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card-resenha {
+        grid-template-columns: 1fr;
+    }
+
+    .capa-resenha {
+        justify-content: flex-start;
+    }
+
+    .cabecalho-card-resenha {
+        flex-direction: column;
+    }
+
+    .btn-ver-livro {
+        align-self: flex-start;
+    }
+
+}

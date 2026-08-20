@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Minhas Resenhas - Liberium{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/books/minhas_resenhas.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="pagina-resenhas">
+
+    <!-- CABEÇALHO -->
+
+    <div class="cabecalho-resenhas">
+
+        <div>
+            <span class="subtitulo-resenhas">
+                MINHA ESTANTE
+            </span>
+
+            <h1>Minhas Resenhas</h1>
+
+            <p>
+                Todas as avaliações e resenhas que você escreveu
+                sobre os livros que leu.
+            </p>
+        </div>
+
+        <div class="contador-resenhas">
+            <strong>{{ resenhas|length }}</strong>
+            <span>
+                {% if resenhas|length == 1 %}
+                    resenha
+                {% else %}
+                    resenhas
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- RESENHAS -->
+
+    {% if resenhas %}
+
+        <div class="lista-resenhas">
+
+            {% for item in resenhas %}
+
+                <article class="card-resenha">
+
+                    <!-- CAPA -->
+
+                    <div class="capa-resenha">
+
+                        {% if item.livro.capa %}
+                            <img
+                                src="{{ url_for('static', filename=item.livro.capa) }}"
+                                alt="Capa de {{ item.livro.titulo }}"
+                            >
+                        {% else %}
+                            <div class="sem-capa">
+                                📖
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- CONTEÚDO -->
+
+                    <div class="conteudo-resenha">
+
+                        <div class="cabecalho-card-resenha">
+
+                            <div>
+
+                                <h2>
+                                    {{ item.livro.titulo }}
+                                </h2>
+
+                                {% if item.livro.autor %}
+                                    <p class="autor-resenha">
+                                        {{ item.livro.autor }}
+                                    </p>
+                                {% endif %}
+
+                            </div>
+
+                            <a
+                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                class="btn-ver-livro"
+                            >
+                                Ver livro
+                            </a>
+
+                        </div>
+
+
+                        <!-- ESTRELAS -->
+
+                        <div class="nota-resenha">
+
+                            {% for i in range(1, 6) %}
+
+                                {% if i <= item.nota %}
+                                    <span class="estrela preenchida">★</span>
+                                {% else %}
+                                    <span class="estrela">☆</span>
+                                {% endif %}
+
+                            {% endfor %}
+
+                            <span class="nota-numero">
+                                {{ item.nota }}/5
+                            </span>
+
+                        </div>
+
+
+                        <!-- TEXTO -->
+
+                        <div class="texto-resenha">
+
+                            <span class="aspas">“</span>
+
+                            <p>
+                                {{ item.resenha }}
+                            </p>
+
+                            <span class="aspas final">”</span>
+
+                        </div>
+
+
+                        <!-- DATA -->
+
+                        {% if item.data_leitura %}
+
+                            <div class="data-resenha">
+                                📅 Leitura concluída em
+                                {{ item.data_leitura.strftime('%d/%m/%Y') }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <!-- NENHUMA RESENHA -->
+
+        <div class="resenhas-vazias">
+
+            <div class="icone-vazio">
+                📖
+            </div>
+
+            <h2>Você ainda não escreveu nenhuma resenha</h2>
+
+            <p>
+                Leia um livro e compartilhe sua opinião com a comunidade
+                do Liberium.
+            </p>
+
+            <a
+                href="{{ url_for('home.home') }}"
+                class="btn-explorar"
+            >
+                Explorar livros
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
