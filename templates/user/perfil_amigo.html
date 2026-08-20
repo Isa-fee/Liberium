@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amigos/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="pagina-amigos">
+
+    <aside class="sidebar">
+        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-perfil">
+        <h3>{{ current_user.nome }}</h3>
+        <p class="usuario">@{{ current_user.nome|lower|replace(' ', '') }}</p>
+
+        <nav class="menu-lateral">
+            <a href="{{ url_for('estante_bp.estante') }}">Minha Estante</a>
+            <a href="#">Clubes de leitura</a>
+            <hr>
+            <span class="titulo-menu">Coleção</span>
+            <a href="{{ url_for('loja_bp.loja') }}">Loja de decorações</a>
+            <a href="{{ url_for('loja_bp.colecao') }}">Minha coleção</a>
+            <hr>
+            <span class="titulo-menu">Perfil</span>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+        </nav>
+    </aside>
+
+    <div class="conteudo">
+
+        <div class="navegacao-amigos">
+            <a href="{{ url_for('amigos_bp.amigos') }}" class="aba-amigos ativa">Amigos</a>
+            <a href="{{ url_for('amigos_bp.solicitacoes') }}" class="aba-amigos">Solicitações</a>
+            <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="aba-amigos">Encontrar leitores</a>
+        </div>
+
+        <div class="layout-amigos">
+
+            <main class="conteudo-amigos">
+
+                <section class="perfil-publico">
+
+                    <div class="card-meu-perfil">
+
+                        <img src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}" class="foto-meu-perfil">
+
+                        <h3>{{ usuario.nome }}</h3>
+
+                        <p class="meu-username">
+                            {{ usuario.nivel or "Leitor Iniciante" }}
+                        </p>
+
+                        <div class="estatisticas">
+
+                            <div class="estatistica">
+                                <strong>{{ quantidade_amigos }}</strong>
+                                <span>Amigos</span>
+                            </div>
+
+                            <div class="estatistica">
+                                <strong>{{ livros_lidos|length }}</strong>
+                                <span>Livros lidos</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section class="secao-amigos">
+                    <div class="cabecalho-secao">
+                        <h2> Lendo atualmente</h2>
+                        <p>Livros que {{ usuario.nome }} está lendo.</p>
+                    </div>
+
+                    {% if livros_lendo %}
+                        <div class="lista-amigos">
+                            {% for item in livros_lendo %}
+                                <div class="card-amigo">
+                                    <div class="perfil-amigo">
+                                        {% if item.livro.capa %}
+                                            <img src="{{ url_for('static', filename=item.livro.capa) }}" class="foto-amigo" alt="{{ item.livro.titulo }}">
+                                        {% else %}
+                                            <div class="foto-amigo">📖</div>
+                                        {% endif %}
+
+                                        <div class="dados-amigo">
+                                            <h3>{{ item.livro.titulo }}</h3>
+                                            <span class="username">{{ item.livro.autor }}</span>
+                                            <span class="nivel-amigo">
+                                                {{ item.progresso }}% concluído
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="estado-vazio">
+                            <div class="icone-vazio">📚</div>
+                            <h2>Sem leitura atual</h2>
+                            <p>Este leitor não está lendo nenhum livro no momento.</p>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <!-- =================================
+                     MINIATURA DA ESTANTE
+                ================================== -->
+
+                <section class="secao-amigos">
+
+                    <div class="cabecalho-secao">
+                        <h2>Estante de {{ usuario.nome }}</h2>
+                        <p>Veja os livros e decorações deste leitor.</p>
+                    </div>
+
+                    <a href="{{ url_for('estante_bp.estante_usuario', usuario_id=usuario.id) }}" class="mini-estante">
+
+                        <div class="mini-livros">
+
+                            {% for item in estante[:6] %}
+
+                                {% if item.livro and item.livro.capa %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.livro.capa) }}"
+                                        alt="{{ item.livro.titulo }}"
+                                    >
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% if estante %}
+
+                            <span>
+                                Ver estante completa →
+                            </span>
+
+                        {% else %}
+
+                            <span>
+                                Ver estante →
+                            </span>
+
+                        {% endif %}
+
+                    </a>
+
+                </section>
+
+                <!-- =================================
+                     LEITURAS CONCLUÍDAS
+                ================================== -->
+
+                <section class="secao-amigos">
+
+                    <div class="cabecalho-secao">
+                        <h2>Leituras concluídas</h2>
+                    </div>
+
+                    {% if livros_lidos %}
+
+                    <div class="lista-amigos">
+
+                        {% for item in livros_lidos %}
+
+                        <div class="card-amigo">
+
+                            <div class="perfil-amigo">
+
+                                {% if item.livro.capa %}
+                                <img
+                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    class="foto-amigo"
+                                    alt="{{ item.livro.titulo }}"
+                                >
+                                {% endif %}
+
+                                <div class="dados-amigo">
+
+                                    <h3>{{ item.livro.titulo }}</h3>
+
+                                    <span class="username">
+                                        {{ item.livro.autor }}
+                                    </span>
+
+                                    {% if item.nota %}
+                                    <span class="nivel-amigo">
+                                        ⭐ {{ item.nota }}/5
+                                    </span>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="estado-vazio">
+                        <div class="icone-vazio">🌿</div>
+                        <h2>Nenhuma leitura concluída</h2>
+                        <p>Ainda não existem livros marcados como lidos.</p>
+                    </div>
+
+                    {% endif %}
+
+                </section>
+
+            </main>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}

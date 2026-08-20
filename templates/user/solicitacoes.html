@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amigos/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="pagina-amigos">
+
+    <aside class="sidebar">
+        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-perfil">
+        <h3>{{ current_user.nome }}</h3>
+        <p class="usuario">@{{ current_user.nome|lower|replace(' ', '') }}</p>
+
+        <nav class="menu-lateral">
+            <a href="{{ url_for('estante_bp.estante') }}">Minha Estante</a>
+            <a href="#">Clubes de leitura</a>
+            <hr>
+            <span class="titulo-menu">Coleção</span>
+            <a href="{{ url_for('loja_bp.loja') }}">Loja de decorações</a>
+            <a href="{{ url_for('loja_bp.colecao') }}">Minha coleção</a>
+            <hr>
+            <span class="titulo-menu">Perfil</span>
+            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+            <hr>
+            <div class="card-moedas">
+                <img src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}" class="icone-libelula">
+                <strong>{{ current_user.libelulas }}</strong>
+                <span>Mini Libélulas</span>
+            </div>
+        </nav>
+    </aside>
+
+    <div class="conteudo">
+
+        <div class="navegacao-amigos">
+            <a href="{{ url_for('amigos_bp.amigos') }}" class="aba-amigos">Amigos</a>
+            <a href="{{ url_for('amigos_bp.solicitacoes') }}" class="aba-amigos ativa">
+                Solicitações
+                {% if solicitacoes %}
+                    ({{ solicitacoes|length }})
+                {% endif %}
+            </a>
+            <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="aba-amigos">Encontrar leitores</a>
+        </div>
+
+        <div class="layout-amigos">
+            <main class="conteudo-amigos">
+
+                <section class="secao-solicitacoes">
+                    <div class="cabecalho-secao">
+                        <h1>Solicitações de amizade</h1>
+                        <p>Gerencie os leitores que querem fazer amizade com você.</p>
+                    </div>
+
+                    {% if solicitacoes %}
+                    <div class="lista-solicitacoes">
+
+                        {% for solicitacao in solicitacoes %}
+                        <div class="card-solicitacao">
+
+                            <div class="perfil-solicitacao">
+                                <img src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrao.png') }}" class="foto-solicitacao">
+
+                                <div class="dados-solicitacao">
+                                    <h3>{{ solicitacao.usuario.nome }}</h3>
+                                    <p>{{ solicitacao.usuario.nivel }}</p>
+                                </div>
+                            </div>
+
+                            <div class="acoes-solicitacao">
+
+                                <form method="POST" action="{{ url_for('amigos_bp.aceitar_amizade', amizade_id=solicitacao.id) }}">
+                                    <button class="btn-aceitar">Aceitar</button>
+                                </form>
+
+                                <form method="POST" action="{{ url_for('amigos_bp.recusar_amizade', amizade_id=solicitacao.id) }}">
+                                    <button class="btn-recusar">Recusar</button>
+                                </form>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+                    <div class="estado-vazio">
+                        <div class="icone-vazio">🌿</div>
+                        <h2>Nenhuma solicitação</h2>
+                        <p>Quando alguém enviar uma solicitação de amizade ela aparecerá aqui.</p>
+                    </div>
+                    {% endif %}
+                </section>
+
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}
