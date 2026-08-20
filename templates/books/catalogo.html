@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+
+{% block title %}Livros | Liberium{% endblock %}
+
+{% block styles %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/catalogo/style.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<main class="pagina-livros">
+
+    <!-- ================================= -->
+    <!-- CABEÇALHO -->
+    <!-- ================================= -->
+
+    <header class="cabecalho-catalogo">
+
+        <div>
+
+            <span class="subtitulo-catalogo">
+                EXPLORE O UNIVERSO DOS LIVROS
+            </span>
+
+            <h1>
+                Descubra sua próxima história
+            </h1>
+
+            <p>
+                Encontre livros para sua próxima aventura.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================= -->
+    <!-- FILTROS -->
+    <!-- ================================= -->
+
+    <form
+        action="{{ url_for('books_bp.catalogo') }}"
+        method="GET"
+        class="filtros-livros"
+    >
+
+        <!-- BUSCA -->
+
+        <div class="campo-busca">
+
+            <span>⌕</span>
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Buscar por título ou autor..."
+                value="{{ busca }}"
+            >
+
+        </div>
+
+
+        <div class="linha-filtros">
+
+            <!-- GÊNERO -->
+
+            <div class="filtro">
+
+                <label for="genero">
+                    Gênero
+                </label>
+
+                <select name="genero" id="genero">
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                    {% for item in generos %}
+
+                        <option
+                            value="{{ item }}"
+                            {% if genero == item %}selected{% endif %}
+                        >
+                            {{ item }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- IDIOMA -->
+
+            <div class="filtro">
+
+                <label for="idioma">
+                    Idioma
+                </label>
+
+                <select name="idioma" id="idioma">
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                    {% for item in idiomas %}
+
+                        <option
+                            value="{{ item }}"
+                            {% if idioma == item %}selected{% endif %}
+                        >
+                            {{ item }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- ANO -->
+
+            <div class="filtro">
+
+                <label for="ano">
+                    Ano
+                </label>
+
+                <select name="ano" id="ano">
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                    {% for item in anos %}
+
+                        <option
+                            value="{{ item }}"
+                            {% if ano == item %}selected{% endif %}
+                        >
+                            {{ item }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- AVALIAÇÃO -->
+
+            <div class="filtro">
+
+                <label for="avaliacao">
+                    Avaliação
+                </label>
+
+                <select name="avaliacao" id="avaliacao">
+
+                    <option value="">
+                        Todas
+                    </option>
+
+                    <option
+                        value="4"
+                        {% if avaliacao == "4" %}selected{% endif %}
+                    >
+                        ⭐ 4+
+                    </option>
+
+                    <option
+                        value="3"
+                        {% if avaliacao == "3" %}selected{% endif %}
+                    >
+                        ⭐ 3+
+                    </option>
+
+                    <option
+                        value="2"
+                        {% if avaliacao == "2" %}selected{% endif %}
+                    >
+                        ⭐ 2+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ORDENAR -->
+
+            <div class="filtro">
+
+                <label for="ordenar">
+                    Ordenar
+                </label>
+
+                <select name="ordenar" id="ordenar">
+
+                    <option
+                        value="recentes"
+                        {% if ordenar == "recentes" %}selected{% endif %}
+                    >
+                        Mais recentes
+                    </option>
+
+                    <option
+                        value="avaliacao"
+                        {% if ordenar == "avaliacao" %}selected{% endif %}
+                    >
+                        Melhor avaliados
+                    </option>
+
+                    <option
+                        value="az"
+                        {% if ordenar == "az" %}selected{% endif %}
+                    >
+                        A — Z
+                    </option>
+
+                    <option
+                        value="za"
+                        {% if ordenar == "za" %}selected{% endif %}
+                    >
+                        Z — A
+                    </option>
+
+                    <option
+                        value="antigos"
+                        {% if ordenar == "antigos" %}selected{% endif %}
+                    >
+                        Mais antigos
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-filtrar"
+            >
+                Filtrar
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <!-- ================================= -->
+    <!-- RESULTADO -->
+    <!-- ================================= -->
+
+    <section class="catalogo">
+
+        <div class="titulo-resultados">
+
+            <h2>
+                {% if busca %}
+                    Resultados para "{{ busca }}"
+                {% else %}
+                    Todos os livros
+                {% endif %}
+            </h2>
+
+            <span>
+                {{ livros|length }}
+                livro{% if livros|length != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+
+        {% if livros %}
+
+            <div class="grid-livros">
+
+                {% for livro in livros %}
+
+                    <article class="card-livro">
+
+                        <a
+                            href="{{ url_for(
+                                'books_bp.ver',
+                                id=livro.id
+                            ) }}"
+                            class="link-livro"
+                        >
+
+                            <div class="capa-container">
+
+                                {% if livro.capa %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=livro.capa
+                                        ) }}"
+                                        alt="{{ livro.titulo }}"
+                                        class="capa-catalogo"
+                                    >
+
+                                {% else %}
+
+                                    <div class="capa-sem-imagem">
+                                        Sem capa
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if livro.id in livros_na_estante %}
+
+                                    <span class="badge-estante">
+                                        Na sua estante
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="informacoes-livro">
+
+                                <h3>
+                                    {{ livro.titulo }}
+                                </h3>
+
+                                <p class="autor">
+                                    {{ livro.autor or "Autor desconhecido" }}
+                                </p>
+
+
+                                <div class="avaliacao">
+
+                                    {% if livro.avaliacao %}
+
+                                        <span class="estrelas">
+                                            ★
+                                        </span>
+
+                                        {{ livro.avaliacao }}
+
+                                    {% else %}
+
+                                        <span class="sem-avaliacao">
+                                            Sem avaliação
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if livro.genero %}
+
+                                    <span class="genero">
+                                        {{ livro.genero }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="nenhum-livro">
+
+                <div class="icone-vazio">
+                    📚
+                </div>
+
+                <h3>
+                    Nenhum livro encontrado
+                </h3>
+
+                <p>
+                    Tente mudar os filtros ou fazer outra busca.
+                </p>
+
+                <a
+                    href="{{ url_for('books_bp.catalogo') }}"
+                    class="limpar-filtros"
+                >
+                    Limpar filtros
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+{% endblock %}
