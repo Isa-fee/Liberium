@@ -132,12 +132,19 @@
             <!-- PRATELEIRA LENDO -->
             <!-- ================================================= -->
 
-            <section
+           <section
                 id="lendo"
                 class="bloco-prateleira"
             >
 
-                <div class="linha-prateleira">
+                <div class="placa-prateleira">
+                    LENDO
+                </div>
+
+                <div
+                    class="linha-prateleira"
+                    data-prateleira="lendo"
+                >
 
                     {% if itens_lendo %}
 
@@ -149,7 +156,11 @@
 
                             {% if item.tipo == "livro" %}
 
-                                <div class="livro-card">
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <a
                                         href="{{ url_for(
@@ -179,7 +190,11 @@
 
                             {% else %}
 
-                                <div class="decoracao-estante">
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <img
                                         src="{{ url_for(
@@ -206,11 +221,6 @@
 
                 </div>
 
-
-                <div class="placa-prateleira">
-                    LENDO
-                </div>
-
             </section>
 
 
@@ -223,7 +233,7 @@
                 class="bloco-prateleira"
             >
 
-                <div class="linha-prateleira">
+                <div class="linha-prateleira" data-prateleira="lidos">
 
                     {% if itens_lidos %}
 
@@ -235,7 +245,11 @@
 
                             {% if item.tipo == "livro" %}
 
-                                <div class="livro-card">
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <a
                                         href="{{ url_for(
@@ -287,7 +301,11 @@
 
                             {% else %}
 
-                                <div class="decoracao-estante">
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <img
                                         src="{{ url_for(
@@ -331,7 +349,7 @@
                 class="bloco-prateleira"
             >
 
-                <div class="linha-prateleira">
+                <div class="linha-prateleira" data-prateleira="quero ler">
 
                     {% if itens_quero_ler %}
 
@@ -343,7 +361,11 @@
 
                             {% if item.tipo == "livro" %}
 
-                                <div class="livro-card">
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <a
                                         href="{{ url_for(
@@ -373,7 +395,11 @@
 
                             {% else %}
 
-                                <div class="decoracao-estante">
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
+                                >
 
                                     <img
                                         src="{{ url_for(
