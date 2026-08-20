@@ -1,0 +1,395 @@
+/* ==========================================
+   PÁGINA CRIAR CLUBE
+========================================== */
+
+.pagina-criar-clube {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    color: #2c362b;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+
+/* ==========================================
+   CABEÇALHO
+========================================== */
+
+.cabecalho-criar-clube {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.cabecalho-criar-clube h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #1a2419;
+    margin: 0 0 5px;
+}
+
+.cabecalho-criar-clube p {
+    color: #6b776a;
+    font-size: 15px;
+    margin: 0;
+}
+
+
+/* ==========================================
+   BOTÃO VOLTAR
+========================================== */
+
+.botao-voltar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #d8d8d0;
+    border-radius: 50%;
+
+    background-color: #ffffff;
+
+    color: #442b1a;
+    text-decoration: none;
+
+    font-size: 23px;
+
+    transition: 0.2s;
+}
+
+.botao-voltar:hover {
+    background-color: #efebe4;
+}
+
+
+/* ==========================================
+   FORMULÁRIO
+========================================== */
+
+.formulario-clube {
+    background-color: #ffffff;
+
+    border: 1px solid #e1e1d9;
+    border-radius: 24px;
+
+    padding: 36px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ==========================================
+   CAMPOS
+========================================== */
+
+.campo-clube {
+    margin-bottom: 28px;
+}
+
+.campo-clube label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #442b1a;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.campo-clube label span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b776a;
+}
+
+
+/* INPUTS E TEXTAREA */
+
+.campo-clube input,
+.campo-clube textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    border: 1px solid #bbbdb2;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+
+    color: #2c362b;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+}
+
+.campo-clube input:focus,
+.campo-clube textarea:focus {
+    border-color: #677f63;
+    box-shadow: 0 0 0 2px rgba(103, 127, 99, 0.12);
+}
+
+
+/* DESCRIÇÃO */
+
+.campo-clube textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+
+/* TEXTO DE AJUDA */
+
+.campo-clube small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #6b776a;
+
+    font-size: 12px;
+}
+
+
+/* ==========================================
+   CAMPO DE BUSCA DO LIVRO
+========================================== */
+
+.campo-busca {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #bbbdb2;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+
+    padding-left: 14px;
+}
+
+.campo-busca span {
+    color: #677f63;
+    font-size: 24px;
+}
+
+.campo-busca input {
+    border: none;
+    box-shadow: none;
+}
+
+.campo-busca input:focus {
+    border: none;
+    box-shadow: none;
+}
+
+
+/* ==========================================
+   LINK DO CLUBE
+========================================== */
+
+.campo-link {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #bbbdb2;
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+}
+
+.campo-link span {
+    padding: 13px 14px;
+
+    background-color: #efebe4;
+
+    color: #6b776a;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+.campo-link input {
+    border: none;
+    border-radius: 0;
+}
+
+.campo-link input:focus {
+    border: none;
+    box-shadow: none;
+}
+
+
+/* ==========================================
+   DATAS
+========================================== */
+
+.datas-clube {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+}
+
+
+/* ==========================================
+   UPLOAD DA IMAGEM
+========================================== */
+
+.upload-clube {
+    padding: 28px;
+
+    border: 2px dashed #c8c9bf;
+    border-radius: 14px;
+
+    background-color: #f5f5ef;
+
+    text-align: center;
+}
+
+.icone-upload {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.upload-clube p {
+    color: #6b776a;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 15px;
+}
+
+.upload-clube input[type="file"] {
+    display: none;
+}
+
+.botao-imagem {
+    display: inline-block;
+
+    padding: 9px 18px;
+
+    border-radius: 20px;
+
+    background-color: #677f63;
+    color: #ffffff !important;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.botao-imagem:hover {
+    background-color: #52684f;
+}
+
+.upload-clube small {
+    margin-top: 12px;
+}
+
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.acoes-clube {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 32px;
+}
+
+.botao-cancelar {
+    padding: 10px 22px;
+
+    border: 1px solid #442b1a;
+    border-radius: 20px;
+
+    background-color: #ffffff;
+
+    color: #442b1a !important;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.botao-cancelar:hover {
+    background-color: #efebe4;
+}
+
+.botao-criar {
+    padding: 11px 25px;
+
+    border: none;
+    border-radius: 20px;
+
+    background-color: #677f63;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.botao-criar:hover {
+    background-color: #52684f;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .pagina-criar-clube {
+        padding: 0 20px;
+    }
+
+    .formulario-clube {
+        padding: 25px;
+    }
+
+    .cabecalho-criar-clube h1 {
+        font-size: 32px;
+    }
+
+    .datas-clube {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .campo-link {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .campo-link span {
+        text-align: center;
+    }
+
+    .acoes-clube {
+        gap: 15px;
+    }
+
+}

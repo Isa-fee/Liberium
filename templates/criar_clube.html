@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Criar clube | Liberium
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clube/criar_clube.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-criar-clube">
+
+    <!-- CABEÇALHO -->
+
+    <div class="cabecalho-criar-clube">
+
+        <a href="{{ url_for('clubes.listar_clubes') }}" class="botao-voltar">
+            ←
+        </a>
+
+        <div>
+            <h1>Criar clube de leitura</h1>
+
+            <p>
+                Preencha as informações abaixo para criar seu clube.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- FORMULÁRIO -->
+
+    <form
+        class="formulario-clube"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <!-- LIVRO -->
+
+        <div class="campo-clube">
+
+            <label for="livro">
+                Qual será o livro lido?
+            </label>
+
+            <div class="campo-busca">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="livro"
+                    name="livro"
+                    placeholder="Buscar livro..."
+                    required
+                >
+
+            </div>
+
+            <small>
+                Comece a digitar o título do livro para encontrar.
+            </small>
+
+        </div>
+
+
+        <!-- DESCRIÇÃO -->
+
+        <div class="campo-clube">
+
+            <label for="descricao">
+                Descrição do clube
+            </label>
+
+            <textarea
+                id="descricao"
+                name="descricao"
+                maxlength="300"
+                placeholder="Conte um pouco sobre o seu clube, o que vão ler, como vai funcionar..."
+                required
+            ></textarea>
+
+            <small>
+                Seja criativo e convide mais pessoas para participarem!
+            </small>
+
+        </div>
+
+
+        <!-- NOME DO CLUBE -->
+
+        <div class="campo-clube">
+
+            <label for="nome">
+                Nome do clube
+            </label>
+
+            <div class="campo-link">
+
+                <span>
+                    https://liberium.app/clube/
+                </span>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="nomedoseuclube"
+                    required
+                >
+
+            </div>
+
+            <small>
+                Esse será o nome usado para identificar seu clube.
+            </small>
+
+        </div>
+
+
+        <!-- GÊNERO -->
+
+        <div class="campo-clube">
+
+            <label for="genero">
+                Gênero do clube
+            </label>
+
+            <select
+                id="genero"
+                name="genero"
+                required
+            >
+
+                <option value="" disabled selected>
+                    Selecione um gênero
+                </option>
+
+                <option value="Romance">
+                    Romance
+                </option>
+
+                <option value="Fantasia">
+                    Fantasia
+                </option>
+
+                <option value="Suspense">
+                    Suspense
+                </option>
+
+                <option value="Distopia">
+                    Distopia
+                </option>
+
+                <option value="Ficção">
+                    Ficção
+                </option>
+
+                <option value="Terror">
+                    Terror
+                </option>
+
+                <option value="Aventura">
+                    Aventura
+                </option>
+
+                <option value="Outro">
+                    Outro
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DATAS -->
+
+        <div class="datas-clube">
+
+            <div class="campo-clube">
+
+                <label for="data_inicio">
+                    Quando começa?
+                </label>
+
+                <input
+                    type="date"
+                    id="data_inicio"
+                    name="data_inicio"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo-clube">
+
+                <label for="data_fim">
+                    Quando termina?
+                </label>
+
+                <input
+                    type="date"
+                    id="data_fim"
+                    name="data_fim"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGEM -->
+
+        <div class="campo-clube">
+
+            <label for="imagem">
+                Imagem do clube
+                <span>(opcional)</span>
+            </label>
+
+            <div class="upload-clube">
+
+                <div class="icone-upload">
+                    🖼
+                </div>
+
+                <p>
+                    Envie uma imagem que represente
+                    <br>
+                    seu clube de leitura
+                </p>
+
+                <label for="imagem" class="botao-imagem">
+                    Escolher imagem
+                </label>
+
+                <input
+                    type="file"
+                    id="imagem"
+                    name="imagem"
+                    accept=".jpg,.jpeg,.png,.webp"
+                >
+
+                <small>
+                    Formatos aceitos: JPG, PNG ou WEBP.
+                    Tamanho máximo: 5MB
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTÕES -->
+
+        <div class="acoes-clube">
+
+            <a
+                href="{{ url_for('clubes.listar_clubes') }}"
+                class="botao-cancelar"
+            >
+                Cancelar
+            </a>
+
+            <button
+                type="submit"
+                class="botao-criar"
+            >
+                Criar clube
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}
