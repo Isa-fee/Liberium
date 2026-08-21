@@ -49,6 +49,7 @@
 
         <div class="barra-busca">
             <span>⌕</span>
+
             <input
                 type="text"
                 name="q"
@@ -59,156 +60,222 @@
 
         <div class="acoes-catalogo">
 
-            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda"> Surpreenda-me </button>
+            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda">
+                Surpreenda-me
+            </button>
 
-            <details class="filtros-avancados">
+            <button
+                type="button"
+                class="btn-toggle-filtros"
+            >
+                ☰ Filtros
+            </button>
 
-                <summary>Filtros</summary>
+        </div>
 
-                <div class="linha-filtros">
+        <div class="conteudo-filtros">
 
-                    <div class="filtro">
-                        <label for="genero">Gênero</label>
+            <div class="linha-filtros">
 
-                        <select name="genero" id="genero">
-                            <option value="">Todos</option>
+                <div class="filtro">
 
-                            {% for item in generos %}
-                                <option
-                                    value="{{ item }}"
-                                    {% if genero == item %}selected{% endif %}
-                                >
-                                    {{ item }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <label for="genero">
+                        Gênero
+                    </label>
 
-                    <div class="filtro">
-                        <label for="idioma">Idioma</label>
+                    <select
+                        name="genero"
+                        id="genero"
+                    >
 
-                        <select name="idioma" id="idioma">
-                            <option value="">Todos</option>
+                        <option value="">
+                            Todos
+                        </option>
 
-                            {% for item in idiomas %}
-                                <option
-                                    value="{{ item }}"
-                                    {% if idioma == item %}selected{% endif %}
-                                >
-                                    {{ item }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="filtro">
-                        <label for="ano">Ano</label>
-
-                        <select name="ano" id="ano">
-                            <option value="">Todos</option>
-
-                            {% for item in anos %}
-                                <option
-                                    value="{{ item }}"
-                                    {% if ano == item %}selected{% endif %}
-                                >
-                                    {{ item }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="filtro">
-                        <label for="avaliacao">Avaliação</label>
-
-                        <select name="avaliacao" id="avaliacao">
-                            <option value="">Todas</option>
+                        {% for item in generos %}
 
                             <option
-                                value="4"
-                                {% if avaliacao == "4" %}selected{% endif %}
+                                value="{{ item }}"
+                                {% if genero == item %}selected{% endif %}
                             >
-                                ⭐ 4+
+                                {{ item }}
                             </option>
 
-                            <option
-                                value="3"
-                                {% if avaliacao == "3" %}selected{% endif %}
-                            >
-                                ⭐ 3+
-                            </option>
+                        {% endfor %}
 
-                            <option
-                                value="2"
-                                {% if avaliacao == "2" %}selected{% endif %}
-                            >
-                                ⭐ 2+
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="filtro">
-                        <label for="ordenar">Ordenar</label>
-
-                        <select name="ordenar" id="ordenar">
-                            <option
-                                value="recentes"
-                                {% if ordenar == "recentes" %}selected{% endif %}
-                            >
-                                Mais recentes
-                            </option>
-
-                            <option
-                                value="avaliacao"
-                                {% if ordenar == "avaliacao" %}selected{% endif %}
-                            >
-                                Melhor avaliados
-                            </option>
-
-                            <option
-                                value="az"
-                                {% if ordenar == "az" %}selected{% endif %}
-                            >
-                                A — Z
-                            </option>
-
-                            <option
-                                value="za"
-                                {% if ordenar == "za" %}selected{% endif %}
-                            >
-                                Z — A
-                            </option>
-
-                            <option
-                                value="antigos"
-                                {% if ordenar == "antigos" %}selected{% endif %}
-                            >
-                                Mais antigos
-                            </option>
-                        </select>
-                    </div>
+                    </select>
 
                 </div>
 
-                <div class="acoes-filtros">
+                <div class="filtro">
 
-                    <a
-                        href="{{ url_for('books_bp.catalogo') }}"
-                        class="remover-filtros"
-                    >
-                        Remover filtros
-                    </a>
+                    <label for="idioma">
+                        Idioma
+                    </label>
 
-                    <button
-                        type="submit"
-                        class="btn-filtrar"
+                    <select
+                        name="idioma"
+                        id="idioma"
                     >
-                        Aplicar filtros
-                    </button>
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        {% for item in idiomas %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if idioma == item %}selected{% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
 
                 </div>
 
-            </details>
+                <div class="filtro">
+
+                    <label for="ano">
+                        Ano
+                    </label>
+
+                    <select
+                        name="ano"
+                        id="ano"
+                    >
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        {% for item in anos %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if ano == item %}selected{% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="filtro">
+
+                    <label for="avaliacao">
+                        Avaliação
+                    </label>
+
+                    <select
+                        name="avaliacao"
+                        id="avaliacao"
+                    >
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        <option
+                            value="4"
+                            {% if avaliacao == "4" %}selected{% endif %}
+                        >
+                            ⭐ 4+
+                        </option>
+
+                        <option
+                            value="3"
+                            {% if avaliacao == "3" %}selected{% endif %}
+                        >
+                            ⭐ 3+
+                        </option>
+
+                        <option
+                            value="2"
+                            {% if avaliacao == "2" %}selected{% endif %}
+                        >
+                            ⭐ 2+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="filtro">
+
+                    <label for="ordenar">
+                        Ordenar
+                    </label>
+
+                    <select
+                        name="ordenar"
+                        id="ordenar"
+                    >
+
+                        <option
+                            value="recentes"
+                            {% if ordenar == "recentes" %}selected{% endif %}
+                        >
+                            Mais recentes
+                        </option>
+
+                        <option
+                            value="avaliacao"
+                            {% if ordenar == "avaliacao" %}selected{% endif %}
+                        >
+                            Melhor avaliados
+                        </option>
+
+                        <option
+                            value="az"
+                            {% if ordenar == "az" %}selected{% endif %}
+                        >
+                            A — Z
+                        </option>
+
+                        <option
+                            value="za"
+                            {% if ordenar == "za" %}selected{% endif %}
+                        >
+                            Z — A
+                        </option>
+
+                        <option
+                            value="antigos"
+                            {% if ordenar == "antigos" %}selected{% endif %}
+                        >
+                            Mais antigos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="acoes-filtros">
+
+                <a
+                    href="{{ url_for('books_bp.catalogo') }}"
+                    class="remover-filtros"
+                >
+                    Remover filtros
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-filtrar"
+                >
+                    Aplicar filtros
+                </button>
+
+            </div>
 
         </div>
 
@@ -383,5 +450,30 @@
     </section>
 
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+        const btnFiltros = document.querySelector(".btn-toggle-filtros");
+        const conteudoFiltros = document.querySelector(".conteudo-filtros");
+    
+        if (!btnFiltros || !conteudoFiltros) {
+            return;
+        }
+    
+        btnFiltros.addEventListener("click", () => {
+    
+            conteudoFiltros.classList.toggle("aberto");
+    
+            if (conteudoFiltros.classList.contains("aberto")) {
+                btnFiltros.textContent = "✕ Fechar filtros";
+            } else {
+                btnFiltros.textContent = "☰ Filtros";
+            }
+    
+        });
+    
+    });
+    </script>
 
 {% endblock %}
