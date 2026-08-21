@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from datetime import date
+from datetime import date
+from random import choice
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
@@ -495,6 +497,38 @@ def catalogo():
             usuario_id=current_user.id
         ).all()
     }
+
+    # --------------------------------------
+    # SURPREENDA-ME
+    # --------------------------------------
+
+    if request.args.get("surpreenda"):
+
+        livros_disponiveis = [
+            livro
+            for livro in livros
+            if livro.id not in livros_na_estante
+        ]
+
+        if livros_disponiveis:
+
+            livro_sorteado = choice(livros_disponiveis)
+
+            return redirect(
+                url_for(
+                    "books_bp.ver",
+                    id=livro_sorteado.id
+                )
+            )
+
+        flash(
+            "Não encontramos nenhum livro novo para sortear com esses filtros!",
+            "warning"
+        )
+
+    # --------------------------------------
+    # CATÁLOGO
+    # --------------------------------------
 
     return render_template(
         "books/catalogo.html",

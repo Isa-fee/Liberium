@@ -45,216 +45,170 @@
     <!-- FILTROS -->
     <!-- ================================= -->
 
-    <form
-        action="{{ url_for('books_bp.catalogo') }}"
-        method="GET"
-        class="filtros-livros"
-    >
+    <form action="{{ url_for('books_bp.catalogo') }}" method="GET" class="filtros-livros">
 
-        <!-- BUSCA -->
-
-        <div class="campo-busca">
-
+        <div class="barra-busca">
             <span>⌕</span>
-
             <input
                 type="text"
                 name="q"
                 placeholder="Buscar por título ou autor..."
                 value="{{ busca }}"
             >
-
         </div>
 
+        <div class="acoes-catalogo">
 
-        <div class="linha-filtros">
+            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda"> Surpreenda-me </button>
 
-            <!-- GÊNERO -->
+            <details class="filtros-avancados">
 
-            <div class="filtro">
+                <summary>Filtros</summary>
 
-                <label for="genero">
-                    Gênero
-                </label>
+                <div class="linha-filtros">
 
-                <select name="genero" id="genero">
+                    <div class="filtro">
+                        <label for="genero">Gênero</label>
 
-                    <option value="">
-                        Todos
-                    </option>
+                        <select name="genero" id="genero">
+                            <option value="">Todos</option>
 
-                    {% for item in generos %}
+                            {% for item in generos %}
+                                <option
+                                    value="{{ item }}"
+                                    {% if genero == item %}selected{% endif %}
+                                >
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                        <option
-                            value="{{ item }}"
-                            {% if genero == item %}selected{% endif %}
-                        >
-                            {{ item }}
-                        </option>
+                    <div class="filtro">
+                        <label for="idioma">Idioma</label>
 
-                    {% endfor %}
+                        <select name="idioma" id="idioma">
+                            <option value="">Todos</option>
 
-                </select>
+                            {% for item in idiomas %}
+                                <option
+                                    value="{{ item }}"
+                                    {% if idioma == item %}selected{% endif %}
+                                >
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            </div>
+                    <div class="filtro">
+                        <label for="ano">Ano</label>
 
+                        <select name="ano" id="ano">
+                            <option value="">Todos</option>
 
-            <!-- IDIOMA -->
+                            {% for item in anos %}
+                                <option
+                                    value="{{ item }}"
+                                    {% if ano == item %}selected{% endif %}
+                                >
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            <div class="filtro">
+                    <div class="filtro">
+                        <label for="avaliacao">Avaliação</label>
 
-                <label for="idioma">
-                    Idioma
-                </label>
+                        <select name="avaliacao" id="avaliacao">
+                            <option value="">Todas</option>
 
-                <select name="idioma" id="idioma">
+                            <option
+                                value="4"
+                                {% if avaliacao == "4" %}selected{% endif %}
+                            >
+                                ⭐ 4+
+                            </option>
 
-                    <option value="">
-                        Todos
-                    </option>
+                            <option
+                                value="3"
+                                {% if avaliacao == "3" %}selected{% endif %}
+                            >
+                                ⭐ 3+
+                            </option>
 
-                    {% for item in idiomas %}
+                            <option
+                                value="2"
+                                {% if avaliacao == "2" %}selected{% endif %}
+                            >
+                                ⭐ 2+
+                            </option>
+                        </select>
+                    </div>
 
-                        <option
-                            value="{{ item }}"
-                            {% if idioma == item %}selected{% endif %}
-                        >
-                            {{ item }}
-                        </option>
+                    <div class="filtro">
+                        <label for="ordenar">Ordenar</label>
 
-                    {% endfor %}
+                        <select name="ordenar" id="ordenar">
+                            <option
+                                value="recentes"
+                                {% if ordenar == "recentes" %}selected{% endif %}
+                            >
+                                Mais recentes
+                            </option>
 
-                </select>
+                            <option
+                                value="avaliacao"
+                                {% if ordenar == "avaliacao" %}selected{% endif %}
+                            >
+                                Melhor avaliados
+                            </option>
 
-            </div>
+                            <option
+                                value="az"
+                                {% if ordenar == "az" %}selected{% endif %}
+                            >
+                                A — Z
+                            </option>
 
+                            <option
+                                value="za"
+                                {% if ordenar == "za" %}selected{% endif %}
+                            >
+                                Z — A
+                            </option>
 
-            <!-- ANO -->
+                            <option
+                                value="antigos"
+                                {% if ordenar == "antigos" %}selected{% endif %}
+                            >
+                                Mais antigos
+                            </option>
+                        </select>
+                    </div>
 
-            <div class="filtro">
+                </div>
 
-                <label for="ano">
-                    Ano
-                </label>
+                <div class="acoes-filtros">
 
-                <select name="ano" id="ano">
-
-                    <option value="">
-                        Todos
-                    </option>
-
-                    {% for item in anos %}
-
-                        <option
-                            value="{{ item }}"
-                            {% if ano == item %}selected{% endif %}
-                        >
-                            {{ item }}
-                        </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
-
-
-            <!-- AVALIAÇÃO -->
-
-            <div class="filtro">
-
-                <label for="avaliacao">
-                    Avaliação
-                </label>
-
-                <select name="avaliacao" id="avaliacao">
-
-                    <option value="">
-                        Todas
-                    </option>
-
-                    <option
-                        value="4"
-                        {% if avaliacao == "4" %}selected{% endif %}
+                    <a
+                        href="{{ url_for('books_bp.catalogo') }}"
+                        class="remover-filtros"
                     >
-                        ⭐ 4+
-                    </option>
+                        Remover filtros
+                    </a>
 
-                    <option
-                        value="3"
-                        {% if avaliacao == "3" %}selected{% endif %}
+                    <button
+                        type="submit"
+                        class="btn-filtrar"
                     >
-                        ⭐ 3+
-                    </option>
+                        Aplicar filtros
+                    </button>
 
-                    <option
-                        value="2"
-                        {% if avaliacao == "2" %}selected{% endif %}
-                    >
-                        ⭐ 2+
-                    </option>
+                </div>
 
-                </select>
-
-            </div>
-
-
-            <!-- ORDENAR -->
-
-            <div class="filtro">
-
-                <label for="ordenar">
-                    Ordenar
-                </label>
-
-                <select name="ordenar" id="ordenar">
-
-                    <option
-                        value="recentes"
-                        {% if ordenar == "recentes" %}selected{% endif %}
-                    >
-                        Mais recentes
-                    </option>
-
-                    <option
-                        value="avaliacao"
-                        {% if ordenar == "avaliacao" %}selected{% endif %}
-                    >
-                        Melhor avaliados
-                    </option>
-
-                    <option
-                        value="az"
-                        {% if ordenar == "az" %}selected{% endif %}
-                    >
-                        A — Z
-                    </option>
-
-                    <option
-                        value="za"
-                        {% if ordenar == "za" %}selected{% endif %}
-                    >
-                        Z — A
-                    </option>
-
-                    <option
-                        value="antigos"
-                        {% if ordenar == "antigos" %}selected{% endif %}
-                    >
-                        Mais antigos
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <button
-                type="submit"
-                class="btn-filtrar"
-            >
-                Filtrar
-            </button>
+            </details>
 
         </div>
 
