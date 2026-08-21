@@ -145,7 +145,9 @@
 
         <header class="cabecalho-livro">
             <h1>{{ livro.titulo }}</h1>
-            <p class="autores">por {{ livro.autor }}</p>
+            <p class="autores"> por 
+                <a href="{{ url_for('books_bp.autor', nome=livro.autor) }}" class="link-autor">{{ livro.autor }}</a>
+            </p>
 
             {% if livro.genero %}
             <span class="badge-genero">{{ livro.genero }}</span>

@@ -295,7 +295,22 @@
                                 </h3>
 
                                 <p class="autor">
-                                    {{ livro.autor or "Autor desconhecido" }}
+
+                                    {% if livro.autor %}
+                                
+                                        <a
+                                            href="{{ url_for('books_bp.autor', nome=livro.autor) }}"
+                                            class="link-autor"
+                                        >
+                                            {{ livro.autor }}
+                                        </a>
+                                
+                                    {% else %}
+                                
+                                        Autor desconhecido
+                                
+                                    {% endif %}
+                                
                                 </p>
 
 
