@@ -6,7 +6,7 @@ from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 
-from models import Estante, DecoracaoEstante, UsuarioColecionavel
+from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante
 from extensions import db
 
 
@@ -258,13 +258,19 @@ def estante_usuario(usuario_id):
         decoracoes_quero_ler
     )
 
+    elogios = ElogioEstante.query.filter_by(
+    destinatario_id=usuario.id
+    ).order_by(
+        ElogioEstante.data.desc()
+    ).all()
+
     return render_template(
         "books/estante_usuario.html",
         usuario=usuario,
         itens_lendo=itens_lendo,
         itens_lidos=itens_lidos,
-        itens_quero_ler=itens_quero_ler
-    )
+        itens_quero_ler=itens_quero_ler,
+        elogios=elogios    )
 # REORDENAR ESTANTE
 # ======================================
 

@@ -103,6 +103,52 @@
                         </div>
                     {% endif %}
                 </section>
+                <!-- =================================
+                     ELOGIOS
+                ================================== -->
+
+                <section class="secao-amigos">
+                    <div class="cabecalho-secao">
+                        <h2>💚 Elogios dos leitores</h2>
+                        <p>Mensagens deixadas por outros leitores.</p>
+                    </div>
+                
+                    {% if elogios %}
+                        <div class="lista-elogios">
+                            {% for elogio in elogios %}
+                                <div class="card-elogio">
+                                    <div class="perfil-elogio">
+                                        <img
+                                            src="{{ url_for('static', filename=elogio.autor.foto if elogio.autor.foto else 'img/perfil_padrao.png') }}"
+                                            class="foto-elogio"
+                                            alt="Foto de {{ elogio.autor.nome }}"
+                                        >
+                                        <div>
+                                            <strong>{{ elogio.autor.nome }}</strong>
+                                            <span>{{ elogio.autor.nivel }}</span>
+                                        </div>
+                                    </div>
+                
+                                    <p class="mensagem-elogio">
+                                        "{{ elogio.mensagem }}"
+                                    </p>
+                
+                                    <small class="data-elogio">
+                                        {{ elogio.data.strftime('%d/%m/%Y') }}
+                                    </small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="estado-vazio">
+                            <div class="icone-vazio">💌</div>
+                            <h2>Nenhum elogio ainda</h2>
+                            <p>
+                                Este leitor ainda não recebeu elogios.
+                            </p>
+                        </div>
+                    {% endif %}
+                </section>
 
                 <!-- =================================
                      MINIATURA DA ESTANTE

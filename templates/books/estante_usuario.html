@@ -306,12 +306,34 @@
                     Deixe um elogio para {{ usuario.nome }}!
                 </p>
 
-                <button
-                    type="button"
-                    class="btn-adicionar"
-                >
-                    🌿 Enviar elogio
-                </button>
+                {% if current_user.id != usuario.id %}
+                    <form method="POST" action="{{ url_for('amigos_bp.enviar_elogio', usuario_id=usuario.id) }}" class="form-elogio">
+                        <textarea name="mensagem" maxlength="300" placeholder="Escreva algo legal sobre a estante..."></textarea>
+                        <button type="submit">Enviar elogio 💚</button>
+                    </form>
+                {% endif %}
+
+                {% if elogios %}
+                    <section class="secao-comentario">
+                        <h2>💌 Elogios recebidos</h2>
+
+                        <div class="lista-elogios">
+                            {% for elogio in elogios %}
+                            <div class="card-elogio">
+                                <img
+                                    src="{{ url_for('static', filename=elogio.autor.foto if elogio.autor.foto else 'img/perfil_padrao.png') }}"
+                                    alt="{{ elogio.autor.nome }}"
+                                >
+
+                                <div>
+                                    <strong>{{ elogio.autor.nome }}</strong>
+                                    <p>{{ elogio.mensagem }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    {% endif %}
 
             </div>
 

@@ -16,7 +16,8 @@ from models import (
     Usuario,
     Amizade,
     Estante,
-    DecoracaoEstante
+    DecoracaoEstante,
+    ElogioEstante
 )
 from controllers.estante_controller import montar_prateleira
 from extensions import db
@@ -394,6 +395,11 @@ def perfil_usuario(usuario_id):
     estante = Estante.query.filter_by(
         usuario_id=usuario.id
     ).all()
+    elogios = ElogioEstante.query.filter_by(
+    destinatario_id=usuario.id
+    ).order_by(
+        ElogioEstante.data.desc()
+    ).all()
 
     return render_template(
         "user/perfil_amigo.html",
@@ -401,7 +407,8 @@ def perfil_usuario(usuario_id):
         livros_lidos=livros_lidos,
         livros_lendo=livros_lendo,
         quantidade_amigos=quantidade_amigos,
-        estante=estante
+        estante=estante,
+        elogios=elogios
     )
 
 @amigos_bp.route("/estante/<int:usuario_id>")
@@ -425,7 +432,81 @@ def estante_amigo(usuario_id):
     lendo = montar_prateleira(livros, decoracoes)
 
     return render_template(
-        "user/estante_amigo.html",
+        "books/estante_usuario.html",
         usuario=usuario,
         lendo=lendo
+    )
+
+@amigos_bp.route(
+    "/elogio/<int:usuario_id>",
+    methods=["POST"]
+)
+@login_required
+def enviar_elogio(usuario_id):
+
+    usuario = Usuario.query.get_or_404(usuario_id)
+
+    mensagem = request.form.get(
+        "mensagem",
+        ""
+    ).strip()
+
+    if not mensagem:
+        flash(
+            "Escreva um elogio antes de enviar.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "amigos_bp.estante_amigo",
+                usuario_id=usuario_id
+            )
+        )
+
+    if len(mensagem) > 300:
+        flash(
+            "O elogio pode ter no máximo 300 caracteres.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "amigos_bp.estante_amigo",
+                usuario_id=usuario_id
+            )
+        )
+
+    if usuario_id == current_user.id:
+        flash(
+            "Você não pode enviar um elogio para si mesmo.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "amigos_bp.estante_amigo",
+                usuario_id=usuario_id
+            )
+        )
+
+    elogio = ElogioEstante(
+        autor_id=current_user.id,
+        destinatario_id=usuario_id,
+        mensagem=mensagem
+    )
+
+    db.session.add(elogio)
+    db.session.commit()
+
+    flash(
+        "Elogio enviado! 💚",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "amigos_bp.estante_amigo",
+            usuario_id=usuario_id
+        )
     )

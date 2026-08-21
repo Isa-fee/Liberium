@@ -406,3 +406,117 @@
 .decoracao-estante.item-arrastavel {
     user-select: none;
 }
+
+
+.secao-comentario {
+    background: white;
+    border: 1px solid #e2ddd6;
+    border-radius: 16px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.secao-comentario h2 {
+    color: #5b3923;
+    margin-bottom: 8px;
+}
+
+.secao-comentario p {
+    color: #777;
+}
+
+/* ####################### */
+
+.form-elogio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.form-elogio textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    border: 1px solid #d8d2ca;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.form-elogio textarea:focus {
+    outline: none;
+    border-color: #8fa382;
+}
+
+.form-elogio button {
+    align-self: flex-end;
+    background: #8fa382;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.lista-elogios {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-elogio {
+    max-height: 70px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: white;
+    border: 1px solid #e3ded8;
+    border-radius: 14px;
+    padding: 18px;
+}
+.card-elogio > img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.perfil-elogio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.foto-elogio {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.perfil-elogio strong {
+    display: block;
+    color: #5b3923;
+}
+
+.perfil-elogio span {
+    display: block;
+    font-size: .85rem;
+    color: #8d8d8d;
+    margin-top: 3px;
+}
+
+.mensagem-elogio {
+    margin: 15px 0 8px;
+    color: #5b3923;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.data-elogio {
+    color: #999;
+    font-size: .8rem;
+}
