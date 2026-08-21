@@ -545,3 +545,15 @@
 .btn-salvar-avaliacao:hover {
     background: #7d9172;
 }
+
+.link-autor{
+    color:#6f8464;
+    text-decoration:none;
+    font-weight:600;
+    transition:.2s;
+}
+
+.link-autor:hover{
+    color:#4d6245;
+    text-decoration:underline;
+}

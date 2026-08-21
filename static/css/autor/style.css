@@ -1,0 +1,491 @@
+/* =========================================================
+   PÁGINA DO AUTOR — LIBERIUM
+   ========================================================= */
+
+   .autor-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 55px 50px 80px;
+    box-sizing: border-box;
+    color: #3f433d;
+}
+
+
+/* =========================================================
+   CABEÇALHO DO AUTOR
+   ========================================================= */
+
+.autor-header {
+    position: relative;
+    text-align: center;
+
+    padding: 55px 40px 48px;
+
+    margin-bottom: 35px;
+
+    background: #ffffff;
+
+    border-top: 4px solid #8fa382;
+    border-bottom: 1px solid #e2e7df;
+
+    box-shadow: 0 8px 25px rgba(53, 65, 48, 0.06);
+}
+
+
+/* Pequeno título acima do nome */
+
+.rotulo-autor {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #8fa382;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+
+/* Nome */
+
+.autor-header h1 {
+    margin: 0;
+
+    color: #343832;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: clamp(2rem, 4vw, 3.2rem);
+
+    font-weight: 400;
+
+    line-height: 1.2;
+}
+
+
+/* Descrição */
+
+.descricao-autor {
+    max-width: 600px;
+
+    margin: 16px auto 0;
+
+    color: #7a8076;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ESTATÍSTICAS
+   ========================================================= */
+
+.estatisticas {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 30px;
+}
+
+
+.estatistica {
+    min-width: 120px;
+
+    padding: 13px 25px;
+
+    border-left: 1px solid #dfe5db;
+    border-right: 1px solid #dfe5db;
+
+    text-align: center;
+}
+
+
+.estatistica strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #718566;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.5rem;
+
+    font-weight: 400;
+}
+
+
+.estatistica span {
+    color: #8b9088;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.75rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* =========================================================
+   SOBRE O AUTOR
+   ========================================================= */
+
+.sobre-autor {
+    padding: 5px 10px 35px;
+
+    margin-bottom: 10px;
+
+    border-bottom: 1px solid #e1e5df;
+}
+
+
+.sobre-autor h2 {
+    margin: 0 0 14px;
+
+    color: #41453f;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.45rem;
+
+    font-weight: 400;
+}
+
+
+.sobre-autor h2::after {
+    content: "";
+
+    display: block;
+
+    width: 38px;
+    height: 2px;
+
+    margin-top: 10px;
+
+    background: #8fa382;
+}
+
+
+.sobre-autor p {
+    max-width: 850px;
+
+    margin: 0;
+
+    color: #737970;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.95rem;
+
+    line-height: 1.8;
+}
+
+
+.sobre-autor strong {
+    color: #596751;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TÍTULO DA ÁREA DE LIVROS
+   ========================================================= */
+
+.livros-autor {
+    padding-top: 35px;
+}
+
+
+.titulo-secao {
+    display: flex;
+
+    align-items: baseline;
+
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid #e1e5df;
+}
+
+
+.titulo-secao h2 {
+    margin: 0;
+
+    color: #41453f;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.55rem;
+
+    font-weight: 400;
+}
+
+
+.titulo-secao span {
+    color: #8a9085;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   GRID DE LIVROS
+   ========================================================= */
+
+.grid-livros {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 34px 28px;
+}
+
+
+/* =========================================================
+   CARD DO LIVRO
+   ========================================================= */
+
+.card-livro {
+    display: block;
+
+    overflow: hidden;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    background: transparent;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.card-livro:hover {
+    transform: translateY(-6px);
+}
+
+
+/* =========================================================
+   CAPA
+   ========================================================= */
+
+.card-livro img,
+.card-livro .sem-capa {
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 2 / 3;
+
+    object-fit: cover;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 7px 18px rgba(35, 42, 32, 0.13);
+
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.card-livro:hover img,
+.card-livro:hover .sem-capa {
+    box-shadow:
+        0 13px 27px rgba(35, 42, 32, 0.19);
+}
+
+
+/* =========================================================
+   LIVRO SEM CAPA
+   ========================================================= */
+
+.card-livro .sem-capa {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2eb;
+
+    color: #7d8976;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO LIVRO
+   ========================================================= */
+
+.info-livro {
+    padding: 14px 3px 0;
+}
+
+
+.info-livro h3 {
+    overflow: hidden;
+
+    margin: 0 0 8px;
+
+    color: #3f433d;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.95rem;
+
+    font-weight: 650;
+
+    line-height: 1.4;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+
+/* =========================================================
+   AVALIAÇÃO
+   ========================================================= */
+
+.avaliacao {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #c49b45;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   GÊNERO
+   ========================================================= */
+
+.genero {
+    display: inline-block;
+
+    padding: 4px 10px;
+
+    border: 1px solid #d9e1d4;
+
+    border-radius: 20px;
+
+    background: #f4f7f2;
+
+    color: #718166;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .autor-container {
+        padding: 40px 30px 60px;
+    }
+
+    .grid-livros {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 28px 22px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE — CELULAR
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .autor-container {
+        padding: 30px 20px 50px;
+    }
+
+
+    .autor-header {
+        padding: 40px 20px 35px;
+    }
+
+
+    .autor-header h1 {
+        font-size: 2rem;
+    }
+
+
+    .descricao-autor {
+        font-size: 0.88rem;
+    }
+
+
+    .grid-livros {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 25px 18px;
+    }
+
+
+    .titulo-secao h2 {
+        font-size: 1.3rem;
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .grid-livros {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 18px 12px;
+    }
+
+
+    .info-livro h3 {
+        font-size: 0.85rem;
+    }
+
+}

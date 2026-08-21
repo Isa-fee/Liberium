@@ -40,7 +40,37 @@ def ver(id):
         item_estante=item_estante,
         hoje=date.today()
     )
+# ======================================
+# PÁGINA DO AUTOR
+# ======================================
 
+@books_bp.route("/autor/<path:nome>")
+@login_required
+def autor(nome):
+
+    livros = Livro.query.filter(
+        Livro.autor == nome
+    ).order_by(
+        Livro.titulo.asc()
+    ).all()
+
+    if not livros:
+
+        flash(
+            "Autor não encontrado.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.catalogo")
+        )
+
+    return render_template(
+        "autor/autor.html",
+        autor=nome,
+        livros=livros,
+        quantidade=len(livros)
+    )
 
 # ======================================
 # BUSCA DE LIVROS

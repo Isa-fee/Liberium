@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ autor }} | Liberium
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/autor/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="autor-container">
+
+    <section class="autor-header">
+
+        <span class="rotulo-autor">
+            AUTOR
+        </span>
+    
+        <h1>{{ autor }}</h1>
+    
+        <p class="descricao-autor">
+            Conheça as obras de {{ autor }} disponíveis no Liberium.
+        </p>
+    
+        <div class="estatisticas">
+    
+            <div class="estatistica">
+                <strong>{{ quantidade }}</strong>
+                <span>
+                    livro{% if quantidade != 1 %}s{% endif %}
+                </span>
+            </div>
+    
+        </div>
+    
+    </section>
+
+
+    <section class="sobre-autor">
+
+        <h2>Sobre o autor</h2>
+
+        <p>
+            Esta página reúne todas as obras de
+            <strong>{{ autor }}</strong>
+            disponíveis no Liberium.
+        </p>
+
+    </section>
+
+
+    <section class="livros-autor">
+
+        <div class="titulo-secao">
+
+            <h2>Livros do autor</h2>
+
+            <span>{{ quantidade }} livro{% if quantidade != 1 %}s{% endif %}</span>
+
+        </div>
+
+        <div class="grid-livros">
+
+            {% for livro in livros %}
+
+            <a
+                href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                class="card-livro"
+            >
+
+                {% if livro.capa %}
+
+                <img
+                    src="{{ url_for('static', filename=livro.capa) }}"
+                    alt="{{ livro.titulo }}"
+                >
+
+                {% else %}
+
+                <div class="sem-capa">
+                    Sem capa
+                </div>
+
+                {% endif %}
+
+                <div class="info-livro">
+
+                    <h3>{{ livro.titulo }}</h3>
+
+                    {% if livro.avaliacao %}
+                    <span class="avaliacao">
+                        ⭐ {{ livro.avaliacao }}
+                    </span>
+                    {% endif %}
+
+                    {% if livro.genero %}
+                    <span class="genero">
+                        {{ livro.genero }}
+                    </span>
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}
