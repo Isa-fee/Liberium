@@ -112,5 +112,46 @@
         "tipo": "boneco",
         "preco": 50,
         "imagem": "img/bonecos/princesaesapo.png"
+    },
+    {
+        "nome": "Anne",
+        "descricao": "A garota de imaginação sem limites.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecaanne.png"
+    },
+    {
+        "nome": "Gilbert",
+        "descricao": "O par leal e apaixonado de Anne.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecogilbert.png"
+    },
+    {
+        "nome": "Anabeth",
+        "descricao": "A estrategista e sábia semideusa.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecoanabeth.png"
+    },{
+        "nome": "Percy",
+        "descricao": "O destemido filho de Poseidon.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecopercy.png"
+    },
+    {
+        "nome": "Cardan",
+        "descricao": "O sarcástico e elegante Rei de Elfhame.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecocardan.png"
+    },
+    {
+        "nome": "Jude",
+        "descricao": "A humana destemida do Reino das Fadas.",
+        "tipo": "boneco",
+        "preco": 50,
+        "imagem": "img/bonecos/bonecojude.png"
     }
 ]

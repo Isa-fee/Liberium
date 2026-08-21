@@ -1091,6 +1091,88 @@
     font-weight: 600;
 }
 
+.lista-elogios {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card-elogio {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: #f8f7f5;
+    border-radius: 12px;
+}
+
+.card-elogio img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card-elogio strong {
+    color: #5b3923;
+}
+
+.card-elogio p {
+    margin: 5px 0 0;
+    color: #555;
+}
+
+.lista-elogios {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-elogio {
+    background: white;
+    border: 1px solid #e3ded8;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.perfil-elogio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.foto-elogio {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.perfil-elogio strong {
+    display: block;
+    color: #5b3923;
+}
+
+.perfil-elogio span {
+    display: block;
+    font-size: .85rem;
+    color: #8d8d8d;
+    margin-top: 3px;
+}
+
+.mensagem-elogio {
+    margin: 15px 0 8px;
+    color: #5b3923;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.data-elogio {
+    color: #999;
+    font-size: .8rem;
+}
+
 /* =========================================
    RESPONSIVIDADE
 ========================================= */

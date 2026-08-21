@@ -284,7 +284,7 @@
                         <div class="capa-livro">
 
                             {% if leitura_atual.livro.capa %}
-                            <img src="{{ leitura_atual.livro.capa }}" alt="{{ leitura_atual.livro.titulo }}">
+                            <img src="{{ url_for('static', filename=leitura_atual.livro.capa) }}" alt="{{ leitura_atual.livro.titulo }}">
                             {% else %}
                             <div class="capa-placeholder">📖</div>
                             {% endif %}

@@ -1,6 +1,6 @@
 from extensions import db
 from flask_login import UserMixin
-from datetime import date
+from datetime import date, datetime
 
 
 class Usuario(UserMixin, db.Model):
@@ -510,4 +510,41 @@ class Clube(db.Model):
     usuario = db.relationship(
         "Usuario",
         backref="clubes_criados"
+    )
+
+class ElogioEstante(db.Model):
+    __tablename__ = "elogios_estante"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    autor_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    destinatario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    mensagem = db.Column(
+        db.String(300),
+        nullable=False
+    )
+
+    data = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+    autor = db.relationship(
+        "Usuario",
+        foreign_keys=[autor_id]
+    )
+
+    destinatario = db.relationship(
+        "Usuario",
+        foreign_keys=[destinatario_id]
     )
