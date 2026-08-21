@@ -1337,5 +1337,91 @@
         "ano": "2022",
         "idioma": "Português",
         "avaliacao": 4.8
-    } 
+    },
+    {
+        "titulo": "O Caminho dos Reis",
+        "autor": "Brandon Sanderson",
+        "descricao": "Roshar é um mundo de pedras e tempestades. Essas estranhas tormentas, de incrível poder, varrem o terreno rochoso com tanta frequência que terminaram moldando não apenas a ecologia, mas também a civilização. Animais que se escondem em conchas, árvores de galhos rígidos e uma vegetação que se retrai e se revela. As cidades só podem ser construídas onde a topografia oferece abrigo. Vida antes da morte.  Força antes da fraqueza.  Jornada antes do destino.",
+        "capa": "img/capas/o_caminho_dos_reis.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 1240,
+        "ano": "2022",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    },
+    {
+        "titulo": "Palavras de Radiância",
+        "autor": "Brandon Sanderson",
+        "descricao": "Mesmo com seus inimigos esperando que ele tivesse uma morte miserável, Kaladin sobreviveu para receber o comando dos guarda-costas reais, algo controverso para um “olhos-escuros” de baixo escalão. Agora, ele deve proteger Dalinar e o rei de qualquer perigo ― sobretudo a insólita ameaça do Assassino de Branco ―, enquanto luta secretamente para dominar seus novos e notáveis poderes, que, de alguma forma, estão ligados ao seu espreno de honra, Syl.",
+        "capa": "img/capas/palavras_de_radiancia.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 1328,
+        "ano": "2023",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    },
+    {
+        "titulo": "Sacramentadora",
+        "autor": "Brandon Sanderson",
+        "descricao": "A humanidade agora está diante de uma nova Desolação com o retorno dos Esvaziadores, um inimigo ao mesmo tempo numeroso e letal que busca vingança. A vitória dos exércitos alethianos de Dalinar causa consequências: os parshedianos convocam a violenta Tempestade Eterna, devastando o mundo e fazendo os pacíficos parshermanos descobrirem com horror que foram escravizados pelos humanos durante um milênio.",
+        "capa": "img/capas/sacramentadora.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 1536,
+        "ano": "2024",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    },
+    {
+        "titulo": "O Ritmo da Guerra",
+        "autor": "Brandon Sanderson",
+        "descricao": "Após unir as forças humanas em uma coalizão de resistência contra a invasão inimiga, Dalinar Kholin e seus Cavaleiros Radiantes passam um ano travando uma guerra longa e brutal. Nenhum dos lados consegue vantagem, e a sombra da traição paira sobre cada movimento ― especialmente com Taravangian, o astuto e imprevisível aliado de Dalinar, sempre pronto para agir conforme seus próprios planos.",
+        "capa": "img/capas/o_ritmo_da_guerra.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 1408,
+        "ano": "2025",
+        "idioma": "Português",
+        "avaliacao": 4.8
+    },
+    {
+        "titulo": "Mistborn: Nascidos da Bruma",
+        "autor": "Brandon Sanderson",
+        "descricao": "Certa vez, um herói surgiu para salvar o mundo. Ele fracassou. Desde então, o mundo tem sido um deserto de cinzas e névoa, governado pelo imortal conhecido como Senhor Soberano. A esperança, porém, persiste. Uma nova revolta está se formando por meio de um grande golpe, um brilhante gênio do crime e a coragem de uma heroína improvável: uma jovem das ruas que precisa aprender a dominar o poder de uma Nascida da Bruma.",
+        "capa": "img/capas/mistborn_nascidos_da_bruma.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 716,
+        "ano": "2025",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "Mistborn: O Poço da Ascensão",
+        "autor": "Brandon Sanderson",
+        "descricao": "Eles fizeram o impossível, dando fim ao reino de mil anos do divino Senhor Soberano. Agora, Vin, a jovem das ruas que emergiu como a poderosa Nascida da Bruma, e Elend Venture, o jovem nobre que a ama, precisam construir uma nova sociedade sob as cinzas do antigo império.",
+        "capa": "img/capas/mistborn_o_poco_da_ascensao.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 856 ,
+        "ano": "2025",
+        "idioma": "Português",
+        "avaliacao": 4.7
+    },
+    {
+        "titulo": "Mistborn: O Herói das Eras",
+        "autor": "Brandon Sanderson",
+        "descricao": "Quando Vin cumpre a profecia e libera o poder guardado no Poço da Ascensão, ela descobre que tudo não passava de uma artimanha, e Ruína, o ser divino que emerge, está livre e decidido a destruir o mundo. Após escapar da morte e se tornar um Nascido da Bruma, o Imperador Elend Venture está em busca de pistas deixadas pelo Senhor Soberano que podem ajudar a combater as novas ameaças. As lendas falam de um herói, mas elas ainda são confiáveis? Para corrigir seu erro, Vin deverá descobrir a verdade e se tornar o Herói das Eras antes que Ruína acabe com toda a vida no planeta.",
+        "capa": "img/capas/mistborn_o_heroi_das_eras.jpg",
+        "genero": "Alta Fantasia",
+        "editora": "Trama",
+        "paginas": 800  ,
+        "ano": "2025",
+        "idioma": "Português",
+        "avaliacao": 4.9
+    }
 ]
+
+

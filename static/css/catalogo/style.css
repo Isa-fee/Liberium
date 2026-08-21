@@ -320,12 +320,16 @@
 
 .autor {
     margin: 0 0 10px;
-    color: #888;
     font-size: .85rem;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.autor > a {
+    text-decoration: none;
+    color: #888;
 }
 
 .avaliacao {

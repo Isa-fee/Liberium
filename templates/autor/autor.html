@@ -11,56 +11,77 @@
 
 {% block content %}
 
-<div class="autor-container">
+<main class="pagina-autor">
 
-    <section class="autor-header">
+    <!-- =========================================
+         CABEÇALHO
+    ========================================== -->
 
-        <span class="rotulo-autor">
-            AUTOR
-        </span>
-    
-        <h1>{{ autor }}</h1>
-    
-        <p class="descricao-autor">
-            Conheça as obras de {{ autor }} disponíveis no Liberium.
-        </p>
-    
-        <div class="estatisticas">
-    
-            <div class="estatistica">
-                <strong>{{ quantidade }}</strong>
-                <span>
-                    livro{% if quantidade != 1 %}s{% endif %}
+    <section class="cabecalho-autor">
+
+        <div class="identificacao-autor">
+
+            <span class="etiqueta-autor">
+                AUTOR
+            </span>
+
+            <h1>{{ autor }}</h1>
+
+            <p>
+                Conheça as obras de
+                <strong>{{ autor }}</strong>
+                disponíveis no Liberium.
+            </p>
+
+        </div>
+
+
+        <div class="contador-livros">
+
+            <strong>{{ quantidade }}</strong>
+
+            <span>
+                livro{% if quantidade != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TÍTULO DA SEÇÃO
+    ========================================== -->
+
+    <section class="secao-livros">
+
+        <div class="cabecalho-secao">
+
+            <div>
+
+                <span class="subtitulo-secao">
+                    BIBLIOTECA
                 </span>
+
+                <h2>
+                    Obras de {{ autor }}
+                </h2>
+
             </div>
-    
-        </div>
-    
-    </section>
 
-
-    <section class="sobre-autor">
-
-        <h2>Sobre o autor</h2>
-
-        <p>
-            Esta página reúne todas as obras de
-            <strong>{{ autor }}</strong>
-            disponíveis no Liberium.
-        </p>
-
-    </section>
-
-
-    <section class="livros-autor">
-
-        <div class="titulo-secao">
-
-            <h2>Livros do autor</h2>
-
-            <span>{{ quantidade }} livro{% if quantidade != 1 %}s{% endif %}</span>
+            <span class="quantidade-livros">
+                {{ quantidade }}
+                livro{% if quantidade != 1 %}s{% endif %}
+            </span>
 
         </div>
+
+
+        <!-- =====================================
+             LIVROS
+        ====================================== -->
+
+        {% if livros %}
 
         <div class="grid-livros">
 
@@ -71,35 +92,48 @@
                 class="card-livro"
             >
 
-                {% if livro.capa %}
+                <div class="capa-livro">
 
-                <img
-                    src="{{ url_for('static', filename=livro.capa) }}"
-                    alt="{{ livro.titulo }}"
-                >
+                    {% if livro.capa %}
 
-                {% else %}
+                    <img
+                        src="{{ url_for('static', filename=livro.capa) }}"
+                        alt="Capa de {{ livro.titulo }}"
+                    >
 
-                <div class="sem-capa">
-                    Sem capa
-                </div>
+                    {% else %}
 
-                {% endif %}
+                    <div class="sem-capa">
+                        <span>Sem capa</span>
+                    </div>
 
-                <div class="info-livro">
-
-                    <h3>{{ livro.titulo }}</h3>
-
-                    {% if livro.avaliacao %}
-                    <span class="avaliacao">
-                        ⭐ {{ livro.avaliacao }}
-                    </span>
                     {% endif %}
 
+                </div>
+
+
+                <div class="informacoes-livro">
+
+                    <h3>
+                        {{ livro.titulo }}
+                    </h3>
+
+
+                    {% if livro.avaliacao %}
+
+                    <span class="avaliacao">
+                        ★ {{ livro.avaliacao }}
+                    </span>
+
+                    {% endif %}
+
+
                     {% if livro.genero %}
+
                     <span class="genero">
                         {{ livro.genero }}
                     </span>
+
                     {% endif %}
 
                 </div>
@@ -110,8 +144,33 @@
 
         </div>
 
+        {% else %}
+
+        <!-- =====================================
+             ESTADO VAZIO
+        ====================================== -->
+
+        <div class="livros-vazios">
+
+            <div class="icone-vazio">
+                📚
+            </div>
+
+            <h3>
+                Nenhum livro encontrado
+            </h3>
+
+            <p>
+                Ainda não existem obras de {{ autor }}
+                disponíveis no Liberium.
+            </p>
+
+        </div>
+
+        {% endif %}
+
     </section>
 
-</div>
+</main>
 
 {% endblock %}
