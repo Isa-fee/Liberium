@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from datetime import date
-from datetime import date
 from random import choice
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
+from utils.google_books import (buscar_google_books, buscar_livro_google)
 
 from models import Livro, Estante, DecoracaoEstante
 from extensions import db
@@ -38,7 +38,40 @@ def ver(id):
         "books/books.html",
         livro=livro,
         item_estante=item_estante,
-        hoje=date.today()
+        hoje=date.today(),
+        origem="banco"
+    )
+
+
+# ======================================
+# DETALHES DO LIVRO DO GOOGLE
+# ======================================
+
+@books_bp.route("/google/<string:google_id>")
+@login_required
+def ver_google(google_id):
+
+    livro = buscar_livro_google(
+        google_id
+    )
+
+    if not livro:
+
+        flash(
+            "Não foi possível carregar esse livro.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.catalogo")
+        )
+
+    return render_template(
+        "books/books.html",
+        livro=livro,
+        item_estante=None,
+        hoje=date.today(),
+        origem="google"
     )
 # ======================================
 # PÁGINA DO AUTOR
@@ -76,11 +109,22 @@ def autor(nome):
 # BUSCA DE LIVROS
 # ======================================
 
+# ======================================
+# BUSCA DE LIVROS
+# ======================================
+
 @books_bp.route("/buscar")
 @login_required
 def buscar():
 
-    termo = request.args.get("q", "").strip()
+    termo = request.args.get(
+        "q",
+        ""
+    ).strip()
+
+    # ==================================
+    # BUSCA VAZIA
+    # ==================================
 
     if not termo:
 
@@ -93,13 +137,48 @@ def buscar():
             url_for("home.home")
         )
 
-    livros = Livro.query.filter(
-        Livro.titulo.ilike(f"%{termo}%")
+    # ==================================
+    # 1. BUSCAR NO BANCO LOCAL
+    # ==================================
+
+    livros_banco = Livro.query.filter(
+        db.or_(
+            Livro.titulo.ilike(
+                f"%{termo}%"
+            ),
+            Livro.autor.ilike(
+                f"%{termo}%"
+            )
+        )
     ).all()
+
+    # ==================================
+    # 2. ENCONTROU NO NOSSO BANCO
+    # ==================================
+
+    if livros_banco:
+
+        return render_template(
+            "books/resultados.html",
+            livros=livros_banco,
+            termo=termo,
+            origem="banco"
+        )
+
+    # ==================================
+    # 3. NÃO ENCONTROU:
+    # BUSCAR NO GOOGLE BOOKS
+    # ==================================
+
+    livros_google = buscar_google_books(
+        termo
+    )
 
     return render_template(
         "books/resultados.html",
-        livros=livros
+        livros=livros_google,
+        termo=termo,
+        origem="google"
     )
 
 

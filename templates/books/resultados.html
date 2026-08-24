@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/books/style.css') }}"
+>
+{% endblock %}
+
 {% block content %}
 
 <h1 class="titulo-resultados">
@@ -12,18 +19,53 @@
 
         {% for livro in livros %}
 
-            <a
-                href="{{ url_for('books_bp.ver', id=livro.id) }}"
-                class="card-livro"
-            >
+            {% if origem == "banco" %}
+
+                <a
+                    href="{{ url_for(
+                        'books_bp.ver',
+                        id=livro.id
+                    ) }}"
+                    class="livro-resultado"
+                >
+
+            {% else %}
+
+                <a
+                    href="{{ url_for(
+                        'books_bp.ver_google',
+                        google_id=livro.google_id
+                    ) }}"
+                    class="livro-resultado"
+                >
+
+            {% endif %}
+
+
+                <!-- CAPA -->
 
                 {% if livro.capa %}
 
-                    <img
-                        src="{{ url_for('static', filename=livro.capa) }}"
-                        class="capa-lista"
-                        alt="Capa de {{ livro.titulo }}"
-                    >
+                    {% if origem == "google" %}
+
+                        <img
+                            src="{{ livro.capa }}"
+                            class="capa-lista"
+                            alt="Capa de {{ livro.titulo }}"
+                        >
+
+                    {% else %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=livro.capa
+                            ) }}"
+                            class="capa-lista"
+                            alt="Capa de {{ livro.titulo }}"
+                        >
+
+                    {% endif %}
 
                 {% else %}
 
@@ -32,6 +74,9 @@
                     </div>
 
                 {% endif %}
+
+
+                <!-- INFORMAÇÕES -->
 
                 <div class="info-livro">
 
