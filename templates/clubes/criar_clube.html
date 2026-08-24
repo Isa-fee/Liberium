@@ -39,34 +39,43 @@
         enctype="multipart/form-data"
     >
 
-        <!-- LIVRO -->
+  <!-- LIVRO -->
+  <div class="campo-clube">
 
-        <div class="campo-clube">
+    <label for="livro">
+        Qual será o livro lido?
+    </label>
 
-            <label for="livro">
-                Qual será o livro lido?
-            </label>
+    <div class="campo-busca">
 
-            <div class="campo-busca">
+        <span>⌕</span>
 
-                <span>⌕</span>
+        <input
+            type="text"
+            id="livro"
+            placeholder="Buscar livro por título ou autor..."
+            autocomplete="off"
+            required
+        >
 
-                <input
-                    type="text"
-                    id="livro"
-                    name="livro"
-                    placeholder="Buscar livro..."
-                    required
-                >
+    </div>
 
-            </div>
+    <input
+        type="hidden"
+        id="livro_id"
+        name="livro_id"
+    >
 
-            <small>
-                Comece a digitar o título do livro para encontrar.
-            </small>
+    <div
+        id="resultados-livros"
+        class="resultados-livros"
+    ></div>
 
-        </div>
+    <small>
+        Pesquise entre os livros cadastrados no Liberium.
+    </small>
 
+</div>
 
         <!-- DESCRIÇÃO -->
 
@@ -280,5 +289,80 @@
     </form>
 
 </section>
+<script>
 
+    const campoLivro = document.getElementById("livro");
+    const campoLivroId = document.getElementById("livro_id");
+    const resultadosLivros = document.getElementById("resultados-livros");
+    
+    campoLivro.addEventListener("input", async function () {
+    
+        const termo = campoLivro.value.trim();
+    
+        // Apaga a seleção anterior
+        campoLivroId.value = "";
+    
+        resultadosLivros.innerHTML = "";
+    
+        if (termo.length < 2) {
+            return;
+        }
+    
+        try {
+    
+            const resposta = await fetch(
+                `/clubes/buscar-livros?q=${encodeURIComponent(termo)}`
+            );
+    
+            const livros = await resposta.json();
+    
+            if (livros.length === 0) {
+    
+                resultadosLivros.innerHTML = `
+                    <div class="sem-resultados">
+                        Nenhum livro encontrado.
+                    </div>
+                `;
+    
+                return;
+            }
+    
+            livros.forEach(function (livro) {
+    
+                const resultado = document.createElement("button");
+    
+                resultado.type = "button";
+                resultado.className = "resultado-livro";
+    
+                resultado.innerHTML = `
+                    <strong>${livro.titulo}</strong>
+                    <span>${livro.autor || "Autor desconhecido"}</span>
+                `;
+    
+                resultado.addEventListener("click", function () {
+    
+                    campoLivro.value = livro.titulo;
+    
+                    campoLivroId.value = livro.id;
+    
+                    resultadosLivros.innerHTML = "";
+    
+                });
+    
+                resultadosLivros.appendChild(resultado);
+    
+            });
+    
+        } catch (erro) {
+    
+            console.error(
+                "Erro ao pesquisar livros:",
+                erro
+            );
+    
+        }
+    
+    });
+    
+    </script>
 {% endblock %}
