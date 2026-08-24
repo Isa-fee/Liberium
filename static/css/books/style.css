@@ -557,3 +557,205 @@
     color:#4d6245;
     text-decoration:underline;
 }
+
+/* ========================================= */
+/*        RESULTADOS DA PESQUISA             */
+/* ========================================= */
+
+.link-resultado {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* Reutiliza o mesmo livro-container,
+   porém menor na página de resultados */
+
+.resultado-livro {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 25px auto;
+
+    grid-template-columns: 180px 1fr !important;
+
+    gap: 30px;
+
+    padding: 25px 35px;
+
+    border-radius: 12px;
+
+    background: #f8f8f6;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.resultado-livro:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 22px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+/* CAPA NOS RESULTADOS */
+
+.resultado-livro .coluna-esquerda {
+    justify-content: center;
+}
+
+
+.resultado-livro .capa-livro {
+    width: 130px;
+    max-width: 130px;
+
+    height: 190px;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+}
+
+
+/* COLUNA DE INFORMAÇÕES */
+
+.resultado-livro .coluna-direita {
+    justify-content: center;
+
+    gap: 12px;
+}
+
+
+/* TÍTULO */
+
+.resultado-livro .cabecalho-livro h1 {
+    margin: 0 0 5px;
+
+    font-size: 1.6rem;
+
+    font-weight: 600;
+
+    color: #442b1a;
+}
+
+
+/* AUTOR */
+
+.resultado-livro .autores {
+    margin: 0;
+
+    color: #6c5338;
+
+    font-size: 0.95rem;
+}
+
+
+/* SINOPSE */
+
+.resultado-livro .sinopse h2 {
+    margin: 0 0 6px;
+
+    font-size: 1rem;
+
+    color: #555;
+}
+
+
+.resultado-livro .texto-sinopse {
+    margin: 0;
+
+    max-width: 850px;
+
+    color: #666;
+
+    font-size: 0.9rem;
+
+    line-height: 1.55;
+}
+
+
+/* SEM CAPA */
+
+.resultado-livro .sem-capa {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e6e4df;
+
+    color: #777;
+
+    font-size: 0.85rem;
+
+    text-align: center;
+}
+
+
+/* ========================================= */
+/*           NENHUM RESULTADO                */
+/* ========================================= */
+
+.resultado-vazio {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 40px auto;
+
+    grid-template-columns: 1fr !important;
+
+    padding: 40px;
+
+    border-radius: 12px;
+
+    background: #f8f8f6;
+
+    text-align: center;
+}
+
+
+/* ========================================= */
+/*              RESPONSIVO                   */
+/* ========================================= */
+
+@media (max-width: 700px) {
+
+    .resultado-livro {
+        grid-template-columns: 100px 1fr !important;
+
+        padding: 18px;
+
+        gap: 18px;
+    }
+
+
+    .resultado-livro .capa-livro {
+        width: 90px;
+        max-width: 90px;
+
+        height: 135px;
+    }
+
+
+    .resultado-livro .cabecalho-livro h1 {
+        font-size: 1.15rem;
+    }
+
+
+    .resultado-livro .sinopse h2 {
+        font-size: 0.9rem;
+    }
+
+
+    .resultado-livro .texto-sinopse {
+        font-size: 0.8rem;
+    }
+
+}

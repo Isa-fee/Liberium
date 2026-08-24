@@ -2,7 +2,6 @@ from flask import Flask
 from extensions import db, login_manager
 from dotenv import load_dotenv
 from utils.insignias import criar_insignias
-import os
 
 load_dotenv()
 

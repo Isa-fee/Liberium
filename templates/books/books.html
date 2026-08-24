@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}{{ livro.titulo }}{% endblock %}
+{% block title %}
+    {{ livro.titulo }}
+{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/books/style.css') }}">
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/books/style.css') }}"
+>
 {% endblock %}
 
 {% block content %}
@@ -14,177 +19,523 @@
 
     <aside class="coluna-esquerda">
 
+        <!-- ================= CAPA ================= -->
+
         {% if livro.capa %}
-        <img src="{{ url_for('static', filename=livro.capa) }}" alt="{{ livro.titulo }}" class="capa-livro">
+
+            {% if origem == "google" %}
+
+                <img
+                    src="{{ livro.capa }}"
+                    alt="{{ livro.titulo }}"
+                    class="capa-livro"
+                >
+
+            {% else %}
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename=livro.capa
+                    ) }}"
+                    alt="{{ livro.titulo }}"
+                    class="capa-livro"
+                >
+
+            {% endif %}
+
         {% else %}
-        <div class="sem-capa capa-livro">Sem capa</div>
+
+            <div class="sem-capa capa-livro">
+                Sem capa
+            </div>
+
         {% endif %}
 
+
+        <!-- ================= AVALIAÇÃO GERAL ================= -->
+
         <div class="avaliacao-estrelas">
+
             ★★★★★
-            <span class="nota">({{ livro.avaliacao or "Sem avaliações" }})</span>
+
+            <span class="nota">
+                (
+                {{ livro.avaliacao or "Sem avaliações" }}
+                )
+            </span>
+
         </div>
 
-        <!-- BOTÃO ESTANTE -->
 
-        <div class="dropdown-estante">
-            <button class="btn-estante">Adicionar na estante ▾</button>
-            <div class="menu-estante">
-                <form action="{{ url_for('books_bp.adicionar_estante', livro_id=livro.id) }}" method="POST">
-                    <button name="status" value="lendo">Estou lendo</button>
-                    <button name="status" value="quero ler">Quero ler</button>
-                    <button name="status" value="lido">Já li</button>
-                </form>
-            </div>
-        </div>
+        <!-- ================= BOTÃO ESTANTE ================= -->
 
-        <!-- CARD DO USUÁRIO -->
+        {% if origem == "banco" %}
 
-        {% if item_estante %}
-        <div class="painel-leitura">
-            <h3>Seu progresso</h3>
+            <div class="dropdown-estante">
 
-            <p class="status-atual">
-                Status:
-                <strong>{{ item_estante.status|capitalize }}</strong>
-            </p>
-
-            {% if item_estante.status == "lendo" %}
-            <div class="progresso-box">
-                <label>Progresso</label>
-
-                <div class="barra">
-                    <div class="progresso" style="width: {{ item_estante.progresso }}%;"></div>
-                </div>
-
-                <p>{{ item_estante.progresso or 0 }}%</p>
-
-                <form action="{{ url_for('estante_bp.atualizar_progresso', id=livro.id) }}" method="POST" class="form-progresso">
-                    <label for="pagina">Página atual</label>
-                    <input type="number" id="pagina" name="pagina" min="0" max="{{ livro.paginas }}" value="{{ item_estante.pagina_atual or 0 }}">
-                    <small>de {{ livro.paginas }} páginas</small>
-                    <button type="submit" class="btn-secundario">Atualizar progresso</button>
-                </form>
-            </div>
-            {% endif %}
-
-            <!-- ================= AVALIAÇÃO ================= -->
-
-            {% if item_estante.status == "lido" %}
-            <div class="avaliacao-usuario">
-
-                {% if item_estante.nota %}
-                <div class="minha-avaliacao">
-                    <span class="minha-nota">
-                        {% for i in range(item_estante.nota) %}★{% endfor %}{% for i in range(5 - item_estante.nota) %}☆{% endfor %}
-                    </span>
-                </div>
-                {% endif %}
-
-                <button type="button" class="btn-avaliar" id="abrir-modal-avaliacao">
-                    {% if item_estante.nota %}Editar avaliação{% else %}Adicionar avaliação{% endif %}
+                <button class="btn-estante">
+                    Adicionar na estante ▾
                 </button>
-            </div>
 
-            <!-- ================= MODAL ================= -->
+                <div class="menu-estante">
 
-            <div class="modal-overlay" id="modal-avaliacao" aria-hidden="true">
-                <div class="modal-avaliacao" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-avaliacao">
+                    <form
+                        action="{{ url_for(
+                            'books_bp.adicionar_estante',
+                            livro_id=livro.id
+                        ) }}"
+                        method="POST"
+                    >
 
-                    <div class="modal-cabecalho">
-                        <h2 id="titulo-modal-avaliacao">Avaliar livro</h2>
-                        <button type="button" class="fechar-modal" id="fechar-modal-avaliacao" aria-label="Fechar">×</button>
-                    </div>
+                        <button
+                            name="status"
+                            value="lendo"
+                        >
+                            Estou lendo
+                        </button>
 
-                    <form action="{{ url_for('estante_bp.avaliar', id=livro.id) }}" method="POST" class="form-avaliacao">
+                        <button
+                            name="status"
+                            value="quero ler"
+                        >
+                            Quero ler
+                        </button>
 
-                        <label>Que nota você dá para este livro?</label>
-
-                        <div class="estrelas-avaliacao">
-                            <input type="hidden" name="nota" id="nota-avaliacao" value="{{ item_estante.nota or 0 }}">
-
-                            {% for i in range(1, 6) %}
-                            <button type="button" class="estrela" data-nota="{{ i }}" aria-label="{{ i }} estrela{% if i > 1 %}s{% endif %}">
-                                {% if item_estante.nota and i <= item_estante.nota %}★{% else %}☆{% endif %}
-                            </button>
-                            {% endfor %}
-                        </div>
-
-                        <label for="resenha">Compartilhe sua experiência</label>
-
-                        <textarea id="resenha" name="resenha" rows="7" maxlength="2000" placeholder="O que você achou do livro?">{{ item_estante.resenha or "" }}</textarea>
-
-                        <div class="data-avaliacao">
-                            <label for="data-leitura">Data da leitura</label>
-                            <input
-                                type="date"
-                                id="data-leitura"
-                                name="data_leitura"
-                                value="{{ item_estante.data_leitura.strftime('%Y-%m-%d') if item_estante.data_leitura else hoje.strftime('%Y-%m-%d') }}"
-                            >
-                        </div>
-
-                        <div class="acoes-modal">
-                            <button type="button" class="btn-cancelar" id="cancelar-modal-avaliacao">Cancelar</button>
-                            <button type="submit" class="btn-salvar-avaliacao">Salvar</button>
-                        </div>
+                        <button
+                            name="status"
+                            value="lido"
+                        >
+                            Já li
+                        </button>
 
                     </form>
-                </div>
-            </div>
-            {% endif %}
 
-        </div>
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <div class="livro-google-aviso">
+                Livro encontrado pelo Google Books
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================= CARD DO USUÁRIO ================= -->
+
+        {% if origem == "banco" and item_estante %}
+
+            <div class="painel-leitura">
+
+                <h3>
+                    Seu progresso
+                </h3>
+
+                <p class="status-atual">
+
+                    Status:
+
+                    <strong>
+                        {{ item_estante.status|capitalize }}
+                    </strong>
+
+                </p>
+
+
+                <!-- ================= PROGRESSO ================= -->
+
+                {% if item_estante.status == "lendo" %}
+
+                    <div class="progresso-box">
+
+                        <label>
+                            Progresso
+                        </label>
+
+                        <div class="barra">
+
+                            <div
+                                class="progresso"
+                                style="width: {{ item_estante.progresso }}%;"
+                            >
+                            </div>
+
+                        </div>
+
+                        <p>
+                            {{ item_estante.progresso or 0 }}%
+                        </p>
+
+                        <form
+                            action="{{ url_for(
+                                'estante_bp.atualizar_progresso',
+                                id=livro.id
+                            ) }}"
+                            method="POST"
+                            class="form-progresso"
+                        >
+
+                            <label for="pagina">
+                                Página atual
+                            </label>
+
+                            <input
+                                type="number"
+                                id="pagina"
+                                name="pagina"
+                                min="0"
+                                max="{{ livro.paginas }}"
+                                value="{{ item_estante.pagina_atual or 0 }}"
+                            >
+
+                            <small>
+                                de {{ livro.paginas }} páginas
+                            </small>
+
+                            <button
+                                type="submit"
+                                class="btn-secundario"
+                            >
+                                Atualizar progresso
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- ================= AVALIAÇÃO ================= -->
+
+                {% if item_estante.status == "lido" %}
+
+                    <div class="avaliacao-usuario">
+
+                        {% if item_estante.nota %}
+
+                            <div class="minha-avaliacao">
+
+                                <span class="minha-nota">
+
+                                    {% for i in range(item_estante.nota) %}
+                                        ★
+                                    {% endfor %}
+
+                                    {% for i in range(5 - item_estante.nota) %}
+                                        ☆
+                                    {% endfor %}
+
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                        <button
+                            type="button"
+                            class="btn-avaliar"
+                            id="abrir-modal-avaliacao"
+                        >
+
+                            {% if item_estante.nota %}
+                                Editar avaliação
+                            {% else %}
+                                Adicionar avaliação
+                            {% endif %}
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- ================= MODAL ================= -->
+
+                    <div
+                        class="modal-overlay"
+                        id="modal-avaliacao"
+                        aria-hidden="true"
+                    >
+
+                        <div
+                            class="modal-avaliacao"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="titulo-modal-avaliacao"
+                        >
+
+                            <div class="modal-cabecalho">
+
+                                <h2 id="titulo-modal-avaliacao">
+                                    Avaliar livro
+                                </h2>
+
+                                <button
+                                    type="button"
+                                    class="fechar-modal"
+                                    id="fechar-modal-avaliacao"
+                                    aria-label="Fechar"
+                                >
+                                    ×
+                                </button>
+
+                            </div>
+
+                            <form
+                                action="{{ url_for(
+                                    'estante_bp.avaliar',
+                                    id=livro.id
+                                ) }}"
+                                method="POST"
+                                class="form-avaliacao"
+                            >
+
+                                <label>
+                                    Que nota você dá para este livro?
+                                </label>
+
+                                <div class="estrelas-avaliacao">
+
+                                    <input
+                                        type="hidden"
+                                        name="nota"
+                                        id="nota-avaliacao"
+                                        value="{{ item_estante.nota or 0 }}"
+                                    >
+
+                                    {% for i in range(1, 6) %}
+
+                                        <button
+                                            type="button"
+                                            class="estrela"
+                                            data-nota="{{ i }}"
+                                            aria-label="{{ i }} estrela{% if i > 1 %}s{% endif %}"
+                                        >
+
+                                            {% if item_estante.nota and i <= item_estante.nota %}
+                                                ★
+                                            {% else %}
+                                                ☆
+                                            {% endif %}
+
+                                        </button>
+
+                                    {% endfor %}
+
+                                </div>
+
+                                <label for="resenha">
+                                    Compartilhe sua experiência
+                                </label>
+
+                                <textarea
+                                    id="resenha"
+                                    name="resenha"
+                                    rows="7"
+                                    maxlength="2000"
+                                    placeholder="O que você achou do livro?"
+                                >{{ item_estante.resenha or "" }}</textarea>
+
+                                <div class="data-avaliacao">
+
+                                    <label for="data-leitura">
+                                        Data da leitura
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="data-leitura"
+                                        name="data_leitura"
+                                        value="{{ item_estante.data_leitura.strftime('%Y-%m-%d') if item_estante.data_leitura else hoje.strftime('%Y-%m-%d') }}"
+                                    >
+
+                                </div>
+
+                                <div class="acoes-modal">
+
+                                    <button
+                                        type="button"
+                                        class="btn-cancelar"
+                                        id="cancelar-modal-avaliacao"
+                                    >
+                                        Cancelar
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        class="btn-salvar-avaliacao"
+                                    >
+                                        Salvar
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
         {% endif %}
 
     </aside>
+
 
     <!-- ================= COLUNA DIREITA ================= -->
 
     <section class="coluna-direita">
 
+        <!-- ================= CABEÇALHO ================= -->
+
         <header class="cabecalho-livro">
-            <h1>{{ livro.titulo }}</h1>
-            <p class="autores"> por 
-                <a href="{{ url_for('books_bp.autor', nome=livro.autor) }}" class="link-autor">{{ livro.autor }}</a>
+
+            <h1>
+                {{ livro.titulo }}
+            </h1>
+
+            <p class="autores">
+
+                por
+
+                {% if origem == "banco" %}
+
+                    <a
+                        href="{{ url_for(
+                            'books_bp.autor',
+                            nome=livro.autor
+                        ) }}"
+                        class="link-autor"
+                    >
+                        {{ livro.autor }}
+                    </a>
+
+                {% else %}
+
+                    <span class="autor-google">
+                        {{ livro.autor }}
+                    </span>
+
+                {% endif %}
+
             </p>
 
             {% if livro.genero %}
-            <span class="badge-genero">{{ livro.genero }}</span>
+
+                <span class="badge-genero">
+                    {{ livro.genero }}
+                </span>
+
             {% endif %}
+
         </header>
 
+
+        <!-- ================= SINOPSE ================= -->
+
         <section class="sinopse">
-            <h2>Sinopse</h2>
-            <p id="meu-texto">{{ livro.descricao or "Sinopse não disponível." }}</p>
+
+            <h2>
+                Sinopse
+            </h2>
+
+            <p id="meu-texto">
+                {{ livro.descricao or "Sinopse não disponível." }}
+            </p>
+
         </section>
+
+
+        <!-- ================= INFORMAÇÕES ================= -->
 
         <section class="informacoes">
-            <div class="info">
-                <small>Páginas</small>
-                <strong>{{ livro.paginas or "-" }}</strong>
-            </div>
 
             <div class="info">
-                <small>Idioma</small>
-                <strong>{{ livro.idioma or "-" }}</strong>
+
+                <small>
+                    Páginas
+                </small>
+
+                <strong>
+                    {{ livro.paginas or "-" }}
+                </strong>
+
             </div>
 
-            <div class="info">
-                <small>Editora</small>
-                <strong>{{ livro.editora or "-" }}</strong>
-            </div>
 
             <div class="info">
-                <small>Ano</small>
-                <strong>{{ livro.ano or "-" }}</strong>
+
+                <small>
+                    Idioma
+                </small>
+
+                <strong>
+                    {{ livro.idioma or "-" }}
+                </strong>
+
             </div>
 
+
             <div class="info">
-                <small>Gênero</small>
-                <strong>{{ livro.genero or "-" }}</strong>
+
+                <small>
+                    Editora
+                </small>
+
+                <strong>
+                    {{ livro.editora or "-" }}
+                </strong>
+
             </div>
+
+
+            <div class="info">
+
+                <small>
+                    Ano
+                </small>
+
+                <strong>
+                    {{ livro.ano or "-" }}
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <small>
+                    Gênero
+                </small>
+
+                <strong>
+                    {{ livro.genero or "-" }}
+                </strong>
+
+            </div>
+
         </section>
+
+
+        <!-- ================= ORIGEM GOOGLE ================= -->
+
+        {% if origem == "google" %}
+
+            <section class="info-origem-google">
+
+                <small>
+                    Este livro foi consultado através da Google Books API e não está salvo no catálogo do Liberium.
+                </small>
+
+            </section>
+
+        {% endif %}
 
     </section>
 
