@@ -1,0 +1,45 @@
+<div class="sobre-livro-card">
+    {% if clube.livro %}
+      <div class="livro-capa-wrapper">
+        <img src="{{ clube.livro.capa or 'https://via.placeholder.com/200x300?text=Sem+Capa' }}" 
+             alt="Capa de {{ clube.livro.titulo }}" 
+             class="livro-capa">
+      </div>
+  
+      <div class="livro-detalhes">
+        <span class="badge-genero">{{ clube.livro.genero or 'Leitura Atual' }}</span>
+        <h2>{{ clube.livro.titulo }}</h2>
+        <h4 class="livro-autor">Por <strong>{{ clube.livro.autor }}</strong></h4>
+  
+        <div class="livro-meta">
+          {% if clube.livro.paginas %}
+            <span>📖 {{ clube.livro.paginas }} páginas</span>
+          {% endif %}
+          {% if clube.livro.ano %}
+            <span>📅 {{ clube.livro.ano }}</span>
+          {% endif %}
+          {% if clube.livro.avaliacao %}
+            <span>⭐ {{ "%.1f"|format(clube.livro.avaliacao) }} / 5.0</span>
+          {% endif %}
+        </div>
+  
+        <hr class="divisor">
+  
+        <div class="livro-sinopse">
+          <h3>Sinopse</h3>
+          <p>{{ clube.livro.descricao or 'Nenhuma descrição fornecida para este livro.' }}</p>
+        </div>
+  
+        <!-- Botão de Ação rápida para o usuário adicionar à estante dele -->
+        <div class="livro-acoes">
+          <a href="{{ url_for('books_bp.ver', id=clube.livro.id) }}" class="btn btn-primary">
+            Ver detalhes na biblioteca
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <div class="sem-livro-alerta">
+        <p>Nenhum livro foi selecionado para este clube no momento.</p>
+      </div>
+    {% endif %}
+  </div>

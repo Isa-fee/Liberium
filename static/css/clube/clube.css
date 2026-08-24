@@ -677,3 +677,136 @@
     }
 
 }
+/* ==========================================================================
+   ABA PARTICIPANTES (ESTILO MARATONA)
+   ========================================================================== */
+
+/* Grid principal em cards responsivos */
+.grid-participantes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 10px 0;
+}
+
+/* Card do participante */
+.card-participante {
+    background-color: #1a1a24;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #2d2d3a;
+    border-left: 4px solid #7000ff; /* Linha de destaque roxa/verde na esquerda */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card-participante:hover {
+    transform: translateY(-2px);
+    border-color: #3d3d4e;
+}
+
+/* Header do Card */
+.participante-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.participante-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #2e2e3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.participante-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.participante-nome-linha {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.participante-nome-linha h4 {
+    margin: 0;
+    color: #f1f1f5;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.badge-voces {
+    background-color: #5c33be;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: lowercase;
+}
+
+/* Badges de estatísticas (porcentagem e atualizações) */
+.participante-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.stat-badge {
+    background-color: #272733;
+    color: #b0b0c2;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+/* Tags de Sentimento */
+.participante-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-sentimento {
+    background-color: #2a2838;
+    color: #d1d1e0;
+    font-size: 0.73rem;
+    padding: 4px 10px;
+    border-radius: 14px;
+    border: 1px solid #3d3952;
+}
+
+/* Botão Ver Histórico */
+.btn-historico {
+    width: 100%;
+    background-color: #242433;
+    border: 1px solid #36364a;
+    color: #e1e1e8;
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-historico:hover {
+    background-color: #2e2e42;
+    border-color: #5c33be;
+    color: #fff;
+}

@@ -1,6 +1,7 @@
 from extensions import db
 from flask_login import UserMixin
 from datetime import date, datetime
+from datetime import datetime
 
 
 class Usuario(UserMixin, db.Model):
@@ -495,6 +496,12 @@ class Clube(db.Model):
         nullable=False
     )
 
+    livro_id = db.Column(
+        db.Integer,
+        db.ForeignKey("livros.id"),
+        nullable=True
+    )
+
     quantidade_membros = db.Column(
         db.Integer,
         default=1,
@@ -510,6 +517,11 @@ class Clube(db.Model):
     usuario = db.relationship(
         "Usuario",
         backref="clubes_criados"
+    )
+
+    livro = db.relationship(
+        "Livro",
+        backref="clubes"
     )
 
 class ElogioEstante(db.Model):
@@ -547,4 +559,28 @@ class ElogioEstante(db.Model):
     destinatario = db.relationship(
         "Usuario",
         foreign_keys=[destinatario_id]
+    )
+    
+class Discussao(db.Model):
+    __tablename__ = 'discussoes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(150), nullable=True)
+    conteudo = db.Column(db.Text, nullable=False)
+    data_criacao = db.Column(
+        db.DateTime, default=datetime.utcnow, nullable=False
+    )
+
+    # Chaves estrangeiras
+    clube_id = db.Column(
+        db.Integer, db.ForeignKey('clubes.id'), nullable=False
+    )
+    usuario_id = db.Column(
+        db.Integer, db.ForeignKey('usuarios.id'), nullable=False
+    )
+
+    # Relacionamentos
+    usuario = db.relationship('Usuario', backref='discussoes')
+    clube = db.relationship(
+        'Clube', backref=db.backref('discussoes', lazy=True)
     )
