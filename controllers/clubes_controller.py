@@ -2,8 +2,7 @@ import os
 from extensions import db
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-# Importação atualizada com a model Discussao
-from models import Clube, Discussao, Livro
+from models import Clube, Discussao, Livro, MembroClube
 from werkzeug.utils import secure_filename
 
 clubes_bp = Blueprint('clubes', __name__, url_prefix='/clubes')
@@ -118,12 +117,34 @@ def criar_clube():
             genero=genero,
             imagem=caminho_imagem,
             usuario_id=current_user.id,
-            # LIVRO ESCOLHIDO
             livro_id=livro.id,
             quantidade_membros=1,
         )
 
         db.session.add(novo_clube)
+
+        # Precisamos gerar o ID do clube
+        db.session.flush()
+
+        # Criador entra automaticamente
+        membro_criador = MembroClube(
+            clube_id=novo_clube.id,
+            usuario_id=current_user.id,
+            paginas_lidas=0,
+            progresso_percentual=0,
+            total_atualizacoes=0
+        )
+
+        db.session.add(membro_criador)
+
+        # Registra o membro antes de contar
+        db.session.flush()
+
+        # Sincroniza a quantidade real
+        novo_clube.quantidade_membros = MembroClube.query.filter_by(
+            clube_id=novo_clube.id
+        ).count()
+
         db.session.commit()
 
         return redirect(url_for('clubes.listar_clubes'))
@@ -173,29 +194,96 @@ def criar_discussao(clube_id):
 
     return redirect(url_for('clubes.ver_clube', clube_id=clube_id))
 
-@clubes_bp.route('/clube/<int:clube_id>/atualizar-progresso', methods=['POST'])
+# ======================================
+# ATUALIZAR PROGRESSO NO CLUBE
+# ======================================
+@clubes_bp.route('/<int:clube_id>/atualizar-progresso', methods=['POST'])
 @login_required
 def atualizar_progresso(clube_id):
     clube = Clube.query.get_or_404(clube_id)
-    paginas_lidas = int(request.form.get('paginas_lidas', 0))
+    # Clube precisa ter um livro
+    if not clube.livro:
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube_id
+            )
+        )
 
-    # Busca a relação do usuário com este clube
+    # ======================================
+    # PEGAR PÁGINA INFORMADA
+    # ======================================
+
+    try:
+        paginas_lidas = int(
+            request.form.get(
+                'paginas_lidas',
+                0
+            )
+        )
+    except (ValueError, TypeError):
+        paginas_lidas = 0
+    total_paginas = clube.livro.paginas or 0
+
+    # Não permite página negativa
+    if paginas_lidas < 0:
+        paginas_lidas = 0
+
+    # Não permite passar do total do livro
+    if total_paginas > 0:
+        paginas_lidas = min(
+            paginas_lidas,
+            total_paginas
+        )
+
+    # ======================================
+    # BUSCAR MEMBRO
+    # ======================================
+
     membro = MembroClube.query.filter_by(
-        clube_id=clube.id, 
+        clube_id=clube.id,
         usuario_id=current_user.id
     ).first()
 
-    if membro and clube.livro:
-        total_paginas = clube.livro.paginas or 0
-        
-        # Atualiza a página e recalcula o percentual
-        membro.paginas_lidas = paginas_lidas
-        if total_paginas > 0:
-            membro.progresso_percentual = min(100, round((paginas_lidas / total_paginas) * 100))
-        else:
-            membro.progresso_percentual = 0
-            
-        membro.total_atualizacoes = (membro.total_atualizacoes or 0) + 1
-        db.session.commit()
+    # Caso ainda não exista, cria
+    if not membro:
+        membro = MembroClube(
+            clube_id=clube.id,
+            usuario_id=current_user.id,
+            paginas_lidas=0,
+            progresso_percentual=0,
+            total_atualizacoes=0
+        )
 
-    return redirect(url_for('clubes.ver_clube', id=clube_id))
+        db.session.add(membro)
+
+        # Faz o INSERT antes de contar
+        db.session.flush()
+
+        # Atualiza a quantidade com o número REAL
+        # de membros cadastrados nesse clube
+        clube.quantidade_membros = MembroClube.query.filter_by(
+            clube_id=clube.id
+        ).count()
+
+    # ======================================
+    # ATUALIZAR PROGRESSO
+    # ======================================
+
+    membro.paginas_lidas = paginas_lidas
+    if total_paginas > 0:
+        membro.progresso_percentual = round(
+            (paginas_lidas / total_paginas) * 100
+        )
+    else:
+        membro.progresso_percentual = 0
+    membro.total_atualizacoes = (
+        membro.total_atualizacoes or 0
+    ) + 1
+    db.session.commit()
+    return redirect(
+        url_for(
+            'clubes.ver_clube',
+            clube_id=clube_id
+        )
+    )
