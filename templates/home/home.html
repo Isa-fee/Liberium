@@ -17,18 +17,43 @@
         <div class="estatisticas-container">
 
             <div class="grafico">
-                <canvas id="generosLidos"></canvas>
-                <p>Gêneros Lidos</p>
+
+                {% if total_lidos > 0 %}
+            
+                    <canvas id="generosLidos"></canvas>
+            
+                {% else %}
+            
+                    <div class="grafico-vazio">
+                        <span>0</span>
+                        <small>
+                            Leia seu primeiro livro
+                        </small>
+                    </div>
+            
+                {% endif %}
+            
+                <p>
+                    Gêneros Lidos
+                </p>
+            
             </div>
 
             <div class="numero-livros">
-                <h3>Livros Lidos</h3>
-                <span>30</span>
+
+                <h3>
+                    Livros Lidos
+                </h3>
+            
+                <span>
+                    {{ total_lidos }}
+                </span>
+            
             </div>
 
             <div class="grafico">
                 <canvas id="livrosAndamento"></canvas>
-                <p>Livros em andamento</p>
+                <p>Livros na Estante</p>
             </div>
 
         </div>
@@ -127,5 +152,23 @@
     </div>
 
 </div>
+
+
+<script
+    id="dados-home"
+    type="application/json"
+>
+{
+    "generos_labels": {{ generos_labels | tojson }},
+    "generos_valores": {{ generos_valores | tojson }},
+    "total_lidos": {{ total_lidos | tojson }},
+    "total_lendo": {{ total_lendo | tojson }},
+    "total_quero_ler": {{ total_quero_ler | tojson }}
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 
 {% endblock %}

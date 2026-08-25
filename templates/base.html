@@ -44,7 +44,7 @@
         </div>
 
 
-        <div class="links-nav">
+        <div class="topnav-links">
 
             <a href="{{ url_for('estante_bp.estante') }}">
                 Minha Estante
@@ -62,13 +62,13 @@
                 Amigos
             </a>
         
+            <a href="{{ url_for('user_bp.perfil') }}">
+                {{ current_user.nome }}
+            </a>
+        
             {% if current_user.is_authenticated %}
         
-                <a href="{{ url_for('user_bp.perfil') }}" class="perfil-nav">
-                    {{ current_user.nome }}
-                </a>
-        
-                <a href="{{ url_for('user_bp.logout') }}" class="sair-nav">
+                <a href="{{ url_for('user_bp.logout') }}">
                     Sair
                 </a>
         
