@@ -3,7 +3,12 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def buscar_google_books(termo):
+def buscar_google_books(
+    termo,
+    start_index=0,
+    max_results=20,
+    idioma=None
+):
 
     url = (
         "https://www.googleapis.com/"
@@ -12,9 +17,17 @@ def buscar_google_books(termo):
 
     parametros = {
         "q": termo,
-        "maxResults": 20,
+        "maxResults": max_results,
+        "startIndex": start_index,
         "printType": "books"
     }
+
+    # ==================================
+    # FILTRO DE IDIOMA
+    # ==================================
+
+    if idioma:
+        parametros["langRestrict"] = idioma
 
     # ==================================
     # CHAVE DA API
@@ -85,6 +98,8 @@ def buscar_google_books(termo):
 
         livro = {
 
+            "id": None,
+
             "google_id": item.get(
                 "id"
             ),
@@ -100,13 +115,16 @@ def buscar_google_books(termo):
                 else "Autor não informado"
             ),
 
-           "descricao": BeautifulSoup(
+            "descricao": BeautifulSoup(
                 info.get(
                     "description",
                     "Sinopse não disponível."
                 ),
                 "html.parser"
-            ).get_text(" ", strip=True),
+            ).get_text(
+                " ",
+                strip=True
+            ),
 
             "capa": (
                 imagens.get("thumbnail")

@@ -87,6 +87,16 @@ class Livro(db.Model):
     idioma = db.Column(db.String(50))
     avaliacao = db.Column(db.Float)
     destaque = db.Column(db.Boolean, default=False)
+    google_id = db.Column(
+    db.String(100),
+    unique=True,
+    nullable=True
+    )
+
+    origem = db.Column(
+        db.String(30),
+        default="local"
+    )
 
 
 class Estante(db.Model):
@@ -522,6 +532,72 @@ class Clube(db.Model):
     livro = db.relationship(
         "Livro",
         backref="clubes"
+    )
+
+class MembroClube(db.Model):
+    __tablename__ = "membros_clube"
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "clube_id",
+            "usuario_id",
+            name="uq_membro_clube_usuario"
+        ),
+    )
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    clube_id = db.Column(
+        db.Integer,
+        db.ForeignKey("clubes.id"),
+        nullable=False
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    paginas_lidas = db.Column(
+        db.Integer,
+        default=0,
+        nullable=False
+    )
+
+    progresso_percentual = db.Column(
+        db.Integer,
+        default=0,
+        nullable=False
+    )
+
+    total_atualizacoes = db.Column(
+        db.Integer,
+        default=0,
+        nullable=False
+    )
+
+    data_entrada = db.Column(
+        db.Date,
+        default=date.today,
+        nullable=False
+    )
+
+    clube = db.relationship(
+        "Clube",
+        backref=db.backref(
+            "membros",
+            lazy=True,
+            cascade="all, delete-orphan"
+        )
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="clubes_participando"
     )
 
 class ElogioEstante(db.Model):
