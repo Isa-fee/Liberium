@@ -103,86 +103,320 @@ body {
     text-decoration: underline;
 }
 
-/* navbar */
-.topnav {
-    height: 70px;     /* altura desejada da navbar */
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* distribui espaço entre os blocos */
-    padding: 5px 30px;
-    gap: 16px;
-    box-sizing: border-box;
-    margin-top: 5px;
-}
+/* =========================================
+   NAVBAR PRINCIPAL
+========================================= */
 
-/* logo com altura igual à navbar */
-.topnav .navlogo {
-    max-height: 100%;   /* nunca ultrapassa a altura da navbar */
-    height: 100%;       /* tenta ocupar a altura toda */
-    width: auto;        /* mantém proporção */
-    display: block;     /* evita espaçamento de linha em imagens inline */
-}
-
-.topnav .logonav {
-    height: 100%;      /* ocupa todo o espaço disponível */
-}
-
-.topnav .link {
-    color: #fdf9f6;
-    text-decoration: none;
-    padding: 8px 16px;
-  }
-
-
-.content {
-    background-color:var(--branco-floral);
-    /* height: 150vh; */
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+header {
     width: 100%;
-    margin: 0 auto;
+    background: var(--verde-oliva);
 }
 
-.material-symbols-outlined {
-    color: var(--verde-musgo);
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48;
-    cursor: pointer;
+.topnav {
+    width: 100%;
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 28px;
+
+    padding: 8px 30px;
+
+    box-sizing: border-box;
 }
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logonav {
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
+}
+
+.logonav a {
+    display: flex;
+    align-items: center;
+}
+
+.navlogo {
+    width: 175px;
+    height: 58px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.links-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 24px;
+
+    flex-shrink: 0;
+}
+
+.links-nav a {
+    position: relative;
+
+    color: var(--branco-floral);
+
+    text-decoration: none;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    padding: 8px 0;
+
+    transition: color 0.2s ease;
+}
+
+.links-nav a:hover {
+    color: var(--marrom-cafe);
+}
+
+
+/* linha no hover */
+
+.links-nav a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 2px;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: var(--marrom-cafe);
+
+    transition: width 0.2s ease;
+}
+
+.links-nav a:hover::after {
+    width: 100%;
+}
+
+
+/* =========================================
+   PERFIL
+========================================= */
+
+.links-nav .perfil-nav {
+    font-weight: 600;
+}
+
+
+/* =========================================
+   SAIR
+========================================= */
+
+.links-nav .sair-nav {
+    color: #f2e8df;
+}
+
+.links-nav .sair-nav:hover {
+    color: var(--marrom-cafe);
+}
+
+
+/* =========================================
+   BUSCA
+========================================= */
 
 .busca {
-    position: relative; /* necessário para o posicionamento do ícone */
-    display: inline-block;
-    width: 400px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: min(400px, 28vw);
+
+    margin-left: auto;
+
+    flex-shrink: 1;
 }
 
 .pesquisa {
-    color: white;
-    width: 400px;
+    width: 100%;
+    height: 42px;
+
+    padding: 10px 16px 10px 44px;
+
     border: 1px solid var(--verde-musgo);
-    border-radius: 20px;
-    font-size: 16px;
-    background-color: var(--verde-oliva);
-    padding: 10px 15px 10px 45px;
+
+    border-radius: 24px;
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.pesquisa:focus {
+    background: rgba(255, 255, 255, 0.13);
+
+    border-color: var(--marrom-cafe);
 }
 
 .pesquisa::placeholder {
-    color: #f7f6f8;
+    color: rgba(255, 255, 255, 0.9);
 }
+
+
+/* =========================================
+   ÍCONE DA BUSCA
+========================================= */
 
 .busca .material-symbols-outlined {
     position: absolute;
-    left: 10px;  /* distância da borda direita */
-    top: 50%;    /* centraliza verticalmente */
+
+    left: 13px;
+    top: 50%;
+
     transform: translateY(-50%);
-    cursor: pointer;
-    transition: color 0.2s ease;
+
+    color: var(--verde-musgo);
+
+    font-size: 23px;
+
+    pointer-events: none;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE DA NAVBAR
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .topnav {
+        gap: 18px;
+
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .links-nav {
+        gap: 16px;
+    }
+
+    .links-nav a {
+        font-size: 13px;
+    }
+
+    .navlogo {
+        width: 145px;
+    }
+
+    .busca {
+        width: min(300px, 25vw);
+    }
+
+}
+
+
+@media (max-width: 992px) {
+
+    .topnav {
+        flex-wrap: wrap;
+
+        justify-content: space-between;
+
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .logonav {
+        order: 1;
+    }
+
+    .links-nav {
+        order: 2;
+
+        flex: 1;
+
+        justify-content: flex-end;
+    }
+
+    .busca {
+        order: 3;
+
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .topnav {
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 12px;
+    }
+
+    .navlogo {
+        width: 170px;
+        height: auto;
+    }
+
+    .links-nav {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px 18px;
+    }
+
+    .links-nav a {
+        font-size: 13px;
+    }
+
+    .busca {
+        width: 100%;
+
+        max-width: 400px;
+    }
+
 }
 
 
