@@ -9,273 +9,619 @@
 <section class="pagina-amigos">
 
     <aside class="sidebar">
-        <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-perfil">
+        <img
+            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+            class="foto-perfil"
+        >
+
         <h3>{{ current_user.nome }}</h3>
-        <p class="usuario">@{{ current_user.nome|lower|replace(' ', '') }}</p>
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
 
         <nav class="menu-lateral">
-            <a href="{{ url_for('estante_bp.estante') }}">Minha Estante</a>
-            <a href="#">Clubes de leitura</a>
+
+            <a href="{{ url_for('estante_bp.estante') }}">
+                Minha Estante
+            </a>
+
+            <a href="#">
+                Clubes de leitura
+            </a>
+
             <hr>
 
-            <span class="titulo-menu">Coleção</span>
-            <a href="{{ url_for('loja_bp.loja') }}">Loja de decorações</a>
-            <a href="{{ url_for('loja_bp.colecao') }}">Minha coleção</a>
+            <span class="titulo-menu">
+                Coleção
+            </span>
+
+            <a href="{{ url_for('loja_bp.loja') }}">
+                Loja de decorações
+            </a>
+
+            <a href="{{ url_for('loja_bp.colecao') }}">
+                Minha coleção
+            </a>
+
             <hr>
 
-            <span class="titulo-menu">Perfil</span>
-            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+            <span class="titulo-menu">
+                Perfil
+            </span>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
+
             <hr>
 
             <div class="card-moedas">
-                <img src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}" alt="Mini Libélula" class="icone-libelula">
-                <strong>{{ current_user.libelulas }}</strong>
-                <span>Mini Libélulas</span>
+
+                <img
+                    src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}"
+                    alt="Mini Libélula"
+                    class="icone-libelula"
+                >
+
+                <strong>
+                    {{ current_user.libelulas }}
+                </strong>
+
+                <span>
+                    Mini Libélulas
+                </span>
+
             </div>
+
         </nav>
     </aside>
 
     <div class="conteudo">
 
         <div class="navegacao-amigos">
-            <a href="{{ url_for('amigos_bp.amigos') }}" class="aba-amigos ativa">Amigos</a>
 
-            <a href="{{ url_for('amigos_bp.solicitacoes') }}" class="aba-amigos">
+            <a
+                href="{{ url_for('amigos_bp.amigos') }}"
+                class="aba-amigos ativa"
+            >
+                Amigos
+            </a>
+
+            <a
+                href="{{ url_for('amigos_bp.solicitacoes') }}"
+                class="aba-amigos"
+            >
                 Solicitações
+
                 {% if solicitacoes %}
                     ({{ solicitacoes|length }})
                 {% endif %}
             </a>
 
-            <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="aba-amigos">
+            <a
+                href="{{ url_for('amigos_bp.encontrar_leitores') }}"
+                class="aba-amigos"
+            >
                 Encontrar leitores
             </a>
+
         </div>
 
         <div class="layout-amigos">
 
             <main class="conteudo-amigos">
 
-                <form method="GET" action="{{ url_for('amigos_bp.amigos') }}" class="barra-pesquisa" id="busca">
-                    <span class="icone-pesquisa">⌕</span>
-                    <input type="text" name="busca" value="{{ busca }}" placeholder="Buscar leitores pelo nome...">
+                <form
+                    method="GET"
+                    action="{{ url_for('amigos_bp.amigos') }}"
+                    class="barra-pesquisa"
+                    id="busca"
+                >
+
+                    <span class="icone-pesquisa">
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        name="busca"
+                        value="{{ busca }}"
+                        placeholder="Buscar leitores pelo nome..."
+                    >
+
                 </form>
 
+
                 {% if busca %}
+
                 <section class="secao-busca">
+
                     <div class="cabecalho-secao">
-                        <h2>Resultados para "{{ busca }}"</h2>
+                        <h2>
+                            Resultados para "{{ busca }}"
+                        </h2>
                     </div>
 
+
                     {% if resultados_busca %}
+
                     <div class="lista-amigos">
+
                         {% for usuario in resultados_busca %}
+
                         <div class="card-amigo">
 
                             <div class="perfil-amigo">
-                                <img src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}" class="foto-amigo" alt="Foto de {{ usuario.nome }}">
+
+                                <img
+                                    src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}"
+                                    class="foto-amigo"
+                                    alt="Foto de {{ usuario.nome }}"
+                                >
 
                                 <div class="dados-amigo">
-                                    <h3>{{ usuario.nome }}</h3>
-                                    <span class="username">Leitor do Liberium</span>
-                                    <span class="nivel-amigo">{{ usuario.nivel or "Leitor Iniciante" }}</span>
+
+                                    <h3>
+                                        {{ usuario.nome }}
+                                    </h3>
+
+                                    <span class="username">
+                                        Leitor do Liberium
+                                    </span>
+
+                                    <span class="nivel-amigo">
+                                        {{ usuario.nivel or "Leitor Iniciante" }}
+                                    </span>
+
                                 </div>
+
                             </div>
 
-                            <a href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=usuario.id) }}" class="btn-perfil">
+                            <a
+                                href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=usuario.id) }}"
+                                class="btn-perfil"
+                            >
                                 Ver perfil
                             </a>
 
-                            <form method="POST" action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=usuario.id) }}">
-                                <button type="submit" class="btn-adicionar">Adicionar amigo</button>
+                            <form
+                                method="POST"
+                                action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=usuario.id) }}"
+                            >
+                                <button
+                                    type="submit"
+                                    class="btn-adicionar"
+                                >
+                                    Adicionar amigo
+                                </button>
                             </form>
 
                         </div>
+
                         {% endfor %}
+
                     </div>
 
                     {% else %}
+
                     <div class="estado-vazio">
-                        <div class="icone-vazio">🔎</div>
-                        <h2>Nenhum leitor encontrado</h2>
-                        <p>Não encontramos nenhum usuário com esse nome.</p>
+
+                        <div class="icone-vazio-circulo">
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Encontrar_leitores.png') }}"
+                                alt="Nenhum leitor encontrado"
+                                class="icone-vazio-img"
+                            >
+                        </div>
+
+                        <h2>
+                            Nenhum leitor encontrado
+                        </h2>
+
+                        <p>
+                            Não encontramos nenhum usuário com esse nome.
+                        </p>
+
                     </div>
+
                     {% endif %}
+
                 </section>
+
                 {% endif %}
 
+
                 <section class="secao-solicitacoes" id="solicitacoes">
+
                     <div class="cabecalho-secao">
-                        <h2>Solicitações de amizade</h2>
-                        <p>Pessoas que querem compartilhar leituras com você.</p>
+
+                        <h2>
+                            Solicitações de amizade
+                        </h2>
+
+                        <p>
+                            Pessoas que querem compartilhar leituras com você.
+                        </p>
+
                     </div>
 
+
                     {% if solicitacoes %}
+
                     <div class="lista-solicitacoes">
 
                         {% for solicitacao in solicitacoes %}
+
                         <div class="card-solicitacao">
 
                             <div class="perfil-solicitacao">
-                                <img src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrao.png') }}" alt="Foto de {{ solicitacao.usuario.nome }}" class="foto-solicitacao">
+
+                                <img
+                                    src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrao.png') }}"
+                                    alt="Foto de {{ solicitacao.usuario.nome }}"
+                                    class="foto-solicitacao"
+                                >
 
                                 <div class="dados-solicitacao">
-                                    <h3>{{ solicitacao.usuario.nome }}</h3>
-                                    <p>Quer adicionar você aos amigos.</p>
+
+                                    <h3>
+                                        {{ solicitacao.usuario.nome }}
+                                    </h3>
+
+                                    <p>
+                                        Quer adicionar você aos amigos.
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="acoes-solicitacao">
 
-                                <form method="POST" action="{{ url_for('amigos_bp.aceitar_amizade', amizade_id=solicitacao.id) }}">
-                                    <button type="submit" class="btn-aceitar">Aceitar</button>
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('amigos_bp.aceitar_amizade', amizade_id=solicitacao.id) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn-aceitar"
+                                    >
+                                        Aceitar
+                                    </button>
+
                                 </form>
 
-                                <form method="POST" action="{{ url_for('amigos_bp.recusar_amizade', amizade_id=solicitacao.id) }}">
-                                    <button type="submit" class="btn-recusar">Recusar</button>
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('amigos_bp.recusar_amizade', amizade_id=solicitacao.id) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn-recusar"
+                                    >
+                                        Recusar
+                                    </button>
+
                                 </form>
 
                             </div>
+
                         </div>
+
                         {% endfor %}
 
                     </div>
 
                     {% else %}
+
                     <div class="estado-vazio">
-                        <div class="icone-vazio">🌿</div>
-                        <h2>Nenhuma solicitação</h2>
-                        <p>Quando alguém quiser fazer amizade com você, a solicitação aparecerá aqui.</p>
+
+                        <div class="icone-vazio-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Nenhuma_solicitacao.png') }}"
+                                alt="Nenhuma solicitação"
+                                class="icone-vazio-img"
+                            >
+
+                        </div>
+
+                        <h2>
+                            Nenhuma solicitação
+                        </h2>
+
+                        <p>
+                            Quando alguém quiser fazer amizade com você,
+                            a solicitação aparecerá aqui.
+                        </p>
+
                     </div>
+
                     {% endif %}
+
                 </section>
+
 
                 <section class="secao-amigos">
 
                     <div class="cabecalho-secao">
+
                         <div>
-                            <h1>Meus amigos</h1>
-                            <p>{{ amigos|length }} leitores conectados com você</p>
+
+                            <h1>
+                                Meus amigos
+                            </h1>
+
+                            <p>
+                                {{ amigos|length }} leitores conectados com você
+                            </p>
+
                         </div>
+
                     </div>
 
+
                     {% if amigos %}
+
                     <div class="lista-amigos">
 
                         {% for amigo in amigos %}
+
                         <div class="card-amigo">
 
                             <div class="perfil-amigo">
-                                <img src="{{ url_for('static', filename=amigo.foto if amigo.foto else 'img/perfil_padrao.png') }}" alt="Foto de {{ amigo.nome }}" class="foto-amigo">
+
+                                <img
+                                    src="{{ url_for('static', filename=amigo.foto if amigo.foto else 'img/perfil_padrao.png') }}"
+                                    alt="Foto de {{ amigo.nome }}"
+                                    class="foto-amigo"
+                                >
 
                                 <div class="dados-amigo">
-                                    <h3>{{ amigo.nome }}</h3>
-                                    <span class="username">Leitor do Liberium</span>
-                                    <span class="nivel-amigo">✦ {{ amigo.nivel or "Leitor Iniciante" }}</span>
+
+                                    <h3>
+                                        {{ amigo.nome }}
+                                    </h3>
+
+                                    <span class="username">
+                                        Leitor do Liberium
+                                    </span>
+
+                                    <span class="nivel-amigo">
+                                        ✦ {{ amigo.nivel or "Leitor Iniciante" }}
+                                    </span>
+
                                 </div>
+
                             </div>
+
 
                             <div class="livro-amigo">
-                                <span class="icone-livro">📖</span>
-                                <div class="livro-amigo">
-                                    <span class="icone-livro">📖</span>
-                                    <div>
-                                        <small>Lendo atualmente</small>
-                                        <strong>Ver perfil para visualizar</strong>
-                                    </div>
+
+                                <div class="icone-pequeno-circulo icone-livro-circulo">
+
+                                    <img
+                                        src="{{ url_for('static', filename='img/icones/Lendo_atualmente.png') }}"
+                                        alt="Lendo atualmente"
+                                        class="icone-pequeno-img"
+                                    >
+
                                 </div>
+
+                                <div>
+
+                                    <small>
+                                        Lendo atualmente
+                                    </small>
+
+                                    <strong>
+                                        Ver perfil para visualizar
+                                    </strong>
+
+                                </div>
+
                             </div>
 
-                            <a href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=amigo.id) }}" class="btn-perfil">
+
+                            <a
+                                href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=amigo.id) }}"
+                                class="btn-perfil"
+                            >
                                 Ver perfil
                             </a>
 
                         </div>
+
                         {% endfor %}
 
                     </div>
 
                     {% else %}
-                    <div class="estado-vazio">
-                        <div class="icone-vazio">👥</div>
-                        <h2>Você ainda não tem amigos</h2>
-                        <p>Encontre outros leitores para compartilhar histórias, recomendações e leituras.</p>
 
-                        <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="btn-principal">
+                    <div class="estado-vazio">
+
+                        <div class="icone-vazio-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Encontrar_leitores.png') }}"
+                                alt="Encontrar leitores"
+                                class="icone-vazio-img"
+                            >
+
+                        </div>
+
+                        <h2>
+                            Você ainda não tem amigos
+                        </h2>
+
+                        <p>
+                            Encontre outros leitores para compartilhar histórias,
+                            recomendações e leituras.
+                        </p>
+
+                        <a
+                            href="{{ url_for('amigos_bp.encontrar_leitores') }}"
+                            class="btn-principal"
+                        >
                             Encontrar leitores
                         </a>
+
                     </div>
+
                     {% endif %}
 
                 </section>
 
+
                 <section class="secao-sugestoes">
 
                     <div class="cabecalho-secao">
+
                         <div>
-                            <h2>Sugestões para você</h2>
-                            <p>Outros leitores que podem compartilhar seus interesses literários.</p>
+
+                            <h2>
+                                Sugestões para você
+                            </h2>
+
+                            <p>
+                                Outros leitores que podem compartilhar seus interesses literários.
+                            </p>
+
                         </div>
+
                     </div>
+
 
                     <div class="grid-sugestoes">
 
                         {% for sugestao in sugestoes %}
+
                         <div class="card-sugestao">
 
-                            <a href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=sugestao.id) }}">
-                                <img src="{{ url_for('static', filename=sugestao.foto if sugestao.foto else 'img/perfil_padrao.png') }}" alt="Foto de {{ sugestao.nome }}" class="foto-sugestao">
+                            <a
+                                href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=sugestao.id) }}"
+                            >
+
+                                <img
+                                    src="{{ url_for('static', filename=sugestao.foto if sugestao.foto else 'img/perfil_padrao.png') }}"
+                                    alt="Foto de {{ sugestao.nome }}"
+                                    class="foto-sugestao"
+                                >
+
                             </a>
 
-                            <h3>{{ sugestao.nome }}</h3>
-                            <p>{{ sugestao.nivel or "Leitor Iniciante" }}</p>
+                            <h3>
+                                {{ sugestao.nome }}
+                            </h3>
 
-                            <form method="POST" action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=sugestao.id) }}">
-                                <button type="submit" class="btn-adicionar">+ Adicionar</button>
+                            <p>
+                                {{ sugestao.nivel or "Leitor Iniciante" }}
+                            </p>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=sugestao.id) }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn-adicionar"
+                                >
+                                    + Adicionar
+                                </button>
+
                             </form>
 
                         </div>
+
                         {% endfor %}
 
                     </div>
+
                 </section>
 
             </main>
+
 
             <aside class="sidebar-amigos">
 
                 <div class="card-meu-perfil">
 
                     <div class="titulo-card">
-                        <h2>Meu perfil</h2>
+
+                        <h2>
+                            Meu perfil
+                        </h2>
+
                     </div>
 
-                    <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-meu-perfil" alt="Foto de {{ current_user.nome }}">
+                    <img
+                        src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+                        class="foto-meu-perfil"
+                        alt="Foto de {{ current_user.nome }}"
+                    >
 
-                    <h3>{{ current_user.nome }}</h3>
+                    <h3>
+                        {{ current_user.nome }}
+                    </h3>
 
                     <p class="meu-username">
                         @{{ current_user.nome|lower|replace(' ', '') }}
                     </p>
 
+
                     <div class="estatisticas">
 
                         <div class="estatistica">
-                            <strong>{{ amigos|length }}</strong>
-                            <span>Amigos</span>
+
+                            <strong>
+                                {{ amigos|length }}
+                            </strong>
+
+                            <span>
+                                Amigos
+                            </span>
+
                         </div>
 
                         <div class="estatistica">
-                            <strong>{{ livros_lidos }}</strong>
-                            <span>Livros lidos</span>
+
+                            <strong>
+                                {{ livros_lidos }}
+                            </strong>
+
+                            <span>
+                                Livros lidos
+                            </span>
+
                         </div>
 
                     </div>
+
                 </div>
+
 
                 <div class="card-sidebar">
 
-                    <h2>📖 Lendo atualmente</h2>
+                    <h2 class="titulo-com-icone">
+
+                        <span class="icone-titulo-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Lendo_atualmente.png') }}"
+                                alt=""
+                                class="icone-titulo-img"
+                            >
+
+                        </span>
+
+                        Lendo atualmente
+
+                    </h2>
+
 
                     {% if leitura_atual %}
 
@@ -284,19 +630,36 @@
                         <div class="capa-livro">
 
                             {% if leitura_atual.livro.capa %}
-                            <img src="{{ url_for('static', filename=leitura_atual.livro.capa) }}" alt="{{ leitura_atual.livro.titulo }}">
+
+                            <img
+                                src="{{ url_for('static', filename=leitura_atual.livro.capa) }}"
+                                alt="{{ leitura_atual.livro.titulo }}"
+                            >
+
                             {% else %}
-                            <div class="capa-placeholder">📖</div>
+
+                            <div class="capa-placeholder">
+                                📖
+                            </div>
+
                             {% endif %}
 
                         </div>
 
                         <div class="dados-livro">
-                            <h3>{{ leitura_atual.livro.titulo }}</h3>
+
+                            <h3>
+                                {{ leitura_atual.livro.titulo }}
+                            </h3>
 
                             {% if leitura_atual.livro.autor %}
-                            <p>{{ leitura_atual.livro.autor }}</p>
+
+                            <p>
+                                {{ leitura_atual.livro.autor }}
+                            </p>
+
                             {% endif %}
+
                         </div>
 
                     </div>
@@ -304,38 +667,112 @@
                     {% else %}
 
                     <div class="sem-leitura">
-                        <span>📚</span>
-                        <p>Você não está lendo nenhum livro no momento.</p>
+
+                        <div class="icone-sem-leitura-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Lendo_atualmente.png') }}"
+                                alt="Nenhuma leitura atual"
+                                class="icone-sem-leitura-img"
+                            >
+
+                        </div>
+
+                        <p>
+                            Você não está lendo nenhum livro no momento.
+                        </p>
+
                     </div>
 
                     {% endif %}
 
                 </div>
 
+
                 <div class="card-sidebar">
 
-                    <h2>⚡ Ações rápidas</h2>
+                    <h2 class="titulo-com-icone">
 
-                    <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="acao-rapida">
-                        <span>👥</span>
+                        <span class="icone-titulo-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Acoes_rapidas.png') }}"
+                                alt=""
+                                class="icone-titulo-img"
+                            >
+
+                        </span>
+
+                        Ações rápidas
+
+                    </h2>
+
+
+                    <a
+                        href="{{ url_for('amigos_bp.encontrar_leitores') }}"
+                        class="acao-rapida"
+                    >
+
+                        <span class="icone-acao-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Encontrar_leitores.png') }}"
+                                alt=""
+                                class="icone-acao-img"
+                            >
+
+                        </span>
 
                         <div>
-                            <strong>Encontrar leitores</strong>
-                            <small>Conheça novos leitores</small>
+
+                            <strong>
+                                Encontrar leitores
+                            </strong>
+
+                            <small>
+                                Conheça novos leitores
+                            </small>
+
                         </div>
 
-                        <span class="seta">→</span>
+                        <span class="seta">
+                            →
+                        </span>
+
                     </a>
 
-                    <a href="#" class="acao-rapida">
-                        <span>📚</span>
+
+                    <a
+                        href="#"
+                        class="acao-rapida"
+                    >
+
+                        <span class="icone-acao-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Explorar_clubes.png') }}"
+                                alt=""
+                                class="icone-acao-img"
+                            >
+
+                        </span>
 
                         <div>
-                            <strong>Explorar clubes</strong>
-                            <small>Leia junto com outros</small>
+
+                            <strong>
+                                Explorar clubes
+                            </strong>
+
+                            <small>
+                                Leia junto com outros
+                            </small>
+
                         </div>
 
-                        <span class="seta">→</span>
+                        <span class="seta">
+                            →
+                        </span>
+
                     </a>
 
                 </div>
@@ -343,6 +780,7 @@
             </aside>
 
         </div>
+
     </div>
 
 </section>

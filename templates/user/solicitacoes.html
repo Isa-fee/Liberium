@@ -86,9 +86,26 @@
 
                     {% else %}
                     <div class="estado-vazio">
-                        <div class="icone-vazio">🌿</div>
-                        <h2>Nenhuma solicitação</h2>
-                        <p>Quando alguém enviar uma solicitação de amizade ela aparecerá aqui.</p>
+
+                        <div class="icone-vazio-circulo">
+
+                            <img
+                                src="{{ url_for('static', filename='img/icones/Nenhuma_solicitacao.png') }}"
+                                alt="Nenhuma solicitação"
+                                class="icone-vazio-img"
+                            >
+
+                        </div>
+
+                        <h2>
+                            Nenhuma solicitação
+                        </h2>
+
+                        <p>
+                            Quando alguém quiser fazer amizade com você,
+                            a solicitação aparecerá aqui.
+                        </p>
+
                     </div>
                     {% endif %}
                 </section>

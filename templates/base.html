@@ -44,34 +44,42 @@
         </div>
 
 
-        <div>
+        <div class="links-nav">
 
             <a href="{{ url_for('estante_bp.estante') }}">
                 Minha Estante
             </a>
-
+        
             <a href="{{ url_for('books_bp.catalogo') }}">
                 Livros
             </a>
-
-            <a href="{{ url_for('user_bp.perfil') }}">
-                {{ current_user.nome }}
+        
+            <a href="#">
+                Clubes de leitura
             </a>
-
+        
+            <a href="{{ url_for('amigos_bp.amigos') }}">
+                Amigos
+            </a>
+        
             {% if current_user.is_authenticated %}
-
-                <a href="{{ url_for('user_bp.logout') }}">
-                    SAIR
+        
+                <a href="{{ url_for('user_bp.perfil') }}" class="perfil-nav">
+                    {{ current_user.nome }}
                 </a>
-
+        
+                <a href="{{ url_for('user_bp.logout') }}" class="sair-nav">
+                    Sair
+                </a>
+        
             {% else %}
-
+        
                 <a href="{{ url_for('user_bp.perfil') }}">
-                    PERFIL
+                    Perfil
                 </a>
-
+        
             {% endif %}
-
+        
         </div>
 
 
