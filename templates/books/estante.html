@@ -170,6 +170,18 @@
                                         class="livro-link"
                                     >
 
+                                    {% if item.objeto.livro.capa %}
+
+                                    {% if item.objeto.livro.capa.startswith("http") %}
+                                
+                                        <img
+                                            src="{{ item.objeto.livro.capa }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+                                
+                                    {% else %}
+                                
                                         <img
                                             src="{{ url_for(
                                                 'static',
@@ -178,6 +190,16 @@
                                             class="livro-estante"
                                             alt="{{ item.objeto.livro.titulo }}"
                                         >
+                                
+                                    {% endif %}
+                                
+                                {% else %}
+                                
+                                    <div class="sem-capa livro-estante">
+                                        Sem capa
+                                    </div>
+                                
+                                {% endif %}
 
                                     </a>
 
@@ -259,6 +281,18 @@
                                         class="livro-link"
                                     >
 
+                                    {% if item.objeto.livro.capa %}
+
+                                    {% if item.objeto.livro.capa.startswith("http") %}
+                                
+                                        <img
+                                            src="{{ item.objeto.livro.capa }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+                                
+                                    {% else %}
+                                
                                         <img
                                             src="{{ url_for(
                                                 'static',
@@ -267,6 +301,16 @@
                                             class="livro-estante"
                                             alt="{{ item.objeto.livro.titulo }}"
                                         >
+                                
+                                    {% endif %}
+                                
+                                {% else %}
+                                
+                                    <div class="sem-capa livro-estante">
+                                        Sem capa
+                                    </div>
+                                
+                                {% endif %}
 
                                     </a>
 
@@ -375,6 +419,18 @@
                                         class="livro-link"
                                     >
 
+                                    {% if item.objeto.livro.capa %}
+
+                                    {% if item.objeto.livro.capa.startswith("http") %}
+                                
+                                        <img
+                                            src="{{ item.objeto.livro.capa }}"
+                                            class="livro-estante"
+                                            alt="{{ item.objeto.livro.titulo }}"
+                                        >
+                                
+                                    {% else %}
+                                
                                         <img
                                             src="{{ url_for(
                                                 'static',
@@ -383,6 +439,16 @@
                                             class="livro-estante"
                                             alt="{{ item.objeto.livro.titulo }}"
                                         >
+                                
+                                    {% endif %}
+                                
+                                {% else %}
+                                
+                                    <div class="sem-capa livro-estante">
+                                        Sem capa
+                                    </div>
+                                
+                                {% endif %}
 
                                     </a>
 

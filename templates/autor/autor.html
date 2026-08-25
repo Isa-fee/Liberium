@@ -96,16 +96,30 @@
 
                     {% if livro.capa %}
 
-                    <img
-                        src="{{ url_for('static', filename=livro.capa) }}"
-                        alt="Capa de {{ livro.titulo }}"
-                    >
+                        {% if livro.capa.startswith("http") %}
+
+                            <img
+                                src="{{ livro.capa }}"
+                                alt="Capa de {{ livro.titulo }}"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=livro.capa
+                                ) }}"
+                                alt="Capa de {{ livro.titulo }}"
+                            >
+
+                        {% endif %}
 
                     {% else %}
 
-                    <div class="sem-capa">
-                        <span>Sem capa</span>
-                    </div>
+                        <div class="sem-capa">
+                            <span>Sem capa</span>
+                        </div>
 
                     {% endif %}
 

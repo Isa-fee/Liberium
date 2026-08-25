@@ -74,6 +74,94 @@ def ver_google(google_id):
         origem="google"
     )
 # ======================================
+# ADICIONAR LIVRO DO GOOGLE À ESTANTE
+# ======================================
+
+@books_bp.route(
+    "/google/<string:google_id>/adicionar_estante",
+    methods=["POST"]
+)
+@login_required
+def adicionar_google_estante(google_id):
+
+    status = request.form.get("status")
+
+    if status not in [
+        "quero ler",
+        "lendo",
+        "lido"
+    ]:
+
+        flash(
+            "Status inválido.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "books_bp.ver_google",
+                google_id=google_id
+            )
+        )
+
+    # ==================================
+    # JÁ EXISTE NO BANCO?
+    # ==================================
+
+    livro = Livro.query.filter_by(
+        google_id=google_id
+    ).first()
+
+    # ==================================
+    # SE NÃO EXISTE, BUSCAR NA API
+    # ==================================
+
+    if not livro:
+
+        dados = buscar_livro_google(
+            google_id
+        )
+
+        if not dados:
+
+            flash(
+                "Não foi possível salvar esse livro.",
+                "warning"
+            )
+
+            return redirect(
+                url_for("books_bp.catalogo")
+            )
+
+        livro = Livro(
+            titulo=dados.get("titulo"),
+            autor=dados.get("autor"),
+            descricao=dados.get("descricao"),
+            capa=dados.get("capa"),
+            genero=dados.get("genero"),
+            editora=dados.get("editora"),
+            paginas=dados.get("paginas"),
+            ano=dados.get("ano"),
+            idioma=dados.get("idioma"),
+            avaliacao=dados.get("avaliacao"),
+            google_id=google_id,
+            origem="google"
+        )
+
+        db.session.add(livro)
+
+        db.session.commit()
+
+    # ==================================
+    # ADICIONAR NA ESTANTE
+    # ==================================
+
+    return adicionar_estante(
+        livro.id
+    )
+
+    
+# ======================================
 # PÁGINA DO AUTOR
 # ======================================
 
@@ -456,45 +544,96 @@ def adicionar_estante(livro_id):
 @login_required
 def catalogo():
 
-    busca = request.args.get("q", "").strip()
-    genero = request.args.get("genero", "").strip()
-    idioma = request.args.get("idioma", "").strip()
-    ano = request.args.get("ano", "").strip()
-    avaliacao = request.args.get("avaliacao", "").strip()
-    ordenar = request.args.get("ordenar", "recentes")
+    # ======================================
+    # PARÂMETROS
+    # ======================================
 
-    # --------------------------------------
-    # BUSCA BASE
-    # --------------------------------------
+    busca = request.args.get(
+        "q",
+        ""
+    ).strip()
+
+    genero = request.args.get(
+        "genero",
+        ""
+    ).strip()
+
+    idioma = request.args.get(
+        "idioma",
+        ""
+    ).strip()
+
+    ano = request.args.get(
+        "ano",
+        ""
+    ).strip()
+
+    avaliacao = request.args.get(
+        "avaliacao",
+        ""
+    ).strip()
+
+    ordenar = request.args.get(
+        "ordenar",
+        "recentes"
+    )
+
+    pagina = request.args.get(
+        "pagina",
+        1,
+        type=int
+    )
+
+    if pagina < 1:
+        pagina = 1
+
+    por_pagina = 12
+
+
+    # ======================================
+    # LIVROS DO BANCO
+    # ======================================
 
     consulta = Livro.query
 
-    # --------------------------------------
-    # BUSCA POR TÍTULO OU AUTOR
-    # --------------------------------------
+
+    # ======================================
+    # BUSCA
+    # ======================================
 
     if busca:
 
         consulta = consulta.filter(
+
             db.or_(
-                Livro.titulo.ilike(f"%{busca}%"),
-                Livro.autor.ilike(f"%{busca}%")
+
+                Livro.titulo.ilike(
+                    f"%{busca}%"
+                ),
+
+                Livro.autor.ilike(
+                    f"%{busca}%"
+                )
             )
         )
 
-    # --------------------------------------
-    # FILTRO DE GÊNERO
-    # --------------------------------------
+
+    # ======================================
+    # FILTRO GÊNERO
+    # ======================================
 
     if genero:
 
         consulta = consulta.filter(
-            Livro.genero == genero
+            Livro.genero.ilike(
+                f"%{genero}%"
+            )
         )
 
-    # --------------------------------------
-    # FILTRO DE IDIOMA
-    # --------------------------------------
+
+    # ======================================
+    # FILTRO IDIOMA
+    # ======================================
 
     if idioma:
 
@@ -502,35 +641,44 @@ def catalogo():
             Livro.idioma == idioma
         )
 
-    # --------------------------------------
-    # FILTRO DE ANO
-    # --------------------------------------
+
+    # ======================================
+    # FILTRO ANO
+    # ======================================
 
     if ano:
 
         consulta = consulta.filter(
-            Livro.ano == ano
+            Livro.ano.ilike(
+                f"{ano}%"
+            )
         )
 
-    # --------------------------------------
-    # FILTRO DE AVALIAÇÃO
-    # --------------------------------------
+
+    # ======================================
+    # FILTRO AVALIAÇÃO
+    # ======================================
 
     if avaliacao:
 
         try:
-            nota_minima = float(avaliacao)
+
+            nota_minima = float(
+                avaliacao
+            )
 
             consulta = consulta.filter(
                 Livro.avaliacao >= nota_minima
             )
 
         except ValueError:
+
             pass
 
-    # --------------------------------------
-    # ORDENAÇÃO
-    # --------------------------------------
+
+    # ======================================
+    # ORDENAÇÃO BANCO
+    # ======================================
 
     if ordenar == "avaliacao":
 
@@ -558,98 +706,469 @@ def catalogo():
 
     else:
 
-        # Mais recentes
         consulta = consulta.order_by(
             Livro.ano.desc()
         )
 
-    livros = consulta.all()
 
-    # --------------------------------------
-    # OPÇÕES DOS FILTROS
-    # --------------------------------------
+    # ======================================
+    # PEGAR LIVROS DO BANCO
+    # ======================================
 
-    generos = db.session.query(
-        Livro.genero
-    ).filter(
-        Livro.genero.isnot(None),
-        Livro.genero != ""
-    ).distinct().order_by(
-        Livro.genero
-    ).all()
+    if pagina == 1:
 
-    idiomas = db.session.query(
-        Livro.idioma
-    ).filter(
-        Livro.idioma.isnot(None),
-        Livro.idioma != ""
-    ).distinct().order_by(
-        Livro.idioma
-    ).all()
+        livros_banco = consulta.limit(
+            por_pagina
+        ).all()
 
-    anos = db.session.query(
-        Livro.ano
-    ).filter(
-        Livro.ano.isnot(None),
-        Livro.ano != ""
-    ).distinct().order_by(
-        Livro.ano.desc()
-    ).all()
+    else:
 
-    # --------------------------------------
-    # LIVROS QUE JÁ ESTÃO NA ESTANTE
-    # --------------------------------------
+        livros_banco = []
+
+    # ======================================
+    # TRANSFORMAR EM DICIONÁRIO
+    # ======================================
+
+    livros = []
+
+    for livro in livros_banco:
+
+        livros.append({
+
+            "id": livro.id,
+
+            "google_id": livro.google_id,
+
+            "titulo": livro.titulo,
+
+            "autor": livro.autor,
+
+            "descricao": livro.descricao,
+
+            "capa": livro.capa,
+
+            "genero": livro.genero,
+
+            "editora": livro.editora,
+
+            "paginas": livro.paginas,
+
+            "ano": livro.ano,
+
+            "idioma": livro.idioma,
+
+            "avaliacao": livro.avaliacao,
+
+            "origem": "banco"
+        })
+
+
+    # ======================================
+    # TERMO PARA GOOGLE
+    # ======================================
+
+    if busca:
+
+        termo_google = busca
+
+    elif genero:
+
+        termo_google = (
+            f"subject:{genero}"
+        )
+
+    else:
+
+        termo_google = "subject:fiction"
+
+
+    # ======================================
+    # GOOGLE BOOKS
+    # ======================================
+
+    inicio_google = (
+        (pagina - 1)
+        * por_pagina
+    )
+
+    livros_google = buscar_google_books(
+        termo_google,
+        start_index=inicio_google,
+        max_results=por_pagina,
+        idioma=(
+            idioma
+            if idioma
+            else None
+        )
+    )
+
+        # ======================================
+        # FILTRAR GOOGLE POR GÊNERO
+        # ======================================
+
+    if genero:
+        livros_google = [
+            livro
+            for livro in livros_google
+                if (
+                    livro.get("genero")
+                    and genero.lower()
+                    in livro.get(
+                        "genero",
+                        ""
+                    ).lower()
+                )
+            ]
+
+
+    # ======================================
+    # FILTRAR GOOGLE POR ANO
+    # ======================================
+
+    if ano:
+
+        livros_google = [
+
+            livro
+
+            for livro in livros_google
+
+            if str(
+                livro.get(
+                    "ano",
+                    ""
+                )
+            ).startswith(
+                ano
+            )
+        ]
+
+
+    # ======================================
+    # FILTRAR GOOGLE POR AVALIAÇÃO
+    # ======================================
+
+    if avaliacao:
+
+        try:
+
+            nota_minima = float(
+                avaliacao
+            )
+
+            livros_google = [
+
+                livro
+
+                for livro in livros_google
+
+                if (
+                    livro.get(
+                        "avaliacao"
+                    ) is not None
+                    and livro.get(
+                        "avaliacao"
+                    ) >= nota_minima
+                )
+            ]
+
+        except ValueError:
+
+            pass
+
+
+    # ======================================
+    # IDS GOOGLE QUE JÁ ESTÃO NO BANCO
+    # ======================================
+
+    google_ids_salvos = {
+
+        livro.google_id
+
+        for livro in Livro.query.filter(
+            Livro.google_id.isnot(None)
+        ).all()
+
+        if livro.google_id
+    }
+
+
+    # ======================================
+    # ADICIONAR GOOGLE AO CATÁLOGO
+    # ======================================
+
+    for livro_google in livros_google:
+
+        google_id = livro_google.get(
+            "google_id"
+        )
+
+        # Se o mesmo volume já existe no
+        # banco, não mostramos duas vezes
+        if (
+            google_id
+            not in google_ids_salvos
+        ):
+
+            livros.append(
+                livro_google
+            )
+
+
+    # ======================================
+    # ORDENAÇÃO FINAL
+    # ======================================
+
+    if ordenar == "az":
+
+        livros.sort(
+            key=lambda livro:
+            (
+                livro.get(
+                    "titulo"
+                )
+                or ""
+            ).lower()
+        )
+
+
+    elif ordenar == "za":
+
+        livros.sort(
+            key=lambda livro:
+            (
+                livro.get(
+                    "titulo"
+                )
+                or ""
+            ).lower(),
+            reverse=True
+        )
+
+
+    elif ordenar == "avaliacao":
+
+        livros.sort(
+            key=lambda livro:
+            livro.get(
+                "avaliacao"
+            )
+            or 0,
+            reverse=True
+        )
+
+
+    elif ordenar == "antigos":
+
+        livros.sort(
+            key=lambda livro:
+            str(
+                livro.get(
+                    "ano"
+                )
+                or "9999"
+            )
+        )
+
+
+    else:
+
+        livros.sort(
+            key=lambda livro:
+            str(
+                livro.get(
+                    "ano"
+                )
+                or ""
+            ),
+            reverse=True
+        )
+
+
+    # ======================================
+    # LIVROS NA ESTANTE DO USUÁRIO
+    # ======================================
 
     livros_na_estante = {
+
         item.livro_id
+
         for item in Estante.query.filter_by(
             usuario_id=current_user.id
         ).all()
     }
 
-    # --------------------------------------
+
+    # ======================================
     # SURPREENDA-ME
-    # --------------------------------------
+    # ======================================
 
-    if request.args.get("surpreenda"):
+    if request.args.get(
+        "surpreenda"
+    ):
 
-        livros_disponiveis = [
-            livro
-            for livro in livros
-            if livro.id not in livros_na_estante
-        ]
+        livros_disponiveis = []
+
+        for livro in livros:
+
+            if livro["origem"] == "google":
+
+                livros_disponiveis.append(
+                    livro
+                )
+
+            elif (
+                livro["id"]
+                not in livros_na_estante
+            ):
+
+                livros_disponiveis.append(
+                    livro
+                )
+
 
         if livros_disponiveis:
 
-            livro_sorteado = choice(livros_disponiveis)
+            livro_sorteado = choice(
+                livros_disponiveis
+            )
+
+
+            # GOOGLE
+
+            if (
+                livro_sorteado[
+                    "origem"
+                ]
+                == "google"
+            ):
+
+                return redirect(
+                    url_for(
+                        "books_bp.ver_google",
+
+                        google_id=(
+                            livro_sorteado[
+                                "google_id"
+                            ]
+                        )
+                    )
+                )
+
+
+            # BANCO
 
             return redirect(
                 url_for(
                     "books_bp.ver",
-                    id=livro_sorteado.id
+
+                    id=livro_sorteado[
+                        "id"
+                    ]
                 )
             )
 
-        flash(
-            "Não encontramos nenhum livro novo para sortear com esses filtros!",
-            "warning"
-        )
 
-    # --------------------------------------
-    # CATÁLOGO
-    # --------------------------------------
+    # ======================================
+    # GÊNEROS
+    # ======================================
+
+    generos = [
+
+        "Ficção",
+        "Fantasia",
+        "Romance",
+        "Mistério",
+        "Suspense",
+        "Terror",
+        "Aventura",
+        "História",
+        "Biografia",
+        "Ciência",
+        "Tecnologia"
+    ]
+
+
+    # ======================================
+    # IDIOMAS
+    # ======================================
+
+    idiomas = [
+        "pt",
+        "en",
+        "es",
+        "fr"
+    ]
+
+
+    # ======================================
+    # ANOS
+    #
+    # Mantém compatibilidade com seu
+    # catalogo.html atual.
+    # ======================================
+
+    anos = [
+
+        item[0]
+
+        for item in db.session.query(
+            Livro.ano
+        ).filter(
+            Livro.ano.isnot(None)
+        ).distinct().all()
+
+        if item[0]
+    ]
+
+    anos.sort(
+        reverse=True
+    )
+
+
+    # ======================================
+    # EXISTEM MAIS RESULTADOS?
+    # ======================================
+
+    tem_mais = (
+        len(livros_google)
+        == por_pagina
+    )
+
+
+    # ======================================
+    # TEMPLATE
+    # ======================================
 
     return render_template(
+
         "books/catalogo.html",
+
         livros=livros,
-        generos=[g[0] for g in generos],
-        idiomas=[i[0] for i in idiomas],
-        anos=[a[0] for a in anos],
-        livros_na_estante=livros_na_estante,
+
+        generos=generos,
+
+        idiomas=idiomas,
+
+        anos=anos,
+
+        livros_na_estante=(
+            livros_na_estante
+        ),
+
         busca=busca,
+
         genero=genero,
+
         idioma=idioma,
+
         ano=ano,
+
         avaliacao=avaliacao,
-        ordenar=ordenar
+
+        ordenar=ordenar,
+
+        pagina=pagina,
+
+        tem_mais=tem_mais
     )

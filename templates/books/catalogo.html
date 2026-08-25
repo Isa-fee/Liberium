@@ -314,26 +314,52 @@
 
                     <article class="card-livro">
 
-                        <a
-                            href="{{ url_for(
-                                'books_bp.ver',
-                                id=livro.id
-                            ) }}"
-                            class="link-livro"
-                        >
+                        {% if livro.origem == "google" %}
+
+                            <a
+                                href="{{ url_for(
+                                    'books_bp.ver_google',
+                                    google_id=livro.google_id
+                                ) }}"
+                                class="link-livro"
+                            >
+
+                        {% else %}
+
+                            <a
+                                href="{{ url_for(
+                                    'books_bp.ver',
+                                    id=livro.id
+                                ) }}"
+                                class="link-livro"
+                            >
+
+                        {% endif %}
 
                             <div class="capa-container">
 
                                 {% if livro.capa %}
 
-                                    <img
-                                        src="{{ url_for(
-                                            'static',
-                                            filename=livro.capa
-                                        ) }}"
-                                        alt="{{ livro.titulo }}"
-                                        class="capa-catalogo"
-                                    >
+                                    {% if livro.capa.startswith("http") %}
+
+                                        <img
+                                            src="{{ livro.capa }}"
+                                            alt="{{ livro.titulo }}"
+                                            class="capa-catalogo"
+                                        >
+
+                                    {% else %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=livro.capa
+                                            ) }}"
+                                            alt="{{ livro.titulo }}"
+                                            class="capa-catalogo"
+                                        >
+
+                                    {% endif %}
 
                                 {% else %}
 
@@ -344,12 +370,15 @@
                                 {% endif %}
 
 
-                                {% if livro.id in livros_na_estante %}
-
+                                {% if
+                                    livro.origem == "banco"
+                                    and livro.id in livros_na_estante
+                                %}
+                                
                                     <span class="badge-estante">
                                         Na sua estante
                                     </span>
-
+                                
                                 {% endif %}
 
                             </div>
@@ -419,6 +448,30 @@
                 {% endfor %}
 
             </div>
+
+            {% if tem_mais %}
+
+                <div class="carregar-mais-container">
+
+                    <a
+                        href="{{ url_for(
+                            'books_bp.catalogo',
+                            q=busca,
+                            genero=genero,
+                            idioma=idioma,
+                            ano=ano,
+                            avaliacao=avaliacao,
+                            ordenar=ordenar,
+                            pagina=pagina + 1
+                        ) }}"
+                        class="btn-carregar-mais"
+                    >
+                        Carregar mais
+                    </a>
+
+                </div>
+
+            {% endif %}
 
         {% else %}
 
