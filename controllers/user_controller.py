@@ -16,39 +16,95 @@ user_bp = Blueprint("user_bp", __name__, url_prefix="/user")
 
 @user_bp.route("/register", methods=["GET", "POST"])
 def register():
-
     if request.method == "POST":
-
-        nome = request.form.get("nome")
-        email = request.form.get("email")
-        senha = request.form.get("senha")
-        confirmar_senha = request.form.get("confirmar_senha")
-
+        nome = request.form.get(
+            "nome",
+            ""
+        ).strip()
+        email = request.form.get(
+            "email",
+            ""
+        ).strip().lower()
+        senha = request.form.get(
+            "senha",
+            ""
+        )
+        confirmar_senha = request.form.get(
+            "confirmar_senha",
+            ""
+        )
+        tipo = request.form.get(
+            "tipo",
+            "leitor"
+        )
+        # ==================================
+        # VALIDAR TIPO DE USUÁRIO
+        # ==================================
+        tipos_permitidos = [
+            "leitor",
+            "autor"
+        ]
+        if tipo not in tipos_permitidos:
+            tipo = "leitor"
+        # ==================================
+        # VALIDAR CAMPOS
+        # ==================================
+        if not nome or not email or not senha:
+            flash(
+                "Preencha todos os campos obrigatórios.",
+                "danger"
+            )
+            return redirect(
+                url_for("user_bp.register")
+            )
+        # ==================================
+        # CONFIRMAR SENHA
+        # ==================================
         if senha != confirmar_senha:
-            flash("As senhas não coincidem!", "danger")
-            return redirect(url_for("user_bp.register"))
-
-        usuario_existente = Usuario.query.filter_by(email=email).first()
-
+            flash(
+                "As senhas não coincidem!",
+                "danger"
+            )
+            return redirect(
+                url_for("user_bp.register")
+            )
+        # ==================================
+        # VERIFICAR E-MAIL
+        # ==================================
+        usuario_existente = Usuario.query.filter_by(
+            email=email
+        ).first()
         if usuario_existente:
-            flash("E-mail já cadastrado!", "danger")
-            return redirect(url_for("user_bp.register"))
-
+            flash(
+                "E-mail já cadastrado!",
+                "danger"
+            )
+            return redirect(
+                url_for("user_bp.register")
+            )
+        # ==================================
+        # CRIAR USUÁRIO
+        # ==================================
         novo_usuario = Usuario(
             nome=nome,
             email=email,
-            senha=generate_password_hash(senha)
+            senha=generate_password_hash(senha),
+            tipo=tipo
         )
-
-        db.session.add(novo_usuario)
+        db.session.add(
+            novo_usuario
+        )
         db.session.commit()
-
-        verificar_insignias(novo_usuario)
-
-        flash("Cadastro realizado com sucesso!", "success")
-
-        return redirect(url_for("user_bp.login"))
-
+        verificar_insignias(
+            novo_usuario
+        )
+        flash(
+            "Cadastro realizado com sucesso!",
+            "success"
+        )
+        return redirect(
+            url_for("user_bp.login")
+        )
     return render_template("user/register.html")
 
 
