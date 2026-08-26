@@ -558,204 +558,326 @@
     text-decoration:underline;
 }
 
-/* ========================================= */
-/*        RESULTADOS DA PESQUISA             */
-/* ========================================= */
+/* =========================================
+   RESULTADOS DA PESQUISA
+========================================= */
 
-.link-resultado {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-
-
-/* Reutiliza o mesmo livro-container,
-   porém menor na página de resultados */
-
-.resultado-livro {
+.titulo-resultados {
     width: 90%;
     max-width: 1200px;
 
-    margin: 25px auto;
+    margin: 45px auto 25px;
 
-    grid-template-columns: 180px 1fr !important;
+    color: #442b1a;
 
-    gap: 30px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
 
-    padding: 25px 35px;
+/* =========================================
+   PÁGINA DE RESULTADOS
+========================================= */
 
-    border-radius: 12px;
+.pagina-resultados {
+    min-height: 100vh;
+    padding: 1px 0;
 
-    background: #f8f8f6;
+    background-color: #f8f7f5;
+}
+
+
+/* =========================================
+   LISTA DE RESULTADOS
+========================================= */
+
+.lista-livros {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding-bottom: 60px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+/* =========================================
+   CARD DO LIVRO
+========================================= */
+
+.livro-resultado {
+    width: 100%;
+    min-height: 190px;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
 
     box-sizing: border-box;
 
+    padding: 18px 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e4df;
+    border-radius: 14px;
+
+    text-decoration: none;
+    color: inherit;
+
+    box-shadow: 0 4px 15px rgba(68, 43, 26, 0.05);
+
     transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
 
-.resultado-livro:hover {
-    transform: translateY(-2px);
+.livro-resultado:hover {
+    transform: translateY(-3px);
 
-    box-shadow:
-        0 7px 22px
-        rgba(0, 0, 0, 0.08);
+    border-color: #aab9a4;
+
+    box-shadow: 0 8px 22px rgba(68, 43, 26, 0.10);
 }
 
 
-/* CAPA NOS RESULTADOS */
+/* =========================================
+   CAPA
+========================================= */
 
-.resultado-livro .coluna-esquerda {
-    justify-content: center;
-}
+.capa-lista {
+    width: 115px;
+    height: 165px;
 
-
-.resultado-livro .capa-livro {
-    width: 130px;
-    max-width: 130px;
-
-    height: 190px;
+    flex-shrink: 0;
 
     object-fit: cover;
 
     border-radius: 7px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 
-/* COLUNA DE INFORMAÇÕES */
+/* =========================================
+   SEM CAPA
+========================================= */
 
-.resultado-livro .coluna-direita {
+.livro-resultado > .sem-capa {
+    width: 115px;
+    height: 165px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
     justify-content: center;
 
-    gap: 12px;
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    background: #e8ede5;
+
+    border: 1px solid #d5ded1;
+    border-radius: 7px;
+
+    color: #6c7d69;
+
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+
+/* =========================================
+   INFORMAÇÕES
+========================================= */
+
+.info-livro {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
 /* TÍTULO */
 
-.resultado-livro .cabecalho-livro h1 {
-    margin: 0 0 5px;
-
-    font-size: 1.6rem;
-
-    font-weight: 600;
+.info-livro h4 {
+    margin: 0 0 6px;
 
     color: #442b1a;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    transition: color 0.2s ease;
+}
+
+
+.livro-resultado:hover .info-livro h4 {
+    color: #5f765b;
 }
 
 
 /* AUTOR */
 
-.resultado-livro .autores {
-    margin: 0;
+.info-livro > p:not(.descricao-curta) {
+    margin: 0 0 10px;
 
     color: #6c5338;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+
+/* DESCRIÇÃO */
+
+.descricao-curta {
+    margin: 0;
+
+    max-width: 900px;
+
+    color: #77736e;
+
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   NENHUM RESULTADO
+========================================= */
+
+.nenhum-resultado {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 60px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e4df;
+    border-radius: 14px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 15px rgba(68, 43, 26, 0.05);
+}
+
+
+.nenhum-resultado h3 {
+    margin: 0 0 10px;
+
+    color: #442b1a;
+
+    font-size: 1.4rem;
+}
+
+
+.nenhum-resultado p {
+    margin: 0;
+
+    color: #77736e;
 
     font-size: 0.95rem;
 }
 
 
-/* SINOPSE */
-
-.resultado-livro .sinopse h2 {
-    margin: 0 0 6px;
-
-    font-size: 1rem;
-
-    color: #555;
-}
-
-
-.resultado-livro .texto-sinopse {
-    margin: 0;
-
-    max-width: 850px;
-
-    color: #666;
-
-    font-size: 0.9rem;
-
-    line-height: 1.55;
-}
-
-
-/* SEM CAPA */
-
-.resultado-livro .sem-capa {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #e6e4df;
-
-    color: #777;
-
-    font-size: 0.85rem;
-
-    text-align: center;
-}
-
-
-/* ========================================= */
-/*           NENHUM RESULTADO                */
-/* ========================================= */
-
-.resultado-vazio {
-    width: 90%;
-    max-width: 1200px;
-
-    margin: 40px auto;
-
-    grid-template-columns: 1fr !important;
-
-    padding: 40px;
-
-    border-radius: 12px;
-
-    background: #f8f8f6;
-
-    text-align: center;
-}
-
-
-/* ========================================= */
-/*              RESPONSIVO                   */
-/* ========================================= */
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
 
 @media (max-width: 700px) {
 
-    .resultado-livro {
-        grid-template-columns: 100px 1fr !important;
+    .titulo-resultados {
+        width: calc(100% - 36px);
 
-        padding: 18px;
+        margin-top: 30px;
 
-        gap: 18px;
+        font-size: 1.65rem;
     }
 
 
-    .resultado-livro .capa-livro {
-        width: 90px;
-        max-width: 90px;
-
-        height: 135px;
+    .lista-livros {
+        width: calc(100% - 36px);
     }
 
 
-    .resultado-livro .cabecalho-livro h1 {
-        font-size: 1.15rem;
+    .livro-resultado {
+        min-height: auto;
+
+        align-items: flex-start;
+
+        gap: 16px;
+
+        padding: 15px;
     }
 
 
-    .resultado-livro .sinopse h2 {
-        font-size: 0.9rem;
+    .capa-lista,
+    .livro-resultado > .sem-capa {
+        width: 85px;
+        height: 125px;
     }
 
 
-    .resultado-livro .texto-sinopse {
-        font-size: 0.8rem;
+    .info-livro h4 {
+        font-size: 1.05rem;
+    }
+
+
+    .info-livro > p:not(.descricao-curta) {
+        font-size: 0.85rem;
+    }
+
+
+    .descricao-curta {
+        font-size: 0.82rem;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .livro-resultado {
+        gap: 13px;
+    }
+
+
+    .capa-lista,
+    .livro-resultado > .sem-capa {
+        width: 72px;
+        height: 105px;
+    }
+
+
+    .info-livro h4 {
+        font-size: 0.95rem;
+    }
+
+
+    .descricao-curta {
+        -webkit-line-clamp: 2;
     }
 
 }

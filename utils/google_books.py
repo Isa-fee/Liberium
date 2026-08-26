@@ -2,6 +2,36 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+def normalizar_capa(imagens, google_id=None):
+
+    capa = (
+        imagens.get("extraLarge")
+        or imagens.get("large")
+        or imagens.get("medium")
+        or imagens.get("small")
+        or imagens.get("thumbnail")
+        or imagens.get("smallThumbnail")
+    )
+
+    if capa:
+        capa = capa.replace("http://", "https://")
+
+        # Algumas URLs publisher vêm codificadas incorretamente
+        if "content%3Fid=" not in capa:
+            return capa
+
+    # Fallback usando diretamente o ID do Google Books
+    if google_id:
+        return (
+            "https://books.google.com/books/content"
+            f"?id={google_id}"
+            "&printsec=frontcover"
+            "&img=1"
+            "&zoom=2"
+            "&source=gbs_api"
+        )
+
+    return None
 
 def buscar_google_books(
     termo,
@@ -126,9 +156,9 @@ def buscar_google_books(
                 strip=True
             ),
 
-            "capa": (
-                imagens.get("thumbnail")
-                or imagens.get("smallThumbnail")
+           "capa": normalizar_capa(
+                imagens,
+                item.get("id")
             ),
 
             "genero": (
@@ -162,6 +192,10 @@ def buscar_google_books(
 
             "origem": "google"
         }
+        print("===================================")
+        print("LIVRO:", livro["titulo"])
+        print("CAPA:", livro["capa"])
+        print("===================================")
 
         livros.append(
             livro
@@ -251,9 +285,9 @@ def buscar_livro_google(google_id):
             "html.parser"
         ).get_text(" ", strip=True),
 
-        "capa": (
-            imagens.get("thumbnail")
-            or imagens.get("smallThumbnail")
+        "capa": normalizar_capa(
+            imagens,
+            item.get("id")
         ),
 
         "genero": (
