@@ -12,10 +12,9 @@ class Usuario(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     senha = db.Column(db.String(200), nullable=False)
     foto = db.Column(db.String(255), nullable=True)
+    
     # GAMIFICAÇÃO
-
     xp = db.Column(db.Integer, default=20)
-
     nivel = db.Column(
         db.String(50),
         default="Leitor Iniciante"
@@ -24,6 +23,15 @@ class Usuario(UserMixin, db.Model):
     libelulas = db.Column(
         db.Integer,
         default=5
+    )
+    
+    # TIPO DE USUÁRIO
+    # leitor | autor | administrador
+
+    tipo = db.Column(
+        db.String(20),
+        nullable=False,
+        default="leitor"
     )
 
 class Amizade(db.Model):
