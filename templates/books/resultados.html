@@ -8,122 +8,122 @@
 {% endblock %}
 
 {% block content %}
+<div class="pagina-resultados">
+    <h1 class="titulo-resultados">
+        Resultados da pesquisa
+    </h1>
 
-<h1 class="titulo-resultados">
-    Resultados da pesquisa
-</h1>
+    <div class="lista-livros">
 
-<div class="lista-livros">
+        {% if livros %}
 
-    {% if livros %}
+            {% for livro in livros %}
 
-        {% for livro in livros %}
+                {% if origem == "banco" %}
 
-            {% if origem == "banco" %}
-
-                <a
-                    href="{{ url_for(
-                        'books_bp.ver',
-                        id=livro.id
-                    ) }}"
-                    class="livro-resultado"
-                >
-
-            {% else %}
-
-                <a
-                    href="{{ url_for(
-                        'books_bp.ver_google',
-                        google_id=livro.google_id
-                    ) }}"
-                    class="livro-resultado"
-                >
-
-            {% endif %}
-
-
-                <!-- CAPA -->
-
-                {% if livro.capa %}
-
-                    {% if origem == "google" %}
-
-                        <img
-                            src="{{ livro.capa }}"
-                            class="capa-lista"
-                            alt="Capa de {{ livro.titulo }}"
-                        >
-
-                    {% else %}
-
-                        <img
-                            src="{{ url_for(
-                                'static',
-                                filename=livro.capa
-                            ) }}"
-                            class="capa-lista"
-                            alt="Capa de {{ livro.titulo }}"
-                        >
-
-                    {% endif %}
+                    <a
+                        href="{{ url_for(
+                            'books_bp.ver',
+                            id=livro.id
+                        ) }}"
+                        class="livro-resultado"
+                    >
 
                 {% else %}
 
-                    <div class="sem-capa">
-                        Sem capa
-                    </div>
+                    <a
+                        href="{{ url_for(
+                            'books_bp.ver_google',
+                            google_id=livro.google_id
+                        ) }}"
+                        class="livro-resultado"
+                    >
 
                 {% endif %}
 
 
-                <!-- INFORMAÇÕES -->
+                    <!-- CAPA -->
 
-                <div class="info-livro">
+                    {% if livro.capa %}
 
-                    <h4>
-                        {{ livro.titulo }}
-                    </h4>
+                        {% if livro.capa.startswith('http') %}
 
-                    <p>
-                        {{ livro.autor }}
-                    </p>
-
-                    <p class="descricao-curta">
-
-                        {% if livro.descricao %}
-
-                            {{ livro.descricao[:200] }}...
+                            <img
+                                src="{{ livro.capa }}"
+                                class="capa-lista"
+                                alt="Capa de {{ livro.titulo }}"
+                            >
 
                         {% else %}
 
-                            Descrição não disponível.
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=livro.capa
+                                ) }}"
+                                class="capa-lista"
+                                alt="Capa de {{ livro.titulo }}"
+                            >
 
                         {% endif %}
 
-                    </p>
+                    {% else %}
 
-                </div>
+                        <div class="sem-capa">
+                            Sem capa
+                        </div>
 
-            </a>
+                    {% endif %}
 
-        {% endfor %}
+                    <!-- INFORMAÇÕES -->
 
-    {% else %}
+                    <div class="info-livro">
 
-        <div class="nenhum-resultado">
+                        <h4>
+                            {{ livro.titulo }}
+                        </h4>
 
-            <h3>
-                Nenhum livro encontrado
-            </h3>
+                        <p>
+                            {{ livro.autor }}
+                        </p>
 
-            <p>
-                Tente pesquisar utilizando outro termo.
-            </p>
+                        <p class="descricao-curta">
 
-        </div>
+                            {% if livro.descricao %}
 
-    {% endif %}
+                                {{ livro.descricao[:200] }}...
 
+                            {% else %}
+
+                                Descrição não disponível.
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="nenhum-resultado">
+
+                <h3>
+                    Nenhum livro encontrado
+                </h3>
+
+                <p>
+                    Tente pesquisar utilizando outro termo.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
 </div>
 
 {% endblock %}
