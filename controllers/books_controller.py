@@ -8,7 +8,7 @@ from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 from utils.google_books import (buscar_google_books, buscar_livro_google)
 
-from models import Livro, Estante, DecoracaoEstante
+from models import Livro, Estante, DecoracaoEstante, SolicitacaoLivro
 from extensions import db
 
 
@@ -192,11 +192,6 @@ def autor(nome):
         livros=livros,
         quantidade=len(livros)
     )
-
-# ======================================
-# BUSCA DE LIVROS
-# ======================================
-
 # ======================================
 # BUSCA DE LIVROS
 # ======================================
@@ -267,6 +262,183 @@ def buscar():
         livros=livros_google,
         termo=termo,
         origem="google"
+    )
+
+# ======================================
+# SOLICITAR CADASTRO DE LIVRO
+# ======================================
+
+@books_bp.route(
+    "/solicitar",
+    methods=["GET", "POST"]
+)
+@login_required
+def solicitar_livro():
+
+    if request.method == "POST":
+
+        titulo = request.form.get(
+            "titulo",
+            ""
+        ).strip()
+
+        autor = request.form.get(
+            "autor",
+            ""
+        ).strip()
+
+        descricao = request.form.get(
+            "descricao",
+            ""
+        ).strip()
+
+        genero = request.form.get(
+            "genero",
+            ""
+        ).strip()
+
+        editora = request.form.get(
+            "editora",
+            ""
+        ).strip()
+
+        paginas = request.form.get(
+            "paginas",
+            type=int
+        )
+
+        ano = request.form.get(
+            "ano",
+            ""
+        ).strip()
+
+        idioma = request.form.get(
+            "idioma",
+            ""
+        ).strip()
+
+        isbn = request.form.get(
+            "isbn",
+            ""
+        ).strip()
+
+        # ==================================
+        # CAMPOS OBRIGATÓRIOS
+        # ==================================
+
+        if not titulo or not autor:
+
+            flash(
+                "Informe pelo menos o título e o autor do livro.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "books_bp.solicitar_livro",
+                    titulo=titulo
+                )
+            )
+
+        # ==================================
+        # VERIFICAR SE JÁ EXISTE
+        # ==================================
+
+        livro_existente = Livro.query.filter(
+            db.func.lower(Livro.titulo)
+            == titulo.lower()
+        ).first()
+
+        if livro_existente:
+
+            flash(
+                "Esse livro já está cadastrado no Liberium.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "books_bp.ver",
+                    id=livro_existente.id
+                )
+            )
+
+        # ==================================
+        # EVITAR SOLICITAÇÃO REPETIDA
+        # ==================================
+
+        solicitacao_existente = (
+            SolicitacaoLivro.query.filter(
+                SolicitacaoLivro.solicitante_id
+                == current_user.id,
+
+                db.func.lower(
+                    SolicitacaoLivro.titulo
+                )
+                == titulo.lower(),
+
+                SolicitacaoLivro.status
+                == "pendente"
+            ).first()
+        )
+
+        if solicitacao_existente:
+
+            flash(
+                "Você já possui uma solicitação pendente para esse livro.",
+                "warning"
+            )
+
+            return redirect(
+                url_for("books_bp.catalogo")
+            )
+
+        # ==================================
+        # CRIAR SOLICITAÇÃO
+        # ==================================
+
+        solicitacao = SolicitacaoLivro(
+            titulo=titulo,
+            autor=autor,
+            descricao=descricao or None,
+            genero=genero or None,
+            editora=editora or None,
+            paginas=paginas,
+            ano=ano or None,
+            idioma=idioma or None,
+            isbn=isbn or None,
+            solicitante_id=current_user.id,
+            status="pendente"
+        )
+
+        db.session.add(
+            solicitacao
+        )
+
+        db.session.commit()
+
+        flash(
+            "Solicitação enviada! "
+            "Um administrador irá analisar o cadastro do livro.",
+            "success"
+        )
+
+        return redirect(
+            url_for("books_bp.catalogo")
+        )
+
+    # ==================================
+    # GET
+    # ==================================
+
+    titulo = request.args.get(
+        "titulo",
+        ""
+    )
+
+    return render_template(
+        "books/solicitar_livro.html",
+        titulo=titulo
     )
 
 
