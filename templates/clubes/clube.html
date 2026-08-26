@@ -340,217 +340,269 @@
                 </div>
 
             </section>
+<!-- ========================================
+     ABA 2 - DISCUSSÕES
+======================================== -->
+
+<section id="aba-discussao" class="aba-conteudo">
+
+    <div class="card-clube discussao-container">
+
+        <!-- CABEÇALHO -->
+        <div class="discussao-topo">
+
+            <div>
+                <span class="discussao-label">COMUNIDADE</span>
+
+                <h2>
+                    Comentários e discussões
+                </h2>
+
+                <p>
+                    Compartilhe suas reflexões e converse com os membros
+                    sobre a leitura.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="btn-novo-comentario"
+                onclick="toggleFormComentario()"
+            >
+                + Novo comentário
+            </button>
+
+        </div>
 
 
-            <!-- ========================================
-                 ABA 2 - DISCUSSÕES
-            ========================================= -->
+        <!-- ========================================
+             FORMULÁRIO
+        ======================================== -->
 
-            <section
-                id="aba-discussao"
-                class="aba-conteudo"
+        <div
+            id="form-comentario-container"
+            class="form-comentario-box"
+            style="display: none;"
+        >
+
+            <div class="form-comentario-titulo">
+
+                <h3>
+                    Novo comentário
+                </h3>
+
+                <p>
+                    Compartilhe o que você está pensando sobre a leitura.
+                </p>
+
+            </div>
+
+
+            <form
+                action="{{ url_for('clubes.criar_discussao', clube_id=clube.id) }}"
+                method="POST"
             >
 
-                <div class="card-clube">
+                <div class="form-grupo">
 
+                    <label for="titulo">
+                        Título
+                        <span>(opcional)</span>
+                    </label>
 
-                    <div class="card-cabecalho">
-
-                        <div>
-
-                            <h2>
-                                Comentários e discussões
-                            </h2>
-
-                            <p>
-                                Compartilhe suas reflexões e converse com os membros sobre a leitura.
-                            </p>
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            class="btn-primario"
-                            onclick="toggleFormComentario()"
-                        >
-                            + Novo comentário
-                        </button>
-
-                    </div>
-
-
-                    <!-- ========================================
-                         FORMULÁRIO DE COMENTÁRIO
-                    ========================================= -->
-
-                    <div
-                        id="form-comentario-container"
-                        class="form-comentario-box"
-                        style="display: none;"
+                    <input
+                        type="text"
+                        id="titulo"
+                        name="titulo"
+                        placeholder="Ex: O que acharam do capítulo 3?"
                     >
-
-                        <form
-                            action="{{ url_for('clubes.criar_discussao', clube_id=clube.id) }}"
-                            method="POST"
-                        >
-
-                            <div class="form-grupo">
-
-                                <label for="titulo">
-                                    Título (opcional)
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="titulo"
-                                    name="titulo"
-                                    placeholder="Ex: O que acharam do Capítulo 3?"
-                                >
-
-                            </div>
-
-
-                            <div class="form-grupo">
-
-                                <label for="conteudo">
-                                    Seu comentário
-                                </label>
-
-                                <textarea
-                                    id="conteudo"
-                                    name="conteudo"
-                                    rows="4"
-                                    placeholder="Escreva aqui sua opinião, dúvida ou teoria..."
-                                    required
-                                ></textarea>
-
-                            </div>
-
-
-                            <div class="form-acoes">
-
-                                <button
-                                    type="button"
-                                    class="btn-secundario"
-                                    onclick="toggleFormComentario()"
-                                >
-                                    Cancelar
-                                </button>
-
-
-                                <button
-                                    type="submit"
-                                    class="btn-primario"
-                                >
-                                    Publicar comentário
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-
-                    <!-- ========================================
-                         LISTA DE DISCUSSÕES
-                    ========================================= -->
-
-                    {% if clube.discussoes %}
-
-                        <div class="lista-discussoes">
-
-                            {% for discussao in clube.discussoes %}
-
-                                <div class="discussao-card">
-
-
-                                    <div class="discussao-header">
-
-                                        <div class="autor-info">
-
-
-                                            <div class="autor-avatar">
-
-                                                {% if discussao.usuario.foto %}
-
-                                                    <img
-                                                        src="{{ url_for('static', filename=discussao.usuario.foto) }}"
-                                                        alt="{{ discussao.usuario.nome }}"
-                                                    >
-
-                                                {% else %}
-
-                                                    <span>
-                                                        {{ discussao.usuario.nome[0] if discussao.usuario.nome else '?' }}
-                                                    </span>
-
-                                                {% endif %}
-
-                                            </div>
-
-
-                                            <div>
-
-                                                <strong>
-                                                    {{ discussao.usuario.nome }}
-                                                </strong>
-
-                                                <span class="discussao-data">
-
-                                                    {{ discussao.data_criacao.strftime('%d/%m/%Y às %H:%M') }}
-
-                                                </span>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="discussao-corpo">
-
-                                        {% if discussao.titulo %}
-
-                                            <h4>
-                                                {{ discussao.titulo }}
-                                            </h4>
-
-                                        {% endif %}
-
-                                        <p>
-                                            {{ discussao.conteudo }}
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            {% endfor %}
-
-                        </div>
-
-                    {% else %}
-
-                        <div class="sem-comentarios">
-
-                            <h3>
-                                Nenhum comentário ainda
-                            </h3>
-
-                            <p>
-                                Seja o primeiro a iniciar uma discussão sobre o livro!
-                            </p>
-
-                        </div>
-
-                    {% endif %}
 
                 </div>
 
-            </section>
+
+                <div class="form-grupo">
+
+                    <label for="conteudo">
+                        Seu comentário
+                    </label>
+
+                    <textarea
+                        id="conteudo"
+                        name="conteudo"
+                        rows="5"
+                        placeholder="Escreva sua opinião, dúvida, teoria ou reflexão..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-acoes">
+
+                    <button
+                        type="button"
+                        class="btn-cancelar"
+                        onclick="toggleFormComentario()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-publicar"
+                    >
+                        Publicar comentário
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- ========================================
+             DISCUSSÕES
+        ======================================== -->
+
+        {% if clube.discussoes %}
+
+            <div class="discussoes-titulo">
+
+                <h3>
+                    Discussões recentes
+                </h3>
+
+                <span>
+                    {{ clube.discussoes|length }}
+                    {% if clube.discussoes|length == 1 %}
+                        comentário
+                    {% else %}
+                        comentários
+                    {% endif %}
+                </span>
+
+            </div>
+
+
+            <div class="lista-discussoes">
+
+                {% for discussao in clube.discussoes %}
+
+                    <article class="discussao-card">
+
+                        <!-- AUTOR -->
+                        <div class="discussao-header">
+
+                            <div class="autor-info">
+
+                                <div class="autor-avatar">
+
+                                    {% if discussao.usuario.foto %}
+
+                                        <img
+                                            src="{{ url_for('static', filename=discussao.usuario.foto) }}"
+                                            alt="{{ discussao.usuario.nome }}"
+                                        >
+
+                                    {% else %}
+
+                                        <span>
+                                            {{ discussao.usuario.nome[0] if discussao.usuario.nome else '?' }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="autor-dados">
+
+                                    <strong>
+                                        {{ discussao.usuario.nome }}
+                                    </strong>
+
+                                    <span class="discussao-data">
+                                        {{ discussao.data_criacao.strftime('%d/%m/%Y às %H:%M') }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONTEÚDO -->
+                        <div class="discussao-corpo">
+
+                            {% if discussao.titulo %}
+
+                                <h4>
+                                    {{ discussao.titulo }}
+                                </h4>
+
+                            {% endif %}
+
+                            <p>
+                                {{ discussao.conteudo }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- RODAPÉ -->
+                        <div class="discussao-footer">
+
+                            <button type="button">
+                                Responder
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- ESTADO VAZIO -->
+
+            <div class="sem-comentarios">
+
+                <div class="sem-comentarios-icone">
+                    💬
+                </div>
+
+                <h3>
+                    Ainda não há discussões
+                </h3>
+
+                <p>
+                    Seja a primeira pessoa a compartilhar uma reflexão
+                    sobre o livro.
+                </p>
+
+                <button
+                    type="button"
+                    class="btn-vazio-comentario"
+                    onclick="toggleFormComentario()"
+                >
+                    Iniciar uma discussão
+                </button>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+ 
 
 
             <!-- ========================================
