@@ -302,23 +302,30 @@
                         </div>
 
 
-                        <div class="livro-acoes">
-
-                            <button
-                                type="button"
-                                class="btn-secundario"
+                        <div class="livro-acoes"> 
+                        <!-- VER NO CATÁLOGO -->
+                            <a href="{{ url_for('books_bp.ver', id=clube.livro.id) }}" 
+                            class="btn-secundario"
                             >
-                                Ver no catálogo
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="btn-primario"
+                            Ver no catálogo
+                        </a> 
+                        <!-- ADICIONAR À ESTANTE -->
+                            <form action="{{ url_for('books_bp.adicionar_estante', livro_id=clube.livro.id) }}"
+                            method="POST" >
+                        
+                        <input 
+                            type="hidden" 
+                            name="status"
+                            value="quero ler"
                             >
-                                Adicionar à estante
-                            </button>
 
+                        <button 
+                            type="submit"
+                            class="btn-primario"
+                            >
+                            Adicionar à estante
+                        </button>
+                            </form>
                         </div>
 
                     {% else %}

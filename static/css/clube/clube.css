@@ -677,105 +677,190 @@
     }
 
 }
-/* ==========================================================================
-   ABA PARTICIPANTES (ESTILO MARATONA)
-   ========================================================================== */
 
-/* Grid principal em cards responsivos */
+/* -----------------------------------------------------
+   GRID DOS PARTICIPANTES
+----------------------------------------------------- */
+
 .grid-participantes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(280px, 1fr)
+    );
+
     gap: 16px;
+
     padding: 10px 0;
 }
 
-/* Card do participante */
+
+/* -----------------------------------------------------
+   CARD DO PARTICIPANTE
+----------------------------------------------------- */
+
 .card-participante {
-    background-color: #1a1a24;
+    background: var(--bg-card);
+
+    border: 1px solid var(--borda);
     border-radius: 12px;
-    padding: 16px;
-    border: 1px solid #2d2d3a;
-    border-left: 4px solid #7000ff; /* Linha de destaque roxa/verde na esquerda */
+
+    padding: 18px;
+
     display: flex;
     flex-direction: column;
+
     justify-content: space-between;
+
     gap: 14px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .card-participante:hover {
     transform: translateY(-2px);
-    border-color: #3d3d4e;
+
+    border-color: #d5dad3;
+
+    box-shadow:
+        0 4px 12px rgba(45, 49, 46, 0.06);
 }
 
-/* Header do Card */
+
+/* -----------------------------------------------------
+   CABEÇALHO DO PARTICIPANTE
+----------------------------------------------------- */
+
 .participante-header {
     display: flex;
+
     align-items: center;
+
     gap: 12px;
 }
+
+
+/* -----------------------------------------------------
+   AVATAR
+----------------------------------------------------- */
 
 .participante-avatar {
     width: 46px;
     height: 46px;
+
+    flex-shrink: 0;
+
     border-radius: 50%;
+
     overflow: hidden;
-    background-color: #2e2e3d;
+
+    background: var(--verde-claro);
+
+    color: var(--verde);
+
     display: flex;
+
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    color: #fff;
-    flex-shrink: 0;
+
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .participante-avatar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
+
+/* -----------------------------------------------------
+   NOME DO PARTICIPANTE
+----------------------------------------------------- */
+
 .participante-nome-linha {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
+    flex-wrap: wrap;
 }
 
 .participante-nome-linha h4 {
     margin: 0;
-    color: #f1f1f5;
-    font-size: 0.95rem;
+
+    color: var(--texto-primario);
+
+    font-size: 15px;
     font-weight: 600;
 }
 
+
+/* -----------------------------------------------------
+   BADGE "VOCÊ"
+----------------------------------------------------- */
+
 .badge-voces {
-    background-color: #5c33be;
-    color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
+    background: var(--verde-claro);
+
+    color: var(--verde);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
     text-transform: lowercase;
 }
 
-/* Badges de estatísticas (porcentagem e atualizações) */
+
+/* -----------------------------------------------------
+   ESTATÍSTICAS
+----------------------------------------------------- */
+
 .participante-stats {
     display: flex;
+
     align-items: center;
-    gap: 6px;
-    margin-top: 6px;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 5px;
 }
 
 .stat-badge {
-    background-color: #272733;
-    color: #b0b0c2;
-    font-size: 0.75rem;
+    background: #f7f7f4;
+
+    border: 1px solid var(--borda);
+
+    color: var(--texto-secundario);
+
+    font-size: 11px;
+
     font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 12px;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
 }
 
-/* Tags de Sentimento */
+
+/* -----------------------------------------------------
+   TAGS DE SENTIMENTO
+----------------------------------------------------- */
+
 .participante-tags {
     display: flex;
     flex-wrap: wrap;
@@ -783,32 +868,62 @@
 }
 
 .tag-sentimento {
-    background-color: #2a2838;
-    color: #d1d1e0;
-    font-size: 0.73rem;
-    padding: 4px 10px;
-    border-radius: 14px;
-    border: 1px solid #3d3952;
+    background: var(--verde-claro);
+    border: 1px solid #d9dfd6;
+    color: var(--verde);
+    font-size: 11px;
+    padding: 5px 9px;
+    border-radius: 20px;
 }
 
-/* Botão Ver Histórico */
+
+/* -----------------------------------------------------
+   BOTÃO VER HISTÓRICO
+----------------------------------------------------- */
+
 .btn-historico {
     width: 100%;
-    background-color: #242433;
-    border: 1px solid #36364a;
-    color: #e1e1e8;
-    border-radius: 20px;
-    padding: 7px 14px;
-    font-size: 0.8rem;
-    font-weight: 500;
+
+    background: white;
+    border: 1px solid var(--borda);
+    color: var(--texto-primario);
+    border-radius: 9px;
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
 .btn-historico:hover {
-    background-color: #2e2e42;
-    border-color: #5c33be;
-    color: #fff;
+    background: var(--verde-claro);
+
+    border-color: var(--verde);
+
+    color: var(--verde);
+}
+
+
+/* -----------------------------------------------------
+   RESPONSIVIDADE
+----------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .grid-participantes {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .card-participante {
+        padding: 16px;
+    }
+
 }
 
 /* ========================================
