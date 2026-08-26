@@ -920,3 +920,447 @@
 
     margin-top: 22px;
 }
+
+/* ========================================
+   DISCUSSÕES
+======================================== */
+
+.discussao-container {
+    padding: 28px;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.discussao-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e5e7e3;
+}
+
+.discussao-label {
+    display: block;
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    color: #6e736f;
+}
+
+.discussao-topo h2 {
+    margin: 0 0 6px;
+
+    font-size: 22px;
+    color: #2d312e;
+}
+
+.discussao-topo p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #777d78;
+}
+
+
+/* ========================================
+   BOTÃO NOVO COMENTÁRIO
+======================================== */
+
+.btn-novo-comentario {
+    border: none;
+    border-radius: 9px;
+
+    padding: 12px 18px;
+
+    background: #4d5b4e;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-novo-comentario:hover {
+    background: #3f4d42;
+}
+
+
+/* ========================================
+   FORMULÁRIO
+======================================== */
+
+.form-comentario-box {
+    margin-top: 22px;
+    padding: 24px;
+
+    background: #f7f7f4;
+
+    border: 1px solid #e4e6e1;
+    border-radius: 12px;
+}
+
+.form-comentario-titulo {
+    margin-bottom: 20px;
+}
+
+.form-comentario-titulo h3 {
+    margin: 0 0 5px;
+
+    font-size: 17px;
+    color: #2d312e;
+}
+
+.form-comentario-titulo p {
+    margin: 0;
+
+    font-size: 13px;
+    color: #777d78;
+}
+
+
+/* CAMPOS */
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 18px;
+}
+
+.form-grupo label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #3b403c;
+}
+
+.form-grupo label span {
+    font-weight: 400;
+    color: #929791;
+}
+
+.form-grupo input,
+.form-grupo textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d9ddd7;
+    border-radius: 8px;
+
+    background: white;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    color: #2d312e;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-grupo textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus {
+    border-color: #879d84;
+    box-shadow: 0 0 0 3px rgba(135, 157, 132, 0.12);
+}
+
+
+/* ========================================
+   AÇÕES DO FORMULÁRIO
+======================================== */
+
+.form-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-cancelar,
+.btn-publicar {
+    padding: 11px 17px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    border: 1px solid #dfe2dd;
+    background: white;
+    color: #555b56;
+}
+
+.btn-publicar {
+    border: none;
+    background: #4d5b4e;
+    color: white;
+}
+
+.btn-publicar:hover {
+    background: #3f4d42;
+}
+
+
+/* ========================================
+   TÍTULO DAS DISCUSSÕES
+======================================== */
+
+.discussoes-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 28px;
+    margin-bottom: 15px;
+}
+
+.discussoes-titulo h3 {
+    margin: 0;
+
+    font-size: 16px;
+    color: #2d312e;
+}
+
+.discussoes-titulo span {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #eef1ec;
+
+    font-size: 12px;
+    color: #657064;
+}
+
+
+/* ========================================
+   LISTA
+======================================== */
+
+.lista-discussoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* ========================================
+   CARD DE DISCUSSÃO
+======================================== */
+
+.discussao-card {
+    padding: 18px 20px;
+
+    background: white;
+
+    border: 1px solid #e5e7e3;
+    border-radius: 11px;
+
+    transition: 0.2s;
+}
+
+.discussao-card:hover {
+    border-color: #d5dad3;
+}
+
+
+/* ========================================
+   AUTOR
+======================================== */
+
+.discussao-header {
+    display: flex;
+    align-items: center;
+}
+
+.autor-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.autor-avatar {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: #e7ece5;
+
+    color: #4d5b4e;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+.autor-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.autor-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.autor-dados strong {
+    font-size: 13px;
+    color: #2d312e;
+}
+
+.discussao-data {
+    font-size: 11px;
+    color: #929791;
+}
+
+
+/* ========================================
+   CONTEÚDO
+======================================== */
+
+.discussao-corpo {
+    margin-top: 14px;
+    padding-left: 51px;
+}
+
+.discussao-corpo h4 {
+    margin: 0 0 7px;
+
+    font-size: 15px;
+    color: #2d312e;
+}
+
+.discussao-corpo p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #626862;
+}
+
+
+/* ========================================
+   RODAPÉ
+======================================== */
+
+.discussao-footer {
+    margin-top: 12px;
+    padding-left: 51px;
+}
+
+.discussao-footer button {
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #657064;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.discussao-footer button:hover {
+    color: #3f4d42;
+}
+
+
+/* ========================================
+   NENHUM COMENTÁRIO
+======================================== */
+
+.sem-comentarios {
+    margin-top: 25px;
+    padding: 38px 25px;
+
+    text-align: center;
+
+    background: #f8f8f5;
+
+    border: 1px dashed #d9ddd7;
+    border-radius: 11px;
+}
+
+.sem-comentarios-icone {
+    margin-bottom: 12px;
+
+    font-size: 27px;
+}
+
+.sem-comentarios h3 {
+    margin: 0 0 7px;
+
+    font-size: 16px;
+    color: #2d312e;
+}
+
+.sem-comentarios p {
+    max-width: 400px;
+    margin: 0 auto 18px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #808680;
+}
+
+.btn-vazio-comentario {
+    padding: 10px 15px;
+
+    border: 1px solid #d5dad3;
+    border-radius: 8px;
+
+    background: white;
+
+    color: #4d5b4e;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-vazio-comentario:hover {
+    background: #f1f3ef;
+}
