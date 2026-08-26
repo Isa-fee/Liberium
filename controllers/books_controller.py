@@ -159,8 +159,7 @@ def adicionar_google_estante(google_id):
     return adicionar_estante(
         livro.id
     )
-
-    
+  
 # ======================================
 # PÁGINA DO AUTOR
 # ======================================
@@ -526,14 +525,12 @@ def adicionar_estante(livro_id):
     flash(
         mensagem,
         "success"
-    )
+    )   
 
     return redirect(
-        url_for(
-            "books_bp.ver",
-            id=livro_id
-        )
+        url_for("estante_bp.estante")
     )
+    
 
 
 # ======================================
