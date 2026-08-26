@@ -117,12 +117,25 @@
 
                                         {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                                title="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith('http') %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 
@@ -182,12 +195,25 @@
 
                                         {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                                title="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith('http') %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 
@@ -247,12 +273,25 @@
 
                                         {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                                title="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith('http') %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for('static', filename=item.objeto.livro.capa) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                    title="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 

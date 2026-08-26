@@ -59,14 +59,31 @@
                     <div class="capa-resenha">
 
                         {% if item.livro.capa %}
-                            <img
-                                src="{{ url_for('static', filename=item.livro.capa) }}"
-                                alt="Capa de {{ item.livro.titulo }}"
-                            >
+
+                            {% if item.livro.capa.startswith('http') %}
+
+                                <!-- Livro vindo da API -->
+                                <img
+                                    src="{{ item.livro.capa }}"
+                                    alt="Capa de {{ item.livro.titulo }}"
+                                >
+
+                            {% else %}
+
+                                <!-- Livro do banco local -->
+                                <img
+                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    alt="Capa de {{ item.livro.titulo }}"
+                                >
+
+                            {% endif %}
+
                         {% else %}
+
                             <div class="sem-capa">
                                 📖
                             </div>
+
                         {% endif %}
 
                     </div>

@@ -79,9 +79,24 @@
                                 <div class="card-amigo">
                                     <div class="perfil-amigo">
                                         {% if item.livro.capa %}
-                                            <img src="{{ url_for('static', filename=item.livro.capa) }}" class="foto-amigo" alt="{{ item.livro.titulo }}">
+                                            {% if item.livro.capa.startswith('http') %}
+                                                <img
+                                                    src="{{ item.livro.capa }}"
+                                                    class="foto-amigo"
+                                                    alt="{{ item.livro.titulo }}"
+                                                >
+                                            {% else %}
+                                                <img
+                                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                                    class="foto-amigo"
+                                                    alt="{{ item.livro.titulo }}"
+                                                >
+                                            {% endif %}
+
                                         {% else %}
+
                                             <div class="foto-amigo">📖</div>
+
                                         {% endif %}
 
                                         <div class="dados-amigo">
@@ -167,14 +182,19 @@
 
                             {% for item in estante[:6] %}
 
-                                {% if item.livro and item.livro.capa %}
-
+                            {% if item.livro and item.livro.capa %}
+                                {% if item.livro.capa.startswith('http') %}
+                                    <img
+                                        src="{{ item.livro.capa }}"
+                                        alt="{{ item.livro.titulo }}"
+                                    >
+                                {% else %}
                                     <img
                                         src="{{ url_for('static', filename=item.livro.capa) }}"
                                         alt="{{ item.livro.titulo }}"
                                     >
-
                                 {% endif %}
+                            {% endif %}
 
                             {% endfor %}
 
@@ -219,11 +239,21 @@
                             <div class="perfil-amigo">
 
                                 {% if item.livro.capa %}
-                                <img
-                                    src="{{ url_for('static', filename=item.livro.capa) }}"
-                                    class="foto-amigo"
-                                    alt="{{ item.livro.titulo }}"
-                                >
+
+                                    {% if item.livro.capa.startswith('http') %}
+                                        <img
+                                            src="{{ item.livro.capa }}"
+                                            class="foto-amigo"
+                                            alt="{{ item.livro.titulo }}"
+                                        >
+                                    {% else %}
+                                        <img
+                                            src="{{ url_for('static', filename=item.livro.capa) }}"
+                                            class="foto-amigo"
+                                            alt="{{ item.livro.titulo }}"
+                                        >
+                                    {% endif %}
+
                                 {% endif %}
 
                                 <div class="dados-amigo">

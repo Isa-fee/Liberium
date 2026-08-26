@@ -631,16 +631,29 @@
 
                             {% if leitura_atual.livro.capa %}
 
-                            <img
-                                src="{{ url_for('static', filename=leitura_atual.livro.capa) }}"
-                                alt="{{ leitura_atual.livro.titulo }}"
-                            >
+                                {% if leitura_atual.livro.capa.startswith('http') %}
+
+                                    <!-- Capa de livro vindo da API -->
+                                    <img
+                                        src="{{ leitura_atual.livro.capa }}"
+                                        alt="{{ leitura_atual.livro.titulo }}"
+                                    >
+
+                                {% else %}
+
+                                    <!-- Capa de livro do banco local -->
+                                    <img
+                                        src="{{ url_for('static', filename=leitura_atual.livro.capa) }}"
+                                        alt="{{ leitura_atual.livro.titulo }}"
+                                    >
+
+                                {% endif %}
 
                             {% else %}
 
-                            <div class="capa-placeholder">
-                                📖
-                            </div>
+                                <div class="capa-placeholder">
+                                    📖
+                                </div>
 
                             {% endif %}
 
