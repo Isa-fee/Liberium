@@ -78,6 +78,58 @@ class Amizade(db.Model):
         foreign_keys=[amigo_id],
         backref="solicitacoes_recebidas"
     )
+class ConviteClube(db.Model):
+    __tablename__ = "convites_clube"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    clube_id = db.Column(
+        db.Integer,
+        db.ForeignKey("clubes.id"),
+        nullable=False
+    )
+
+    remetente_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    destinatario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="pendente"
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
+    )
+
+    clube = db.relationship(
+        "Clube",
+        backref="convites"
+    )
+
+    remetente = db.relationship(
+        "Usuario",
+        foreign_keys=[remetente_id]
+    )
+
+    destinatario = db.relationship(
+        "Usuario",
+        foreign_keys=[destinatario_id]
+    )
 
 class Livro(db.Model):
     __tablename__ = "livros"
