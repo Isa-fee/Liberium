@@ -110,17 +110,29 @@
         {% else %}
 
             <div class="nenhum-resultado">
-
                 <h3>
-                    Nenhum livro encontrado
+                    Não encontramos esse livro
                 </h3>
-
                 <p>
-                    Tente pesquisar utilizando outro termo.
+                    O livro que você procura ainda não está
+                    disponível no Liberium.
                 </p>
-
+                <p>
+                    Você pode solicitar o cadastro para que
+                    nossa equipe analise as informações.
+                </p>
+                <a
+                    href="{{ url_for(
+                        'books_bp.solicitar_livro',
+                        titulo=termo
+                    ) }}"
+                    class="btn-solicitar-livro"
+                >
+                    Solicitar cadastro
+                </a>
+        
             </div>
-
+        
         {% endif %}
 
     </div>

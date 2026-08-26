@@ -668,3 +668,65 @@ class Discussao(db.Model):
     clube = db.relationship(
         'Clube', backref=db.backref('discussoes', lazy=True)
     )
+class SolicitacaoLivro(db.Model):
+    __tablename__ = "solicitacoes_livros"
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    titulo = db.Column(
+        db.String(255),
+        nullable=False
+    )
+    autor = db.Column(
+        db.String(255),
+        nullable=False
+    )
+    descricao = db.Column(
+        db.Text,
+        nullable=True
+    )
+    genero = db.Column(
+        db.String(100),
+        nullable=True
+    )
+    editora = db.Column(
+        db.String(150),
+        nullable=True
+    )
+    paginas = db.Column(
+        db.Integer,
+        nullable=True
+    )
+    ano = db.Column(
+        db.String(20),
+        nullable=True
+    )
+    idioma = db.Column(
+        db.String(50),
+        nullable=True
+    )
+    isbn = db.Column(
+        db.String(30),
+        nullable=True
+    )
+    solicitante_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+    # pendente | aprovado | recusado
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="pendente"
+    )
+    data_solicitacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
+    solicitante = db.relationship(
+        "Usuario",
+        backref="solicitacoes_livros"
+    )
