@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Convites | Liberium
+{% endblock %}
+
+{% block content %}
+
+<section class="convites-container">
+
+    <div class="convites-header">
+
+        <a
+            href="{{ url_for('clubes.listar_clubes') }}"
+            class="btn-voltar"
+        >
+            ← Voltar para clubes
+        </a>
+
+        <h1>
+            Convites para clubes
+        </h1>
+
+        <p>
+            Veja os convites que você recebeu para participar
+            de clubes de leitura.
+        </p>
+
+    </div>
+
+
+    {% if convites %}
+
+        <div class="lista-convites-recebidos">
+
+            {% for convite in convites %}
+
+                <div class="card-convite">
+
+                    <div class="convite-informacoes">
+
+                        {% if convite.clube.imagem %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=convite.clube.imagem
+                                ) }}"
+                                alt="{{ convite.clube.nome }}"
+                                class="convite-capa"
+                            >
+
+                        {% else %}
+
+                            <div class="convite-avatar">
+                                {{ convite.clube.nome[0] if convite.clube.nome else '?' }}
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="convite-texto">
+
+                            <h2>
+                                {{ convite.clube.nome }}
+                            </h2>
+
+                            <p>
+                                <strong>
+                                    {{ convite.remetente.nome }}
+                                </strong>
+                                convidou você para participar deste clube.
+                            </p>
+
+                            {% if convite.clube.livro %}
+
+                                <span>
+                                    Leitura atual:
+                                    {{ convite.clube.livro.titulo }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="convite-acoes">
+
+                        <form
+                            action="{{ url_for(
+                                'clubes.aceitar_convite',
+                                convite_id=convite.id
+                            ) }}"
+                            method="POST"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn-primario"
+                            >
+                                Aceitar
+                            </button>
+
+                        </form>
+
+
+                        <form
+                            action="{{ url_for(
+                                'clubes.recusar_convite',
+                                convite_id=convite.id
+                            ) }}"
+                            method="POST"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn-secundario"
+                            >
+                                Recusar
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="sem-convites">
+
+            <h2>
+                Nenhum convite no momento
+            </h2>
+
+            <p>
+                Quando alguém convidar você para um clube,
+                o convite aparecerá aqui.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
