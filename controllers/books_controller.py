@@ -1513,3 +1513,108 @@ def recusar_solicitacao(solicitacao_id):
     return redirect(
         url_for("books_bp.solicitacoes_admin")
     )
+# ======================================
+# ADMIN - EDITAR LIVRO
+# ======================================
+@books_bp.route(
+    "/admin/livros/<int:livro_id>/editar",
+    methods=["GET", "POST"]
+)
+@login_required
+def editar_livro_admin(livro_id):
+    # ==================================
+    # SOMENTE ADMINISTRADORES
+    # ==================================
+    if current_user.tipo != "administrador":
+        flash(
+            "Você não possui permissão para realizar essa ação.",
+            "danger"
+        )
+        return redirect(
+            url_for("home.home")
+        )
+    livro = Livro.query.get_or_404(
+        livro_id
+    )
+    # ==================================
+    # SALVAR ALTERAÇÕES
+    # ==================================
+    if request.method == "POST":
+        titulo = request.form.get(
+            "titulo",
+            ""
+        ).strip()
+        autor = request.form.get(
+            "autor",
+            ""
+        ).strip()
+        descricao = request.form.get(
+            "descricao",
+            ""
+        ).strip()
+        genero = request.form.get(
+            "genero",
+            ""
+        ).strip()
+        editora = request.form.get(
+            "editora",
+            ""
+        ).strip()
+        paginas = request.form.get(
+            "paginas",
+            type=int
+        )
+        ano = request.form.get(
+            "ano",
+            ""
+        ).strip()
+        idioma = request.form.get(
+            "idioma",
+            ""
+        ).strip()
+        # ==================================
+        # VALIDAÇÃO
+        # ==================================
+        if not titulo or not autor:
+
+            flash(
+                "Título e autor são obrigatórios.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "books_bp.editar_livro_admin",
+                    livro_id=livro.id
+                )
+            )
+        # ==================================
+        # ATUALIZAR LIVRO
+        # ==================================
+        livro.titulo = titulo
+        livro.autor = autor
+        livro.descricao = descricao or None
+        livro.genero = genero or None
+        livro.editora = editora or None
+        livro.paginas = paginas
+        livro.ano = ano or None
+        livro.idioma = idioma or None
+        db.session.commit()
+        flash(
+            f'"{livro.titulo}" foi atualizado com sucesso!',
+            "success"
+        )
+        return redirect(
+            url_for(
+                "books_bp.ver",
+                id=livro.id
+            )
+        )
+    # ==================================
+    # EXIBIR FORMULÁRIO
+    # ==================================
+
+    return render_template(
+        "books/editar_livro_admin.html",
+        livro=livro
+    )

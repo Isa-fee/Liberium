@@ -106,6 +106,22 @@
                 </a>
 
             {% endfor %}
+            <div class="solicitar-apos-resultados">
+                <h3>Não encontrou o livro que procurava?</h3>
+                <p>
+                    Se o livro não apareceu nos resultados,
+                    você pode solicitar o cadastro dele no Liberium.
+                </p>
+                <a
+                    href="{{ url_for(
+                        'books_bp.solicitar_livro',
+                        titulo=termo
+                    ) }}"
+                    class="btn-solicitar-livro"
+                >
+                    Solicitar cadastro
+                </a>
+            </div>
 
         {% else %}
 
