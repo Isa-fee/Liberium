@@ -1,4 +1,5 @@
 import json
+import os
 
 from extensions import db
 from models import Livro, ItemColecionavel, Usuario, Amizade
@@ -192,3 +193,73 @@ def popular_amizades_teste():
     db.session.commit()
 
     print("Amizades de teste criadas com sucesso!")
+
+# ==========================================
+# ADMINISTRADOR
+# ==========================================
+
+def criar_administrador():
+
+    email = os.getenv("ADMIN_EMAIL")
+    senha = os.getenv("ADMIN_PASSWORD")
+    nome = os.getenv(
+        "ADMIN_NOME",
+        "Administrador"
+    )
+
+    # Verifica se o administrador
+    # foi configurado no .env
+    if not email or not senha:
+
+        print(
+            "Administrador não configurado no .env."
+        )
+
+        return
+
+    email = email.strip().lower()
+
+    # Procura uma conta com esse e-mail
+    usuario = Usuario.query.filter_by(
+        email=email
+    ).first()
+    # ======================================
+    # CONTA JÁ EXISTE
+    # ======================================
+
+    if usuario:
+
+        if usuario.tipo != "administrador":
+
+            usuario.tipo = "administrador"
+
+            db.session.commit()
+
+            print(
+                f"{usuario.nome} agora é administrador(a)."
+            )
+
+        else:
+
+            print(
+                f"Administrador {usuario.nome} já está cadastrado."
+            )
+
+        return
+    # ======================================
+    # CONTA NÃO EXISTE
+    # ======================================
+    administrador = Usuario(
+        nome=nome,
+        email=email,
+        senha=generate_password_hash(senha),
+        tipo="administrador"
+    )
+
+    db.session.add(administrador)
+
+    db.session.commit()
+
+    print(
+        f"Administrador {nome} criado com sucesso!"
+    )
