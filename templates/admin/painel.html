@@ -25,32 +25,23 @@ Painel Administrativo | Liberium
             </h1>
 
             <p>
-                Gerencie o conteúdo e a comunidade do Liberium.
+                Gerencie o catálogo de livros do Liberium.
             </p>
 
         </div>
 
 
         <!-- ==============================
-             ESTATÍSTICAS
+             VISÃO GERAL
         =============================== -->
 
         <div class="admin-estatisticas">
 
             <div class="admin-card-estatistica">
 
-                <span>Usuários</span>
-
-                <strong>
-                    {{ total_usuarios }}
-                </strong>
-
-            </div>
-
-
-            <div class="admin-card-estatistica">
-
-                <span>Livros</span>
+                <span>
+                    Livros cadastrados
+                </span>
 
                 <strong>
                     {{ total_livros }}
@@ -61,18 +52,9 @@ Painel Administrativo | Liberium
 
             <div class="admin-card-estatistica">
 
-                <span>Clubes</span>
-
-                <strong>
-                    {{ total_clubes }}
-                </strong>
-
-            </div>
-
-
-            <div class="admin-card-estatistica">
-
-                <span>Solicitações pendentes</span>
+                <span>
+                    Solicitações pendentes
+                </span>
 
                 <strong>
                     {{ solicitacoes_pendentes }}
@@ -92,12 +74,13 @@ Painel Administrativo | Liberium
             <h2>
                 Gerenciamento
             </h2>
-
-
-            <!-- SOLICITAÇÕES -->
-
+            <!-- ==========================
+                 SOLICITAÇÕES DE LIVROS
+            =========================== -->
             <a
-                href="{{ url_for('books_bp.solicitacoes_admin') }}"
+                href="{{ url_for(
+                    'books_bp.solicitacoes_admin'
+                ) }}"
                 class="admin-card"
             >
 
@@ -106,79 +89,43 @@ Painel Administrativo | Liberium
                 </h3>
 
                 <p>
-                    Analise livros enviados pelos usuários
-                    e aprove ou recuse solicitações.
+                    Analise os livros solicitados pelos usuários
+                    e aprove ou recuse o cadastro.
                 </p>
 
                 {% if solicitacoes_pendentes > 0 %}
 
-                    <span>
+                    <span class="admin-pendencias">
+
                         {{ solicitacoes_pendentes }}
+
+                        solicitação{% if solicitacoes_pendentes != 1 %}ões{% endif %}
+
                         pendente{% if solicitacoes_pendentes != 1 %}s{% endif %}
+
                     </span>
 
                 {% endif %}
 
             </a>
-
-
-            <!-- LIVROS -->
-
+            <!-- ==========================
+                 GERENCIAR LIVROS
+            =========================== -->
             <a
-                href="{{ url_for('books_bp.catalogo') }}"
+                href="{{ url_for(
+                    'books_bp.catalogo'
+                ) }}"
                 class="admin-card"
             >
-
                 <h3>
                     Gerenciar livros
                 </h3>
-
                 <p>
                     Consulte os livros cadastrados no catálogo
-                    para editar ou excluir informações.
+                    para visualizar, editar ou excluir informações.
                 </p>
 
             </a>
-
-
-            <!-- USUÁRIOS -->
-
-            <div class="admin-card admin-card-desabilitado">
-
-                <h3>
-                    Gerenciar usuários
-                </h3>
-
-                <p>
-                    Visualize e gerencie os usuários cadastrados
-                    no Liberium.
-                </p>
-
-                <small>
-                    Em breve
-                </small>
-
-            </div>
-
-
-            <!-- CLUBES -->
-
-            <div class="admin-card admin-card-desabilitado">
-
-                <h3>
-                    Gerenciar clubes
-                </h3>
-
-                <p>
-                    Visualize os clubes de leitura criados
-                    pela comunidade.
-                </p>
-
-                <small>
-                    Em breve
-                </small>
-
-            </div>
 
         </div>
 
