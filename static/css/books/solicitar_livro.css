@@ -1,0 +1,593 @@
+/* ========================================
+   PÁGINA - SOLICITAR LIVRO
+======================================== */
+
+.pagina-solicitar-livro {
+    min-height: 100vh;
+    padding: 45px 30px 70px;
+
+    background: #fdfcfb;
+}
+
+
+/* ========================================
+   CONTAINER
+======================================== */
+
+.solicitar-livro-container {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.cabecalho-solicitacao {
+    margin-bottom: 32px;
+}
+
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 28px;
+
+    color: #6c5338;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-voltar:hover {
+    color: #442b1a;
+
+    transform: translateX(-3px);
+}
+
+
+.identificacao-solicitacao {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #879d84;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+
+.cabecalho-solicitacao h1 {
+    margin: 0 0 10px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+}
+
+
+.cabecalho-solicitacao p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #786a5d;
+
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+
+/* ========================================
+   FORMULÁRIO
+======================================== */
+
+.form-solicitar-livro {
+    padding: 38px 42px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e2dc;
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 30px rgba(68, 43, 26, 0.06);
+}
+
+
+/* ========================================
+   CAMPOS
+======================================== */
+
+.campo {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.campo-grande {
+    width: 100%;
+
+    margin-bottom: 23px;
+}
+
+
+.linha-campos {
+    display: flex;
+
+    gap: 22px;
+
+    margin-bottom: 23px;
+}
+
+
+.campo label {
+    color: #513923;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+
+.campo input,
+.campo textarea,
+.campo select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    color: #442b1a;
+
+    background: #fdfcfb;
+
+    border: 1px solid #ddd5cd;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #aaa097;
+}
+
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+    background: #ffffff;
+
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.13);
+}
+
+
+.campo textarea {
+    min-height: 130px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+
+.campo select {
+    cursor: pointer;
+}
+
+
+/* ========================================
+   UPLOAD DA CAPA
+======================================== */
+
+.campo-capa {
+    margin-top: 4px;
+}
+
+
+.area-upload-capa {
+    position: relative;
+
+    min-height: 125px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 22px;
+
+    background: #faf9f7;
+
+    border: 1.5px dashed #b9c4b6;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.area-upload-capa:hover {
+    background: #f5f7f3;
+
+    border-color: #879d84;
+}
+
+
+/* INPUT INVISÍVEL POR CIMA DA ÁREA */
+
+.area-upload-capa input[type="file"] {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+
+.texto-upload-capa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+.texto-upload-capa::before {
+    content: "＋";
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 3px;
+
+    color: #5f775d;
+
+    background: #edf2eb;
+
+    border-radius: 50%;
+
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+
+.texto-upload-capa strong {
+    color: #513923;
+
+    font-size: 0.95rem;
+}
+
+
+.texto-upload-capa span {
+    color: #91857a;
+
+    font-size: 0.8rem;
+}
+
+
+/* ========================================
+   PREVIEW DA CAPA
+======================================== */
+
+.preview-capa-container {
+    margin-top: 18px;
+
+    padding: 18px;
+
+    background: #f8f7f5;
+
+    border: 1px solid #e5dfd8;
+    border-radius: 12px;
+}
+
+
+.titulo-preview {
+    display: block;
+
+    margin-bottom: 13px;
+
+    color: #6c5338;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+
+.preview-capa-wrapper {
+    width: 115px;
+    height: 165px;
+
+    overflow: hidden;
+
+    background: #eee9e4;
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 5px 15px rgba(68, 43, 26, 0.12);
+}
+
+
+.preview-capa-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.btn-remover-capa {
+    margin-top: 13px;
+
+    padding: 7px 11px;
+
+    color: #8a5548;
+
+    background: transparent;
+
+    border: 1px solid #d9c5bf;
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-remover-capa:hover {
+    color: #713d32;
+
+    background: #f7ece9;
+
+    border-color: #cdaea5;
+}
+
+
+/* ========================================
+   AVISO
+======================================== */
+
+.aviso-solicitacao {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-top: 8px;
+    margin-bottom: 28px;
+
+    padding: 17px 19px;
+
+    background: #f4f6f1;
+
+    border: 1px solid #dde5da;
+    border-radius: 10px;
+}
+
+
+.icone-aviso {
+    flex-shrink: 0;
+
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    background: #879d84;
+
+    border-radius: 50%;
+
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+
+.aviso-solicitacao strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #4f654c;
+
+    font-size: 0.88rem;
+}
+
+
+.aviso-solicitacao p {
+    margin: 0;
+
+    color: #687565;
+
+    font-size: 0.84rem;
+    line-height: 1.55;
+}
+
+
+/* ========================================
+   BOTÕES
+======================================== */
+
+.acoes-formulario {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #eee9e4;
+}
+
+
+.btn-cancelar,
+.btn-enviar-solicitacao {
+    min-height: 43px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 11px 20px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* CANCELAR */
+
+.btn-cancelar {
+    color: #6c5338;
+
+    background: #ffffff;
+
+    border: 1px solid #d8cec4;
+}
+
+
+.btn-cancelar:hover {
+    color: #442b1a;
+
+    background: #f7f4f1;
+
+    border-color: #c9baac;
+}
+
+
+/* ENVIAR */
+
+.btn-enviar-solicitacao {
+    color: #ffffff;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+}
+
+
+.btn-enviar-solicitacao:hover {
+    background: #2d4433;
+
+    border-color: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 700px) {
+
+    .pagina-solicitar-livro {
+        padding: 30px 18px 50px;
+    }
+
+
+    .cabecalho-solicitacao h1 {
+        font-size: 2rem;
+    }
+
+
+    .form-solicitar-livro {
+        padding: 28px 22px;
+    }
+
+
+    .linha-campos {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+
+    .acoes-formulario {
+        flex-direction: column-reverse;
+    }
+
+
+    .btn-cancelar,
+    .btn-enviar-solicitacao {
+        width: 100%;
+    }
+
+}

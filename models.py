@@ -738,6 +738,10 @@ class SolicitacaoLivro(db.Model):
         db.Text,
         nullable=True
     )
+    capa = db.Column(
+        db.String(500),
+        nullable=True
+    )
     genero = db.Column(
         db.String(100),
         nullable=True

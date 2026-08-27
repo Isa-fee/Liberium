@@ -4,29 +4,51 @@
 Editar {{ livro.titulo }} | Liberium
 {% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin/editar_livro_admin.css') }}"
+>
+{% endblock %}
+
+
 {% block content %}
 
-<section class="pagina-editar-livro-admin">
+<section class="pagina-editar-livro">
 
     <div class="editar-livro-container">
 
+        <!-- ========================================
+             CABEÇALHO
+        ========================================= -->
+
         <div class="cabecalho-editar-livro">
 
-            <span>
+            <a
+                href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                class="btn-voltar"
+            >
+                ← Voltar para o livro
+            </a>
+
+            <span class="identificacao-pagina">
                 Administração
             </span>
 
-            <h1>
-                Editar livro
-            </h1>
+            <h1>Editar livro</h1>
 
             <p>
-                Corrija ou atualize as informações
-                disponíveis no catálogo.
+                Atualize as informações de
+                <strong>{{ livro.titulo }}</strong>
+                no catálogo do Liberium.
             </p>
 
         </div>
 
+
+        <!-- ========================================
+             FORMULÁRIO
+        ========================================= -->
 
         <form
             method="POST"
@@ -34,112 +56,353 @@ Editar {{ livro.titulo }} | Liberium
                 'books_bp.editar_livro_admin',
                 livro_id=livro.id
             ) }}"
+            enctype="multipart/form-data"
             class="form-editar-livro"
         >
 
-            <label>
-                Título *
+            <div class="layout-edicao">
 
-                <input
-                    type="text"
-                    name="titulo"
-                    value="{{ livro.titulo }}"
-                    required
-                >
-            </label>
+                <!-- =================================
+                     COLUNA DA CAPA
+                ================================== -->
 
+                <aside class="coluna-capa">
 
-            <label>
-                Autor(a) *
+                    <span class="titulo-secao">
+                        Capa do livro
+                    </span>
 
-                <input
-                    type="text"
-                    name="autor"
-                    value="{{ livro.autor or '' }}"
-                    required
-                >
-            </label>
+                    <div class="capa-atual">
 
+                        {% if livro.capa %}
 
-            <label>
-                Gênero
+                            {% if livro.capa.startswith('http') %}
 
-                <input
-                    type="text"
-                    name="genero"
-                    value="{{ livro.genero or '' }}"
-                >
-            </label>
+                                <img
+                                    id="imagem-capa-exibida"
+                                    src="{{ livro.capa }}"
+                                    alt="Capa de {{ livro.titulo }}"
+                                    class="preview-capa-atual"
+                                >
 
+                            {% else %}
 
-            <label>
-                Editora
+                                <img
+                                    id="imagem-capa-exibida"
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=livro.capa
+                                    ) }}"
+                                    alt="Capa de {{ livro.titulo }}"
+                                    class="preview-capa-atual"
+                                >
 
-                <input
-                    type="text"
-                    name="editora"
-                    value="{{ livro.editora or '' }}"
-                >
-            </label>
+                            {% endif %}
 
+                        {% else %}
 
-            <label>
-                Número de páginas
+                            <div
+                                class="sem-capa"
+                                id="sem-capa"
+                            >
+                                <span class="icone-sem-capa">
+                                    ◇
+                                </span>
 
-                <input
-                    type="number"
-                    name="paginas"
-                    min="1"
-                    value="{{ livro.paginas or '' }}"
-                >
-            </label>
+                                <span>
+                                    Sem capa
+                                </span>
+                            </div>
 
+                            <img
+                                id="imagem-capa-exibida"
+                                src=""
+                                alt="Pré-visualização da capa"
+                                class="preview-capa-atual"
+                                style="display: none;"
+                            >
 
-            <label>
-                Ano
+                        {% endif %}
 
-                <input
-                    type="text"
-                    name="ano"
-                    value="{{ livro.ano or '' }}"
-                >
-            </label>
+                    </div>
 
 
-            <label>
-                Idioma
+                    <!-- UPLOAD -->
 
-                <input
-                    type="text"
-                    name="idioma"
-                    value="{{ livro.idioma or '' }}"
-                >
-            </label>
+                    <div class="area-trocar-capa">
+
+                        <label
+                            for="capa"
+                            class="btn-trocar-capa"
+                        >
+                            Trocar capa
+                        </label>
+
+                        <input
+                            type="file"
+                            id="capa"
+                            name="capa"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                        >
+
+                        <p class="ajuda-capa">
+                            JPG, JPEG, PNG ou WEBP.
+                            Se nenhuma imagem for selecionada,
+                            a capa atual será mantida.
+                        </p>
+
+                        <span
+                            id="nome-arquivo"
+                            class="nome-arquivo"
+                        ></span>
+
+                    </div>
+
+                </aside>
 
 
-            <label>
-                Sinopse
+                <!-- =================================
+                     COLUNA DOS DADOS
+                ================================== -->
 
-                <textarea
-                    name="descricao"
-                    rows="8"
-                >{{ livro.descricao or '' }}</textarea>
+                <div class="coluna-dados">
 
-            </label>
+                    <div class="titulo-formulario">
+
+                        <span class="titulo-secao">
+                            Informações do livro
+                        </span>
+
+                        <p>
+                            Os campos com * são obrigatórios.
+                        </p>
+
+                    </div>
 
 
-            <div class="acoes-editar-livro">
+                    <!-- TÍTULO -->
+
+                    <div class="campo-edicao">
+
+                        <label for="titulo">
+                            Título *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="titulo"
+                            name="titulo"
+                            value="{{ livro.titulo or '' }}"
+                            placeholder="Nome do livro"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AUTOR -->
+
+                    <div class="campo-edicao">
+
+                        <label for="autor">
+                            Autor(a) *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="autor"
+                            name="autor"
+                            value="{{ livro.autor or '' }}"
+                            placeholder="Nome do autor ou autora"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- GÊNERO + EDITORA -->
+
+                    <div class="linha-campos-edicao">
+
+                        <div class="campo-edicao">
+
+                            <label for="genero">
+                                Gênero
+                            </label>
+
+                            <input
+                                type="text"
+                                id="genero"
+                                name="genero"
+                                value="{{ livro.genero or '' }}"
+                                placeholder="Ex.: Fantasia"
+                            >
+
+                        </div>
+
+
+                        <div class="campo-edicao">
+
+                            <label for="editora">
+                                Editora
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editora"
+                                name="editora"
+                                value="{{ livro.editora or '' }}"
+                                placeholder="Nome da editora"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PÁGINAS + ANO -->
+
+                    <div class="linha-campos-edicao">
+
+                        <div class="campo-edicao">
+
+                            <label for="paginas">
+                                Número de páginas
+                            </label>
+
+                            <input
+                                type="number"
+                                id="paginas"
+                                name="paginas"
+                                value="{{ livro.paginas or '' }}"
+                                min="1"
+                                placeholder="Ex.: 320"
+                            >
+
+                        </div>
+
+
+                        <div class="campo-edicao">
+
+                            <label for="ano">
+                                Ano de publicação
+                            </label>
+
+                            <input
+                                type="text"
+                                id="ano"
+                                name="ano"
+                                value="{{ livro.ano or '' }}"
+                                placeholder="Ex.: 2024"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- IDIOMA -->
+
+                    <div class="campo-edicao">
+
+                        <label for="idioma">
+                            Idioma
+                        </label>
+
+                        <select
+                            id="idioma"
+                            name="idioma"
+                        >
+
+                            <option
+                                value=""
+                                {% if not livro.idioma %}
+                                    selected
+                                {% endif %}
+                            >
+                                Selecione
+                            </option>
+
+                            <option
+                                value="pt"
+                                {% if livro.idioma == "pt" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Português
+                            </option>
+
+                            <option
+                                value="en"
+                                {% if livro.idioma == "en" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Inglês
+                            </option>
+
+                            <option
+                                value="es"
+                                {% if livro.idioma == "es" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Espanhol
+                            </option>
+
+                            <option
+                                value="fr"
+                                {% if livro.idioma == "fr" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Francês
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SINOPSE -->
+
+                    <div class="campo-edicao">
+
+                        <label for="descricao">
+                            Sinopse
+                        </label>
+
+                        <textarea
+                            id="descricao"
+                            name="descricao"
+                            rows="7"
+                            placeholder="Sinopse do livro"
+                        >{{ livro.descricao or '' }}</textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 AÇÕES
+            ========================================= -->
+
+            <div class="acoes-edicao">
 
                 <a
-                    href="{{ url_for(
-                        'books_bp.ver',
-                        id=livro.id
-                    ) }}"
+                    href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                    class="btn-cancelar-edicao"
                 >
                     Cancelar
                 </a>
 
-                <button type="submit">
+                <button
+                    type="submit"
+                    class="btn-salvar-edicao"
+                >
                     Salvar alterações
                 </button>
 
@@ -150,5 +413,75 @@ Editar {{ livro.titulo }} | Liberium
     </div>
 
 </section>
+
+
+<!-- ========================================
+     PREVIEW DA NOVA CAPA
+========================================= -->
+
+<script>
+
+    const inputCapa = document.getElementById("capa");
+
+    const imagemCapa = document.getElementById(
+        "imagem-capa-exibida"
+    );
+
+    const semCapa = document.getElementById(
+        "sem-capa"
+    );
+
+    const nomeArquivo = document.getElementById(
+        "nome-arquivo"
+    );
+
+
+    inputCapa.addEventListener(
+        "change",
+        function () {
+
+            const arquivo = this.files[0];
+
+
+            if (!arquivo) {
+
+                nomeArquivo.textContent = "";
+
+                return;
+
+            }
+
+
+            nomeArquivo.textContent =
+                "Nova imagem: " + arquivo.name;
+
+
+            const leitor = new FileReader();
+
+
+            leitor.onload = function (evento) {
+
+                imagemCapa.src = evento.target.result;
+
+                imagemCapa.style.display = "block";
+
+
+                if (semCapa) {
+
+                    semCapa.style.display = "none";
+
+                }
+
+            };
+
+
+            leitor.readAsDataURL(
+                arquivo
+            );
+
+        }
+    );
+
+</script>
 
 {% endblock %}

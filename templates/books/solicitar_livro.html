@@ -4,42 +4,65 @@
 Solicitar livro | Liberium
 {% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/books/solicitar_livro.css') }}"
+>
+{% endblock %}
+
 {% block content %}
 
 <section class="pagina-solicitar-livro">
 
-    <div class="solicitacao-container">
+    <div class="solicitar-livro-container">
+
+        <!-- =====================================
+             CABEÇALHO
+        ====================================== -->
 
         <div class="cabecalho-solicitacao">
 
             <a
                 href="{{ url_for('books_bp.catalogo') }}"
-                class="voltar-solicitacao"
+                class="btn-voltar"
             >
                 ← Voltar ao catálogo
             </a>
+
+            <span class="identificacao-solicitacao">
+                Catálogo
+            </span>
 
             <h1>
                 Solicitar cadastro de livro
             </h1>
 
             <p>
-                Não encontrou um livro no Liberium?
-                Preencha as informações abaixo.
-                Sua solicitação será analisada por
-                um administrador.
+                Não encontrou o livro que procura?
+                Envie as informações abaixo para que
+                nossa equipe possa analisar o cadastro.
             </p>
 
         </div>
 
 
+        <!-- =====================================
+             FORMULÁRIO
+        ====================================== -->
+
         <form
             method="POST"
             action="{{ url_for('books_bp.solicitar_livro') }}"
-            class="form-solicitacao"
+            enctype="multipart/form-data"
+            class="form-solicitar-livro"
         >
 
-            <div class="campo-solicitacao">
+            <!-- =====================================
+                 TÍTULO
+            ====================================== -->
+
+            <div class="campo campo-grande">
 
                 <label for="titulo">
                     Título *
@@ -49,15 +72,19 @@ Solicitar livro | Liberium
                     type="text"
                     id="titulo"
                     name="titulo"
-                    value="{{ titulo }}"
-                    placeholder="Nome do livro"
+                    value="{{ titulo or '' }}"
+                    placeholder="Digite o título do livro"
                     required
                 >
 
             </div>
 
 
-            <div class="campo-solicitacao">
+            <!-- =====================================
+                 AUTOR
+            ====================================== -->
+
+            <div class="campo campo-grande">
 
                 <label for="autor">
                     Autor(a) *
@@ -67,14 +94,87 @@ Solicitar livro | Liberium
                     type="text"
                     id="autor"
                     name="autor"
-                    placeholder="Nome do autor ou autora"
+                    placeholder="Digite o nome do autor ou autora"
                     required
                 >
 
             </div>
 
 
-            <div class="campo-solicitacao">
+            <!-- =====================================
+                 CAPA
+            ====================================== -->
+
+            <div class="campo campo-grande campo-capa">
+
+                <label for="capa">
+                    Capa do livro
+                </label>
+
+                <div class="area-upload-capa">
+
+                    <input
+                        type="file"
+                        id="capa"
+                        name="capa"
+                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    >
+
+                    <div class="texto-upload-capa">
+
+                        <strong>
+                            Selecione uma imagem da capa
+                        </strong>
+
+                        <span>
+                            JPG, JPEG, PNG ou WEBP
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PREVIEW -->
+
+                <div
+                    id="preview-capa-container"
+                    class="preview-capa-container"
+                    style="display: none;"
+                >
+
+                    <span class="titulo-preview">
+                        Pré-visualização
+                    </span>
+
+                    <div class="preview-capa-wrapper">
+
+                        <img
+                            id="preview-capa"
+                            src=""
+                            alt="Pré-visualização da capa"
+                        >
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="remover-capa"
+                        class="btn-remover-capa"
+                    >
+                        Remover imagem
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 SINOPSE
+            ====================================== -->
+
+            <div class="campo campo-grande">
 
                 <label for="descricao">
                     Sinopse
@@ -83,15 +183,20 @@ Solicitar livro | Liberium
                 <textarea
                     id="descricao"
                     name="descricao"
-                    placeholder="Escreva uma breve sinopse do livro"
+                    rows="6"
+                    placeholder="Digite uma breve descrição do livro..."
                 ></textarea>
 
             </div>
 
 
+            <!-- =====================================
+                 GÊNERO + EDITORA
+            ====================================== -->
+
             <div class="linha-campos">
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="genero">
                         Gênero
@@ -101,13 +206,13 @@ Solicitar livro | Liberium
                         type="text"
                         id="genero"
                         name="genero"
-                        placeholder="Ex.: Romance"
+                        placeholder="Ex.: Fantasia"
                     >
 
                 </div>
 
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="editora">
                         Editora
@@ -117,7 +222,7 @@ Solicitar livro | Liberium
                         type="text"
                         id="editora"
                         name="editora"
-                        placeholder="Editora"
+                        placeholder="Nome da editora"
                     >
 
                 </div>
@@ -125,12 +230,16 @@ Solicitar livro | Liberium
             </div>
 
 
+            <!-- =====================================
+                 PÁGINAS + ANO
+            ====================================== -->
+
             <div class="linha-campos">
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="paginas">
-                        Número de páginas
+                        Páginas
                     </label>
 
                     <input
@@ -144,10 +253,10 @@ Solicitar livro | Liberium
                 </div>
 
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="ano">
-                        Ano de publicação
+                        Ano
                     </label>
 
                     <input
@@ -162,9 +271,13 @@ Solicitar livro | Liberium
             </div>
 
 
+            <!-- =====================================
+                 IDIOMA + ISBN
+            ====================================== -->
+
             <div class="linha-campos">
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="idioma">
                         Idioma
@@ -200,7 +313,7 @@ Solicitar livro | Liberium
                 </div>
 
 
-                <div class="campo-solicitacao">
+                <div class="campo">
 
                     <label for="isbn">
                         ISBN
@@ -210,7 +323,7 @@ Solicitar livro | Liberium
                         type="text"
                         id="isbn"
                         name="isbn"
-                        placeholder="Ex.: 9781234567890"
+                        placeholder="Ex.: 9788535902778"
                     >
 
                 </div>
@@ -218,31 +331,159 @@ Solicitar livro | Liberium
             </div>
 
 
+            <!-- =====================================
+                 AVISO
+            ====================================== -->
+
             <div class="aviso-solicitacao">
 
-                <strong>Antes de enviar</strong>
+                <div class="icone-aviso">
+                    i
+                </div>
 
-                <p>
-                    Confira se as informações estão corretas.
-                    O envio não adiciona o livro automaticamente
-                    ao catálogo. A solicitação será analisada
-                    por um administrador.
-                </p>
+                <div>
+
+                    <strong>
+                        Antes de enviar
+                    </strong>
+
+                    <p>
+                        Confira se as informações estão corretas.
+                        O livro não será adicionado imediatamente ao
+                        catálogo. A solicitação será analisada por
+                        um administrador.
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <button
-                type="submit"
-                class="btn-enviar-solicitacao"
-            >
-                Enviar solicitação
-            </button>
+            <!-- =====================================
+                 AÇÕES
+            ====================================== -->
+
+            <div class="acoes-formulario">
+
+                <a
+                    href="{{ url_for('books_bp.catalogo') }}"
+                    class="btn-cancelar"
+                >
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-enviar-solicitacao"
+                >
+                    Enviar solicitação
+                </button>
+
+            </div>
 
         </form>
 
     </div>
 
 </section>
+
+
+<!-- =====================================
+     PREVIEW DA CAPA
+====================================== -->
+
+<script>
+
+    const inputCapa = document.getElementById("capa");
+
+    const previewContainer = document.getElementById(
+        "preview-capa-container"
+    );
+
+    const previewCapa = document.getElementById(
+        "preview-capa"
+    );
+
+    const botaoRemover = document.getElementById(
+        "remover-capa"
+    );
+
+
+    inputCapa.addEventListener(
+        "change",
+        function () {
+
+            const arquivo = this.files[0];
+
+            if (!arquivo) {
+
+                esconderPreview();
+
+                return;
+            }
+
+
+            const tiposPermitidos = [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
+
+
+            if (!tiposPermitidos.includes(arquivo.type)) {
+
+                alert(
+                    "Selecione uma imagem JPG, JPEG, PNG ou WEBP."
+                );
+
+                inputCapa.value = "";
+
+                esconderPreview();
+
+                return;
+            }
+
+
+            const leitor = new FileReader();
+
+
+            leitor.onload = function (evento) {
+
+                previewCapa.src = evento.target.result;
+
+                previewContainer.style.display = "block";
+
+            };
+
+
+            leitor.readAsDataURL(
+                arquivo
+            );
+
+        }
+    );
+
+
+    botaoRemover.addEventListener(
+        "click",
+        function () {
+
+            inputCapa.value = "";
+
+            esconderPreview();
+
+        }
+    );
+
+
+    function esconderPreview() {
+
+        previewCapa.src = "";
+
+        previewContainer.style.display = "none";
+
+    }
+
+</script>
 
 {% endblock %}

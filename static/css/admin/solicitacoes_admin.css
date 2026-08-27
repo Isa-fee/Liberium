@@ -1,0 +1,750 @@
+/* ========================================
+   PÁGINA - SOLICITAÇÕES ADMIN
+======================================== */
+
+.pagina-solicitacoes {
+    min-height: 100vh;
+
+    padding: 45px 30px 80px;
+
+    background: #fdfcfb;
+}
+
+
+.solicitacoes-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.cabecalho-solicitacoes {
+    margin-bottom: 32px;
+}
+
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 28px;
+
+    color: #6c5338;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-voltar:hover {
+    color: #442b1a;
+
+    transform: translateX(-3px);
+}
+
+
+.identificacao-pagina {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #879d84;
+
+    font-size: 0.77rem;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+.cabecalho-solicitacoes h1 {
+    margin: 0 0 10px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+
+.cabecalho-solicitacoes p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #786a5d;
+
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+
+/* ========================================
+   RESUMO
+======================================== */
+
+.resumo-solicitacoes {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+
+.resumo-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e9e3dd;
+    border-radius: 12px;
+}
+
+
+.resumo-numero {
+    margin-bottom: 3px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.8rem;
+}
+
+
+.resumo-texto {
+    color: #8a7b6e;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   LISTA
+======================================== */
+
+.lista-solicitacoes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.card-solicitacao {
+    display: grid;
+
+    grid-template-columns: 165px 1fr;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e0da;
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 22px rgba(68, 43, 26, 0.05);
+}
+
+
+/* ========================================
+   CAPA
+======================================== */
+
+.area-capa-solicitacao {
+    min-height: 255px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 22px;
+
+    background: #f4f2ee;
+
+    border-right: 1px solid #e7e0da;
+}
+
+
+.capa-solicitacao {
+    width: 120px;
+    height: 175px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 7px 18px rgba(68, 43, 26, 0.17);
+}
+
+
+/* ========================================
+   SEM CAPA
+======================================== */
+
+.sem-capa {
+    width: 120px;
+    height: 175px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: #9a8e83;
+
+    background: #eae6e1;
+
+    border: 1px dashed #cfc6bd;
+    border-radius: 6px;
+
+    font-size: 0.78rem;
+}
+
+
+.icone-sem-capa {
+    color: #879d84;
+
+    font-size: 2rem;
+}
+
+
+/* ========================================
+   CONTEÚDO
+======================================== */
+
+.conteudo-solicitacao {
+    min-width: 0;
+
+    padding: 26px 30px;
+}
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.linha-status {
+    margin-bottom: 8px;
+}
+
+
+.status-solicitacao {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 30px;
+
+    font-size: 0.69rem;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+
+.status-pendente {
+    color: #8b672e;
+
+    background: #f6eedc;
+}
+
+
+.status-aprovado {
+    color: #4f6b4c;
+
+    background: #e8efe6;
+}
+
+
+.status-recusado {
+    color: #8a5148;
+
+    background: #f4e7e4;
+}
+
+
+/* ========================================
+   TÍTULO
+======================================== */
+
+.titulo-solicitacao h2 {
+    margin: 0 0 5px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+
+    line-height: 1.25;
+}
+
+
+.autor-solicitacao {
+    margin: 0;
+
+    color: #8a7b6e;
+
+    font-size: 0.9rem;
+}
+
+
+.autor-solicitacao strong {
+    color: #6c5338;
+
+    font-weight: 600;
+}
+
+
+/* ========================================
+   INFORMAÇÕES DO LIVRO
+======================================== */
+
+.informacoes-livro {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px 25px;
+
+    margin-top: 20px;
+    padding: 15px 0;
+
+    border-top: 1px solid #eee9e4;
+    border-bottom: 1px solid #eee9e4;
+}
+
+
+.informacao {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 90px;
+}
+
+
+.informacao-label {
+    color: #9a8d81;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+
+.informacao-valor {
+    color: #584534;
+
+    font-size: 0.86rem;
+}
+
+
+/* ========================================
+   SINOPSE
+======================================== */
+
+.sinopse-solicitacao {
+    margin-top: 18px;
+}
+
+
+.titulo-secao-card {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #879d84;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+
+.sinopse-solicitacao p {
+    display: -webkit-box;
+
+    overflow: hidden;
+
+    margin: 0;
+
+    color: #716559;
+
+    font-size: 0.88rem;
+    line-height: 1.6;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
+
+/* ========================================
+   SOLICITANTE / DATA
+======================================== */
+
+.rodape-informacoes {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-top: 21px;
+}
+
+
+.solicitante,
+.data-solicitacao {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.nome-solicitante,
+.data-solicitacao > span:last-child {
+    color: #5d4c3e;
+
+    font-size: 0.83rem;
+}
+
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.acoes-solicitacao {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 22px;
+    padding-top: 19px;
+
+    border-top: 1px solid #eee9e4;
+}
+
+
+.form-acao {
+    margin: 0;
+}
+
+
+.btn-recusar,
+.btn-aprovar {
+    min-height: 40px;
+
+    padding: 9px 17px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* RECUSAR */
+
+.btn-recusar {
+    color: #87584f;
+
+    background: #ffffff;
+
+    border: 1px solid #d9c2bc;
+}
+
+
+.btn-recusar:hover {
+    color: #713f35;
+
+    background: #f8eeec;
+
+    border-color: #cbaaa1;
+}
+
+
+/* APROVAR */
+
+.btn-aprovar {
+    color: #ffffff;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+}
+
+
+.btn-aprovar:hover {
+    background: #2d4433;
+
+    border-color: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   SOLICITAÇÃO PROCESSADA
+======================================== */
+
+.solicitacao-processada {
+    margin-top: 22px;
+    padding-top: 16px;
+
+    color: #8a7b6e;
+
+    border-top: 1px solid #eee9e4;
+
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+
+/* ========================================
+   SEM SOLICITAÇÕES
+======================================== */
+
+.sem-solicitacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 65px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e0da;
+    border-radius: 16px;
+}
+
+
+.icone-vazio {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 17px;
+
+    color: #6d846a;
+
+    background: #edf1eb;
+
+    border-radius: 50%;
+
+    font-size: 2rem;
+}
+
+
+.sem-solicitacoes h2 {
+    margin: 0 0 8px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+
+.sem-solicitacoes p {
+    max-width: 430px;
+
+    margin: 0 0 22px;
+
+    color: #827468;
+
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+.btn-ir-catalogo {
+    display: inline-flex;
+
+    padding: 10px 17px;
+
+    color: #ffffff;
+
+    background: #36503c;
+
+    border-radius: 8px;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-ir-catalogo:hover {
+    background: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 850px) {
+
+    .resumo-solicitacoes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .card-solicitacao {
+        grid-template-columns: 140px 1fr;
+    }
+
+
+    .area-capa-solicitacao {
+        padding: 18px;
+    }
+
+
+    .capa-solicitacao,
+    .sem-capa {
+        width: 100px;
+        height: 150px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .pagina-solicitacoes {
+        padding: 30px 18px 55px;
+    }
+
+
+    .cabecalho-solicitacoes h1 {
+        font-size: 2rem;
+    }
+
+
+    .card-solicitacao {
+        display: block;
+    }
+
+
+    .area-capa-solicitacao {
+        min-height: auto;
+
+        border-right: none;
+        border-bottom: 1px solid #e7e0da;
+    }
+
+
+    .capa-solicitacao,
+    .sem-capa {
+        width: 120px;
+        height: 175px;
+    }
+
+
+    .conteudo-solicitacao {
+        padding: 23px 20px;
+    }
+
+
+    .rodape-informacoes {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .acoes-solicitacao {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+
+    .form-acao {
+        width: 100%;
+    }
+
+
+    .btn-recusar,
+    .btn-aprovar {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .resumo-solicitacoes {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .resumo-card {
+        padding: 16px;
+    }
+
+
+    .informacoes-livro {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+}

@@ -4,193 +4,418 @@
 Solicitações de livros | Liberium
 {% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin/solicitacoes_admin.css') }}"
+>
+{% endblock %}
+
 
 {% block content %}
 
-<section class="pagina-admin-solicitacoes">
+<section class="pagina-solicitacoes">
 
-    <div class="admin-solicitacoes-container">
+    <div class="solicitacoes-container">
 
-        <div class="cabecalho-admin">
+        <!-- ========================================
+             CABEÇALHO
+        ========================================= -->
 
-            <div>
+        <div class="cabecalho-solicitacoes">
 
-                <span class="admin-identificacao">
-                    Administração
-                </span>
+            <a
+                href="{{ url_for('books_bp.catalogo') }}"
+                class="btn-voltar"
+            >
+                ← Voltar ao catálogo
+            </a>
 
-                <h1>
-                    Solicitações de livros
-                </h1>
+            <span class="identificacao-pagina">
+                Administração
+            </span>
 
-                <p>
-                    Analise os livros enviados pelos usuários
-                    antes de adicioná-los ao catálogo.
-                </p>
+            <h1>
+                Solicitações de livros
+            </h1>
 
-            </div>
+            <p>
+                Analise os livros enviados pelos usuários
+                antes de adicioná-los ao catálogo do Liberium.
+            </p>
 
         </div>
 
 
-        <!-- ================================
-             CONTADORES
-        ================================= -->
+        <!-- ========================================
+             RESUMO
+        ========================================= -->
 
         <div class="resumo-solicitacoes">
 
-            <div class="resumo-item">
+            <div class="resumo-card">
 
-                <strong>
-                    {{ solicitacoes
-                        |selectattr("status", "equalto", "pendente")
-                        |list
-                        |length }}
-                </strong>
+                <span class="resumo-numero">
+                    {{ solicitacoes|length }}
+                </span>
 
-                <span>Pendentes</span>
-
-            </div>
-
-
-            <div class="resumo-item">
-
-                <strong>
-                    {{ solicitacoes
-                        |selectattr("status", "equalto", "aprovado")
-                        |list
-                        |length }}
-                </strong>
-
-                <span>Aprovadas</span>
+                <span class="resumo-texto">
+                    Solicitações
+                </span>
 
             </div>
 
 
-            <div class="resumo-item">
+            <div class="resumo-card">
 
-                <strong>
-                    {{ solicitacoes
-                        |selectattr("status", "equalto", "recusado")
-                        |list
-                        |length }}
-                </strong>
+                <span class="resumo-numero">
+                    {{
+                        solicitacoes
+                        | selectattr("status", "equalto", "pendente")
+                        | list
+                        | length
+                    }}
+                </span>
 
-                <span>Recusadas</span>
+                <span class="resumo-texto">
+                    Pendentes
+                </span>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span class="resumo-numero">
+                    {{
+                        solicitacoes
+                        | selectattr("status", "equalto", "aprovado")
+                        | list
+                        | length
+                    }}
+                </span>
+
+                <span class="resumo-texto">
+                    Aprovadas
+                </span>
+
+            </div>
+
+
+            <div class="resumo-card">
+
+                <span class="resumo-numero">
+                    {{
+                        solicitacoes
+                        | selectattr("status", "equalto", "recusado")
+                        | list
+                        | length
+                    }}
+                </span>
+
+                <span class="resumo-texto">
+                    Recusadas
+                </span>
 
             </div>
 
         </div>
 
 
-        <!-- ================================
+        <!-- ========================================
              SOLICITAÇÕES
-        ================================= -->
+        ========================================= -->
 
-        <div class="lista-solicitacoes-admin">
+        {% if solicitacoes %}
 
-            {% if solicitacoes %}
+            <div class="lista-solicitacoes">
 
                 {% for solicitacao in solicitacoes %}
 
-                    <article class="card-solicitacao-admin">
+                    <article class="card-solicitacao">
 
-                        <div class="info-solicitacao-admin">
+                    <!-- ==================================
+                        CAPA
+                    =================================== -->
 
-                            <div class="topo-card-solicitacao">
+                    {% set livro_aprovado = livros_aprovados.get(solicitacao.id) %}
 
-                                <h2>
-                                    {{ solicitacao.titulo }}
-                                </h2>
+                    <div class="area-capa-solicitacao">
 
-                                <span class="status-solicitacao status-{{ solicitacao.status }}">
-                                    {{ solicitacao.status|capitalize }}
+                        <!-- ==================================
+                            LIVRO JÁ APROVADO
+                            Usa a capa atual do catálogo
+                        =================================== -->
+
+                        {% if livro_aprovado and livro_aprovado.capa %}
+
+                            {% if livro_aprovado.capa.startswith('http') %}
+
+                                <img
+                                    src="{{ livro_aprovado.capa }}"
+                                    alt="Capa de {{ livro_aprovado.titulo }}"
+                                    class="capa-solicitacao"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=livro_aprovado.capa
+                                    ) }}"
+                                    alt="Capa de {{ livro_aprovado.titulo }}"
+                                    class="capa-solicitacao"
+                                >
+
+                            {% endif %}
+
+
+                        <!-- ==================================
+                            SOLICITAÇÃO AINDA NÃO APROVADA
+                            Usa a capa enviada pelo usuário
+                        =================================== -->
+
+                        {% elif solicitacao.capa %}
+
+                            {% if solicitacao.capa.startswith('http') %}
+
+                                <img
+                                    src="{{ solicitacao.capa }}"
+                                    alt="Capa de {{ solicitacao.titulo }}"
+                                    class="capa-solicitacao"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=solicitacao.capa
+                                    ) }}"
+                                    alt="Capa de {{ solicitacao.titulo }}"
+                                    class="capa-solicitacao"
+                                >
+
+                            {% endif %}
+
+
+                        <!-- ==================================
+                            SEM CAPA
+                        =================================== -->
+
+                        {% else %}
+
+                            <div class="sem-capa">
+
+                                <span class="icone-sem-capa">
+                                    ◇
+                                </span>
+
+                                <span>
+                                    Sem capa
                                 </span>
 
                             </div>
 
+                        {% endif %}
 
-                            <p>
-                                <strong>Autor(a):</strong>
-                                {{ solicitacao.autor }}
-                            </p>
+                    </div>
 
 
-                            <p>
-                                <strong>Solicitado por:</strong>
-                                {{ solicitacao.solicitante.nome }}
-                            </p>
+                        <!-- ==================================
+                             CONTEÚDO
+                        =================================== -->
+
+                        <div class="conteudo-solicitacao">
+
+                            <!-- TOPO -->
+
+                            <div class="topo-card-solicitacao">
+
+                                <div class="titulo-solicitacao">
+
+                                    <div class="linha-status">
+
+                                        {% if solicitacao.status == "pendente" %}
+
+                                            <span class="status-solicitacao status-pendente">
+                                                Pendente
+                                            </span>
+
+                                        {% elif solicitacao.status == "aprovado" %}
+
+                                            <span class="status-solicitacao status-aprovado">
+                                                Aprovado
+                                            </span>
+
+                                        {% elif solicitacao.status == "recusado" %}
+
+                                            <span class="status-solicitacao status-recusado">
+                                                Recusado
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="status-solicitacao">
+                                                {{ solicitacao.status }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
 
 
-                            <p>
-                                <strong>Perfil:</strong>
+                                    <h2>
+                                        {{ solicitacao.titulo }}
+                                    </h2>
 
-                                {% if solicitacao.solicitante.tipo == "autor" %}
-                                    Autor(a)
-                                {% elif solicitacao.solicitante.tipo == "administrador" %}
-                                    Administrador
-                                {% else %}
-                                    Leitor
+
+                                    <p class="autor-solicitacao">
+                                        por
+                                        <strong>
+                                            {{ solicitacao.autor }}
+                                        </strong>
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ==================================
+                                 INFORMAÇÕES
+                            =================================== -->
+
+                            <div class="informacoes-livro">
+
+                                {% if solicitacao.genero %}
+
+                                    <div class="informacao">
+
+                                        <span class="informacao-label">
+                                            Gênero
+                                        </span>
+
+                                        <span class="informacao-valor">
+                                            {{ solicitacao.genero }}
+                                        </span>
+
+                                    </div>
+
                                 {% endif %}
 
-                            </p>
+
+                                {% if solicitacao.editora %}
+
+                                    <div class="informacao">
+
+                                        <span class="informacao-label">
+                                            Editora
+                                        </span>
+
+                                        <span class="informacao-valor">
+                                            {{ solicitacao.editora }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
 
 
-                            {% if solicitacao.genero %}
+                                {% if solicitacao.paginas %}
 
-                                <p>
-                                    <strong>Gênero:</strong>
-                                    {{ solicitacao.genero }}
-                                </p>
+                                    <div class="informacao">
 
-                            {% endif %}
+                                        <span class="informacao-label">
+                                            Páginas
+                                        </span>
 
+                                        <span class="informacao-valor">
+                                            {{ solicitacao.paginas }}
+                                        </span>
 
-                            {% if solicitacao.editora %}
+                                    </div>
 
-                                <p>
-                                    <strong>Editora:</strong>
-                                    {{ solicitacao.editora }}
-                                </p>
-
-                            {% endif %}
+                                {% endif %}
 
 
-                            {% if solicitacao.ano %}
+                                {% if solicitacao.ano %}
 
-                                <p>
-                                    <strong>Ano:</strong>
-                                    {{ solicitacao.ano }}
-                                </p>
+                                    <div class="informacao">
 
-                            {% endif %}
+                                        <span class="informacao-label">
+                                            Ano
+                                        </span>
 
+                                        <span class="informacao-valor">
+                                            {{ solicitacao.ano }}
+                                        </span>
 
-                            {% if solicitacao.paginas %}
+                                    </div>
 
-                                <p>
-                                    <strong>Páginas:</strong>
-                                    {{ solicitacao.paginas }}
-                                </p>
-
-                            {% endif %}
+                                {% endif %}
 
 
-                            {% if solicitacao.isbn %}
+                                {% if solicitacao.idioma %}
 
-                                <p>
-                                    <strong>ISBN:</strong>
-                                    {{ solicitacao.isbn }}
-                                </p>
+                                    <div class="informacao">
 
-                            {% endif %}
+                                        <span class="informacao-label">
+                                            Idioma
+                                        </span>
 
+                                        <span class="informacao-valor">
+
+                                            {% if solicitacao.idioma == "pt" %}
+                                                Português
+                                            {% elif solicitacao.idioma == "en" %}
+                                                Inglês
+                                            {% elif solicitacao.idioma == "es" %}
+                                                Espanhol
+                                            {% elif solicitacao.idioma == "fr" %}
+                                                Francês
+                                            {% else %}
+                                                {{ solicitacao.idioma }}
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if solicitacao.isbn %}
+
+                                    <div class="informacao">
+
+                                        <span class="informacao-label">
+                                            ISBN
+                                        </span>
+
+                                        <span class="informacao-valor">
+                                            {{ solicitacao.isbn }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- ==================================
+                                 SINOPSE
+                            =================================== -->
 
                             {% if solicitacao.descricao %}
 
-                                <div class="descricao-solicitacao">
+                                <div class="sinopse-solicitacao">
 
-                                    <strong>Sinopse</strong>
+                                    <span class="titulo-secao-card">
+                                        Sinopse
+                                    </span>
 
                                     <p>
                                         {{ solicitacao.descricao }}
@@ -201,7 +426,57 @@ Solicitações de livros | Liberium
                             {% endif %}
 
 
-                            <!-- SOMENTE PENDENTES POSSUEM AÇÕES -->
+                            <!-- ==================================
+                                 SOLICITANTE
+                            =================================== -->
+
+                            <div class="rodape-informacoes">
+
+                                <div class="solicitante">
+
+                                    <span class="titulo-secao-card">
+                                        Solicitado por
+                                    </span>
+
+                                    <span class="nome-solicitante">
+
+                                        {% if solicitacao.solicitante %}
+
+                                            {{ solicitacao.solicitante.nome }}
+
+                                        {% else %}
+
+                                            Usuário #{{ solicitacao.solicitante_id }}
+
+                                        {% endif %}
+
+                                    </span>
+
+                                </div>
+
+
+                                {% if solicitacao.data_solicitacao %}
+
+                                    <div class="data-solicitacao">
+
+                                        <span class="titulo-secao-card">
+                                            Enviado em
+                                        </span>
+
+                                        <span>
+                                            {{ solicitacao.data_solicitacao.strftime('%d/%m/%Y') }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- ==================================
+                                 AÇÕES DO ADMIN
+                            =================================== -->
 
                             {% if solicitacao.status == "pendente" %}
 
@@ -210,27 +485,13 @@ Solicitações de livros | Liberium
                                     <form
                                         method="POST"
                                         action="{{ url_for(
-                                            'books_bp.aprovar_solicitacao',
-                                            solicitacao_id=solicitacao.id
-                                        ) }}"
-                                    >
-
-                                        <button
-                                            type="submit"
-                                            class="btn-aprovar"
-                                        >
-                                            Aprovar
-                                        </button>
-
-                                    </form>
-
-
-                                    <form
-                                        method="POST"
-                                        action="{{ url_for(
                                             'books_bp.recusar_solicitacao',
                                             solicitacao_id=solicitacao.id
                                         ) }}"
+                                        class="form-acao"
+                                        onsubmit="return confirm(
+                                            'Deseja realmente recusar esta solicitação?'
+                                        );"
                                     >
 
                                         <button
@@ -242,6 +503,44 @@ Solicitações de livros | Liberium
 
                                     </form>
 
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'books_bp.aprovar_solicitacao',
+                                            solicitacao_id=solicitacao.id
+                                        ) }}"
+                                        class="form-acao"
+                                        onsubmit="return confirm(
+                                            'Aprovar este livro e adicioná-lo ao catálogo?'
+                                        );"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-aprovar"
+                                        >
+                                            Aprovar livro
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="solicitacao-processada">
+
+                                    {% if solicitacao.status == "aprovado" %}
+
+                                        Esta solicitação já foi aprovada.
+
+                                    {% elif solicitacao.status == "recusado" %}
+
+                                        Esta solicitação foi recusada.
+
+                                    {% endif %}
+
                                 </div>
 
                             {% endif %}
@@ -252,24 +551,41 @@ Solicitações de livros | Liberium
 
                 {% endfor %}
 
-            {% else %}
+            </div>
 
-                <div class="nenhuma-solicitacao">
 
-                    <h2>
-                        Nenhuma solicitação
-                    </h2>
+        {% else %}
 
-                    <p>
-                        Ainda não existem solicitações de
-                        cadastro de livros.
-                    </p>
+            <!-- ========================================
+                 ESTADO VAZIO
+            ========================================= -->
 
+            <div class="sem-solicitacoes">
+
+                <div class="icone-vazio">
+                    ◇
                 </div>
 
-            {% endif %}
+                <h2>
+                    Nenhuma solicitação por aqui
+                </h2>
 
-        </div>
+                <p>
+                    Quando um usuário solicitar o cadastro
+                    de um livro, ele aparecerá nesta página
+                    para análise.
+                </p>
+
+                <a
+                    href="{{ url_for('books_bp.catalogo') }}"
+                    class="btn-ir-catalogo"
+                >
+                    Voltar ao catálogo
+                </a>
+
+            </div>
+
+        {% endif %}
 
     </div>
 
