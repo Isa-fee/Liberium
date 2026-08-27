@@ -141,6 +141,25 @@
                     Editar livro
                 </a>
 
+                <!-- EXCLUIR -->
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'books_bp.excluir_livro_admin',
+                        livro_id=livro.id
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Tem certeza que deseja excluir este livro do catálogo? Esta ação não poderá ser desfeita.'
+                    );"
+                >
+                    <button
+                        type="submit"
+                        class="btn-excluir-livro-admin"
+                    >
+                        Excluir livro
+                    </button>
+                </form>
+
             </div>
 
         {% endif %}
