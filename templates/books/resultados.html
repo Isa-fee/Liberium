@@ -125,18 +125,23 @@
 
         {% else %}
 
-            <div class="nenhum-resultado">
-                <h3>
+            <div class="resultado-vazio">
+
+                <div class="resultado-vazio-icone">
+                    ◇
+                </div>
+            
+                <h2>
                     Não encontramos esse livro
-                </h3>
+                </h2>
+            
                 <p>
-                    O livro que você procura ainda não está
-                    disponível no Liberium.
+                    O livro que você procura ainda não está disponível no Liberium.
+                    <br>
+                    Você pode solicitar o cadastro para que nossa equipe analise
+                    as informações.
                 </p>
-                <p>
-                    Você pode solicitar o cadastro para que
-                    nossa equipe analise as informações.
-                </p>
+            
                 <a
                     href="{{ url_for(
                         'books_bp.solicitar_livro',
@@ -146,7 +151,7 @@
                 >
                     Solicitar cadastro
                 </a>
-        
+            
             </div>
         
         {% endif %}
