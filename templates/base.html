@@ -63,7 +63,7 @@
             </a>
 
             {% if current_user.is_authenticated and current_user.tipo == "administrador" %}
-                <a href="{{ url_for('books_bp.solicitacoes_admin') }}">
+                <a href="{{ url_for('admin_bp.painel') }}">
                     Administração
                 </a>
             {% endif %}
