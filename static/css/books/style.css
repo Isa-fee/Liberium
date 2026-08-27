@@ -877,10 +877,196 @@
     background: #b97a72;
     color: #ffffff;
 }
+/* ========================================
+   RESULTADO VAZIO
+======================================== */
 
-/* =========================================
-   RESPONSIVIDADE
-========================================= */
+.resultado-vazio {
+    width: 100%;
+    min-height: 310px;
+
+    padding: 55px 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: #fdfcfb;
+
+    border: 1px solid #e5dfd7;
+    border-radius: 14px;
+
+    box-shadow: 0 6px 20px rgba(68, 43, 26, 0.04);
+}
+
+
+/* ÍCONE */
+
+.resultado-vazio-icone {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #edf1eb;
+
+    color: #879d84;
+
+    font-size: 1.8rem;
+}
+
+
+/* TÍTULO */
+
+.resultado-vazio h2 {
+    margin: 0 0 10px;
+
+    color: #442b1a;
+
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+
+/* TEXTO */
+
+.resultado-vazio p {
+    max-width: 570px;
+
+    margin: 0 0 24px;
+
+    color: #806f63;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   BOTÃO SOLICITAR CADASTRO
+======================================== */
+
+.btn-solicitar-livro {
+    min-width: 180px;
+
+    padding: 11px 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #879d84;
+
+    border: 1px solid #879d84;
+    border-radius: 22px;
+
+    color: #ffffff;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+/* ========================================
+   SOLICITAR LIVRO APÓS OS RESULTADOS
+======================================== */
+
+.btn-solicitar-livro:hover {
+    background: #36503c;
+    border-color: #36503c;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transform: translateY(-1px);
+}
+.solicitar-apos-resultados {
+    margin-top: 28px;
+    margin-bottom: 45px;
+}
+
+.solicitar-apos-resultados h3 {
+    margin: 0 0 3px;
+
+    color: #442b1a;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.solicitar-apos-resultados p {
+    margin: 0 0 12px;
+
+    color: #6c5338;
+
+    font-size: 0.95rem;
+}
+
+.btn-solicitar-livro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 25px;
+
+    background: #879d84;
+    color: #ffffff;
+
+    border-radius: 22px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.btn-solicitar-livro:hover {
+    background: #36503c;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media (max-width: 700px) {
+
+    .resultado-vazio {
+        min-height: 270px;
+
+        padding: 40px 20px;
+    }
+
+    .resultado-vazio h2 {
+        font-size: 1.2rem;
+    }
+
+    .resultado-vazio p {
+        font-size: 0.9rem;
+    }
+
+    .btn-solicitar-livro {
+        width: 100%;
+        max-width: 260px;
+    }
+}
 
 @media (max-width: 700px) {
 
