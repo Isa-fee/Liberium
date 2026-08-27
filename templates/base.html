@@ -61,6 +61,12 @@
             <a href="{{ url_for('amigos_bp.amigos') }}">
                 Amigos
             </a>
+
+            {% if current_user.is_authenticated and current_user.tipo == "administrador" %}
+                <a href="{{ url_for('books_bp.solicitacoes_admin') }}">
+                    Administração
+                </a>
+            {% endif %}
         
             <a href="{{ url_for('user_bp.perfil') }}">
                 {{ current_user.nome }}

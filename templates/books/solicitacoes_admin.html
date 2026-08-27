@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}
+Solicitações de livros | Liberium
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-admin-solicitacoes">
+
+    <div class="admin-solicitacoes-container">
+
+        <div class="cabecalho-admin">
+
+            <div>
+
+                <span class="admin-identificacao">
+                    Administração
+                </span>
+
+                <h1>
+                    Solicitações de livros
+                </h1>
+
+                <p>
+                    Analise os livros enviados pelos usuários
+                    antes de adicioná-los ao catálogo.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================
+             CONTADORES
+        ================================= -->
+
+        <div class="resumo-solicitacoes">
+
+            <div class="resumo-item">
+
+                <strong>
+                    {{ solicitacoes
+                        |selectattr("status", "equalto", "pendente")
+                        |list
+                        |length }}
+                </strong>
+
+                <span>Pendentes</span>
+
+            </div>
+
+
+            <div class="resumo-item">
+
+                <strong>
+                    {{ solicitacoes
+                        |selectattr("status", "equalto", "aprovado")
+                        |list
+                        |length }}
+                </strong>
+
+                <span>Aprovadas</span>
+
+            </div>
+
+
+            <div class="resumo-item">
+
+                <strong>
+                    {{ solicitacoes
+                        |selectattr("status", "equalto", "recusado")
+                        |list
+                        |length }}
+                </strong>
+
+                <span>Recusadas</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================
+             SOLICITAÇÕES
+        ================================= -->
+
+        <div class="lista-solicitacoes-admin">
+
+            {% if solicitacoes %}
+
+                {% for solicitacao in solicitacoes %}
+
+                    <article class="card-solicitacao-admin">
+
+                        <div class="info-solicitacao-admin">
+
+                            <div class="topo-card-solicitacao">
+
+                                <h2>
+                                    {{ solicitacao.titulo }}
+                                </h2>
+
+                                <span class="status-solicitacao status-{{ solicitacao.status }}">
+                                    {{ solicitacao.status|capitalize }}
+                                </span>
+
+                            </div>
+
+
+                            <p>
+                                <strong>Autor(a):</strong>
+                                {{ solicitacao.autor }}
+                            </p>
+
+
+                            <p>
+                                <strong>Solicitado por:</strong>
+                                {{ solicitacao.solicitante.nome }}
+                            </p>
+
+
+                            <p>
+                                <strong>Perfil:</strong>
+
+                                {% if solicitacao.solicitante.tipo == "autor" %}
+                                    Autor(a)
+                                {% elif solicitacao.solicitante.tipo == "administrador" %}
+                                    Administrador
+                                {% else %}
+                                    Leitor
+                                {% endif %}
+
+                            </p>
+
+
+                            {% if solicitacao.genero %}
+
+                                <p>
+                                    <strong>Gênero:</strong>
+                                    {{ solicitacao.genero }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if solicitacao.editora %}
+
+                                <p>
+                                    <strong>Editora:</strong>
+                                    {{ solicitacao.editora }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if solicitacao.ano %}
+
+                                <p>
+                                    <strong>Ano:</strong>
+                                    {{ solicitacao.ano }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if solicitacao.paginas %}
+
+                                <p>
+                                    <strong>Páginas:</strong>
+                                    {{ solicitacao.paginas }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if solicitacao.isbn %}
+
+                                <p>
+                                    <strong>ISBN:</strong>
+                                    {{ solicitacao.isbn }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if solicitacao.descricao %}
+
+                                <div class="descricao-solicitacao">
+
+                                    <strong>Sinopse</strong>
+
+                                    <p>
+                                        {{ solicitacao.descricao }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- SOMENTE PENDENTES POSSUEM AÇÕES -->
+
+                            {% if solicitacao.status == "pendente" %}
+
+                                <div class="acoes-solicitacao">
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'books_bp.aprovar_solicitacao',
+                                            solicitacao_id=solicitacao.id
+                                        ) }}"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-aprovar"
+                                        >
+                                            Aprovar
+                                        </button>
+
+                                    </form>
+
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'books_bp.recusar_solicitacao',
+                                            solicitacao_id=solicitacao.id
+                                        ) }}"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-recusar"
+                                        >
+                                            Recusar
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="nenhuma-solicitacao">
+
+                    <h2>
+                        Nenhuma solicitação
+                    </h2>
+
+                    <p>
+                        Ainda não existem solicitações de
+                        cadastro de livros.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

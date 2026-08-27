@@ -1341,3 +1341,175 @@ def catalogo():
 
         tem_mais=tem_mais
     )
+# ======================================
+# PAINEL - SOLICITAÇÕES DE LIVROS
+# ======================================
+
+@books_bp.route("/admin/solicitacoes")
+@login_required
+def solicitacoes_admin():
+
+    # SOMENTE ADMINISTRADORES
+    if current_user.tipo != "administrador":
+
+        flash(
+            "Você não possui permissão para acessar essa página.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("home.home")
+        )
+
+    solicitacoes = SolicitacaoLivro.query.order_by(
+        SolicitacaoLivro.data_solicitacao.desc()
+    ).all()
+
+    return render_template(
+        "books/solicitacoes_admin.html",
+        solicitacoes=solicitacoes
+    )
+# ======================================
+# APROVAR SOLICITAÇÃO
+# ======================================
+
+@books_bp.route(
+    "/admin/solicitacoes/<int:solicitacao_id>/aprovar",
+    methods=["POST"]
+)
+@login_required
+def aprovar_solicitacao(solicitacao_id):
+
+    # SOMENTE ADMINISTRADORES
+    if current_user.tipo != "administrador":
+
+        flash(
+            "Você não possui permissão para realizar essa ação.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("home.home")
+        )
+
+    solicitacao = SolicitacaoLivro.query.get_or_404(
+        solicitacao_id
+    )
+
+    # Não processar duas vezes
+    if solicitacao.status != "pendente":
+
+        flash(
+            "Essa solicitação já foi analisada.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.solicitacoes_admin")
+        )
+    # ==================================
+    # VERIFICAR SE LIVRO JÁ EXISTE
+    # ==================================
+
+    livro_existente = Livro.query.filter(
+        db.func.lower(Livro.titulo)
+        == solicitacao.titulo.lower()
+    ).first()
+
+    if livro_existente:
+
+        solicitacao.status = "aprovado"
+
+        db.session.commit()
+
+        flash(
+            "O livro já estava cadastrado. "
+            "A solicitação foi marcada como aprovada.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.solicitacoes_admin")
+        )
+    # ==================================
+    # CRIAR LIVRO
+    # ==================================
+
+    novo_livro = Livro(
+        titulo=solicitacao.titulo,
+        autor=solicitacao.autor,
+        descricao=solicitacao.descricao,
+        genero=solicitacao.genero,
+        editora=solicitacao.editora,
+        paginas=solicitacao.paginas,
+        ano=solicitacao.ano,
+        idioma=solicitacao.idioma,
+
+        avaliacao=None,
+        destaque=False,
+        google_id=None,
+        origem="solicitacao"
+    )
+
+    db.session.add(
+        novo_livro
+    )
+    solicitacao.status = "aprovado"
+    db.session.commit()
+    flash(
+        f'"{solicitacao.titulo}" foi aprovado e adicionado ao catálogo!',
+        "success"
+    )
+    return redirect(
+        url_for("books_bp.solicitacoes_admin")
+    )
+# ======================================
+# RECUSAR SOLICITAÇÃO
+# ======================================
+
+@books_bp.route(
+    "/admin/solicitacoes/<int:solicitacao_id>/recusar",
+    methods=["POST"]
+)
+@login_required
+def recusar_solicitacao(solicitacao_id):
+
+    # SOMENTE ADMINISTRADORES
+    if current_user.tipo != "administrador":
+
+        flash(
+            "Você não possui permissão para realizar essa ação.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("home.home")
+        )
+
+    solicitacao = SolicitacaoLivro.query.get_or_404(
+        solicitacao_id
+    )
+
+    if solicitacao.status != "pendente":
+
+        flash(
+            "Essa solicitação já foi analisada.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.solicitacoes_admin")
+        )
+
+    solicitacao.status = "recusado"
+
+    db.session.commit()
+
+    flash(
+        f'A solicitação de "{solicitacao.titulo}" foi recusada.',
+        "success"
+    )
+
+    return redirect(
+        url_for("books_bp.solicitacoes_admin")
+    )
