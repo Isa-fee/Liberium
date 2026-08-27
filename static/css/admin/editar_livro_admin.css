@@ -1,0 +1,599 @@
+/* ========================================
+   PÁGINA - EDITAR LIVRO
+======================================== */
+
+.pagina-editar-livro {
+    min-height: 100vh;
+
+    padding: 45px 30px 80px;
+
+    background: #fdfcfb;
+}
+
+
+.editar-livro-container {
+    width: 100%;
+    max-width: 1050px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.cabecalho-editar-livro {
+    margin-bottom: 30px;
+}
+
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 27px;
+
+    color: #6c5338;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-voltar:hover {
+    color: #442b1a;
+
+    transform: translateX(-3px);
+}
+
+
+.identificacao-pagina {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #879d84;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+.cabecalho-editar-livro h1 {
+    margin: 0 0 9px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+
+.cabecalho-editar-livro p {
+    margin: 0;
+
+    color: #817368;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+.cabecalho-editar-livro p strong {
+    color: #604a38;
+
+    font-weight: 600;
+}
+
+
+/* ========================================
+   FORMULÁRIO
+======================================== */
+
+.form-editar-livro {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e0da;
+    border-radius: 17px;
+
+    box-shadow:
+        0 7px 28px rgba(68, 43, 26, 0.055);
+}
+
+
+.layout-edicao {
+    display: grid;
+
+    grid-template-columns: 245px 1fr;
+}
+
+
+/* ========================================
+   COLUNA DA CAPA
+======================================== */
+
+.coluna-capa {
+    padding: 30px;
+
+    background: #f6f4f1;
+
+    border-right: 1px solid #e7e0da;
+}
+
+
+.titulo-secao {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #879d84;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* ========================================
+   CAPA
+======================================== */
+
+.capa-atual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 255px;
+
+    margin-bottom: 22px;
+}
+
+
+.preview-capa-atual {
+    width: 150px;
+    height: 225px;
+
+    display: block;
+
+    object-fit: cover;
+
+    background: #e9e4df;
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 8px 22px rgba(68, 43, 26, 0.18);
+}
+
+
+/* ========================================
+   SEM CAPA
+======================================== */
+
+.sem-capa {
+    width: 150px;
+    height: 225px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: #94887d;
+
+    background: #ebe7e2;
+
+    border: 1px dashed #cbbfb5;
+    border-radius: 7px;
+
+    font-size: 0.8rem;
+}
+
+
+.icone-sem-capa {
+    color: #879d84;
+
+    font-size: 2rem;
+}
+
+
+/* ========================================
+   TROCAR CAPA
+======================================== */
+
+.area-trocar-capa {
+    text-align: center;
+}
+
+
+.area-trocar-capa input[type="file"] {
+    display: none;
+}
+
+
+.btn-trocar-capa {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 10px 14px;
+
+    color: #536951;
+
+    background: #ffffff;
+
+    border: 1px solid #bfcabb;
+    border-radius: 8px;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-trocar-capa:hover {
+    color: #36503c;
+
+    background: #edf2eb;
+
+    border-color: #879d84;
+}
+
+
+.ajuda-capa {
+    margin: 11px 0 0;
+
+    color: #998c81;
+
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+
+.nome-arquivo {
+    display: block;
+
+    margin-top: 10px;
+
+    color: #5e765b;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   COLUNA DE DADOS
+======================================== */
+
+.coluna-dados {
+    min-width: 0;
+
+    padding: 31px 35px;
+}
+
+
+.titulo-formulario {
+    margin-bottom: 23px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid #eee9e4;
+}
+
+
+.titulo-formulario .titulo-secao {
+    margin-bottom: 5px;
+}
+
+
+.titulo-formulario p {
+    margin: 0;
+
+    color: #9a8d82;
+
+    font-size: 0.78rem;
+}
+
+
+/* ========================================
+   CAMPOS
+======================================== */
+
+.campo-edicao {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 21px;
+}
+
+
+.campo-edicao label {
+    color: #584331;
+
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+
+.campo-edicao input,
+.campo-edicao textarea,
+.campo-edicao select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    color: #442b1a;
+
+    background: #fdfcfb;
+
+    border: 1px solid #ddd5cd;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.campo-edicao input::placeholder,
+.campo-edicao textarea::placeholder {
+    color: #aca299;
+}
+
+
+.campo-edicao input:focus,
+.campo-edicao textarea:focus,
+.campo-edicao select:focus {
+    background: #ffffff;
+
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.12);
+}
+
+
+.campo-edicao textarea {
+    min-height: 150px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+
+.campo-edicao select {
+    cursor: pointer;
+}
+
+
+/* ========================================
+   CAMPOS LADO A LADO
+======================================== */
+
+.linha-campos-edicao {
+    display: flex;
+
+    gap: 18px;
+}
+
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.acoes-edicao {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding: 21px 35px;
+
+    background: #fdfcfb;
+
+    border-top: 1px solid #e9e3dd;
+}
+
+
+.btn-cancelar-edicao,
+.btn-salvar-edicao {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 10px 19px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.83rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+/* CANCELAR */
+
+.btn-cancelar-edicao {
+    color: #6c5338;
+
+    background: #ffffff;
+
+    border: 1px solid #d7ccc2;
+}
+
+
+.btn-cancelar-edicao:hover {
+    color: #442b1a;
+
+    background: #f5f2ef;
+
+    border-color: #c8b9ac;
+}
+
+
+/* SALVAR */
+
+.btn-salvar-edicao {
+    color: #ffffff;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+}
+
+
+.btn-salvar-edicao:hover {
+    background: #2d4433;
+
+    border-color: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 800px) {
+
+    .layout-edicao {
+        grid-template-columns: 200px 1fr;
+    }
+
+
+    .coluna-capa {
+        padding: 25px 20px;
+    }
+
+
+    .preview-capa-atual,
+    .sem-capa {
+        width: 130px;
+        height: 195px;
+    }
+
+
+    .capa-atual {
+        min-height: 220px;
+    }
+
+
+    .coluna-dados {
+        padding: 27px 25px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .pagina-editar-livro {
+        padding: 30px 18px 55px;
+    }
+
+
+    .cabecalho-editar-livro h1 {
+        font-size: 2rem;
+    }
+
+
+    .layout-edicao {
+        display: block;
+    }
+
+
+    .coluna-capa {
+        border-right: none;
+        border-bottom: 1px solid #e7e0da;
+    }
+
+
+    .capa-atual {
+        min-height: auto;
+
+        margin: 20px 0;
+    }
+
+
+    .preview-capa-atual,
+    .sem-capa {
+        width: 140px;
+        height: 210px;
+    }
+
+
+    .area-trocar-capa {
+        max-width: 300px;
+
+        margin: 0 auto;
+    }
+
+
+    .linha-campos-edicao {
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+
+    .acoes-edicao {
+        flex-direction: column-reverse;
+
+        padding: 20px;
+    }
+
+
+    .btn-cancelar-edicao,
+    .btn-salvar-edicao {
+        width: 100%;
+    }
+
+}

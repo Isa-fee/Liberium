@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from datetime import date
 from random import choice
+import os
+from uuid import uuid4
+from werkzeug.utils import secure_filename
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
@@ -18,6 +21,16 @@ from models import (
 )
 from extensions import db
 
+EXTENSOES_CAPA = {"png", "jpg", "jpeg", "webp"}
+
+
+def extensao_permitida(nome_arquivo):
+
+    return (
+        "." in nome_arquivo
+        and nome_arquivo.rsplit(".", 1)[1].lower()
+        in EXTENSOES_CAPA
+    )
 
 books_bp = Blueprint(
     "books_bp",
@@ -298,6 +311,61 @@ def solicitar_livro():
             ""
         ).strip()
 
+        arquivo_capa = request.files.get("capa")
+
+        capa = None
+
+        if arquivo_capa and arquivo_capa.filename:
+
+            if not extensao_permitida(arquivo_capa.filename):
+
+                flash(
+                    "Formato de capa inválido. Use JPG, JPEG, PNG ou WEBP.",
+                    "warning"
+                )
+
+                return redirect(
+                    url_for("books_bp.solicitar_livro")
+                )
+
+            nome_original = secure_filename(
+                arquivo_capa.filename
+            )
+
+            extensao = nome_original.rsplit(
+                ".",
+                1
+            )[1].lower()
+
+            nome_arquivo = (
+                f"{uuid4().hex}.{extensao}"
+            )
+
+            pasta = os.path.join(
+                "static",
+                "img",
+                "capas",
+                "solicitacoes"
+            )
+
+            os.makedirs(
+                pasta,
+                exist_ok=True
+            )
+
+            caminho_completo = os.path.join(
+                pasta,
+                nome_arquivo
+            )
+
+            arquivo_capa.save(
+                caminho_completo
+            )
+
+            capa = (
+                f"img/capas/solicitacoes/{nome_arquivo}"
+            )
+
         genero = request.form.get(
             "genero",
             ""
@@ -407,6 +475,7 @@ def solicitar_livro():
             titulo=titulo,
             autor=autor,
             descricao=descricao or None,
+            capa=capa or None,
             genero=genero or None,
             editora=editora or None,
             paginas=paginas,
@@ -1356,7 +1425,10 @@ def catalogo():
 @login_required
 def solicitacoes_admin():
 
+    # ==================================
     # SOMENTE ADMINISTRADORES
+    # ==================================
+
     if current_user.tipo != "administrador":
 
         flash(
@@ -1368,13 +1440,50 @@ def solicitacoes_admin():
             url_for("home.home")
         )
 
+    # ==================================
+    # BUSCAR SOLICITAÇÕES
+    # ==================================
+
     solicitacoes = SolicitacaoLivro.query.order_by(
         SolicitacaoLivro.data_solicitacao.desc()
     ).all()
 
+    # ==================================
+    # LIVROS APROVADOS
+    #
+    # Guarda o livro atual correspondente
+    # a cada solicitação aprovada.
+    #
+    # Assim, se o administrador alterar
+    # a capa depois, a tela de solicitações
+    # mostra a capa atualizada.
+    # ==================================
+
+    livros_aprovados = {}
+
+    for solicitacao in solicitacoes:
+
+        if solicitacao.status == "aprovado":
+
+            livro = Livro.query.filter(
+                db.func.lower(Livro.titulo)
+                == solicitacao.titulo.lower()
+            ).first()
+
+            if livro:
+
+                livros_aprovados[
+                    solicitacao.id
+                ] = livro
+
+    # ==================================
+    # TEMPLATE
+    # ==================================
+
     return render_template(
         "books/solicitacoes_admin.html",
-        solicitacoes=solicitacoes
+        solicitacoes=solicitacoes,
+        livros_aprovados=livros_aprovados
     )
 # ======================================
 # APROVAR SOLICITAÇÃO
@@ -1446,6 +1555,7 @@ def aprovar_solicitacao(solicitacao_id):
         titulo=solicitacao.titulo,
         autor=solicitacao.autor,
         descricao=solicitacao.descricao,
+        capa=solicitacao.capa,
         genero=solicitacao.genero,
         editora=solicitacao.editora,
         paginas=solicitacao.paginas,
@@ -1523,65 +1633,85 @@ def recusar_solicitacao(solicitacao_id):
 # ======================================
 # ADMIN - EDITAR LIVRO
 # ======================================
+
 @books_bp.route(
     "/admin/livros/<int:livro_id>/editar",
     methods=["GET", "POST"]
 )
 @login_required
 def editar_livro_admin(livro_id):
+
     # ==================================
     # SOMENTE ADMINISTRADORES
     # ==================================
+
     if current_user.tipo != "administrador":
+
         flash(
             "Você não possui permissão para realizar essa ação.",
             "danger"
         )
+
         return redirect(
             url_for("home.home")
         )
+
     livro = Livro.query.get_or_404(
         livro_id
     )
+
     # ==================================
     # SALVAR ALTERAÇÕES
     # ==================================
+
     if request.method == "POST":
+
         titulo = request.form.get(
             "titulo",
             ""
         ).strip()
+
         autor = request.form.get(
             "autor",
             ""
         ).strip()
+
         descricao = request.form.get(
             "descricao",
             ""
         ).strip()
+
+        arquivo_capa = request.files.get("capa")
+
         genero = request.form.get(
             "genero",
             ""
         ).strip()
+
         editora = request.form.get(
             "editora",
             ""
         ).strip()
+
         paginas = request.form.get(
             "paginas",
             type=int
         )
+
         ano = request.form.get(
             "ano",
             ""
         ).strip()
+
         idioma = request.form.get(
             "idioma",
             ""
         ).strip()
+
         # ==================================
         # VALIDAÇÃO
         # ==================================
+
         if not titulo or not autor:
 
             flash(
@@ -1595,28 +1725,93 @@ def editar_livro_admin(livro_id):
                     livro_id=livro.id
                 )
             )
+
         # ==================================
         # ATUALIZAR LIVRO
         # ==================================
+
         livro.titulo = titulo
         livro.autor = autor
         livro.descricao = descricao or None
+
+        # ==================================
+        # ALTERAR CAPA
+        # ==================================
+
+        if arquivo_capa and arquivo_capa.filename:
+
+            if not extensao_permitida(arquivo_capa.filename):
+
+                flash(
+                    "Formato de capa inválido. Use JPG, JPEG, PNG ou WEBP.",
+                    "warning"
+                )
+
+                return redirect(
+                    url_for(
+                        "books_bp.editar_livro_admin",
+                        livro_id=livro.id
+                    )
+                )
+
+            nome_original = secure_filename(
+                arquivo_capa.filename
+            )
+
+            extensao = nome_original.rsplit(
+                ".",
+                1
+            )[1].lower()
+
+            nome_arquivo = (
+                f"{uuid4().hex}.{extensao}"
+            )
+
+            pasta = os.path.join(
+                "static",
+                "img",
+                "capas",
+                "solicitacoes"
+            )
+
+            os.makedirs(
+                pasta,
+                exist_ok=True
+            )
+
+            caminho_completo = os.path.join(
+                pasta,
+                nome_arquivo
+            )
+
+            arquivo_capa.save(
+                caminho_completo
+            )
+
+            livro.capa = (
+                f"img/capas/solicitacoes/{nome_arquivo}"
+            )
+
         livro.genero = genero or None
         livro.editora = editora or None
         livro.paginas = paginas
         livro.ano = ano or None
         livro.idioma = idioma or None
+
         db.session.commit()
+
         flash(
             f'"{livro.titulo}" foi atualizado com sucesso!',
             "success"
         )
+
         return redirect(
             url_for(
                 "books_bp.ver",
                 id=livro.id
             )
         )
+
     # ==================================
     # EXIBIR FORMULÁRIO
     # ==================================
