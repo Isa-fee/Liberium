@@ -1,0 +1,381 @@
+/* =========================================================
+   LIBERIUM — PAINEL ADMINISTRATIVO
+   ========================================================= */
+
+   :root {
+    --verde-principal: #71866b;
+    --verde-medio: #8fa382;
+    --verde-claro: #dfe9d9;
+
+    --fundo: #f5f7f3;
+    --branco: #ffffff;
+
+    --marrom: #4b3323;
+    --marrom-claro: #806b5b;
+
+    --cinza: #777;
+    --cinza-claro: #e9ece7;
+
+    --sombra:
+        0 8px 25px rgba(65, 79, 59, 0.08);
+
+    --sombra-hover:
+        0 14px 30px rgba(65, 79, 59, 0.14);
+}
+
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
+.pagina-admin {
+    min-height: calc(100vh - 100px);
+
+    padding: 42px 55px 70px;
+
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 95% 5%,
+            rgba(143, 163, 130, 0.10),
+            transparent 27%
+        ),
+        var(--fundo);
+
+    color: #343b31;
+}
+
+
+.admin-container {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.admin-cabecalho {
+    margin-bottom: 42px;
+
+    padding: 30px 35px;
+
+    background: var(--branco);
+
+    border: 1px solid rgba(110, 130, 100, 0.08);
+    border-radius: 20px;
+
+    box-shadow: var(--sombra);
+}
+
+
+.admin-cabecalho > span {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: var(--verde-principal);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+.admin-cabecalho h1 {
+    margin: 0;
+
+    color: #2f362d;
+
+    font-size: 30px;
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+
+.admin-cabecalho p {
+    max-width: 600px;
+
+    margin: 9px 0 0;
+
+    color: #858b82;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ESTATÍSTICAS
+   ========================================================= */
+
+.admin-estatisticas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+
+    margin-bottom: 45px;
+}
+
+
+.admin-card-estatistica {
+    min-height: 105px;
+
+    padding: 23px 25px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    background: var(--branco);
+
+    border: 1px solid rgba(110, 130, 100, 0.08);
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 16px rgba(65, 79, 59, 0.06);
+}
+
+
+.admin-card-estatistica span {
+    margin-bottom: 7px;
+
+    color: #858b83;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+
+.admin-card-estatistica strong {
+    color: var(--verde-principal);
+
+    font-size: 28px;
+    font-weight: 750;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   GERENCIAMENTO
+   ========================================================= */
+
+.admin-gerenciamento {
+    margin-top: 10px;
+}
+
+
+.admin-gerenciamento > h2 {
+    margin: 0 0 22px;
+
+    padding: 0 3px 13px;
+
+    color: #343b31;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+
+    border-bottom: 1px solid #e1e6df;
+}
+
+
+/* =========================================================
+   CARDS DE GERENCIAMENTO
+   ========================================================= */
+
+.admin-card {
+    position: relative;
+
+    display: block;
+
+    margin-bottom: 18px;
+
+    padding: 25px 28px;
+
+    box-sizing: border-box;
+
+    color: inherit;
+    text-decoration: none;
+
+    background: var(--branco);
+
+    border: 1px solid rgba(110, 130, 100, 0.08);
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 16px rgba(65, 79, 59, 0.06);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.admin-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(113, 134, 107, 0.18);
+
+    box-shadow: var(--sombra-hover);
+}
+
+
+.admin-card h3 {
+    margin: 0 0 7px;
+
+    color: #343b31;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+.admin-card p {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: #858b82;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CONTADOR DE SOLICITAÇÕES
+   ========================================================= */
+
+.admin-card > span {
+    display: inline-block;
+
+    margin-top: 13px;
+
+    padding: 5px 10px;
+
+    background: #edf4ea;
+
+    border: 1px solid #dce7d8;
+    border-radius: 20px;
+
+    color: #687b61;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DETALHE LATERAL
+   ========================================================= */
+
+.admin-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 20px;
+    bottom: 20px;
+    left: 0;
+
+    width: 3px;
+
+    background: var(--verde-medio);
+
+    border-radius: 0 4px 4px 0;
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+}
+
+
+.admin-card:hover::before {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .pagina-admin {
+        padding: 28px 25px 50px;
+    }
+
+
+    .admin-cabecalho {
+        padding: 26px;
+
+        margin-bottom: 35px;
+    }
+
+
+    .admin-estatisticas {
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .pagina-admin {
+        padding: 20px 15px 45px;
+    }
+
+
+    .admin-cabecalho {
+        padding: 22px;
+
+        margin-bottom: 30px;
+
+        border-radius: 18px;
+    }
+
+
+    .admin-cabecalho h1 {
+        font-size: 25px;
+    }
+
+
+    .admin-estatisticas {
+        grid-template-columns: 1fr;
+    }
+
+
+    .admin-card-estatistica {
+        min-height: 90px;
+    }
+
+
+    .admin-card {
+        padding: 22px;
+    }
+
+}
