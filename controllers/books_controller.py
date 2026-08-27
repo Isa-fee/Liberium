@@ -8,7 +8,14 @@ from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 from utils.google_books import (buscar_google_books, buscar_livro_google)
 
-from models import Livro, Estante, DecoracaoEstante, SolicitacaoLivro
+from models import (
+    Livro,
+    Estante,
+    DecoracaoEstante,
+    SolicitacaoLivro,
+    Atividade,
+    Clube
+)
 from extensions import db
 
 
@@ -1617,4 +1624,69 @@ def editar_livro_admin(livro_id):
     return render_template(
         "books/editar_livro_admin.html",
         livro=livro
+    )
+
+# ======================================
+# ADMIN - EXCLUIR LIVRO
+# ======================================
+@books_bp.route(
+    "/admin/livros/<int:livro_id>/excluir",
+    methods=["POST"]
+)
+@login_required
+def excluir_livro_admin(livro_id):
+    # ==================================
+    # SOMENTE ADMINISTRADORES
+    # ==================================
+    if current_user.tipo != "administrador":
+        flash(
+            "Você não possui permissão para realizar essa ação.",
+            "danger"
+        )
+        return redirect(
+            url_for("home.home")
+        )
+    livro = Livro.query.get_or_404(
+        livro_id
+    )
+    titulo_livro = livro.titulo
+    # ==================================
+    # REMOVER DAS ESTANTES
+    # ==================================
+    Estante.query.filter_by(
+        livro_id=livro.id
+    ).delete(
+        synchronize_session=False
+    )
+    # ==================================
+    # REMOVER ATIVIDADES RELACIONADAS
+    # ==================================
+    Atividade.query.filter_by(
+        livro_id=livro.id
+    ).delete(
+        synchronize_session=False
+    )
+    # ==================================
+    # REMOVER LIVRO DOS CLUBES
+    # ==================================
+    # O clube continua existindo.
+    # Apenas fica sem leitura atual.
+    clubes = Clube.query.filter_by(
+        livro_id=livro.id
+    ).all()
+    for clube in clubes:
+        clube.livro_id = None
+    # ==================================
+    # EXCLUIR O LIVRO
+    # ==================================
+    db.session.delete(
+        livro
+    )
+    db.session.commit()
+    flash(
+        f'"{titulo_livro}" foi excluído do catálogo.',
+        "success"
+    )
+    return redirect(
+        url_for("books_bp.catalogo")
     )
