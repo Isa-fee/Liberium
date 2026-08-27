@@ -126,7 +126,24 @@
             </div>
 
         </div>
+        
+        {% if current_user.is_authenticated and current_user.tipo == "administrador" and origem == "banco" %}
 
+            <div class="acoes-admin-livro">
+
+                <a
+                    href="{{ url_for(
+                        'books_bp.editar_livro_admin',
+                        livro_id=livro.id
+                    ) }}"
+                    class="btn-editar-livro-admin"
+                >
+                    Editar livro
+                </a>
+
+            </div>
+
+        {% endif %}
         
 
 
