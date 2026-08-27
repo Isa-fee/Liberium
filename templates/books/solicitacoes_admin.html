@@ -254,6 +254,10 @@ Solicitações de livros | Liberium
                                             <span class="status-solicitacao status-recusado">
                                                 Recusado
                                             </span>
+                                        {% elif solicitacao.status == "excluido" %}
+                                            <span class="status-solicitacao status-excluido">
+                                                Excluído
+                                            </span>
 
                                         {% else %}
 
@@ -600,9 +604,11 @@ Solicitações de livros | Liberium
                             
                             
                                     {% elif solicitacao.status == "recusado" %}
-                            
                                         Esta solicitação foi recusada.
-                            
+
+                                    {% elif solicitacao.status == "excluido" %}
+                                        O livro desta solicitação foi excluído do catálogo.
+                                        
                                     {% endif %}
                             
                                 </div>

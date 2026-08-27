@@ -794,7 +794,89 @@
 
     font-size: 0.95rem;
 }
+/* ========================================
+   AÇÕES DO ADMINISTRADOR
+======================================== */
 
+.acoes-admin-livro {
+    width: 100%;
+    margin-top: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+
+/* ========================================
+   EDITAR LIVRO
+======================================== */
+
+.btn-editar-livro {
+    min-width: 115px;
+    padding: 9px 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #879d84;
+    border-radius: 20px;
+
+    background: #fdfcfb;
+
+    color: #36503c;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.btn-editar-livro:hover {
+    background: #879d84;
+    color: #ffffff;
+
+    text-decoration: none;
+}
+/* ========================================
+   EXCLUIR LIVRO
+======================================== */
+
+.form-excluir-livro {
+    margin: 0;
+}
+
+.btn-excluir-livro {
+    min-width: 115px;
+    padding: 9px 18px;
+
+    border: 1px solid #b97a72;
+    border-radius: 20px;
+
+    background: #fdfcfb;
+
+    color: #9b554d;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.btn-excluir-livro:hover {
+    background: #b97a72;
+    color: #ffffff;
+}
 
 /* =========================================
    RESPONSIVIDADE

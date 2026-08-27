@@ -1846,6 +1846,20 @@ def excluir_livro_admin(livro_id):
     )
     titulo_livro = livro.titulo
     # ==================================
+    # ATUALIZAR SOLICITAÇÃO ORIGINAL
+    # ==================================
+
+    solicitacao = SolicitacaoLivro.query.filter(
+        db.func.lower(SolicitacaoLivro.titulo)
+        == livro.titulo.lower(),
+
+        SolicitacaoLivro.status
+        == "aprovado"
+    ).first()
+
+    if solicitacao:
+        solicitacao.status = "excluido"
+    # ==================================
     # REMOVER DAS ESTANTES
     # ==================================
     Estante.query.filter_by(

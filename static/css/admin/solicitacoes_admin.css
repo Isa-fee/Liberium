@@ -846,6 +846,10 @@
     color: #ffffff;
 }
 
+.status-excluido {
+    background: #f3e7e5;
+    color: #9b554d;
+}
 
 /* ========================================
    RESPONSIVO
