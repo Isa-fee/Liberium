@@ -4,6 +4,13 @@
 Painel Administrativo | Liberium
 {% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin/painel.css') }}"
+>
+{% endblock %}
+
 {% block content %}
 
 <section class="pagina-admin">
@@ -99,9 +106,11 @@ Painel Administrativo | Liberium
 
                         {{ solicitacoes_pendentes }}
 
-                        solicitação{% if solicitacoes_pendentes != 1 %}ões{% endif %}
-
-                        pendente{% if solicitacoes_pendentes != 1 %}s{% endif %}
+                        {% if solicitacoes_pendentes == 1 %}
+                            solicitação pendente
+                        {% else %}
+                            solicitações pendentes
+                        {% endif %}
 
                     </span>
 
