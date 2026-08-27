@@ -127,8 +127,7 @@
 
         </div>
         
-        {% if current_user.is_authenticated and current_user.tipo == "administrador" and origem == "banco" %}
-
+        {% if current_user.tipo == "administrador" and origem == "banco" %}
             <div class="acoes-admin-livro">
 
                 <a
@@ -136,28 +135,29 @@
                         'books_bp.editar_livro_admin',
                         livro_id=livro.id
                     ) }}"
-                    class="btn-editar-livro-admin"
+                    class="btn-editar-livro"
                 >
                     Editar livro
                 </a>
 
-                <!-- EXCLUIR -->
                 <form
                     method="POST"
                     action="{{ url_for(
                         'books_bp.excluir_livro_admin',
                         livro_id=livro.id
                     ) }}"
+                    class="form-excluir-livro"
                     onsubmit="return confirm(
-                        'Tem certeza que deseja excluir este livro do catálogo? Esta ação não poderá ser desfeita.'
+                        'Tem certeza que deseja excluir este livro do catálogo?'
                     );"
                 >
                     <button
                         type="submit"
-                        class="btn-excluir-livro-admin"
+                        class="btn-excluir-livro"
                     >
                         Excluir livro
                     </button>
+
                 </form>
 
             </div>
