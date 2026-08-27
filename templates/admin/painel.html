@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}
+Painel Administrativo | Liberium
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-admin">
+
+    <div class="admin-container">
+
+        <!-- ==============================
+             CABEÇALHO
+        =============================== -->
+
+        <div class="admin-cabecalho">
+
+            <span>
+                Administração
+            </span>
+
+            <h1>
+                Painel Administrativo
+            </h1>
+
+            <p>
+                Gerencie o conteúdo e a comunidade do Liberium.
+            </p>
+
+        </div>
+
+
+        <!-- ==============================
+             ESTATÍSTICAS
+        =============================== -->
+
+        <div class="admin-estatisticas">
+
+            <div class="admin-card-estatistica">
+
+                <span>Usuários</span>
+
+                <strong>
+                    {{ total_usuarios }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-card-estatistica">
+
+                <span>Livros</span>
+
+                <strong>
+                    {{ total_livros }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-card-estatistica">
+
+                <span>Clubes</span>
+
+                <strong>
+                    {{ total_clubes }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-card-estatistica">
+
+                <span>Solicitações pendentes</span>
+
+                <strong>
+                    {{ solicitacoes_pendentes }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             GERENCIAMENTO
+        =============================== -->
+
+        <div class="admin-gerenciamento">
+
+            <h2>
+                Gerenciamento
+            </h2>
+
+
+            <!-- SOLICITAÇÕES -->
+
+            <a
+                href="{{ url_for('books_bp.solicitacoes_admin') }}"
+                class="admin-card"
+            >
+
+                <h3>
+                    Solicitações de livros
+                </h3>
+
+                <p>
+                    Analise livros enviados pelos usuários
+                    e aprove ou recuse solicitações.
+                </p>
+
+                {% if solicitacoes_pendentes > 0 %}
+
+                    <span>
+                        {{ solicitacoes_pendentes }}
+                        pendente{% if solicitacoes_pendentes != 1 %}s{% endif %}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- LIVROS -->
+
+            <a
+                href="{{ url_for('books_bp.catalogo') }}"
+                class="admin-card"
+            >
+
+                <h3>
+                    Gerenciar livros
+                </h3>
+
+                <p>
+                    Consulte os livros cadastrados no catálogo
+                    para editar ou excluir informações.
+                </p>
+
+            </a>
+
+
+            <!-- USUÁRIOS -->
+
+            <div class="admin-card admin-card-desabilitado">
+
+                <h3>
+                    Gerenciar usuários
+                </h3>
+
+                <p>
+                    Visualize e gerencie os usuários cadastrados
+                    no Liberium.
+                </p>
+
+                <small>
+                    Em breve
+                </small>
+
+            </div>
+
+
+            <!-- CLUBES -->
+
+            <div class="admin-card admin-card-desabilitado">
+
+                <h3>
+                    Gerenciar clubes
+                </h3>
+
+                <p>
+                    Visualize os clubes de leitura criados
+                    pela comunidade.
+                </p>
+
+                <small>
+                    Em breve
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
