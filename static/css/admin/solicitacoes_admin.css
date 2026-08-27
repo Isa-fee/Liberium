@@ -748,3 +748,180 @@
     }
 
 }
+
+/* ========================================
+   AÇÕES DO LIVRO APROVADO
+======================================== */
+
+.solicitacao-aprovada-rodape {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.acoes-livro-aprovado {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.acoes-livro-aprovado form {
+    margin: 0;
+}
+
+
+/* ========================================
+   BOTÃO EDITAR
+======================================== */
+
+.btn-editar-livro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+    padding: 0 18px;
+
+    border: 1px solid #879d84;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #36503c;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.btn-editar-livro:hover {
+    background: #879d84;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   BOTÃO EXCLUIR
+======================================== */
+
+.btn-excluir-livro {
+    min-height: 38px;
+    padding: 0 18px;
+
+    border: 1px solid #b96b62;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #9b5149;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.btn-excluir-livro:hover {
+    background: #b96b62;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media (max-width: 700px) {
+
+    .solicitacao-aprovada-rodape {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .acoes-livro-aprovado {
+        width: 100%;
+    }
+
+    .btn-editar-livro,
+    .btn-excluir-livro {
+        width: 100%;
+    }
+
+    .acoes-livro-aprovado form {
+        flex: 1;
+    }
+
+    .btn-editar-livro {
+        flex: 1;
+    }
+}
+
+/* ========================================
+   SINOPSE EXPANSÍVEL
+======================================== */
+
+.texto-sinopse {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+
+    overflow: hidden;
+
+    margin-bottom: 6px;
+}
+
+
+/* Quando clicar em "Ver mais" */
+
+.texto-sinopse.expandida {
+    display: block;
+
+    overflow: visible;
+
+    -webkit-line-clamp: unset;
+}
+
+
+/* ========================================
+   VER MAIS
+======================================== */
+
+.btn-ver-mais {
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #879d84;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-ver-mais:hover {
+    color: #36503c;
+    text-decoration: underline;
+}

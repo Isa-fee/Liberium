@@ -417,9 +417,23 @@ Solicitações de livros | Liberium
                                         Sinopse
                                     </span>
 
-                                    <p>
+                                    <p
+                                        class="texto-sinopse"
+                                        id="sinopse-{{ solicitacao.id }}"
+                                    >
                                         {{ solicitacao.descricao }}
                                     </p>
+
+                                    <button
+                                        type="button"
+                                        class="btn-ver-mais"
+                                        onclick="alternarSinopse(
+                                            {{ solicitacao.id }},
+                                            this
+                                        )"
+                                    >
+                                        Ver mais
+                                    </button>
 
                                 </div>
 
@@ -527,22 +541,72 @@ Solicitações de livros | Liberium
 
                                 </div>
 
-                            {% else %}
+                                {% else %}
 
                                 <div class="solicitacao-processada">
-
+                            
                                     {% if solicitacao.status == "aprovado" %}
-
-                                        Esta solicitação já foi aprovada.
-
+                            
+                                        <div class="solicitacao-aprovada-rodape">
+                            
+                                            <span>
+                                                Esta solicitação já foi aprovada.
+                                            </span>
+                            
+                                            {% if livro_aprovado %}
+                            
+                                                <div class="acoes-livro-aprovado">
+                            
+                                                    <!-- EDITAR -->
+                            
+                                                    <a
+                                                        href="{{ url_for(
+                                                            'books_bp.editar_livro_admin',
+                                                            livro_id=livro_aprovado.id
+                                                        ) }}"
+                                                        class="btn-editar-livro"
+                                                    >
+                                                        Editar livro
+                                                    </a>
+                            
+                            
+                                                    <!-- EXCLUIR -->
+                            
+                                                    <form
+                                                        method="POST"
+                                                        action="{{ url_for(
+                                                            'books_bp.excluir_livro_admin',
+                                                            livro_id=livro_aprovado.id
+                                                        ) }}"
+                                                        onsubmit="return confirm(
+                                                            'Tem certeza que deseja excluir este livro do catálogo?'
+                                                        );"
+                                                    >
+                            
+                                                        <button
+                                                            type="submit"
+                                                            class="btn-excluir-livro"
+                                                        >
+                                                            Excluir livro
+                                                        </button>
+                            
+                                                    </form>
+                            
+                                                </div>
+                            
+                                            {% endif %}
+                            
+                                        </div>
+                            
+                            
                                     {% elif solicitacao.status == "recusado" %}
-
+                            
                                         Esta solicitação foi recusada.
-
+                            
                                     {% endif %}
-
+                            
                                 </div>
-
+                            
                             {% endif %}
 
                         </div>
@@ -590,5 +654,7 @@ Solicitações de livros | Liberium
     </div>
 
 </section>
+
+<script src="{{ url_for('static', filename='js/solicita_admin.js') }}"></script>
 
 {% endblock %}
