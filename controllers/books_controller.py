@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from datetime import date
 from random import choice
 import os
+import json
 from uuid import uuid4
 from werkzeug.utils import secure_filename
 
@@ -31,6 +32,247 @@ def extensao_permitida(nome_arquivo):
         and nome_arquivo.rsplit(".", 1)[1].lower()
         in EXTENSOES_CAPA
     )
+
+# ======================================
+# SINCRONIZAÇÃO DO CATÁLOGO COM JSON
+# ======================================
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
+
+CAMINHO_LIVROS_JSON = os.path.join(
+    BASE_DIR,
+    "data",
+    "livros.json"
+)
+def carregar_livros_json():
+    try:
+
+        with open(
+            CAMINHO_LIVROS_JSON,
+            "r",
+            encoding="utf-8"
+        ) as arquivo:
+
+            return json.load(arquivo)
+
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError
+    ):
+        return []
+def salvar_livros_json(livros):
+    os.makedirs(
+        os.path.dirname(CAMINHO_LIVROS_JSON),
+        exist_ok=True
+    )
+    with open(
+        CAMINHO_LIVROS_JSON,
+        "w",
+        encoding="utf-8"
+    ) as arquivo:
+        json.dump(
+            livros,
+            arquivo,
+            ensure_ascii=False,
+            indent=4
+        )
+def livro_para_json(livro):
+    idiomas = {
+        "pt": "Português",
+        "en": "Inglês",
+        "es": "Espanhol",
+        "fr": "Francês"
+    }
+    idioma = idiomas.get(
+        livro.idioma,
+        livro.idioma
+    )
+    return {
+        "titulo": livro.titulo,
+        "autor": livro.autor,
+        "descricao": livro.descricao,
+        "capa": livro.capa,
+        "genero": livro.genero,
+        "editora": livro.editora,
+        "paginas": livro.paginas,
+        "ano": livro.ano,
+        "idioma": idioma,
+        "avaliacao": livro.avaliacao
+    }
+# ======================================
+# ADICIONAR LIVRO AO JSON
+# ======================================
+def adicionar_livro_json(livro):
+    livros = carregar_livros_json()
+    # Evita duplicação
+    existe = any(
+        item.get("titulo", "").strip().lower()
+        == livro.titulo.strip().lower()
+        and
+        item.get("autor", "").strip().lower()
+        == livro.autor.strip().lower()
+        for item in livros
+    )
+    if existe:
+        return
+    livros.append(
+        livro_para_json(livro)
+    )
+    salvar_livros_json(livros)
+# ======================================
+# ATUALIZAR LIVRO NO JSON
+# ======================================
+def atualizar_livro_json(
+    livro,
+    titulo_anterior,
+    autor_anterior
+):
+    livros = carregar_livros_json()
+
+    encontrado = False
+
+    for indice, item in enumerate(livros):
+
+        mesmo_titulo = (
+            item.get("titulo", "").strip().lower()
+            == titulo_anterior.strip().lower()
+        )
+
+        mesmo_autor = (
+            item.get("autor", "").strip().lower()
+            == autor_anterior.strip().lower()
+        )
+
+        if mesmo_titulo and mesmo_autor:
+
+            livros[indice] = livro_para_json(
+                livro
+            )
+
+            encontrado = True
+            break
+
+    # Se não estava no JSON, só adicionamos
+    # caso tenha vindo de uma solicitação.
+    # Livros do Google não entram automaticamente.
+    if (
+        not encontrado
+        and livro.origem == "solicitacao"
+    ):
+        livros.append(
+            livro_para_json(livro)
+        )
+
+    salvar_livros_json(livros)
+# ======================================
+# REMOVER LIVRO DO JSON
+# ======================================
+
+def remover_livro_json(livro):
+
+    livros = carregar_livros_json()
+
+    livros = [
+        item
+        for item in livros
+        if not (
+            item.get("titulo", "").strip().lower()
+            == livro.titulo.strip().lower()
+            and
+            item.get("autor", "").strip().lower()
+            == livro.autor.strip().lower()
+        )
+    ]
+
+    salvar_livros_json(livros)
+# ======================================
+# REMOVER ARQUIVO DE CAPA
+# ======================================
+
+def remover_arquivo_capa(caminho_capa):
+
+    # Não existe capa
+    if not caminho_capa:
+        return
+
+    # Não apagar imagens externas,
+    # como capas vindas do Google Books
+    if caminho_capa.startswith(
+        ("http://", "https://")
+    ):
+        return
+
+    # Só permitimos apagar capas da pasta
+    # de solicitações.
+    pasta_permitida = (
+        "img/capas/solicitacoes/"
+    )
+
+    caminho_normalizado = (
+        caminho_capa
+        .replace("\\", "/")
+        .lstrip("/")
+    )
+
+    if not caminho_normalizado.startswith(
+        pasta_permitida
+    ):
+        return
+
+    caminho_completo = os.path.join(
+        BASE_DIR,
+        "static",
+        *caminho_normalizado.split("/")
+    )
+
+    # Segurança extra:
+    # garante que o arquivo realmente está
+    # dentro de static/img/capas/solicitacoes
+    pasta_solicitacoes = os.path.abspath(
+        os.path.join(
+            BASE_DIR,
+            "static",
+            "img",
+            "capas",
+            "solicitacoes"
+        )
+    )
+
+    caminho_completo = os.path.abspath(
+        caminho_completo
+    )
+
+    try:
+
+        if (
+            os.path.commonpath([
+                pasta_solicitacoes,
+                caminho_completo
+            ])
+            != pasta_solicitacoes
+        ):
+            return
+
+    except ValueError:
+        return
+
+    # Apaga somente se o arquivo existir
+    if os.path.isfile(caminho_completo):
+
+        try:
+
+            os.remove(
+                caminho_completo
+            )
+
+        except OSError as erro:
+
+            print(
+                f"Erro ao remover capa: {erro}"
+            )
 
 books_bp = Blueprint(
     "books_bp",
@@ -382,6 +624,7 @@ def solicitar_livro():
             )
 
             pasta = os.path.join(
+                BASE_DIR,
                 "static",
                 "img",
                 "capas",
@@ -1578,6 +1821,12 @@ def aprovar_solicitacao(solicitacao_id):
 
         db.session.commit()
 
+        # Garante que o livro também exista
+        # no catálogo persistente
+        adicionar_livro_json(
+            livro_existente
+        )
+
         flash(
             "O livro já estava cadastrado. "
             "A solicitação foi marcada como aprovada.",
@@ -1609,10 +1858,21 @@ def aprovar_solicitacao(solicitacao_id):
     )
 
     db.session.add(
+    novo_livro
+    )
+
+    solicitacao.status = "aprovado"
+
+    db.session.commit()
+
+    # ==================================
+    # SALVAR TAMBÉM NO JSON
+    # ==================================
+
+    adicionar_livro_json(
         novo_livro
     )
-    solicitacao.status = "aprovado"
-    db.session.commit()
+
     flash(
         f'"{solicitacao.titulo}" foi aprovado e adicionado ao catálogo!',
         "success"
@@ -1705,6 +1965,10 @@ def editar_livro_admin(livro_id):
     # ==================================
 
     if request.method == "POST":
+
+        titulo_anterior = livro.titulo
+        autor_anterior = livro.autor
+        capa_anterior = livro.capa
 
         titulo = request.form.get(
             "titulo",
@@ -1808,6 +2072,7 @@ def editar_livro_admin(livro_id):
             )
 
             pasta = os.path.join(
+                BASE_DIR,
                 "static",
                 "img",
                 "capas",
@@ -1828,9 +2093,11 @@ def editar_livro_admin(livro_id):
                 caminho_completo
             )
 
-            livro.capa = (
+            nova_capa = (
                 f"img/capas/solicitacoes/{nome_arquivo}"
             )
+
+            livro.capa = nova_capa
 
         livro.genero = genero or None
         livro.editora = editora or None
@@ -1839,6 +2106,27 @@ def editar_livro_admin(livro_id):
         livro.idioma = idioma or None
 
         db.session.commit()
+
+        atualizar_livro_json(
+            livro,
+            titulo_anterior,
+            autor_anterior
+        )
+
+        # ==================================
+        # REMOVER CAPA ANTIGA
+        # ==================================
+
+        if (
+            arquivo_capa
+            and arquivo_capa.filename
+            and capa_anterior
+            and capa_anterior != livro.capa
+        ):
+
+            remover_arquivo_capa(
+                capa_anterior
+            )
 
         flash(
             f'"{livro.titulo}" foi atualizado com sucesso!',
@@ -1881,10 +2169,17 @@ def excluir_livro_admin(livro_id):
         return redirect(
             url_for("home.home")
         )
+
     livro = Livro.query.get_or_404(
         livro_id
     )
+
     titulo_livro = livro.titulo
+    capa_livro = livro.capa
+
+    remover_livro_json(
+        livro
+    )
     # ==================================
     # ATUALIZAR SOLICITAÇÃO ORIGINAL
     # ==================================
@@ -1932,6 +2227,11 @@ def excluir_livro_admin(livro_id):
         livro
     )
     db.session.commit()
+
+    remover_arquivo_capa(
+        capa_livro
+    )
+
     flash(
         f'"{titulo_livro}" foi excluído do catálogo.',
         "success"
