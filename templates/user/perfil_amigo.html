@@ -41,26 +41,168 @@
 
                     <div class="card-meu-perfil">
 
-                        <img src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}" class="foto-meu-perfil">
+                        <img src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrão.jpg') }}" class="foto-meu-perfil">
 
                         <h3>{{ usuario.nome }}</h3>
 
                         <p class="meu-username">
                             {{ usuario.nivel or "Leitor Iniciante" }}
                         </p>
+                        
+                        
+                        <!-- =================================
+                             AÇÕES DE AMIZADE
+                        ================================== -->
+                        
+                        {% if usuario.id != current_user.id %}
+                        
+                            <div class="acoes-amizade-perfil">
+                        
+                                <!-- NÃO EXISTE AMIZADE/SOLICITAÇÃO -->
+                        
+                                {% if not amizade %}
+                        
+                                    <form
+                                        action="{{ url_for(
+                                            'amigos_bp.adicionar_amigo',
+                                            usuario_id=usuario.id
+                                        ) }}"
+                                        method="POST"
+                                    >
+                                        <button
+                                            type="submit"
+                                            class="btn-adicionar-amigo"
+                                        >
+                                            + Adicionar amigo
+                                        </button>
+                                    </form>
+                        
+                        
+                                <!-- JÁ SÃO AMIGOS -->
+                        
+                                {% elif amizade.status == "aceita" %}
 
+                                <div class="amizade-confirmada">
+                            
+                                    <div class="status-amizade aceita">
+                                        ✓ Amigos
+                                    </div>
+                            
+                                    <form
+                                        action="{{ url_for(
+                                            'amigos_bp.desfazer_amizade',
+                                            amizade_id=amizade.id
+                                        ) }}"
+                                        method="POST"
+                                        onsubmit="return confirm(
+                                            'Tem certeza que deseja desfazer esta amizade?'
+                                        );"
+                                    >
+                                        <button
+                                            type="submit"
+                                            class="btn-desfazer-amizade"
+                                        >
+                                            Desfazer amizade
+                                        </button>
+                                    </form>
+                            
+                                </div>
+                        
+                        
+                                <!-- VOCÊ ENVIOU A SOLICITAÇÃO -->
+                        
+                                {% elif amizade.status == "pendente" and amizade.usuario_id == current_user.id %}
+
+                                    <div class="solicitacao-enviada-perfil">
+
+                                        <div class="status-amizade pendente">
+                                            Solicitação enviada
+                                        </div>
+
+                                        <form
+                                            action="{{ url_for(
+                                                'amigos_bp.cancelar_solicitacao',
+                                                amizade_id=amizade.id
+                                            ) }}"
+                                            method="POST"
+                                        >
+                                            <button
+                                                type="submit"
+                                                class="btn-cancelar-solicitacao"
+                                            >
+                                                Cancelar solicitação
+                                            </button>
+                                        </form>
+
+                                    </div>
+                        
+                        
+                                <!-- A PESSOA ENVIOU UMA SOLICITAÇÃO PARA VOCÊ -->
+                        
+                                {% elif amizade.status == "pendente"
+                                    and amizade.amigo_id == current_user.id %}
+                        
+                                    <div class="solicitacao-perfil">
+                        
+                                        <span>
+                                            Quer ser seu amigo
+                                        </span>
+                        
+                                        <div class="acoes-solicitacao-perfil">
+                        
+                                            <form
+                                                action="{{ url_for(
+                                                    'amigos_bp.aceitar_amizade',
+                                                    amizade_id=amizade.id
+                                                ) }}"
+                                                method="POST"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    class="btn-aceitar-amigo"
+                                                >
+                                                    Aceitar
+                                                </button>
+                                            </form>
+                        
+                                            <form
+                                                action="{{ url_for(
+                                                    'amigos_bp.recusar_amizade',
+                                                    amizade_id=amizade.id
+                                                ) }}"
+                                                method="POST"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    class="btn-recusar-amigo"
+                                                >
+                                                    Recusar
+                                                </button>
+                                            </form>
+                        
+                                        </div>
+                        
+                                    </div>
+                        
+                                {% endif %}
+                        
+                            </div>
+                        
+                        {% endif %}
+                        
+                        
                         <div class="estatisticas">
-
+                        
                             <div class="estatistica">
                                 <strong>{{ quantidade_amigos }}</strong>
                                 <span>Amigos</span>
                             </div>
-
+                        
                             <div class="estatistica">
                                 <strong>{{ livros_lidos|length }}</strong>
                                 <span>Livros lidos</span>
                             </div>
-
+                        
                         </div>
 
                     </div>

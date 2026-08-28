@@ -1637,6 +1637,50 @@
 
 
 /* ==========================================
+   LINKS DE PERFIL NAS RESENHAS
+========================================== */
+
+.link-foto-autor-resenha {
+    display: block;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+}
+
+.link-foto-autor-resenha .foto-autor-resenha {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.link-foto-autor-resenha:hover .foto-autor-resenha {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.18);
+}
+
+.link-nome-autor-resenha {
+    color: #442b1a;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.link-nome-autor-resenha:hover {
+    color: #6f8464;
+
+    text-decoration: underline;
+}
+
+
+/* ==========================================
    RESPONSIVIDADE
 ========================================== */
 

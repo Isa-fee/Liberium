@@ -1153,6 +1153,208 @@
     margin-top: 35px;
 }
 
+/* ==========================================
+   AÇÕES DE AMIZADE NO PERFIL
+========================================== */
+
+.acoes-amizade-perfil {
+    margin-top: 15px;
+}
+
+.acoes-amizade-perfil form {
+    margin: 0;
+}
+
+
+/* ADICIONAR */
+
+.btn-adicionar-amigo {
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 22px;
+
+    background: #879d84;
+    color: white;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-adicionar-amigo:hover {
+    background: #6f8464;
+
+    transform: translateY(-1px);
+}
+
+
+/* STATUS */
+
+.status-amizade {
+    width: fit-content;
+
+    padding: 9px 17px;
+
+    border-radius: 22px;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.status-amizade.aceita {
+    border: 1px solid #b9c8b4;
+
+    background: #eef3eb;
+    color: #5f7656;
+}
+
+.status-amizade.pendente {
+    border: 1px solid #ded9d2;
+
+    background: #f5f3f0;
+    color: #887a70;
+}
+
+
+/* SOLICITAÇÃO RECEBIDA */
+
+.solicitacao-perfil {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.solicitacao-perfil > span {
+    color: #74665c;
+
+    font-size: 0.82rem;
+}
+
+.acoes-solicitacao-perfil {
+    display: flex;
+
+    gap: 8px;
+}
+
+.btn-aceitar-amigo,
+.btn-recusar-amigo {
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-aceitar-amigo {
+    border: 1px solid #879d84;
+
+    background: #879d84;
+    color: white;
+}
+
+.btn-aceitar-amigo:hover {
+    background: #6f8464;
+    border-color: #6f8464;
+}
+
+.btn-recusar-amigo {
+    border: 1px solid #c9c1ba;
+
+    background: transparent;
+    color: #786a60;
+}
+
+.btn-recusar-amigo:hover {
+    background: #f1eeeb;
+}
+
+
+/* ==========================================
+   GERENCIAR AMIZADE NO PERFIL
+========================================== */
+
+.amizade-confirmada,
+.solicitacao-enviada-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+.amizade-confirmada form,
+.solicitacao-enviada-perfil form {
+    margin: 0;
+}
+
+
+/* DESFAZER AMIZADE */
+
+.btn-desfazer-amizade {
+    padding: 8px 14px;
+
+    border: 1px solid #d8ceca;
+    border-radius: 20px;
+
+    background: transparent;
+    color: #806b61;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-desfazer-amizade:hover {
+    border-color: #b99d92;
+
+    background: #f7efec;
+    color: #79574d;
+}
+
+
+/* CANCELAR SOLICITAÇÃO */
+
+.btn-cancelar-solicitacao {
+    padding: 8px 14px;
+
+    border: none;
+
+    background: transparent;
+    color: #8a7c72;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.btn-cancelar-solicitacao:hover {
+    color: #5e5148;
+}
+
+
+
 /* =========================================
    RESPONSIVIDADE
 ========================================= */

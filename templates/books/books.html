@@ -703,52 +703,68 @@
 
                                 <div class="autor-card-resenha">
 
-
                                     <!-- FOTO -->
-
-                                    <div class="foto-autor-resenha">
-
-                                        {% if resenha.usuario.foto %}
-
-                                            <img
-                                                src="{{ url_for(
-                                                    'static',
-                                                    filename=resenha.usuario.foto
-                                                ) }}"
-                                                alt="{{ resenha.usuario.nome }}"
-                                            >
-
-                                        {% else %}
-
-                                            <div class="foto-resenha-placeholder">
-                                                {{ resenha.usuario.nome[0]|upper }}
-                                            </div>
-
-                                        {% endif %}
-
-                                    </div>
-
-
+                                
+                                    <a
+                                        href="{{ url_for(
+                                            'amigos_bp.perfil_usuario',
+                                            usuario_id=resenha.usuario.id
+                                        ) }}"
+                                        class="link-foto-autor-resenha"
+                                        title="Ver perfil de {{ resenha.usuario.nome }}"
+                                    >
+                                
+                                        <div class="foto-autor-resenha">
+                                
+                                            {% if resenha.usuario.foto %}
+                                
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=resenha.usuario.foto
+                                                    ) }}"
+                                                    alt="{{ resenha.usuario.nome }}"
+                                                >
+                                
+                                            {% else %}
+                                
+                                                <div class="foto-resenha-placeholder">
+                                                    {{ resenha.usuario.nome[0]|upper }}
+                                                </div>
+                                
+                                            {% endif %}
+                                
+                                        </div>
+                                
+                                    </a>
+                                
+                                
                                     <!-- NOME E DATA -->
-
+                                
                                     <div class="dados-autor-resenha">
-
-                                        <strong>
+                                
+                                        <a
+                                            href="{{ url_for(
+                                                'amigos_bp.perfil_usuario',
+                                                usuario_id=resenha.usuario.id
+                                            ) }}"
+                                            class="link-nome-autor-resenha"
+                                        >
                                             {{ resenha.usuario.nome }}
-                                        </strong>
-
+                                        </a>
+                                
                                         {% if resenha.data_resenha %}
-
+                                
                                             <span>
                                                 {{ resenha.data_resenha.strftime(
                                                     '%d/%m/%Y'
                                                 ) }}
                                             </span>
-
+                                
                                         {% endif %}
-
+                                
                                     </div>
-
+                                
                                 </div>
 
 
