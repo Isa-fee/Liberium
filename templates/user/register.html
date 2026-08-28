@@ -2,118 +2,218 @@
 
 {% block title %}Liberium - Cadastro{% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/user/style.css') }}"
+>
+{% endblock %}
+
 {% block content %}
 
-<section class="form-container">
+<section class="auth-container">
 
-  <div class="form-card">
+    <div class="auth-card auth-card-cadastro">
 
-    <h2>Cadastro</h2>
+        <div class="auth-cabecalho">
 
-    <form action="{{ url_for('user_bp.register') }}" method="POST">
+            <span class="auth-etiqueta">
+                JUNTE-SE AO LIBERIUM
+            </span>
 
-      <input 
-        type="text" 
-        name="nome" 
-        placeholder="Nome"
-        required
-      >
+            <h1>
+                Crie sua conta
+            </h1>
 
-      <input 
-        type="email" 
-        name="email" 
-        placeholder="Email"
-        required
-      >
+            <p>
+                Comece sua jornada de leitura e construa
+                sua estante.
+            </p>
 
-      <div class="senha-container">
+        </div>
 
-        <input 
-          type="password" 
-          name="senha" 
-          id="senha"
-          placeholder="Senha"
-          required
+
+        <form
+            action="{{ url_for('user_bp.register') }}"
+            method="POST"
+            class="auth-form"
         >
 
-      </div>
+            <div class="campo-auth">
 
-      <div class="senha-container">
+                <label for="nome">
+                    Nome
+                </label>
 
-        <input 
-          type="password" 
-          name="confirmar_senha"
-          id="confirmar_senha"
-          placeholder="Confirmar senha"
-          required
-        >
+                <input
+                    type="text"
+                    name="nome"
+                    id="nome"
+                    placeholder="Como podemos chamar você?"
+                    autocomplete="name"
+                    required
+                >
 
-      </div>
-      <div class="tipo-usuario">
-        <p class="titulo-tipo">
-          Como você deseja usar o Liberium?
-        </p>
-        <label class="opcao-tipo">
-          <input
-            type="radio"
-            name="tipo"
-            value="leitor"
-            checked
-            required
-          >
-          <div>
-            <strong>Leitor</strong>
-            <span>
-              Quero descobrir livros, organizar minha estante
-              e compartilhar minhas leituras.
-            </span>
-          </div>
-      
-        </label>
-      
-        <label class="opcao-tipo">
-      
-          <input
-            type="radio"
-            name="tipo"
-            value="autor"
-            required
-          >
-      
-          <div>
-            <strong>Autor(a)</strong>
-            <span>
-              Sou autor(a) e também quero participar
-              da comunidade do Liberium.
-            </span>
-          </div>
-      
-        </label>
-      
-      </div>
+            </div>
 
-      <p class="login-text">
 
-        Já possui cadastro?
+            <div class="campo-auth">
 
-        <a href="{{ url_for('user_bp.login') }}">
-          Faça login
-        </a>
+                <label for="email">
+                    E-mail
+                </label>
 
-      </p>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="seuemail@exemplo.com"
+                    autocomplete="email"
+                    required
+                >
 
-      <button type="submit">
-        Continuar
-      </button>
+            </div>
 
-    </form>
 
-    <img
-      src="{{ url_for('static', filename='img/logo.png') }}"
-      class="logo-pequena"
-    >
+            <div class="auth-senhas">
 
-  </div>
+                <div class="campo-auth">
+
+                    <label for="senha">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-auth">
+
+                    <label for="confirmar_senha">
+                        Confirmar senha
+                    </label>
+
+                    <input
+                        type="password"
+                        name="confirmar_senha"
+                        id="confirmar_senha"
+                        placeholder="Repita sua senha"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="tipo-usuario">
+
+                <p class="titulo-tipo">
+                    Como você deseja usar o Liberium?
+                </p>
+
+
+                <div class="tipo-opcoes">
+
+                    <label class="opcao-tipo">
+
+                        <input
+                            type="radio"
+                            name="tipo"
+                            value="leitor"
+                            checked
+                            required
+                        >
+
+                        <div class="opcao-conteudo">
+
+                            <span class="opcao-marcador"></span>
+
+                            <strong>
+                                Leitor
+                            </strong>
+
+                            <span>
+                                Descobrir livros, organizar minha
+                                estante e compartilhar leituras.
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="opcao-tipo">
+
+                        <input
+                            type="radio"
+                            name="tipo"
+                            value="autor"
+                            required
+                        >
+
+                        <div class="opcao-conteudo">
+
+                            <span class="opcao-marcador"></span>
+
+                            <strong>
+                                Autor(a)
+                            </strong>
+
+                            <span>
+                                Participar da comunidade e apresentar
+                                meu trabalho como autor(a).
+                            </span>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-auth"
+            >
+                Criar minha conta
+            </button>
+
+
+            <p class="auth-link-final">
+
+                Já possui cadastro?
+
+                <a href="{{ url_for('user_bp.login') }}">
+                    Fazer login
+                </a>
+
+            </p>
+
+        </form>
+
+
+        <div class="auth-marca">
+
+            <img
+                src="{{ url_for('static', filename='img/logo.png') }}"
+                alt="Liberium"
+            >
+
+        </div>
+
+    </div>
 
 </section>
 
