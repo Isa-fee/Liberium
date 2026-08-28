@@ -455,6 +455,34 @@ def decorar_estante(usuario_item_id):
         url_for("estante_bp.estante")
     )
 
+# ======================================
+# REMOVER DECORAÇÃO DA ESTANTE
+# ======================================
+
+@estante_bp.route(
+    "/decoracao/remover/<int:decoracao_id>",
+    methods=["POST"]
+)
+@login_required
+def remover_decoracao(decoracao_id):
+
+    decoracao = DecoracaoEstante.query.filter_by(
+        id=decoracao_id,
+        usuario_id=current_user.id
+    ).first_or_404()
+
+    db.session.delete(decoracao)
+    db.session.commit()
+
+    flash(
+        "Decoração removida da estante!",
+        "success"
+    )
+
+    return redirect(
+        url_for("estante_bp.estante")
+    )
+
 
 # ======================================
 # ATUALIZAR PROGRESSO
