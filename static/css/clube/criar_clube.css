@@ -7,7 +7,6 @@
     margin: 40px auto;
     padding: 0 30px;
     color: #2c362b;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 
@@ -23,7 +22,7 @@
 }
 
 .cabecalho-criar-clube h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+
     font-size: 38px;
     font-weight: 700;
     color: #1a2419;

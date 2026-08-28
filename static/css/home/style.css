@@ -19,25 +19,54 @@
 ========================================= */
 
 .home-boas-vindas {
+    position: relative;
+
     width: 100%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    gap: 40px;
+    gap: 70px;
 
-    padding: 38px 42px;
+    padding: 35px 45px 45px;
 
-    background:
-        linear-gradient(
-            120deg,
-            rgba(135, 157, 132, 0.16),
-            rgba(225, 212, 195, 0.22)
-        );
+    margin-bottom: 35px;
 
-    border: 1px solid rgba(135, 157, 132, 0.22);
-    border-radius: 24px;
+    background: transparent;
+    border: none;
+}
+
+
+.home-boas-vindas::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: 96%;
+    height: 1px;
+
+    background: #e5ddd4;
+
+    transform: translateX(-50%);
+}
+
+.boas-vindas-visual {
+    flex: 0 0 390px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ilustracao-home {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+
+    object-fit: contain;
 }
 
 .home-boas-vindas-texto {
@@ -81,53 +110,60 @@
     line-height: 1.7;
 }
 
+.boas-vindas-texto {
+    flex: 1;
+    width: 650px;
+}
 
 /* =========================================
    BOTÃO PRINCIPAL
 ========================================= */
 
-.home-btn-estante {
-    flex-shrink: 0;
-
+.btn-home-estante {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-top: 24px;
 
     gap: 12px;
 
-    padding: 13px 22px;
+    padding: 12px 24px;
 
     background: var(--verde-musgo);
-    color: white;
+    color: #fff;
 
-    border: 1px solid var(--verde-musgo);
     border-radius: 30px;
 
-    text-decoration: none;
-
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 600;
+
+    text-decoration: none;
 
     transition:
         transform 0.2s ease,
         background 0.2s ease,
-        color 0.2s ease,
         box-shadow 0.2s ease;
 }
 
-.home-btn-estante span {
-    font-size: 1.2rem;
-
-    transition: transform 0.2s ease;
+.btn-home-estante span {
+    font-size: 1.1rem;
 }
 
-.home-btn-estante:hover {
-    background: transparent;
-    color: var(--verde-musgo);
+.btn-home-estante:hover {
+    background: var(--verde-oliva);
 
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 
-    box-shadow: 0 7px 18px rgba(54, 80, 60, 0.12);
+    box-shadow: 0 5px 14px rgba(54, 80, 60, 0.15);
+}
+
+.home-btn-final{
+    text-decoration: none;
+    color: #fff;
+    background: var(--verde-musgo);
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 1rem;
 }
 
 .home-btn-estante:hover span {
@@ -139,8 +175,9 @@
    SEÇÕES
 ========================================= */
 
-.home-secao {
+.home-secao, .home-painel, .home-sugestoes, .home-final {
     margin-top: 55px;
+    padding: 35px 45px 45px;
 }
 
 .home-titulo-secao {
@@ -540,6 +577,102 @@
     line-height: 1.55;
 }
 
+/* =========================================
+   META - USUÁRIO SEM META
+========================================= */
+
+.meta-sem-meta {
+    min-height: 190px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+.meta-sem-meta::before {
+    content: "✦";
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    border-radius: 50%;
+
+    background: rgba(135, 157, 132, 0.16);
+
+    color: var(--verde-oliva);
+
+    font-size: 1.25rem;
+}
+
+.meta-sem-meta strong {
+    color: var(--marrom-cafe);
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+
+    margin-bottom: 7px;
+}
+
+.meta-sem-meta p {
+    max-width: 430px;
+
+    margin: 0 0 18px;
+
+    color: #8b7c70;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+
+/* BOTÃO CRIAR META */
+
+.btn-criar-meta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 24px;
+
+    background: var(--verde-oliva);
+    color: #ffffff;
+
+    border: 1px solid var(--verde-oliva);
+    border-radius: 30px;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-criar-meta:hover {
+    background: var(--verde-musgo);
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(54, 80, 60, 0.15);
+}
+
 
 /* =========================================
    SUGESTÕES
@@ -555,9 +688,10 @@
     align-items: stretch;
 
     gap: 30px;
+    margin: 28px;
 
     margin-top: 65px;
-    padding: 35px 0;
+    padding: 35px 45px 45px;
 
     border-top: 1px solid #e7e1db;
     border-bottom: 1px solid #e7e1db;
@@ -871,6 +1005,7 @@
     justify-content: space-between;
 
     gap: 30px;
+    margin: 28px;
 
     margin-top: 55px;
     padding: 30px 35px;

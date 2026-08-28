@@ -19,31 +19,42 @@
 
     <section class="home-boas-vindas">
 
-        <div class="home-boas-vindas-texto">
-
-            <span class="home-saudacao">
+        <div class="boas-vindas-texto">
+    
+            <span class="home-etiqueta">
                 SUA JORNADA LITERÁRIA
             </span>
-
+    
             <h1>
-                Bem-vindo(a) à sua Estante Liberium!
+                Bem-vindo(a) à sua Estante<br>
+                Liberium!
             </h1>
-
+    
             <p>
                 Acompanhe suas leituras, descubra novas histórias
                 e continue construindo sua jornada literária.
             </p>
-
+    
+            <a
+                href="{{ url_for('estante_bp.estante') }}"
+                class="btn-home-estante"
+            >
+                Ver minha estante
+                <span>→</span>
+            </a>
+    
         </div>
-
-        <a
-            href="{{ url_for('estante_bp.estante') }}"
-            class="home-btn-estante"
-        >
-            Ver minha estante
-            <span>→</span>
-        </a>
-
+    
+        <div class="boas-vindas-visual">
+    
+            <img
+                src="{{ url_for('static', filename='img/livros-libelula.png') }}"
+                alt=""
+                class="ilustracao-home"
+            >
+    
+        </div>
+    
     </section>
 
 
@@ -329,45 +340,109 @@
 
             <div class="meta-conteudo">
 
-                <div class="meta-numero">
-
-                    <strong>6</strong>
-
-                    <span>
-                        de 10 livros
-                    </span>
-
-                </div>
-
-
-                <div class="meta-barra">
-
-                    <div
-                        class="meta-progresso"
-                        style="width: 60%;"
-                    ></div>
-
-                </div>
-
-
-                <div class="meta-informacoes">
-
-                    <span>
-                        60% concluído
-                    </span>
-
-                    <span>
-                        Faltam 4
-                    </span>
-
-                </div>
-
-
-                <p class="meta-mensagem">
-                    Você está no caminho certo! Continue lendo
-                    para alcançar sua meta deste mês.
-                </p>
-
+                {% if meta_atual %}
+            
+                    <div class="meta-numero">
+            
+                        <strong>
+                            {{ meta_progresso }}
+                        </strong>
+            
+                        <span>
+                            de {{ meta_quantidade }}
+                            livro{% if meta_quantidade != 1 %}s{% endif %}
+                        </span>
+            
+                    </div>
+            
+            
+                    <div class="meta-barra">
+            
+                        <div
+                            class="meta-progresso"
+                            style="width: {{ meta_percentual }}%;"
+                        ></div>
+            
+                    </div>
+            
+            
+                    <div class="meta-informacoes">
+            
+                        <span>
+                            {{ meta_percentual }}% concluído
+                        </span>
+            
+                        <span>
+                            {% if meta_restante > 0 %}
+            
+                                Faltam {{ meta_restante }}
+            
+                            {% else %}
+            
+                                Meta concluída!
+            
+                            {% endif %}
+                        </span>
+            
+                    </div>
+            
+            
+                    {% if meta_restante > 0 %}
+            
+                        <p class="meta-mensagem">
+            
+                            Você está no caminho certo!
+            
+                            {% if meta_restante == 1 %}
+            
+                                Falta apenas 1 livro para alcançar
+                                sua meta deste mês.
+            
+                            {% else %}
+            
+                                Continue lendo para alcançar sua
+                                meta deste mês.
+            
+                            {% endif %}
+            
+                        </p>
+            
+                    {% else %}
+            
+                        <p class="meta-mensagem">
+                            Parabéns! Você alcançou sua meta
+                            de leitura deste mês.
+                        </p>
+            
+                    {% endif %}
+            
+            
+                {% else %}
+            
+                    <!-- USUÁRIO AINDA NÃO CRIOU META -->
+            
+                    <div class="meta-sem-meta">
+            
+                        <strong>
+                            Você ainda não definiu uma meta este mês.
+                        </strong>
+            
+                        <p>
+                            Crie uma meta de leitura e acompanhe
+                            seu progresso por aqui.
+                        </p>
+            
+                        <a
+                            href="{{ url_for('user_bp.perfil') }}"
+                            class="btn-criar-meta"
+                        >
+                            Criar meta
+                        </a>
+            
+                    </div>
+            
+                {% endif %}
+            
             </div>
 
         </div>
@@ -534,7 +609,7 @@
 
         <a
             href="{{ url_for('estante_bp.estante') }}"
-            class="home-btn-estante home-btn-final"
+            class="home-btn-final"
         >
             Ver minha estante
             <span>→</span>

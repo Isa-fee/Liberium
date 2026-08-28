@@ -2,70 +2,141 @@
 
 {% block title %}Liberium - Login{% endblock %}
 
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/user/style.css') }}"
+>
+{% endblock %}
+
 {% block content %}
-<section class="form-container">
 
-  <div class="form-card">
+<section class="auth-container">
 
-    <h2>Bem-vindo(a)!</h2>
+    <div class="auth-card auth-card-login">
 
-    <form action="{{ url_for('user_bp.login') }}" method="POST">
+        <div class="auth-cabecalho">
 
-      <input 
-        type="email" 
-        name="email" 
-        placeholder="Email" 
-        required
-      >
+            <span class="auth-etiqueta">
+                BEM-VINDO DE VOLTA
+            </span>
 
-      <div class="senha-container">
+            <h1>
+                Entre no Liberium
+            </h1>
 
-        <input 
-          type="password" 
-          name="senha" 
-          id="senha" 
-          placeholder="Senha" 
-          required
+            <p>
+                Continue suas leituras, acompanhe suas metas
+                e descubra novos livros.
+            </p>
+
+        </div>
+
+
+        <form
+            action="{{ url_for('user_bp.login') }}"
+            method="POST"
+            class="auth-form"
         >
 
-      </div>
+            <div class="campo-auth">
 
-      <div class="checkbox-area">
+                <label for="email">
+                    E-mail
+                </label>
 
-        <input 
-          type="checkbox" 
-          id="lembrar" 
-          name="lembrar"
-        >
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="seuemail@exemplo.com"
+                    autocomplete="email"
+                    required
+                >
 
-        <label for="lembrar">
-          Lembrar-me
-        </label>
+            </div>
 
-      </div>
 
-      <button type="submit">
-        Continuar
-      </button>
+            <div class="campo-auth">
 
-      <p class="link-cadastro">
+                <label for="senha">
+                    Senha
+                </label>
 
-        Não tem uma conta?
+                <input
+                    type="password"
+                    name="senha"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    required
+                >
 
-        <a href="{{ url_for('user_bp.register') }}">
-          Inscrever-se
-        </a>
+            </div>
 
-      </p>
 
-    </form>
+            <div class="auth-opcoes">
 
-    <img 
-      src="{{ url_for('static', filename='img/logo.png') }}"
-      class="logo-pequena"
-    >
+                <label class="lembrar-login">
 
-  </div>
+                    <input
+                        type="checkbox"
+                        id="lembrar"
+                        name="lembrar"
+                    >
+
+                    <span>
+                        Lembrar de mim
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-auth"
+            >
+                Entrar
+            </button>
+
+
+            <div class="auth-divisor">
+                <span></span>
+
+                <small>
+                    novo por aqui?
+                </small>
+
+                <span></span>
+            </div>
+
+
+            <p class="auth-link-final">
+
+                Ainda não possui uma conta?
+
+                <a href="{{ url_for('user_bp.register') }}">
+                    Criar conta
+                </a>
+
+            </p>
+
+        </form>
+
+
+        <div class="auth-marca">
+
+            <img
+                src="{{ url_for('static', filename='img/logo.png') }}"
+                alt="Liberium"
+            >
+
+        </div>
+
+    </div>
 
 </section>
+
 {% endblock %}

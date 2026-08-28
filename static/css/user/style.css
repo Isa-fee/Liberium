@@ -1,0 +1,508 @@
+/* =========================================
+   LOGIN E CADASTRO - LIBERIUM
+========================================= */
+
+.auth-container {
+    width: 100%;
+    min-height: calc(100vh - 75px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 65px 20px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(135, 157, 132, 0.08),
+            transparent 32%
+        ),
+        #fdfcfb;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 470px;
+
+    padding: 42px 44px 30px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid #e8e0d7;
+    border-radius: 22px;
+
+    box-shadow:
+        0 14px 40px rgba(68, 43, 26, 0.07);
+
+    text-align: left;
+}
+
+.auth-card-cadastro {
+    max-width: 620px;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.auth-cabecalho {
+    margin-bottom: 30px;
+}
+
+.auth-etiqueta {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--verde-oliva);
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+}
+
+.auth-cabecalho h1 {
+    margin: 0 0 8px;
+
+    color: var(--marrom-cafe);
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.85rem;
+    font-weight: 400;
+}
+
+.auth-cabecalho p {
+    max-width: 420px;
+
+    margin: 0;
+
+    color: #8b7c70;
+
+    font-size: 0.85rem;
+    line-height: 1.55;
+}
+
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+.auth-form {
+    width: 100%;
+}
+
+.campo-auth {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 18px;
+}
+
+.campo-auth label,
+.titulo-tipo {
+    color: var(--marrom-cafe);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.campo-auth input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 16px;
+
+    background: #fdfcfb;
+
+    border: 1px solid #ddd3c8;
+    border-radius: 11px;
+
+    outline: none;
+
+    color: var(--marrom-cafe);
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.campo-auth input::placeholder {
+    color: #afa49b;
+}
+
+.campo-auth input:hover {
+    border-color: #c7b9ab;
+}
+
+.campo-auth input:focus {
+    background: #ffffff;
+
+    border-color: var(--verde-oliva);
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.12);
+}
+
+
+/* =========================================
+   SENHAS NO CADASTRO
+========================================= */
+
+.auth-senhas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.auth-senhas .campo-auth {
+    min-width: 0;
+}
+
+
+/* =========================================
+   LEMBRAR LOGIN
+========================================= */
+
+.auth-opcoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: -2px 0 23px;
+}
+
+.lembrar-login {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #78695e;
+
+    font-size: 0.76rem;
+
+    cursor: pointer;
+}
+
+.lembrar-login input {
+    width: 15px;
+    height: 15px;
+
+    margin: 0;
+
+    accent-color: var(--verde-oliva);
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   TIPO DE USUÁRIO
+========================================= */
+
+.tipo-usuario {
+    margin: 4px 0 24px;
+}
+
+.titulo-tipo {
+    margin: 0 0 11px;
+}
+
+.tipo-opcoes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.opcao-tipo {
+    position: relative;
+
+    display: block;
+
+    cursor: pointer;
+}
+
+.opcao-tipo input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.opcao-conteudo {
+    position: relative;
+
+    min-height: 125px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 17px 16px;
+
+    background: #fdfcfb;
+
+    border: 1px solid #e2d9d0;
+    border-radius: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.opcao-conteudo:hover {
+    border-color: #b8c5b5;
+
+    transform: translateY(-1px);
+}
+
+.opcao-marcador {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    width: 15px;
+    height: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #cfc4ba;
+    border-radius: 50%;
+}
+
+.opcao-conteudo strong {
+    margin-bottom: 7px;
+    padding-right: 25px;
+
+    color: var(--marrom-cafe);
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.opcao-conteudo > span:last-child {
+    color: #8b7c70;
+
+    font-size: 0.73rem;
+    line-height: 1.45;
+}
+
+
+/* SELECIONADO */
+
+.opcao-tipo input:checked + .opcao-conteudo {
+    background: rgba(135, 157, 132, 0.08);
+
+    border-color: var(--verde-oliva);
+
+    box-shadow:
+        0 0 0 2px rgba(135, 157, 132, 0.08);
+}
+
+.opcao-tipo input:checked
++ .opcao-conteudo
+.opcao-marcador {
+    background: var(--verde-oliva);
+
+    border: 4px solid #ffffff;
+
+    box-shadow:
+        0 0 0 1px var(--verde-oliva);
+}
+
+
+/* ACESSIBILIDADE PELO TECLADO */
+
+.opcao-tipo input:focus-visible
++ .opcao-conteudo {
+    outline: 2px solid var(--verde-musgo);
+    outline-offset: 2px;
+}
+
+
+/* =========================================
+   BOTÃO PRINCIPAL
+========================================= */
+
+.btn-auth {
+    width: 100%;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 4px;
+
+    background: var(--verde-oliva);
+
+    border: 1px solid var(--verde-oliva);
+    border-radius: 30px;
+
+    color: #ffffff;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-auth:hover {
+    background: var(--verde-musgo);
+
+    border-color: var(--verde-musgo);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(54, 80, 60, 0.14);
+}
+
+
+/* =========================================
+   DIVISOR DO LOGIN
+========================================= */
+
+.auth-divisor {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 23px 0 17px;
+}
+
+.auth-divisor span {
+    flex: 1;
+
+    height: 1px;
+
+    background: #ebe4dd;
+}
+
+.auth-divisor small {
+    color: #a09287;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.auth-link-final {
+    margin: 17px 0 0;
+
+    color: #78695e;
+
+    font-size: 0.77rem;
+    text-align: center;
+}
+
+.auth-link-final a {
+    color: var(--verde-musgo);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.auth-link-final a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MARCA
+========================================= */
+
+.auth-marca {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 23px;
+}
+
+.auth-marca img {
+    width: 52px;
+    height: auto;
+
+    opacity: 0.58;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .auth-container {
+        align-items: flex-start;
+
+        padding: 35px 15px;
+    }
+
+    .auth-card,
+    .auth-card-cadastro {
+        max-width: 100%;
+
+        padding: 32px 22px 25px;
+
+        border-radius: 18px;
+    }
+
+    .auth-cabecalho h1 {
+        font-size: 1.6rem;
+    }
+
+    .auth-senhas {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .tipo-opcoes {
+        grid-template-columns: 1fr;
+    }
+
+    .opcao-conteudo {
+        min-height: auto;
+    }
+}

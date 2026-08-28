@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from models import Livro, Estante
+from models import Livro, Estante, MetaLeitura
 from collections import Counter
+from datetime import date
 
 from sqlalchemy import case
 
@@ -281,38 +282,42 @@ def index():
 @home_bp.route('/home')
 @login_required
 def home():
+
+    # 1. Sugestões
     livros = buscar_sugestoes(
-    current_user.id,
-    limite=12
+        current_user.id,
+        limite=12
     )
 
+    # 2. Buscar estante
     itens_estante = Estante.query.filter_by(
         usuario_id=current_user.id
     ).all()
 
+    # 3. Separar status
     itens_lidos = [
-        item
-        for item in itens_estante
+        item for item in itens_estante
         if item.status == "lido"
     ]
 
     itens_lendo = [
-        item
-        for item in itens_estante
+        item for item in itens_estante
         if item.status == "lendo"
     ]
 
     itens_quero_ler = [
-        item
-        for item in itens_estante
+        item for item in itens_estante
         if item.status == "quero ler"
     ]
 
+    # 4. Totais
     total_lidos = len(itens_lidos)
     total_lendo = len(itens_lendo)
     total_quero_ler = len(itens_quero_ler)
     total_estante = len(itens_estante)
 
+
+    # 5. Gêneros
     generos_lidos = []
 
     for item in itens_lidos:
@@ -322,11 +327,9 @@ def home():
                 item.livro.genero
             )
 
-
     contagem_generos = Counter(
         generos_lidos
     )
-
 
     generos_labels = list(
         contagem_generos.keys()
@@ -336,8 +339,58 @@ def home():
         contagem_generos.values()
     )
 
+
+    # 6. Meta
+    hoje = date.today()
+
+    meta_atual = MetaLeitura.query.filter_by(
+        usuario_id=current_user.id,
+        mes=hoje.month,
+        ano=hoje.year
+    ).first()
+
+    meta_quantidade = 0
+    meta_progresso = 0
+    meta_percentual = 0
+    meta_restante = 0
+
+    if meta_atual:
+
+        livros_concluidos_meta = Estante.query.filter(
+            Estante.usuario_id == current_user.id,
+            Estante.status == "lido",
+            Estante.data_leitura >= meta_atual.data_inicio,
+            Estante.data_leitura <= meta_atual.data_fim
+        ).count()
+
+        meta_quantidade = meta_atual.quantidade
+
+        meta_progresso = min(
+            livros_concluidos_meta,
+            meta_quantidade
+        )
+
+        if meta_quantidade > 0:
+            meta_percentual = min(
+                round(
+                    (
+                        livros_concluidos_meta
+                        / meta_quantidade
+                    ) * 100
+                ),
+                100
+            )
+
+        meta_restante = max(
+            meta_quantidade - livros_concluidos_meta,
+            0
+        )
+
+
+    # 7. Enviar tudo para o HTML
     return render_template(
         "home/home.html",
+
         livros=livros,
 
         total_lidos=total_lidos,
@@ -346,7 +399,13 @@ def home():
         total_estante=total_estante,
 
         generos_labels=generos_labels,
-        generos_valores=generos_valores
+        generos_valores=generos_valores,
+
+        meta_atual=meta_atual,
+        meta_quantidade=meta_quantidade,
+        meta_progresso=meta_progresso,
+        meta_percentual=meta_percentual,
+        meta_restante=meta_restante
     )
     
 
