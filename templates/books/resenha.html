@@ -52,47 +52,68 @@
 
                 <div class="autor-info">
 
-                    <div class="foto-autor">
-
-                        {% if resenha.usuario.foto %}
-
-                            <img
-                                src="{{ url_for(
-                                    'static',
-                                    filename=resenha.usuario.foto
-                                ) }}"
-                                alt="{{ resenha.usuario.nome }}"
-                            >
-
-                        {% else %}
-
-                            <div class="foto-placeholder">
-                                {{ resenha.usuario.nome[0]|upper }}
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-
+                    <!-- FOTO -->
+                
+                    <a
+                        href="{{ url_for(
+                            'amigos_bp.perfil_usuario',
+                            usuario_id=resenha.usuario.id
+                        ) }}"
+                        class="link-foto-perfil"
+                        title="Ver perfil de {{ resenha.usuario.nome }}"
+                    >
+                
+                        <div class="foto-autor">
+                
+                            {% if resenha.usuario.foto %}
+                
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=resenha.usuario.foto
+                                    ) }}"
+                                    alt="{{ resenha.usuario.nome }}"
+                                >
+                
+                            {% else %}
+                
+                                <div class="foto-placeholder">
+                                    {{ resenha.usuario.nome[0]|upper }}
+                                </div>
+                
+                            {% endif %}
+                
+                        </div>
+                
+                    </a>
+                
+                
+                    <!-- NOME E DATA -->
+                
                     <div class="dados-autor">
-
-                        <strong>
+                
+                        <a
+                            href="{{ url_for(
+                                'amigos_bp.perfil_usuario',
+                                usuario_id=resenha.usuario.id
+                            ) }}"
+                            class="link-nome-perfil"
+                        >
                             {{ resenha.usuario.nome }}
-                        </strong>
-
+                        </a>
+                
                         {% if resenha.data_resenha %}
-
+                
                             <span>
                                 {{ resenha.data_resenha.strftime(
                                     '%d/%m/%Y'
                                 ) }}
                             </span>
-
+                
                         {% endif %}
-
+                
                     </div>
-
+                
                 </div>
 
 
@@ -461,27 +482,38 @@
 
                             <!-- FOTO -->
 
-                            <div class="foto-comentario">
+                            <a
+                                href="{{ url_for(
+                                    'amigos_bp.perfil_usuario',
+                                    usuario_id=comentario.usuario.id
+                                ) }}"
+                                class="link-foto-perfil"
+                                title="Ver perfil de {{ comentario.usuario.nome }}"
+                            >
 
-                                {% if comentario.usuario.foto %}
+                                <div class="foto-comentario">
 
-                                    <img
-                                        src="{{ url_for(
-                                            'static',
-                                            filename=comentario.usuario.foto
-                                        ) }}"
-                                        alt="{{ comentario.usuario.nome }}"
-                                    >
+                                    {% if comentario.usuario.foto %}
 
-                                {% else %}
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=comentario.usuario.foto
+                                            ) }}"
+                                            alt="{{ comentario.usuario.nome }}"
+                                        >
 
-                                    <div class="foto-placeholder">
-                                        {{ comentario.usuario.nome[0]|upper }}
-                                    </div>
+                                    {% else %}
 
-                                {% endif %}
+                                        <div class="foto-placeholder">
+                                            {{ comentario.usuario.nome[0]|upper }}
+                                        </div>
 
-                            </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </a>
 
 
                             <!-- CONTEÚDO -->
@@ -492,9 +524,15 @@
 
                                     <div class="dados-comentario">
 
-                                        <strong>
+                                        <a
+                                            href="{{ url_for(
+                                                'amigos_bp.perfil_usuario',
+                                                usuario_id=comentario.usuario.id
+                                            ) }}"
+                                            class="link-nome-comentario"
+                                        >
                                             {{ comentario.usuario.nome }}
-                                        </strong>
+                                        </a>
 
 
                                         {% if comentario.data_criacao %}

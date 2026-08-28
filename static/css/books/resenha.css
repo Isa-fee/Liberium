@@ -881,6 +881,69 @@
     font-size: 0.82rem;
 }
 
+/* ==========================================
+   LINKS PARA PERFIL
+========================================== */
+
+.link-foto-perfil {
+    display: block;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+}
+
+.link-foto-perfil .foto-autor,
+.link-foto-perfil .foto-comentario {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.link-foto-perfil:hover .foto-autor,
+.link-foto-perfil:hover .foto-comentario {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.18);
+}
+
+
+.link-nome-perfil {
+    color: #442b1a;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.link-nome-perfil:hover {
+    color: #6f8464;
+
+    text-decoration: underline;
+}
+
+
+.link-nome-comentario {
+    color: #442b1a;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.link-nome-comentario:hover {
+    color: #6f8464;
+
+    text-decoration: underline;
+}
 
 /* ==========================================
    RESPONSIVO

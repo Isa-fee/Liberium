@@ -234,8 +234,11 @@ def adicionar_amigo(usuario_id):
 
 
     return redirect(
-        url_for("amigos_bp.amigos")
+    url_for(
+        "amigos_bp.perfil_usuario",
+        usuario_id=usuario_id
     )
+)
 
 
 # =========================================================
@@ -372,6 +375,10 @@ def perfil_usuario(usuario_id):
 
     usuario = Usuario.query.get_or_404(usuario_id)
 
+    # =====================================================
+    # LIVROS
+    # =====================================================
+
     livros_lidos = Estante.query.filter_by(
         usuario_id=usuario.id,
         status="lido"
@@ -384,6 +391,10 @@ def perfil_usuario(usuario_id):
         Estante.posicao
     ).all()
 
+    # =====================================================
+    # QUANTIDADE DE AMIGOS
+    # =====================================================
+
     quantidade_amigos = Amizade.query.filter(
         Amizade.status == "aceita",
         (
@@ -392,14 +403,47 @@ def perfil_usuario(usuario_id):
         )
     ).count()
 
+    # =====================================================
+    # ESTANTE
+    # =====================================================
+
     estante = Estante.query.filter_by(
         usuario_id=usuario.id
     ).all()
+
+    # =====================================================
+    # ELOGIOS
+    # =====================================================
+
     elogios = ElogioEstante.query.filter_by(
-    destinatario_id=usuario.id
+        destinatario_id=usuario.id
     ).order_by(
         ElogioEstante.data.desc()
     ).all()
+
+    # =====================================================
+    # RELAÇÃO DE AMIZADE COM O USUÁRIO LOGADO
+    # =====================================================
+
+    amizade = None
+
+    if usuario.id != current_user.id:
+
+        amizade = Amizade.query.filter(
+            (
+                (Amizade.usuario_id == current_user.id) &
+                (Amizade.amigo_id == usuario.id)
+            )
+            |
+            (
+                (Amizade.usuario_id == usuario.id) &
+                (Amizade.amigo_id == current_user.id)
+            )
+        ).first()
+
+    # =====================================================
+    # RENDERIZAR
+    # =====================================================
 
     return render_template(
         "user/perfil_amigo.html",
@@ -408,7 +452,116 @@ def perfil_usuario(usuario_id):
         livros_lendo=livros_lendo,
         quantidade_amigos=quantidade_amigos,
         estante=estante,
-        elogios=elogios
+        elogios=elogios,
+        amizade=amizade
+    )
+
+
+# ==========================================
+# DESFAZER AMIZADE
+# ==========================================
+
+@amigos_bp.route(
+    "/desfazer-amizade/<int:amizade_id>",
+    methods=["POST"]
+)
+@login_required
+def desfazer_amizade(amizade_id):
+
+    amizade = Amizade.query.get_or_404(amizade_id)
+
+    # Segurança: só alguém envolvido na amizade
+    # pode desfazê-la.
+    if (
+        current_user.id != amizade.usuario_id
+        and current_user.id != amizade.amigo_id
+    ):
+        flash(
+            "Você não pode desfazer esta amizade.",
+            "erro"
+        )
+
+        return redirect(
+            url_for("amigos_bp.amigos")
+        )
+
+    # Descobrir quem é o outro usuário
+    if current_user.id == amizade.usuario_id:
+        outro_usuario_id = amizade.amigo_id
+    else:
+        outro_usuario_id = amizade.usuario_id
+
+    db.session.delete(amizade)
+    db.session.commit()
+
+    flash(
+        "Amizade desfeita.",
+        "sucesso"
+    )
+
+    return redirect(
+        url_for(
+            "amigos_bp.perfil_usuario",
+            usuario_id=outro_usuario_id
+        )
+    )
+
+
+# ==========================================
+# CANCELAR SOLICITAÇÃO ENVIADA
+# ==========================================
+
+@amigos_bp.route(
+    "/cancelar-solicitacao/<int:amizade_id>",
+    methods=["POST"]
+)
+@login_required
+def cancelar_solicitacao(amizade_id):
+
+    amizade = Amizade.query.get_or_404(amizade_id)
+
+    # Só quem enviou pode cancelar
+    if amizade.usuario_id != current_user.id:
+
+        flash(
+            "Você não pode cancelar esta solicitação.",
+            "erro"
+        )
+
+        return redirect(
+            url_for("amigos_bp.amigos")
+        )
+
+    # Só pode cancelar enquanto estiver pendente
+    if amizade.status != "pendente":
+
+        flash(
+            "Esta solicitação não está mais pendente.",
+            "erro"
+        )
+
+        return redirect(
+            url_for(
+                "amigos_bp.perfil_usuario",
+                usuario_id=amizade.amigo_id
+            )
+        )
+
+    outro_usuario_id = amizade.amigo_id
+
+    db.session.delete(amizade)
+    db.session.commit()
+
+    flash(
+        "Solicitação cancelada.",
+        "sucesso"
+    )
+
+    return redirect(
+        url_for(
+            "amigos_bp.perfil_usuario",
+            usuario_id=outro_usuario_id
+        )
     )
 
 @amigos_bp.route("/estante/<int:usuario_id>")
