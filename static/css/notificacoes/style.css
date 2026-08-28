@@ -1,0 +1,567 @@
+/* ========================================
+   PÁGINA DE AVISOS
+======================================== */
+
+.pagina-avisos {
+    width: 100%;
+    min-height: calc(100vh - 100px);
+
+    padding: 55px max(
+        20px,
+        calc((100% - 1120px) / 2)
+    ) 90px;
+
+    background: #fdfcfb;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.avisos-cabecalho {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 32px;
+}
+
+.avisos-etiqueta {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #879d84;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.avisos-cabecalho h1 {
+    margin: 0 0 8px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 400;
+}
+
+.avisos-cabecalho p {
+    max-width: 570px;
+
+    margin: 0;
+
+    color: #75685e;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.7;
+}
+
+
+/* ========================================
+   MARCAR TODAS COMO LIDAS
+======================================== */
+
+.btn-marcar-todas {
+    border: 1px solid #d8d1c9;
+    border-radius: 999px;
+
+    padding: 11px 18px;
+
+    background: transparent;
+
+    color: #36503c;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-marcar-todas:hover {
+    background: #f0f2ed;
+    border-color: #879d84;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   FILTROS
+======================================== */
+
+.avisos-filtros {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #e7e2dc;
+}
+
+.filtro-aviso {
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 999px;
+
+    padding: 9px 16px;
+
+    background: transparent;
+
+    color: #75685e;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.filtro-aviso:hover {
+    background: #f1f2ee;
+    color: #36503c;
+}
+
+.filtro-aviso.ativo {
+    background: #36503c;
+    color: #ffffff;
+}
+
+
+/* ========================================
+   LISTA
+======================================== */
+
+.lista-avisos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.aviso-card {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 22px 24px;
+
+    border: 1px solid #ebe6e0;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.aviso-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d9d2ca;
+
+    box-shadow:
+        0 10px 30px rgba(68, 43, 26, 0.07);
+}
+
+
+/* NÃO LIDA */
+
+.aviso-card.aviso-nao-lido {
+    background: #f5f7f2;
+    border-color: #dbe2d8;
+}
+
+.aviso-card.aviso-nao-lido::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: #879d84;
+}
+
+
+/* ========================================
+   ÍCONES
+======================================== */
+
+.aviso-icone {
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 1.45rem;
+}
+
+.aviso-icone-amizade {
+    background: #edf2eb;
+    color: #36503c;
+}
+
+.aviso-icone-clube {
+    background: #f2ece5;
+    color: #6c4931;
+}
+
+.aviso-icone-meta {
+    background: #eef1e9;
+    color: #687d64;
+}
+
+.aviso-icone-conquista {
+    background: #f6f0df;
+    color: #8a6c2d;
+}
+
+.aviso-icone-comentario {
+    background: #edf0eb;
+    color: #526d59;
+}
+
+.aviso-icone-elogio {
+    background: #f4ece8;
+    color: #815d4d;
+}
+
+
+/* ========================================
+   CONTEÚDO
+======================================== */
+
+.aviso-conteudo {
+    flex: 1;
+    min-width: 0;
+}
+
+.aviso-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.aviso-titulo-area {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.aviso-titulo-area h2 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.indicador-nao-lido {
+    flex-shrink: 0;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #879d84;
+}
+
+.aviso-data {
+    flex-shrink: 0;
+
+    color: #a0948a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.75rem;
+}
+
+.aviso-mensagem {
+    max-width: 760px;
+
+    margin: 7px 0 0;
+
+    color: #6f6259;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.aviso-acoes {
+    margin-top: 12px;
+}
+
+.aviso-acoes form {
+    margin: 0;
+}
+
+.aviso-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #36503c;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        gap 0.2s ease,
+        color 0.2s ease;
+}
+
+.aviso-link:hover {
+    gap: 10px;
+    color: #879d84;
+}
+
+.botao-link {
+    padding: 0;
+
+    border: none;
+    background: none;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   ESTADO VAZIO
+======================================== */
+
+.avisos-vazio {
+    min-height: 390px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px 30px;
+
+    border: 1px dashed #dcd5ce;
+    border-radius: 24px;
+
+    background: #ffffff;
+
+    text-align: center;
+}
+
+.vazio-ilustracao {
+    position: relative;
+
+    width: 100px;
+    height: 90px;
+
+    margin-bottom: 14px;
+}
+
+.vazio-sino {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 66px;
+    height: 66px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background: #edf1e9;
+
+    color: #36503c;
+
+    font-size: 2rem;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-4deg);
+}
+
+.vazio-detalhe {
+    position: absolute;
+
+    color: #879d84;
+}
+
+.detalhe-1 {
+    top: 2px;
+    right: 6px;
+
+    font-size: 1rem;
+}
+
+.detalhe-2 {
+    bottom: 4px;
+    left: 5px;
+
+    font-size: 0.7rem;
+}
+
+.avisos-vazio h2 {
+    margin: 0 0 9px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+}
+
+.avisos-vazio p {
+    max-width: 470px;
+
+    margin: 0;
+
+    color: #81746a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.btn-voltar-inicio {
+    display: inline-flex;
+
+    margin-top: 22px;
+    padding: 11px 20px;
+
+    border-radius: 999px;
+
+    background: #36503c;
+
+    color: #ffffff;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-voltar-inicio:hover {
+    background: #879d84;
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media (max-width: 760px) {
+
+    .pagina-avisos {
+        width: min(100% - 26px, 1120px);
+        padding-top: 35px;
+    }
+
+    .avisos-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .aviso-card {
+        padding: 18px;
+    }
+
+    .aviso-topo {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .aviso-data {
+        margin-left: 16px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .aviso-card {
+        gap: 12px;
+    }
+
+    .aviso-icone {
+        flex-basis: 40px;
+
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+
+        font-size: 1.15rem;
+    }
+
+    .aviso-data {
+        margin-left: 0;
+    }
+
+}

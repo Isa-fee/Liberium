@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Avisos | Liberium
+{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/notificacoes/style.css'
+    ) }}"
+>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-avisos">
+
+    <!-- ================================
+         CABEÇALHO
+    ================================= -->
+
+    <div class="avisos-cabecalho">
+
+        <div>
+            <span class="avisos-etiqueta">
+                Central de avisos
+            </span>
+
+            <h1>Avisos</h1>
+
+            <p>
+                Acompanhe as novidades das suas leituras,
+                amizades e clubes.
+            </p>
+        </div>
+
+
+        {% if notificacoes %}
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'notificacoes.marcar_todas_lidas'
+                ) }}"
+            >
+                <button
+                    type="submit"
+                    class="btn-marcar-todas"
+                >
+                    Marcar todas como lidas
+                </button>
+            </form>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================================
+         FILTROS
+    ================================= -->
+
+    {% if notificacoes %}
+
+        <div class="avisos-filtros">
+
+            <button
+                class="filtro-aviso ativo"
+                data-filtro="todos"
+                type="button"
+            >
+                Todos
+            </button>
+
+            <button
+                class="filtro-aviso"
+                data-filtro="amizade"
+                type="button"
+            >
+                Amigos
+            </button>
+
+            <button
+                class="filtro-aviso"
+                data-filtro="clube"
+                type="button"
+            >
+                Clubes
+            </button>
+
+            <button
+                class="filtro-aviso"
+                data-filtro="meta"
+                type="button"
+            >
+                Leituras
+            </button>
+
+            <button
+                class="filtro-aviso"
+                data-filtro="outros"
+                type="button"
+            >
+                Conquistas e interações
+            </button>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================================
+         LISTA DE AVISOS
+    ================================= -->
+
+    <div class="lista-avisos">
+
+        {% if notificacoes %}
+
+            {% for notificacao in notificacoes %}
+
+                {% if notificacao.tipo in [
+                    "conquista",
+                    "comentario",
+                    "elogio"
+                ] %}
+                    {% set categoria = "outros" %}
+                {% else %}
+                    {% set categoria = notificacao.tipo %}
+                {% endif %}
+
+
+                <article
+                    class="
+                        aviso-card
+                        {% if not notificacao.lida %}
+                            aviso-nao-lido
+                        {% endif %}
+                    "
+                    data-tipo="{{ categoria }}"
+                >
+
+                    <!-- ÍCONE -->
+
+                    <div class="
+                        aviso-icone
+                        aviso-icone-{{ notificacao.tipo }}
+                    ">
+
+                        {% if notificacao.tipo == "amizade" %}
+
+                            <span>♡</span>
+
+                        {% elif notificacao.tipo == "clube" %}
+
+                            <span>♧</span>
+
+                        {% elif notificacao.tipo == "meta" %}
+
+                            <span>✓</span>
+
+                        {% elif notificacao.tipo == "conquista" %}
+
+                            <span>☆</span>
+
+                        {% elif notificacao.tipo == "comentario" %}
+
+                            <span>✎</span>
+
+                        {% elif notificacao.tipo == "elogio" %}
+
+                            <span>✦</span>
+
+                        {% else %}
+
+                            <span>•</span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- CONTEÚDO -->
+
+                    <div class="aviso-conteudo">
+
+                        <div class="aviso-topo">
+
+                            <div class="aviso-titulo-area">
+
+                                {% if not notificacao.lida %}
+                                    <span
+                                        class="indicador-nao-lido"
+                                        title="Não lido"
+                                    ></span>
+                                {% endif %}
+
+                                <h2>
+                                    {{ notificacao.titulo }}
+                                </h2>
+
+                            </div>
+
+
+                            <span class="aviso-data">
+
+                                {% if notificacao.data_criacao %}
+
+                                    {{ notificacao.data_criacao.strftime(
+                                        "%d/%m/%Y às %H:%M"
+                                    ) }}
+
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+
+                        <p class="aviso-mensagem">
+                            {{ notificacao.mensagem }}
+                        </p>
+
+
+                        <div class="aviso-acoes">
+
+                            {% if notificacao.link %}
+
+                                <a
+                                    href="{{ url_for(
+                                        'notificacoes.abrir',
+                                        notificacao_id=notificacao.id
+                                    ) }}"
+                                    class="aviso-link"
+                                >
+                                    Ver detalhes
+                                    <span>→</span>
+                                </a>
+
+                            {% elif not notificacao.lida %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'notificacoes.marcar_lida',
+                                        notificacao_id=notificacao.id
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="aviso-link botao-link"
+                                    >
+                                        Marcar como lida
+                                    </button>
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <!-- ============================
+                 ESTADO VAZIO
+            ============================= -->
+
+            <div class="avisos-vazio">
+
+                <div class="vazio-ilustracao">
+
+                    <div class="vazio-sino">
+                        ♡
+                    </div>
+
+                    <span class="vazio-detalhe detalhe-1">
+                        ✦
+                    </span>
+
+                    <span class="vazio-detalhe detalhe-2">
+                        ✦
+                    </span>
+
+                </div>
+
+                <h2>
+                    Tudo tranquilo por aqui
+                </h2>
+
+                <p>
+                    Quando houver novidades sobre suas
+                    leituras, amigos e clubes, elas
+                    aparecerão aqui.
+                </p>
+
+                <a
+                    href="{{ url_for('home.home') }}"
+                    class="btn-voltar-inicio"
+                >
+                    Voltar para o início
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- ====================================
+     FILTROS
+===================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filtros = document.querySelectorAll(
+        ".filtro-aviso"
+    );
+
+    const avisos = document.querySelectorAll(
+        ".aviso-card"
+    );
+
+
+    filtros.forEach(function (botao) {
+
+        botao.addEventListener("click", function () {
+
+            const filtro = this.dataset.filtro;
+
+
+            filtros.forEach(function (item) {
+                item.classList.remove("ativo");
+            });
+
+            this.classList.add("ativo");
+
+
+            avisos.forEach(function (aviso) {
+
+                const tipo = aviso.dataset.tipo;
+
+                if (
+                    filtro === "todos" ||
+                    tipo === filtro
+                ) {
+                    aviso.style.display = "flex";
+                } else {
+                    aviso.style.display = "none";
+                }
+
+            });
+
+        });
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
