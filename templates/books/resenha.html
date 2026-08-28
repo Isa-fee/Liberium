@@ -1,0 +1,786 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ resenha.titulo_resenha or "Resenha" }} - Liberium
+{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/books/resenha.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<main class="pagina-resenha">
+
+    <div class="resenha-container">
+
+
+        <!-- ========================================
+             VOLTAR
+        ========================================= -->
+
+        <div class="topo-resenha">
+
+            <a
+                href="{{ url_for(
+                    'books_bp.ver',
+                    id=resenha.livro.id
+                ) }}"
+                class="btn-voltar"
+            >
+                ← Voltar para o livro
+            </a>
+
+        </div>
+
+
+        <!-- ========================================
+             RESENHA PRINCIPAL
+        ========================================= -->
+
+        <article class="resenha-principal">
+
+
+            <!-- ====================================
+                 AUTOR DA RESENHA
+            ===================================== -->
+
+            <header class="autor-resenha">
+
+                <div class="autor-info">
+
+                    <div class="foto-autor">
+
+                        {% if resenha.usuario.foto %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=resenha.usuario.foto
+                                ) }}"
+                                alt="{{ resenha.usuario.nome }}"
+                            >
+
+                        {% else %}
+
+                            <div class="foto-placeholder">
+                                {{ resenha.usuario.nome[0]|upper }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="dados-autor">
+
+                        <strong>
+                            {{ resenha.usuario.nome }}
+                        </strong>
+
+                        {% if resenha.data_resenha %}
+
+                            <span>
+                                {{ resenha.data_resenha.strftime(
+                                    '%d/%m/%Y'
+                                ) }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTA -->
+
+                <div class="nota-resenha">
+
+                    <div class="estrelas">
+
+                        {% for i in range(1, 6) %}
+
+                            {% if i <= resenha.nota %}
+
+                                <span class="estrela preenchida">
+                                    ★
+                                </span>
+
+                            {% else %}
+
+                                <span class="estrela">
+                                    ☆
+                                </span>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                    <span class="nota-numero">
+                        {{ resenha.nota }}/5
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- ====================================
+                 DIVISOR
+            ===================================== -->
+
+            <div class="divisor"></div>
+
+
+            <!-- ====================================
+                 CONTEÚDO DA RESENHA
+            ===================================== -->
+
+            <section class="conteudo-resenha">
+
+
+                <!-- TÍTULO -->
+
+                {% if resenha.titulo_resenha %}
+
+                    <h1>
+                        {{ resenha.titulo_resenha }}
+                    </h1>
+
+                {% else %}
+
+                    <h1>
+                        Resenha de {{ resenha.livro.titulo }}
+                    </h1>
+
+                {% endif %}
+
+
+                <!-- =================================
+                     SPOILER
+                ================================== -->
+
+                {% if resenha.tem_spoiler %}
+
+                    <div class="aviso-spoiler">
+
+                        <div class="aviso-spoiler-info">
+
+                            <span class="icone-spoiler">
+                                ⚠
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Esta resenha contém spoilers
+                                </strong>
+
+                                <span>
+                                    O texto foi ocultado para não
+                                    revelar partes importantes da história.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-revelar-spoiler"
+                            id="btn-revelar-spoiler"
+                        >
+                            Revelar resenha
+                        </button>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================
+                     TEXTO
+                ================================== -->
+
+                <div
+                    class="
+                        texto-resenha
+                        {% if resenha.tem_spoiler %}
+                            texto-com-spoiler
+                        {% endif %}
+                    "
+                    id="texto-resenha"
+                >
+
+                    <span class="aspas aspas-inicio">
+                        “
+                    </span>
+
+                    <p>
+                        {{ resenha.resenha }}
+                    </p>
+
+                    <span class="aspas aspas-final">
+                        ”
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     DATA DA LEITURA
+                ================================== -->
+
+                {% if resenha.data_leitura %}
+
+                    <div class="data-leitura">
+
+                        <span>
+                            📅
+                        </span>
+
+                        Leitura concluída em
+
+                        <strong>
+                            {{ resenha.data_leitura.strftime(
+                                '%d/%m/%Y'
+                            ) }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- ====================================
+                 LIVRO
+            ===================================== -->
+
+            <footer class="livro-resenha">
+
+                <a
+                    href="{{ url_for(
+                        'books_bp.ver',
+                        id=resenha.livro.id
+                    ) }}"
+                    class="livro-info"
+                >
+
+                    <div class="mini-capa">
+
+                        {% if resenha.livro.capa %}
+
+                            {% if resenha.livro.capa.startswith('http') %}
+
+                                <img
+                                    src="{{ resenha.livro.capa }}"
+                                    alt="{{ resenha.livro.titulo }}"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=resenha.livro.capa
+                                    ) }}"
+                                    alt="{{ resenha.livro.titulo }}"
+                                >
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="mini-capa-vazia">
+                                📖
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="dados-livro">
+
+                        <span class="rotulo-livro">
+                            RESENHA DE
+                        </span>
+
+                        <strong>
+                            {{ resenha.livro.titulo }}
+                        </strong>
+
+                        {% if resenha.livro.autor %}
+
+                            <span>
+                                {{ resenha.livro.autor }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </a>
+
+            </footer>
+
+        </article>
+
+
+        <!-- ========================================
+             COMENTÁRIOS
+        ========================================= -->
+
+        <section class="secao-comentarios">
+
+
+            <!-- ====================================
+                 CABEÇALHO
+            ===================================== -->
+
+            <div class="cabecalho-comentarios">
+
+                <div>
+
+                    <span class="subtitulo-comentarios">
+                        COMUNIDADE
+                    </span>
+
+                    <h2>
+                        Comentários
+                    </h2>
+
+                </div>
+
+
+                <span class="quantidade-comentarios">
+
+                    {{ comentarios|length }}
+
+                    {% if comentarios|length == 1 %}
+                        comentário
+                    {% else %}
+                        comentários
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <!-- ====================================
+                 FORMULÁRIO PARA COMENTAR
+            ===================================== -->
+
+            <div class="novo-comentario">
+
+                <div class="foto-comentario">
+
+                    {% if current_user.foto %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=current_user.foto
+                            ) }}"
+                            alt="{{ current_user.nome }}"
+                        >
+
+                    {% else %}
+
+                        <div class="foto-placeholder">
+                            {{ current_user.nome[0]|upper }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <form
+                    action="{{ url_for(
+                        'estante_bp.comentar_resenha',
+                        resenha_id=resenha.id
+                    ) }}"
+                    method="POST"
+                    class="form-comentario"
+                >
+
+                    <textarea
+                        name="texto"
+                        maxlength="500"
+                        rows="3"
+                        placeholder="Escreva um comentário sobre esta resenha..."
+                        required
+                    ></textarea>
+
+
+                    <div class="acoes-novo-comentario">
+
+                        <small>
+                            Máximo de 500 caracteres
+                        </small>
+
+                        <button
+                            type="submit"
+                            class="btn-comentar"
+                        >
+                            Comentar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- ====================================
+                 LISTA DE COMENTÁRIOS
+            ===================================== -->
+
+            {% if comentarios %}
+
+                <div class="lista-comentarios">
+
+                    {% for comentario in comentarios %}
+
+                        <article
+                            class="comentario"
+                            id="comentario-{{ comentario.id }}"
+                        >
+
+
+                            <!-- FOTO -->
+
+                            <div class="foto-comentario">
+
+                                {% if comentario.usuario.foto %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=comentario.usuario.foto
+                                        ) }}"
+                                        alt="{{ comentario.usuario.nome }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="foto-placeholder">
+                                        {{ comentario.usuario.nome[0]|upper }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- CONTEÚDO -->
+
+                            <div class="conteudo-comentario">
+
+                                <div class="topo-comentario">
+
+                                    <div class="dados-comentario">
+
+                                        <strong>
+                                            {{ comentario.usuario.nome }}
+                                        </strong>
+
+
+                                        {% if comentario.data_criacao %}
+
+                                            <span>
+                                                {{ comentario.data_criacao.strftime(
+                                                    '%d/%m/%Y às %H:%M'
+                                                ) }}
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        {% if comentario.data_edicao %}
+
+                                            <span class="comentario-editado">
+                                                • editado
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- =========================
+                                         AÇÕES DO PRÓPRIO USUÁRIO
+                                    ========================== -->
+
+                                    {% if comentario.usuario_id == current_user.id %}
+
+                                        <div class="acoes-comentario">
+
+                                            <button
+                                                type="button"
+                                                class="btn-editar-comentario"
+                                                onclick="abrirEdicaoComentario(
+                                                    {{ comentario.id }}
+                                                )"
+                                            >
+                                                Editar
+                                            </button>
+
+
+                                            <form
+                                                action="{{ url_for(
+                                                    'estante_bp.excluir_comentario',
+                                                    comentario_id=comentario.id
+                                                ) }}"
+                                                method="POST"
+                                                class="form-excluir-comentario"
+                                                onsubmit="return confirm(
+                                                    'Tem certeza que deseja excluir este comentário?'
+                                                );"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn-excluir-comentario"
+                                                >
+                                                    Excluir
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- =========================
+                                     TEXTO NORMAL
+                                ========================== -->
+
+                                <p
+                                    class="texto-comentario"
+                                    id="texto-comentario-{{ comentario.id }}"
+                                >
+                                    {{ comentario.texto }}
+                                </p>
+
+
+                                <!-- =========================
+                                     FORMULÁRIO DE EDIÇÃO
+                                ========================== -->
+
+                                {% if comentario.usuario_id == current_user.id %}
+
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.editar_comentario',
+                                            comentario_id=comentario.id
+                                        ) }}"
+                                        method="POST"
+                                        class="form-editar-comentario"
+                                        id="form-editar-{{ comentario.id }}"
+                                    >
+
+                                        <textarea
+                                            name="texto"
+                                            maxlength="500"
+                                            rows="3"
+                                            required
+                                        >{{ comentario.texto }}</textarea>
+
+
+                                        <div class="acoes-edicao">
+
+                                            <button
+                                                type="button"
+                                                class="btn-cancelar-edicao"
+                                                onclick="fecharEdicaoComentario(
+                                                    {{ comentario.id }}
+                                                )"
+                                            >
+                                                Cancelar
+                                            </button>
+
+                                            <button
+                                                type="submit"
+                                                class="btn-salvar-comentario"
+                                            >
+                                                Salvar
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                {% endif %}
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- ====================================
+                     SEM COMENTÁRIOS
+                ===================================== -->
+
+                <div class="sem-comentarios">
+
+                    <div class="icone-sem-comentarios">
+                        💬
+                    </div>
+
+                    <h3>
+                        Nenhum comentário ainda
+                    </h3>
+
+                    <p>
+                        Seja a primeira pessoa a conversar
+                        sobre esta resenha.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+    // =====================================
+    // SPOILER
+    // =====================================
+
+    const botaoSpoiler = document.getElementById(
+        "btn-revelar-spoiler"
+    );
+
+    const textoResenha = document.getElementById(
+        "texto-resenha"
+    );
+
+
+    if (botaoSpoiler && textoResenha) {
+
+        botaoSpoiler.addEventListener(
+            "click",
+            function () {
+
+                const escondido =
+                    textoResenha.classList.contains(
+                        "texto-com-spoiler"
+                    );
+
+                if (escondido) {
+
+                    textoResenha.classList.remove(
+                        "texto-com-spoiler"
+                    );
+
+                    botaoSpoiler.textContent =
+                        "Ocultar resenha";
+
+                } else {
+
+                    textoResenha.classList.add(
+                        "texto-com-spoiler"
+                    );
+
+                    botaoSpoiler.textContent =
+                        "Revelar resenha";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // =====================================
+    // ABRIR EDIÇÃO DO COMENTÁRIO
+    // =====================================
+
+    function abrirEdicaoComentario(id) {
+
+        const texto = document.getElementById(
+            "texto-comentario-" + id
+        );
+
+        const formulario = document.getElementById(
+            "form-editar-" + id
+        );
+
+        if (texto) {
+            texto.style.display = "none";
+        }
+
+        if (formulario) {
+            formulario.style.display = "block";
+
+            const textarea =
+                formulario.querySelector("textarea");
+
+            if (textarea) {
+                textarea.focus();
+            }
+        }
+
+    }
+
+
+    // =====================================
+    // CANCELAR EDIÇÃO
+    // =====================================
+
+    function fecharEdicaoComentario(id) {
+
+        const texto = document.getElementById(
+            "texto-comentario-" + id
+        );
+
+        const formulario = document.getElementById(
+            "form-editar-" + id
+        );
+
+        if (formulario) {
+            formulario.style.display = "none";
+        }
+
+        if (texto) {
+            texto.style.display = "block";
+        }
+
+    }
+
+</script>
+
+{% endblock %}

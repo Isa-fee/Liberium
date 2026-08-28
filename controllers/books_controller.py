@@ -49,15 +49,55 @@ def ver(id):
 
     livro = Livro.query.get_or_404(id)
 
+    # ==================================
+    # ITEM DO USUÁRIO NA ESTANTE
+    # ==================================
+
     item_estante = Estante.query.filter_by(
         usuario_id=current_user.id,
         livro_id=id
     ).first()
 
+    # ==================================
+    # RESENHAS DO LIVRO
+    # ==================================
+
+    resenhas = Estante.query.filter(
+        Estante.livro_id == id,
+        Estante.nota.isnot(None),
+        Estante.resenha.isnot(None),
+        Estante.resenha != ""
+    ).order_by(
+        Estante.data_resenha.desc()
+    ).all()
+
+    # ==================================
+    # MÉDIA DAS AVALIAÇÕES
+    # ==================================
+
+    notas = [
+        item.nota
+        for item in resenhas
+        if item.nota is not None
+    ]
+
+    if notas:
+
+        media_avaliacoes = round(
+            sum(notas) / len(notas),
+            1
+        )
+
+    else:
+
+        media_avaliacoes = None
+
     return render_template(
         "books/books.html",
         livro=livro,
         item_estante=item_estante,
+        resenhas=resenhas,
+        media_avaliacoes=media_avaliacoes,
         hoje=date.today(),
         origem="banco"
     )

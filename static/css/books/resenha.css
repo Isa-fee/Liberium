@@ -1,0 +1,979 @@
+/* ==========================================
+   PÁGINA DA RESENHA
+========================================== */
+
+.pagina-resenha {
+    min-height: 100vh;
+    padding: 45px 25px 70px;
+
+    background: #f8f7f5;
+
+    font-family: 'Raleway', sans-serif;
+    color: #442b1a;
+}
+
+.resenha-container {
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   TOPO / VOLTAR
+========================================== */
+
+.topo-resenha {
+    margin-bottom: 22px;
+}
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #6f8464;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.btn-voltar:hover {
+    color: #4d6245;
+    transform: translateX(-3px);
+}
+
+
+/* ==========================================
+   CARD PRINCIPAL DA RESENHA
+========================================== */
+
+.resenha-principal {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 20px;
+
+    box-shadow: 0 8px 30px rgba(68, 43, 26, 0.07);
+}
+
+
+/* ==========================================
+   AUTOR DA RESENHA
+========================================== */
+
+.autor-resenha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 26px 30px;
+}
+
+.autor-info {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.foto-autor,
+.foto-comentario {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+}
+
+.foto-autor img,
+.foto-comentario img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.foto-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #879d84;
+    color: #ffffff;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.dados-autor {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.dados-autor strong {
+    color: #442b1a;
+
+    font-size: 1rem;
+}
+
+.dados-autor span {
+    color: #97897f;
+
+    font-size: 0.8rem;
+}
+
+
+/* ==========================================
+   NOTA DA RESENHA
+========================================== */
+
+.nota-resenha {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.estrelas {
+    display: flex;
+
+    gap: 2px;
+}
+
+.estrelas .estrela {
+    color: #d8d2cc;
+
+    font-size: 1.25rem;
+}
+
+.estrelas .estrela.preenchida {
+    color: #d5a936;
+}
+
+.nota-numero {
+    color: #75665b;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+   DIVISOR
+========================================== */
+
+.divisor {
+    height: 1px;
+
+    margin: 0 30px;
+
+    background: #eee9e4;
+}
+
+
+/* ==========================================
+   CONTEÚDO DA RESENHA
+========================================== */
+
+.conteudo-resenha {
+    padding: 35px 45px 38px;
+}
+
+.conteudo-resenha h1 {
+    margin: 0 0 25px;
+
+    color: #442b1a;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+
+    line-height: 1.25;
+}
+
+
+/* ==========================================
+   TEXTO DA RESENHA
+========================================== */
+
+.texto-resenha {
+    position: relative;
+
+    padding: 8px 25px;
+
+    color: #594a40;
+
+    font-size: 1rem;
+    line-height: 1.8;
+
+    transition: 0.25s;
+}
+
+.texto-resenha p {
+    margin: 0;
+
+    white-space: pre-line;
+}
+
+.aspas {
+    position: absolute;
+
+    color: #aab8a5;
+
+    font-family: Georgia, serif;
+    font-size: 3.5rem;
+
+    line-height: 1;
+
+    opacity: 0.7;
+}
+
+.aspas-inicio {
+    top: -3px;
+    left: -4px;
+}
+
+.aspas-final {
+    right: -2px;
+    bottom: -28px;
+}
+
+
+/* ==========================================
+   SPOILER
+========================================== */
+
+.aviso-spoiler {
+    margin-bottom: 25px;
+    padding: 15px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border: 1px solid #ded8cf;
+    border-radius: 12px;
+
+    background: #f7f4ef;
+}
+
+.aviso-spoiler-info {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.icone-spoiler {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ece5dc;
+    color: #755c46;
+
+    font-size: 1rem;
+}
+
+.aviso-spoiler-info div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.aviso-spoiler-info strong {
+    color: #5b4432;
+
+    font-size: 0.9rem;
+}
+
+.aviso-spoiler-info span:not(.icone-spoiler) {
+    color: #8b7c70;
+
+    font-size: 0.77rem;
+    line-height: 1.4;
+}
+
+.btn-revelar-spoiler {
+    flex-shrink: 0;
+
+    padding: 8px 14px;
+
+    border: 1px solid #879d84;
+    border-radius: 20px;
+
+    background: transparent;
+    color: #6f8464;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-revelar-spoiler:hover {
+    background: #879d84;
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   TEXTO ESCONDIDO POR SPOILER
+========================================== */
+
+.texto-com-spoiler {
+    max-height: 125px;
+
+    overflow: hidden;
+
+    user-select: none;
+
+    filter: blur(7px);
+
+    opacity: 0.35;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   DATA DA LEITURA
+========================================== */
+
+.data-leitura {
+    margin-top: 32px;
+    padding-top: 18px;
+
+    border-top: 1px solid #eee9e4;
+
+    color: #8c7d72;
+
+    font-size: 0.82rem;
+}
+
+.data-leitura span {
+    margin-right: 4px;
+}
+
+.data-leitura strong {
+    color: #66564b;
+}
+
+
+/* ==========================================
+   LIVRO DA RESENHA
+========================================== */
+
+.livro-resenha {
+    padding: 20px 30px;
+
+    border-top: 1px solid #eee9e4;
+
+    background: #faf9f7;
+}
+
+.livro-info {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 13px;
+
+    text-decoration: none;
+}
+
+.mini-capa {
+    width: 42px;
+    height: 60px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 5px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.mini-capa img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.mini-capa-vazia {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ece8e3;
+
+    font-size: 1.2rem;
+}
+
+.dados-livro {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.rotulo-livro {
+    color: #879d84 !important;
+
+    font-size: 0.65rem !important;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.dados-livro strong {
+    color: #442b1a;
+
+    font-size: 0.95rem;
+
+    transition: 0.2s;
+}
+
+.dados-livro > span:last-child {
+    color: #8a7b70;
+
+    font-size: 0.78rem;
+}
+
+.livro-info:hover strong {
+    color: #6f8464;
+}
+
+
+/* ==========================================
+   SEÇÃO DE COMENTÁRIOS
+========================================== */
+
+.secao-comentarios {
+    margin-top: 45px;
+}
+
+
+/* ==========================================
+   CABEÇALHO DOS COMENTÁRIOS
+========================================== */
+
+.cabecalho-comentarios {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.subtitulo-comentarios {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #879d84;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.cabecalho-comentarios h2 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+}
+
+.quantidade-comentarios {
+    color: #8d8076;
+
+    font-size: 0.8rem;
+}
+
+
+/* ==========================================
+   NOVO COMENTÁRIO
+========================================== */
+
+.novo-comentario {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 16px;
+
+    box-shadow: 0 5px 18px rgba(68, 43, 26, 0.04);
+}
+
+.form-comentario {
+    flex: 1;
+}
+
+.form-comentario textarea,
+.form-editar-comentario textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    padding: 12px 14px;
+
+    border: 1px solid #dcd7d1;
+    border-radius: 10px;
+
+    background: #fafafa;
+    color: #443a33;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-comentario textarea {
+    min-height: 85px;
+}
+
+.form-comentario textarea:focus,
+.form-editar-comentario textarea:focus {
+    border-color: #879d84;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(135, 157, 132, 0.1);
+}
+
+.form-comentario textarea::placeholder {
+    color: #aaa19a;
+}
+
+.acoes-novo-comentario {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 9px;
+}
+
+.acoes-novo-comentario small {
+    color: #aaa098;
+
+    font-size: 0.7rem;
+}
+
+.btn-comentar {
+    padding: 9px 20px;
+
+    border: none;
+    border-radius: 22px;
+
+    background: #879d84;
+    color: #ffffff;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-comentar:hover {
+    background: #6f8464;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   LISTA DE COMENTÁRIOS
+========================================== */
+
+.lista-comentarios {
+    margin-top: 25px;
+}
+
+.comentario {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 22px 5px;
+
+    border-bottom: 1px solid #e9e5e0;
+}
+
+.comentario:last-child {
+    border-bottom: none;
+}
+
+.conteudo-comentario {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* ==========================================
+   TOPO DO COMENTÁRIO
+========================================== */
+
+.topo-comentario {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.dados-comentario {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.dados-comentario strong {
+    color: #442b1a;
+
+    font-size: 0.9rem;
+}
+
+.dados-comentario > span {
+    color: #a09389;
+
+    font-size: 0.7rem;
+}
+
+.comentario-editado {
+    color: #879d84 !important;
+
+    font-style: italic;
+}
+
+
+/* ==========================================
+   TEXTO DO COMENTÁRIO
+========================================== */
+
+.texto-comentario {
+    margin: 8px 0 0;
+
+    color: #61544b;
+
+    font-size: 0.9rem;
+    line-height: 1.6;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================
+   AÇÕES DO COMENTÁRIO
+========================================== */
+
+.acoes-comentario {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+.form-excluir-comentario {
+    margin: 0;
+}
+
+.btn-editar-comentario,
+.btn-excluir-comentario {
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-editar-comentario {
+    color: #6f8464;
+}
+
+.btn-editar-comentario:hover {
+    color: #4d6245;
+
+    text-decoration: underline;
+}
+
+.btn-excluir-comentario {
+    color: #a76c65;
+}
+
+.btn-excluir-comentario:hover {
+    color: #874c46;
+
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   EDITAR COMENTÁRIO
+========================================== */
+
+.form-editar-comentario {
+    display: none;
+
+    margin-top: 10px;
+}
+
+.form-editar-comentario textarea {
+    min-height: 80px;
+}
+
+.acoes-edicao {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    margin-top: 8px;
+}
+
+.btn-cancelar-edicao,
+.btn-salvar-comentario {
+    padding: 7px 15px;
+
+    border-radius: 18px;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-cancelar-edicao {
+    border: 1px solid #b7b0aa;
+
+    background: transparent;
+    color: #81766e;
+}
+
+.btn-cancelar-edicao:hover {
+    background: #f1efec;
+}
+
+.btn-salvar-comentario {
+    border: 1px solid #879d84;
+
+    background: #879d84;
+    color: #ffffff;
+}
+
+.btn-salvar-comentario:hover {
+    background: #6f8464;
+    border-color: #6f8464;
+}
+
+
+/* ==========================================
+   SEM COMENTÁRIOS
+========================================== */
+
+.sem-comentarios {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #877a70;
+}
+
+.icone-sem-comentarios {
+    margin-bottom: 12px;
+
+    font-size: 2rem;
+
+    opacity: 0.7;
+}
+
+.sem-comentarios h3 {
+    margin: 0 0 7px;
+
+    color: #5c4b3f;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+.sem-comentarios p {
+    margin: 0;
+
+    font-size: 0.82rem;
+}
+
+
+/* ==========================================
+   RESPONSIVO
+========================================== */
+
+@media (max-width: 700px) {
+
+    .pagina-resenha {
+        padding: 30px 15px 50px;
+    }
+
+    .autor-resenha {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 22px;
+    }
+
+    .conteudo-resenha {
+        padding: 28px 22px 30px;
+    }
+
+    .conteudo-resenha h1 {
+        font-size: 1.6rem;
+    }
+
+    .divisor {
+        margin: 0 22px;
+    }
+
+    .aviso-spoiler {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn-revelar-spoiler {
+        margin-left: 46px;
+    }
+
+    .livro-resenha {
+        padding: 18px 22px;
+    }
+
+    .cabecalho-comentarios {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 7px;
+    }
+
+    .novo-comentario {
+        padding: 17px;
+    }
+
+    .comentario {
+        padding: 20px 0;
+    }
+
+    .topo-comentario {
+        flex-direction: column;
+
+        gap: 7px;
+    }
+
+    .acoes-comentario {
+        align-self: flex-start;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .foto-autor,
+    .foto-comentario {
+        width: 40px;
+        height: 40px;
+    }
+
+    .novo-comentario {
+        gap: 10px;
+    }
+
+    .acoes-novo-comentario small {
+        display: none;
+    }
+
+    .acoes-novo-comentario {
+        justify-content: flex-end;
+    }
+
+    .texto-resenha {
+        padding: 8px 18px;
+    }
+
+}
