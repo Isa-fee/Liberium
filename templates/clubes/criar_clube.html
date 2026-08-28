@@ -39,7 +39,7 @@
         enctype="multipart/form-data"
     >
 
-  <!-- LIVRO -->
+    <!-- LIVRO -->
   <div class="campo-clube">
 
     <label for="livro">
@@ -184,7 +184,98 @@
             </select>
 
         </div>
+ 
+        <!-- ========================================
+     PRIVACIDADE DO CLUBE
+========================================= -->
 
+<div class="campo-clube campo-privacidade">
+
+    <label>
+        Privacidade do clube
+    </label>
+
+    <p class="descricao-privacidade">
+        Escolha quem poderá participar do seu clube de leitura.
+    </p>
+
+    <div class="opcoes-privacidade">
+
+        <!-- PÚBLICO -->
+
+        <label class="opcao-privacidade">
+
+            <input
+                type="radio"
+                name="privacidade"
+                value="publico"
+                checked
+            >
+
+            <div class="card-privacidade">
+
+                <div class="icone-privacidade">
+                    ♧
+                </div>
+
+                <div class="texto-privacidade">
+
+                    <strong>
+                        Clube público
+                    </strong>
+
+                    <span>
+                        Qualquer pessoa pode encontrar
+                        e entrar neste clube.
+                    </span>
+
+                </div>
+
+                <div class="radio-personalizado"></div>
+
+            </div>
+
+        </label>
+
+
+        <!-- PRIVADO -->
+
+        <label class="opcao-privacidade">
+
+            <input
+                type="radio"
+                name="privacidade"
+                value="privado"
+            >
+
+            <div class="card-privacidade">
+
+                <div class="icone-privacidade">
+                    ♙
+                </div>
+
+                <div class="texto-privacidade">
+
+                    <strong>
+                        Clube privado
+                    </strong>
+
+                    <span>
+                        Apenas pessoas convidadas pelo
+                        criador poderão participar.
+                    </span>
+
+                </div>
+
+                <div class="radio-personalizado"></div>
+
+            </div>
+
+        </label>
+
+    </div>
+
+</div>
 
         <!-- DATAS -->
 
