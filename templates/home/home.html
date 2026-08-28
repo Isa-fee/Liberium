@@ -1,95 +1,413 @@
 {% extends "base.html" %}
 
-{% block title %}Liberium - Home Page{% endblock %}
+{% block title %}Liberium - Início{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/home/style.css') }}"
+>
+{% endblock %}
 
 {% block content %}
 
-<div class="content">
+<div class="home-page">
 
-    <h1 class="titulo-home">
-        Bem-vindo(a) à sua Estante Liberium!
-    </h1>
+    <!-- ========================================
+         BOAS-VINDAS
+    ========================================= -->
 
-    <section class="estatisticas">
+    <section class="home-boas-vindas">
 
-        <h2>Suas Estatísticas</h2>
+        <div class="home-boas-vindas-texto">
 
-        <div class="estatisticas-container">
+            <span class="home-saudacao">
+                SUA JORNADA LITERÁRIA
+            </span>
 
-            <div class="grafico">
+            <h1>
+                Bem-vindo(a) à sua Estante Liberium!
+            </h1>
 
-                {% if total_lidos > 0 %}
-            
-                    <canvas id="generosLidos"></canvas>
-            
-                {% else %}
-            
-                    <div class="grafico-vazio">
-                        <span>0</span>
-                        <small>
-                            Leia seu primeiro livro
-                        </small>
-                    </div>
-            
-                {% endif %}
-            
-                <p>
-                    Gêneros Lidos
-                </p>
-            
-            </div>
+            <p>
+                Acompanhe suas leituras, descubra novas histórias
+                e continue construindo sua jornada literária.
+            </p>
 
-            <div class="numero-livros">
+        </div>
 
-                <h3>
-                    Livros Lidos
-                </h3>
-            
-                <span>
-                    {{ total_lidos }}
+        <a
+            href="{{ url_for('estante_bp.estante') }}"
+            class="home-btn-estante"
+        >
+            Ver minha estante
+            <span>→</span>
+        </a>
+
+    </section>
+
+
+    <!-- ========================================
+         VISÃO GERAL
+    ========================================= -->
+
+    <section class="home-secao">
+
+        <div class="home-titulo-secao">
+
+            <div>
+                <span class="home-subtitulo">
+                    SEU PROGRESSO
                 </span>
-            
+
+                <h2>
+                    Visão geral da sua leitura
+                </h2>
             </div>
 
-            <div class="grafico">
-                <canvas id="livrosAndamento"></canvas>
-                <p>Livros na Estante</p>
+            <p>
+                Um resumo da sua estante até agora.
+            </p>
+
+        </div>
+
+
+        <div class="resumo-leitura">
+
+            <!-- LIDOS -->
+
+            <article class="resumo-card">
+
+                <div class="resumo-icone">
+                    <!-- Depois colocaremos nosso ícone personalizado aqui -->
+                    <span class="resumo-icone-placeholder">
+                        ✓
+                    </span>
+                </div>
+
+                <div class="resumo-info">
+                    <strong>
+                        {{ total_lidos }}
+                    </strong>
+
+                    <span>
+                        Livros lidos
+                    </span>
+                </div>
+
+            </article>
+
+
+            <!-- LENDO -->
+
+            <article class="resumo-card">
+
+                <div class="resumo-icone">
+                    <span class="resumo-icone-placeholder">
+                        ◌
+                    </span>
+                </div>
+
+                <div class="resumo-info">
+                    <strong>
+                        {{ total_lendo }}
+                    </strong>
+
+                    <span>
+                        Lendo agora
+                    </span>
+                </div>
+
+            </article>
+
+
+            <!-- QUERO LER -->
+
+            <article class="resumo-card">
+
+                <div class="resumo-icone">
+                    <span class="resumo-icone-placeholder">
+                        +
+                    </span>
+                </div>
+
+                <div class="resumo-info">
+                    <strong>
+                        {{ total_quero_ler }}
+                    </strong>
+
+                    <span>
+                        Quero ler
+                    </span>
+                </div>
+
+            </article>
+
+
+            <!-- TOTAL -->
+
+            <article class="resumo-card">
+
+                <div class="resumo-icone">
+                    <span class="resumo-icone-placeholder">
+                        ≡
+                    </span>
+                </div>
+
+                <div class="resumo-info">
+                    <strong>
+                        {{ total_estante }}
+                    </strong>
+
+                    <span>
+                        Na estante
+                    </span>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         ESTATÍSTICAS + META
+    ========================================= -->
+
+    <section class="home-painel">
+
+        <!-- ESTATÍSTICAS -->
+
+        <div class="home-card home-estatisticas">
+
+            <div class="card-cabecalho">
+
+                <div>
+                    <span class="home-subtitulo">
+                        ESTATÍSTICAS
+                    </span>
+
+                    <h2>
+                        Suas leituras
+                    </h2>
+                </div>
+
+                <span class="card-detalhe">
+                    Até agora
+                </span>
+
+            </div>
+
+
+            <div class="graficos-container">
+
+                <!-- GÊNEROS -->
+
+                <div class="grafico-item">
+
+                    <div class="grafico-area">
+
+                        {% if total_lidos > 0 %}
+
+                            <canvas id="generosLidos"></canvas>
+
+                        {% else %}
+
+                            <div class="grafico-vazio">
+
+                                <strong>0</strong>
+
+                                <span>
+                                    livros
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="grafico-legenda">
+
+                        <strong>
+                            Gêneros lidos
+                        </strong>
+
+                        {% if total_lidos > 0 %}
+
+                            <span>
+                                Veja o que mais aparece nas suas leituras.
+                            </span>
+
+                        {% else %}
+
+                            <span>
+                                Leia seu primeiro livro para começar.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS DA ESTANTE -->
+
+                <div class="grafico-item">
+
+                    <div class="grafico-area">
+
+                        {% if total_estante > 0 %}
+
+                            <canvas id="livrosAndamento"></canvas>
+
+                        {% else %}
+
+                            <div class="grafico-vazio">
+
+                                <strong>0</strong>
+
+                                <span>
+                                    livros
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="grafico-legenda">
+
+                        <strong>
+                            Sua estante
+                        </strong>
+
+                        {% if total_estante > 0 %}
+
+                            <span>
+                                Como suas leituras estão distribuídas.
+                            </span>
+
+                        {% else %}
+
+                            <span>
+                                Adicione livros à sua estante.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- META -->
+
+        <div class="home-card home-meta">
+
+            <div class="card-cabecalho">
+
+                <div>
+                    <span class="home-subtitulo">
+                        META DE LEITURA
+                    </span>
+
+                    <h2>
+                        Continue avançando
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="meta-conteudo">
+
+                <div class="meta-numero">
+
+                    <strong>6</strong>
+
+                    <span>
+                        de 10 livros
+                    </span>
+
+                </div>
+
+
+                <div class="meta-barra">
+
+                    <div
+                        class="meta-progresso"
+                        style="width: 60%;"
+                    ></div>
+
+                </div>
+
+
+                <div class="meta-informacoes">
+
+                    <span>
+                        60% concluído
+                    </span>
+
+                    <span>
+                        Faltam 4
+                    </span>
+
+                </div>
+
+
+                <p class="meta-mensagem">
+                    Você está no caminho certo! Continue lendo
+                    para alcançar sua meta deste mês.
+                </p>
+
             </div>
 
         </div>
 
     </section>
 
-    <section class="meta">
 
-        <div class="meta-leitura">
+    <!-- ========================================
+         SUGESTÕES DE LEITURA
+    ========================================= -->
 
-            <p class="t1-meta">
-                <strong>Sua meta de leitura:</strong>
-                10 livros esse mês.
-            </p>
+    <section class="home-sugestoes">
 
-            <div class="barra-progresso">
-                <div class="progresso" style="width: 60%;"></div>
-            </div>
+        <div class="sugestoes-titulo">
 
-            <p class="texto-meta">
-                Você está no caminho certo, continue lendo mais 4 livros para bater sua meta!
+            <span>
+                SUGESTÕES
+            </span>
+
+            <h2>
+                Leituras para você
+            </h2>
+
+            <p>
+                Descubra sua próxima história.
             </p>
 
         </div>
 
-    </section>
-
-    <section class="carrossel">
-
-        <h2>Sugestões de leitura</h2>
 
         <div class="carrossel-container">
 
-            <button class="carrossel-btn left">
+            <button
+                class="carrossel-btn left"
+                type="button"
+                aria-label="Sugestão anterior"
+            >
                 &#10094;
             </button>
+
 
             <div class="carrossel-cards">
 
@@ -97,45 +415,97 @@
 
                     {% for livro in livros %}
 
-                        <div class="card">
+                        <a
+                            href="{{ url_for('books_bp.ver', id=livro.id) }}"
+                            class="livro-sugestao"
+                        >
 
-                            <a
-                                href="{{ url_for('books_bp.ver', id=livro.id) }}"
-                                class="card-link"
-                            >
+                            <div class="livro-sugestao-capa">
 
                                 {% if livro.capa %}
 
-                                    <img
-                                        src="{{ url_for('static', filename=livro.capa) }}">
-                                        alt="{{ livro.titulo }}"
-                                    >
+                                    {% if livro.capa.startswith('http') %}
+
+                                        <img
+                                            src="{{ livro.capa }}"
+                                            alt="Capa de {{ livro.titulo }}"
+                                        >
+
+                                    {% else %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=livro.capa
+                                            ) }}"
+                                            alt="Capa de {{ livro.titulo }}"
+                                        >
+
+                                    {% endif %}
 
                                 {% else %}
 
-                                    <div class="sem-capa">
-                                        Sem capa
+                                    <div class="sugestao-sem-capa">
+                                        <span>Sem capa</span>
                                     </div>
 
                                 {% endif %}
 
-                            </a>
+                            </div>
 
-                        </div>
+
+                            <div class="livro-sugestao-info">
+
+                                <strong>
+                                    {{ livro.titulo }}
+                                </strong>
+
+                                {% if livro.autor %}
+                                    <span>
+                                        {{ livro.autor }}
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+                        </a>
 
                     {% endfor %}
 
+
                 {% else %}
 
-                    <p>
-                        Nenhum livro em destaque foi encontrado.
-                    </p>
+                    <div class="sugestoes-vazio">
+
+                        <div class="sugestoes-vazio-icone">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Suas próximas leituras aparecerão aqui
+                            </strong>
+
+                            <p>
+                                Em breve, o Liberium usará suas leituras
+                                para encontrar livros que combinam com você.
+                            </p>
+
+                        </div>
+
+                    </div>
 
                 {% endif %}
 
             </div>
 
-            <button class="carrossel-btn right">
+
+            <button
+                class="carrossel-btn right"
+                type="button"
+                aria-label="Próxima sugestão"
+            >
                 &#10095;
             </button>
 
@@ -143,16 +513,41 @@
 
     </section>
 
-    <div class="botao-estante">
 
-        <a href="#" class="btn-estante">
+    <!-- ========================================
+         CHAMADA FINAL
+    ========================================= -->
+
+    <section class="home-final">
+
+        <div>
+
+            <span class="home-subtitulo">
+                SUA ESTANTE
+            </span>
+
+            <h2>
+                Cada livro deixa um pedacinho da sua história.
+            </h2>
+
+        </div>
+
+        <a
+            href="{{ url_for('estante_bp.estante') }}"
+            class="home-btn-estante home-btn-final"
+        >
             Ver minha estante
+            <span>→</span>
         </a>
 
-    </div>
+    </section>
 
 </div>
 
+
+<!-- ========================================
+     DADOS DOS GRÁFICOS
+======================================== -->
 
 <script
     id="dados-home"
@@ -169,6 +564,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script
+    src="{{ url_for('static', filename='js/home.js') }}"
+></script>
 
 {% endblock %}

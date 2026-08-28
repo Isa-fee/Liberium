@@ -1,95 +1,120 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 📏 Verifica se a largura da tela é maior que 600px
-    // O carrossel com JS (smooth scroll e loop) só será ativado em telas maiores
-    if (window.matchMedia("(min-width: 601px)").matches) { 
 
-        const carrossel = document.querySelector(".carrossel-cards");
-        const btnLeft = document.querySelector(".carrossel-btn.left");
-        const btnRight = document.querySelector(".carrossel-btn.right");
+    const carrossel =
+        document.querySelector(".carrossel-cards");
 
-        // Verifica se os elementos necessários existem antes de prosseguir
-        if (!carrossel || !btnLeft || !btnRight) {
-            console.error("Elementos do carrossel não encontrados. Verifique o HTML.");
-            return;
-        }
+    const btnLeft =
+        document.querySelector(".carrossel-btn.left");
 
-        const cards = Array.from(carrossel.querySelectorAll(".card"));
-        // Largura do card (180px) + gap (20px, conforme style.css)
-        const cardWidth = cards[0].offsetWidth + 20; 
+    const btnRight =
+        document.querySelector(".carrossel-btn.right");
 
-        // --- 1. Clonagem de Cards para Loop Infinito ---
-        cards.forEach(card => {
-            // Clona e adiciona no final
-            const cloneEnd = card.cloneNode(true);
-            carrossel.appendChild(cloneEnd);
-            
-            // Clona e adiciona no início
-            const cloneStart = card.cloneNode(true);
-            carrossel.insertBefore(cloneStart, carrossel.firstChild);
+
+    // ==========================================
+    // VERIFICA SE O CARROSSEL EXISTE
+    // ==========================================
+
+    if (
+        !carrossel ||
+        !btnLeft ||
+        !btnRight
+    ) {
+        return;
+    }
+
+
+    const livros = Array.from(
+        carrossel.querySelectorAll(".livro-sugestao")
+    );
+
+
+    // Se não houver livros, não há o que navegar
+    if (livros.length === 0) {
+
+        btnLeft.style.display = "none";
+        btnRight.style.display = "none";
+
+        return;
+    }
+
+
+    // ==========================================
+    // TAMANHO DO DESLOCAMENTO
+    // ==========================================
+
+    function obterDistancia() {
+
+        const primeiroLivro = livros[0];
+
+        const estiloCarrossel =
+            window.getComputedStyle(carrossel);
+
+        const gap =
+            parseFloat(estiloCarrossel.columnGap) || 0;
+
+        return primeiroLivro.offsetWidth + gap;
+    }
+
+
+    // ==========================================
+    // NAVEGAÇÃO
+    // ==========================================
+
+    btnRight.addEventListener("click", () => {
+
+        carrossel.scrollBy({
+            left: obterDistancia(),
+            behavior: "smooth"
         });
 
-        // Posição inicial: move o scroll para o primeiro conjunto real de cards
-        // Isso esconde os clones iniciais
-        const viewportCenter = carrossel.offsetWidth / 2; // Metade da área visível
-        const cardCenterOffset = cardWidth / 2; // Metade da largura de um card
-        // Posição = Início dos cards reais - (Metade da Viewport - Metade do Card)
-        carrossel.scrollLeft = (cardWidth * cards.length) - viewportCenter + cardCenterOffset;
+    });
 
 
-        // --- 2. Funções de Easing e Scroll Suave ---
+    btnLeft.addEventListener("click", () => {
 
-        // Função de easing (desaceleração)
-        function easeInOutQuad(t, b, c, d) {
-            t /= d/2;
-            if (t < 1) return c/2*t*t + b;
-            t--;
-            return -c/2 * (t*(t-2) - 1) + b;
-        }
-        
-        // Função de scroll suave usando requestAnimationFrame
-        function smoothScroll(element, target, duration) {
-            const start = element.scrollLeft;
-            const change = target - start;
-            const increment = 20; // Intervalo de tempo para cada quadro (em ms, simulado)
-            let currentTime = 0;
-
-            const animateScroll = function() {
-                currentTime += increment;
-                const val = easeInOutQuad(currentTime, start, change, duration);
-                element.scrollLeft = val;
-                if (currentTime < duration) {
-                    requestAnimationFrame(animateScroll);
-                }
-            };
-            requestAnimationFrame(animateScroll);
-        }
-
-        // --- 3. Event Listeners (Cliques e Scroll) ---
-
-        // Evento para o botão Direito
-        btnRight.addEventListener("click", () => {
-            smoothScroll(carrossel, carrossel.scrollLeft + cardWidth, 300);
+        carrossel.scrollBy({
+            left: -obterDistancia(),
+            behavior: "smooth"
         });
 
-        // Evento para o botão Esquerdo
-        btnLeft.addEventListener("click", () => {
-            smoothScroll(carrossel, carrossel.scrollLeft - cardWidth, 300);
-        });
+    });
 
-        // Ajusta a posição do scroll quando ele atinge os limites (clones)
-        carrossel.addEventListener("scroll", () => {
-            // Se rolou até o final dos cards reais (e entrou nos clones finais)
-            if (carrossel.scrollLeft >= cardWidth * (cards.length * 2)) {
-                // Volta para o início dos cards reais instantaneamente
-                carrossel.scrollLeft = cardWidth * cards.length;
-            }
-            // Se rolou até os clones iniciais (passou do início)
-            if (carrossel.scrollLeft <= 0) {
-                // Volta para o último conjunto de cards reais instantaneamente
-                carrossel.scrollLeft = cardWidth * cards.length;
-            }
-        });
 
-    } 
-    // Em telas <= 600px, o JS é ignorado e o CSS (scroll-snap) assume o controle.
+    // ==========================================
+    // ESTADO DOS BOTÕES
+    // ==========================================
+
+    function atualizarBotoes() {
+
+        const limite =
+            carrossel.scrollWidth -
+            carrossel.clientWidth;
+
+        const estaNoInicio =
+            carrossel.scrollLeft <= 2;
+
+        const estaNoFim =
+            carrossel.scrollLeft >= limite - 2;
+
+
+        btnLeft.disabled = estaNoInicio;
+        btnRight.disabled = estaNoFim;
+
+    }
+
+
+    carrossel.addEventListener(
+        "scroll",
+        atualizarBotoes
+    );
+
+
+    window.addEventListener(
+        "resize",
+        atualizarBotoes
+    );
+
+
+    atualizarBotoes();
+
 });
