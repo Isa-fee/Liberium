@@ -21,6 +21,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ======================================
+    // CONFIGURAÇÃO VISUAL COMPARTILHADA
+    // ======================================
+
+    const configuracaoLegenda = {
+        position: "bottom",
+
+        labels: {
+            usePointStyle: true,
+            pointStyle: "rectRounded",
+
+            boxWidth: 10,
+            boxHeight: 10,
+
+            padding: 14,
+
+            color: "#6c5338",
+
+            font: {
+                family: "Raleway",
+                size: 14,
+                weight: "500"
+            }
+        }
+    };
+
+
+    // ======================================
     // GRÁFICO DE GÊNEROS LIDOS
     // ======================================
 
@@ -53,22 +80,49 @@ document.addEventListener("DOMContentLoaded", function () {
                             "#d7e2cf"
                         ],
 
-                        borderWidth: 0
+                        borderWidth: 0,
+
+                        hoverOffset: 4
                     }
                 ]
             },
 
             options: {
+
                 responsive: true,
-                maintainAspectRatio: true,
-            
-                plugins: {
-                    legend: {
-                        position: "bottom"
+                maintainAspectRatio: false,
+
+                cutout: "68%",
+
+                layout: {
+                    padding: {
+                        top: 4,
+                        right: 4,
+                        bottom: 4,
+                        left: 4
                     }
+                },
+
+                plugins: {
+
+                    legend: configuracaoLegenda,
+
+                    tooltip: {
+                        backgroundColor: "#442b1a",
+                        titleFont: {
+                            family: "Raleway"
+                        },
+                        bodyFont: {
+                            family: "Raleway"
+                        }
+                    }
+
                 }
+
             }
+
         });
+
     }
 
 
@@ -77,14 +131,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // ======================================
 
     const canvasEstante =
-    document.getElementById("livrosAndamento");
+        document.getElementById("livrosAndamento");
 
     const totalLivros =
         totalLidos +
         totalLendo +
         totalQueroLer;
 
-    if (canvasEstante && totalLivros > 0) {
+
+    if (
+        canvasEstante &&
+        totalLivros > 0
+    ) {
 
         new Chart(canvasEstante, {
 
@@ -109,25 +167,55 @@ document.addEventListener("DOMContentLoaded", function () {
                         backgroundColor: [
                             "#36503c",
                             "#879d84",
-                            "#c8b39b"
+                            "#b8c7ae"
                         ],
 
-                        borderWidth: 0
+                        borderWidth: 0,
+
+                        hoverOffset: 4
                     }
                 ]
+
             },
 
             options: {
+
                 responsive: true,
-                maintainAspectRatio: true,
-    
-                plugins: {
-                    legend: {
-                        position: "bottom"
+                maintainAspectRatio: false,
+
+                cutout: "68%",
+
+                layout: {
+                    padding: {
+                        top: 4,
+                        right: 4,
+                        bottom: 4,
+                        left: 4
                     }
+                },
+
+                plugins: {
+
+                    legend: configuracaoLegenda,
+
+                    tooltip: {
+                        backgroundColor: "#442b1a",
+
+                        titleFont: {
+                            family: "Raleway"
+                        },
+
+                        bodyFont: {
+                            family: "Raleway"
+                        }
+                    }
+
                 }
+
             }
+
         });
+
     }
 
 });
