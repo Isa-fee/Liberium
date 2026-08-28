@@ -1,0 +1,592 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Gerenciar {{ clube.nome }} | Liberium
+{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/clube/gerenciar_clube.css'
+    ) }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<section class="pagina-gerenciar-clube">
+
+    <!-- ======================================
+         CABEÇALHO
+    ======================================= -->
+
+    <div class="gerenciar-topo">
+
+        <a
+            href="{{ url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            ) }}"
+            class="botao-voltar"
+        >
+            ←
+        </a>
+
+        <div>
+
+            <span class="gerenciar-label">
+                SEU CLUBE
+            </span>
+
+            <h1>
+                Gerenciar clube
+            </h1>
+
+            <p>
+                Atualize as informações e configurações
+                do seu clube de leitura.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         FORMULÁRIO
+    ======================================= -->
+
+    <form
+        action="{{ url_for(
+            'clubes.editar_clube',
+            clube_id=clube.id
+        ) }}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="formulario-gerenciar"
+    >
+
+        <!-- ==================================
+             INFORMAÇÕES
+        =================================== -->
+
+        <div class="gerenciar-card">
+
+            <div class="card-cabecalho">
+
+                <h2>
+                    Informações do clube
+                </h2>
+
+                <p>
+                    Essas informações aparecem para
+                    os participantes e visitantes.
+                </p>
+
+            </div>
+
+
+            <!-- NOME -->
+
+            <div class="campo-clube">
+
+                <label for="nome">
+                    Nome do clube
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    maxlength="100"
+                    value="{{ clube.nome }}"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DESCRIÇÃO -->
+
+            <div class="campo-clube">
+
+                <label for="descricao">
+                    Descrição
+                </label>
+
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    maxlength="300"
+                    rows="5"
+                    placeholder="Conte um pouco sobre o clube..."
+                >{{ clube.descricao or '' }}</textarea>
+
+                <small>
+                    Explique a proposta e como funciona
+                    a leitura do clube.
+                </small>
+
+            </div>
+
+
+            <!-- GÊNERO -->
+
+            <div class="campo-clube">
+
+                <label for="genero">
+                    Gênero
+                </label>
+
+                <select
+                    id="genero"
+                    name="genero"
+                    required
+                >
+
+                    {% set generos = [
+                        'Romance',
+                        'Fantasia',
+                        'Suspense',
+                        'Distopia',
+                        'Ficção',
+                        'Terror',
+                        'Aventura',
+                        'Outro'
+                    ] %}
+
+                    {% for genero in generos %}
+
+                        <option
+                            value="{{ genero }}"
+                            {% if clube.genero == genero %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ genero }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================
+             PRIVACIDADE
+        =================================== -->
+
+        <div class="gerenciar-card">
+
+            <div class="card-cabecalho">
+
+                <h2>
+                    Privacidade
+                </h2>
+
+                <p>
+                    Defina quem pode entrar e convidar
+                    pessoas para o clube.
+                </p>
+
+            </div>
+
+
+            <div class="opcoes-privacidade">
+
+                <!-- PÚBLICO -->
+
+                <label class="opcao-privacidade">
+
+                    <input
+                        type="radio"
+                        name="privacidade"
+                        value="publico"
+                        {% if not clube.privado %}
+                            checked
+                        {% endif %}
+                    >
+
+                    <div class="opcao-conteudo">
+
+                        <div class="opcao-icone">
+                            🌿
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Clube público
+                            </strong>
+
+                            <p>
+                                Qualquer pessoa pode entrar.
+                                Os participantes também podem
+                                convidar amigos.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </label>
+
+
+                <!-- PRIVADO -->
+
+                <label class="opcao-privacidade">
+
+                    <input
+                        type="radio"
+                        name="privacidade"
+                        value="privado"
+                        {% if clube.privado %}
+                            checked
+                        {% endif %}
+                    >
+
+                    <div class="opcao-conteudo">
+
+                        <div class="opcao-icone">
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Clube privado
+                            </strong>
+
+                            <p>
+                                Somente pessoas convidadas podem
+                                participar e apenas o criador
+                                pode enviar convites.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================
+             IMAGEM
+        =================================== -->
+
+        <div class="gerenciar-card">
+
+            <div class="card-cabecalho">
+
+                <h2>
+                    Imagem do clube
+                </h2>
+
+                <p>
+                    Atualize a imagem que representa
+                    seu clube.
+                </p>
+
+            </div>
+
+
+            <div class="imagem-gerenciar">
+
+                <div class="imagem-atual">
+
+                    {% if clube.imagem %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=clube.imagem
+                            ) }}"
+                            alt="{{ clube.nome }}"
+                            id="preview-imagem"
+                        >
+
+                    {% else %}
+
+                        <div
+                            class="sem-imagem"
+                            id="sem-imagem"
+                        >
+                            {{ clube.nome[0] if clube.nome else '?' }}
+                        </div>
+
+                        <img
+                            id="preview-imagem"
+                            alt="Prévia da imagem"
+                            style="display: none;"
+                        >
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="imagem-acoes">
+
+                    <label
+                        for="imagem"
+                        class="botao-escolher-imagem"
+                    >
+                        Escolher nova imagem
+                    </label>
+
+                    <input
+                        type="file"
+                        id="imagem"
+                        name="imagem"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <small>
+                        JPG, PNG ou WEBP.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ==================================
+     PARTICIPANTES
+=================================== -->
+
+<div class="gerenciar-card">
+
+    <div class="card-cabecalho participantes-cabecalho">
+
+        <div>
+
+            <h2>
+                Participantes
+            </h2>
+
+            <p>
+                Gerencie as pessoas que fazem parte
+                deste clube.
+            </p>
+
+        </div>
+
+        <span class="total-participantes">
+
+            {{ clube.quantidade_membros }}
+
+            {% if clube.quantidade_membros == 1 %}
+                participante
+            {% else %}
+                participantes
+            {% endif %}
+
+        </span>
+
+    </div>
+
+
+    {% if membros %}
+
+        <div class="lista-participantes-gerenciar">
+
+            {% for membro in membros %}
+
+                <div class="participante-gerenciar">
+
+                    <!-- AVATAR -->
+
+                    <div class="participante-gerenciar-avatar">
+
+                        {% if membro.usuario.foto %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=membro.usuario.foto
+                                ) }}"
+                                alt="{{ membro.usuario.nome }}"
+                            >
+
+                        {% else %}
+
+                            <span>
+                                {{ membro.usuario.nome[0]
+                                if membro.usuario.nome
+                                else '?' }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- INFORMAÇÕES -->
+
+                    <div class="participante-gerenciar-info">
+
+                        <strong>
+                            {{ membro.usuario.nome }}
+                        </strong>
+
+                        {% if membro.usuario_id == clube.usuario_id %}
+
+                            <span class="identificacao-criador">
+                                Criador do clube
+                            </span>
+
+                        {% else %}
+
+                            <span>
+                                Participante
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- AÇÃO -->
+
+                    {% if membro.usuario_id == clube.usuario_id %}
+
+                        <span class="badge-criador-gerenciar">
+                            Criador
+                        </span>
+
+                    {% else %}
+
+                        <form
+                            action="{{ url_for(
+                                'clubes.remover_membro',
+                                clube_id=clube.id,
+                                usuario_id=membro.usuario_id
+                            ) }}"
+                            method="POST"
+                            onsubmit="return confirm(
+                                'Tem certeza que deseja remover este participante do clube?'
+                            );"
+                        >
+
+                            <button
+                                type="submit"
+                                class="botao-remover-membro"
+                            >
+                                Remover
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="sem-participantes-gerenciar">
+
+            <p>
+                Este clube ainda não possui participantes.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+        <!-- ==================================
+             AÇÕES
+        =================================== -->
+
+        <div class="acoes-gerenciar">
+
+            <a
+                href="{{ url_for(
+                    'clubes.ver_clube',
+                    clube_id=clube.id
+                ) }}"
+                class="botao-cancelar"
+            >
+                Cancelar
+            </a>
+
+            <button
+                type="submit"
+                class="botao-salvar"
+            >
+                Salvar alterações
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<script>
+
+const inputImagem =
+    document.getElementById('imagem');
+
+const preview =
+    document.getElementById('preview-imagem');
+
+const semImagem =
+    document.getElementById('sem-imagem');
+
+
+inputImagem.addEventListener(
+    'change',
+    function() {
+
+        const arquivo =
+            this.files[0];
+
+        if (!arquivo) {
+            return;
+        }
+
+        const leitor =
+            new FileReader();
+
+        leitor.onload =
+            function(event) {
+
+                preview.src =
+                    event.target.result;
+
+                preview.style.display =
+                    'block';
+
+                if (semImagem) {
+                    semImagem.style.display =
+                        'none';
+                }
+
+            };
+
+        leitor.readAsDataURL(
+            arquivo
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

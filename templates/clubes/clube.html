@@ -199,20 +199,17 @@
                         >
                             + Convidar amigos
                         </button>
-
-                        <!--
-                            Quando criarmos a rota de edição,
-                            podemos transformar isso em link.
-                        -->
-
-                        <button
-                            type="button"
-                            class="btn-gerenciar-clube"
-                            disabled
-                            title="Em breve"
-                        >
+                        <a
+                            href="{{ url_for(
+                            'clubes.gerenciar_clube',
+                            clube_id=clube.id
+                        ) }}"
+                        class="btn-gerenciar-clube"
+                    >
                             Gerenciar clube
-                        </button>
+                        </a>
+
+
 
                     </div>
 

@@ -1,18 +1,45 @@
-from extensions import db
-from flask_login import UserMixin
 from datetime import date, datetime
 
+from flask_login import UserMixin
+
+from extensions import db
+
+# usuario
 class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
 
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(120), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    senha = db.Column(db.String(200), nullable=False)
-    foto = db.Column(db.String(255), nullable=True)
-    
-    # GAMIFICAÇÃO
-    xp = db.Column(db.Integer, default=20)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    nome = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+    email = db.Column(
+        db.String(150),
+        unique=True,
+        nullable=False
+    )
+
+    senha = db.Column(
+        db.String(200),
+        nullable=False
+    )
+
+    foto = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    # Gamificação
+    xp = db.Column(
+        db.Integer,
+        default=20
+    )
+
     nivel = db.Column(
         db.String(50),
         default="Leitor Iniciante"
@@ -22,16 +49,17 @@ class Usuario(UserMixin, db.Model):
         db.Integer,
         default=5
     )
-    
-    # TIPO DE USUÁRIO
-    # leitor | autor | administrador
 
+    # Tipo de usuário:
+    # leitor | autor | administrador
     tipo = db.Column(
         db.String(20),
         nullable=False,
         default="leitor"
     )
 
+
+# AMIZADE
 class Amizade(db.Model):
     __tablename__ = "amizades"
 
@@ -77,80 +105,65 @@ class Amizade(db.Model):
         backref="solicitacoes_recebidas"
     )
 
-
-class ConviteClube(db.Model):
-    __tablename__ = "convites_clube"
+#LIVRO
+class Livro(db.Model):
+    __tablename__ = "livros"
 
     id = db.Column(
         db.Integer,
         primary_key=True
     )
 
-    clube_id = db.Column(
-        db.Integer,
-        db.ForeignKey("clubes.id"),
+    titulo = db.Column(
+        db.String(255),
         nullable=False
     )
 
-    remetente_id = db.Column(
-        db.Integer,
-        db.ForeignKey("usuarios.id"),
-        nullable=False
+    autor = db.Column(
+        db.String(255)
     )
 
-    destinatario_id = db.Column(
-        db.Integer,
-        db.ForeignKey("usuarios.id"),
-        nullable=False
+    descricao = db.Column(
+        db.Text
     )
 
-    status = db.Column(
-        db.String(20),
-        nullable=False,
-        default="pendente"
+    capa = db.Column(
+        db.String(500)
     )
 
-    data_criacao = db.Column(
-        db.DateTime,
-        nullable=False,
-        default=db.func.now()
+    genero = db.Column(
+        db.String(100)
     )
 
-    clube = db.relationship(
-        "Clube",
-        backref="convites"
+    editora = db.Column(
+        db.String(150)
     )
 
-    remetente = db.relationship(
-        "Usuario",
-        foreign_keys=[remetente_id]
+    paginas = db.Column(
+        db.Integer
     )
 
-    destinatario = db.relationship(
-        "Usuario",
-        foreign_keys=[destinatario_id]
+    ano = db.Column(
+        db.String(20)
     )
 
-class Livro(db.Model):
-    __tablename__ = "livros"
+    idioma = db.Column(
+        db.String(50)
+    )
 
-    id = db.Column(db.Integer, primary_key=True)
+    avaliacao = db.Column(
+        db.Float
+    )
 
-    titulo = db.Column(db.String(255), nullable=False)
-    autor = db.Column(db.String(255))
-    descricao = db.Column(db.Text)
-    capa = db.Column(db.String(500))
-    genero = db.Column(db.String(100))
-    editora = db.Column(db.String(150))
-    paginas = db.Column(db.Integer)
-    ano = db.Column(db.String(20))
-    idioma = db.Column(db.String(50))
-    avaliacao = db.Column(db.Float)
-    destaque = db.Column(db.Boolean, default=False)
+    destaque = db.Column(
+        db.Boolean,
+        default=False
+    )
+
     google_id = db.Column(
-    db.String(100),
-    unique=True,
-    nullable=True
+        db.String(100),
+        unique=True,
+        nullable=True
     )
 
     origem = db.Column(
@@ -158,7 +171,7 @@ class Livro(db.Model):
         default="local"
     )
 
-
+#ESTANTE
 class Estante(db.Model):
     __tablename__ = "estante"
 
@@ -193,61 +206,35 @@ class Estante(db.Model):
         nullable=False,
         default="quero ler"
     )
-    # posição do livro dentro da prateleira
+
     posicao = db.Column(
         db.Integer,
         nullable=False,
         default=0
     )
 
-    # porcentagem de leitura
     progresso = db.Column(
         db.Integer,
         default=0
     )
 
     pagina_atual = db.Column(
-    db.Integer,
-    default=0)
+        db.Integer,
+        default=0
+    )
 
-    # quando terminou a leitura
     data_leitura = db.Column(
         db.Date,
         nullable=True
     )
 
-    # ======================================
-    # AVALIAÇÃO / RESENHA
-    # ======================================
-
-    # nota de 1 a 5 estrelas
     nota = db.Column(
         db.Integer,
         nullable=True
     )
 
-    # título da resenha
-    titulo_resenha = db.Column(
-        db.String(150),
-        nullable=True
-    )
-
-    # texto da resenha
     resenha = db.Column(
         db.Text,
-        nullable=True
-    )
-
-    # indica se a resenha contém spoiler
-    tem_spoiler = db.Column(
-        db.Boolean,
-        nullable=False,
-        default=False
-    )
-
-    # data em que a resenha foi criada
-    data_resenha = db.Column(
-        db.DateTime,
         nullable=True
     )
 
@@ -261,62 +248,8 @@ class Estante(db.Model):
         backref="estantes"
     )
 
-class ComentarioResenha(db.Model):
-    __tablename__ = "comentarios_resenha"
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-
-    # resenha que recebeu o comentário
-    estante_id = db.Column(
-        db.Integer,
-        db.ForeignKey("estante.id"),
-        nullable=False
-    )
-
-    # usuário que escreveu o comentário
-    usuario_id = db.Column(
-        db.Integer,
-        db.ForeignKey("usuarios.id"),
-        nullable=False
-    )
-
-    texto = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    data_criacao = db.Column(
-        db.DateTime,
-        nullable=False,
-        default=datetime.utcnow
-    )
-
-    data_edicao = db.Column(
-        db.DateTime,
-        nullable=True
-    )
-
-    # ======================================
-    # RELACIONAMENTOS
-    # ======================================
-
-    usuario = db.relationship(
-        "Usuario",
-        backref="comentarios_resenhas"
-    )
-
-    resenha = db.relationship(
-        "Estante",
-        backref=db.backref(
-            "comentarios",
-            lazy=True,
-            cascade="all, delete-orphan"
-        )
-    )
-
+# INSÍGNIAS
 class Insignia(db.Model):
     __tablename__ = "insignias"
 
@@ -335,8 +268,14 @@ class Insignia(db.Model):
         nullable=False
     )
 
-    imagem = db.Column(db.String(150), nullable=False)
+    imagem = db.Column(
+        db.String(150),
+        nullable=False
+    )
 
+
+
+# INSÍGNIAS DO USUÁRIO
 class UsuarioInsignia(db.Model):
     __tablename__ = "usuario_insignias"
 
@@ -365,7 +304,6 @@ class UsuarioInsignia(db.Model):
         nullable=False
     )
 
-
     usuario = db.relationship(
         "Usuario",
         backref="conquistas"
@@ -375,6 +313,9 @@ class UsuarioInsignia(db.Model):
         "Insignia"
     )
 
+
+
+# ITEM COLECIONÁVEL
 class ItemColecionavel(db.Model):
     __tablename__ = "itens_colecionaveis"
 
@@ -393,7 +334,7 @@ class ItemColecionavel(db.Model):
         nullable=True
     )
 
-    # decoracao ou boneco
+    # decoracao | boneco
     tipo = db.Column(
         db.String(30),
         nullable=False
@@ -404,19 +345,19 @@ class ItemColecionavel(db.Model):
         nullable=False
     )
 
-    # caminho da imagem dentro de static/
     imagem = db.Column(
         db.String(255),
         nullable=False
     )
 
-    # permite retirar um item da loja sem apagá-lo
     ativo = db.Column(
         db.Boolean,
         default=True,
         nullable=False
     )
 
+
+# COLEÇÃO DO USUÁRIO
 class UsuarioColecionavel(db.Model):
     __tablename__ = "usuarios_colecionaveis"
 
@@ -461,6 +402,8 @@ class UsuarioColecionavel(db.Model):
         backref="proprietarios"
     )
 
+
+# DECORAÇÃO DA ESTANTE
 class DecoracaoEstante(db.Model):
     __tablename__ = "decoracoes_estante"
 
@@ -487,7 +430,6 @@ class DecoracaoEstante(db.Model):
         nullable=False
     )
 
-    # posição dentro da prateleira
     posicao = db.Column(
         db.Integer,
         nullable=False,
@@ -508,10 +450,14 @@ class DecoracaoEstante(db.Model):
     )
 
 
+# META DE LEITURA
 class MetaLeitura(db.Model):
     __tablename__ = "metas_leitura"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     usuario_id = db.Column(
         db.Integer,
@@ -546,8 +492,8 @@ class MetaLeitura(db.Model):
     )
 
     data_fim = db.Column(
-    db.Date,
-    nullable=False
+        db.Date,
+        nullable=False
     )
 
     concluida = db.Column(
@@ -565,6 +511,8 @@ class MetaLeitura(db.Model):
         backref="metas_leitura"
     )
 
+
+# ATIVIDADE
 class Atividade(db.Model):
     __tablename__ = "atividades"
 
@@ -611,6 +559,8 @@ class Atividade(db.Model):
         backref="atividades"
     )
 
+
+# CLUBE
 class Clube(db.Model):
     __tablename__ = "clubes"
 
@@ -620,20 +570,22 @@ class Clube(db.Model):
     )
 
     nome = db.Column(
-        db.String(120),
+        db.String(100),
         nullable=False
     )
 
     descricao = db.Column(
         db.Text,
-        nullable=False
+        nullable=True
     )
 
     genero = db.Column(
         db.String(100),
-        nullable=False
+        nullable=True
     )
 
+    # False = público
+    # True = privado
     privado = db.Column(
         db.Boolean,
         nullable=False,
@@ -645,6 +597,7 @@ class Clube(db.Model):
         nullable=True
     )
 
+    # Criador do clube
     usuario_id = db.Column(
         db.Integer,
         db.ForeignKey("usuarios.id"),
@@ -659,26 +612,30 @@ class Clube(db.Model):
 
     quantidade_membros = db.Column(
         db.Integer,
-        default=1,
-        nullable=False
+        nullable=False,
+        default=1
     )
 
     data_criacao = db.Column(
-        db.Date,
-        default=date.today,
-        nullable=False
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
     )
 
+    # Relacionamentos
     usuario = db.relationship(
         "Usuario",
+        foreign_keys=[usuario_id],
         backref="clubes_criados"
     )
 
     livro = db.relationship(
         "Livro",
+        foreign_keys=[livro_id],
         backref="clubes"
     )
 
+# MEMBRO DO CLUBE
 class MembroClube(db.Model):
     __tablename__ = "membros_clube"
 
@@ -745,10 +702,124 @@ class MembroClube(db.Model):
         backref="clubes_participando"
     )
 
+
+# CONVITE PARA CLUBE
+class ConviteClube(db.Model):
+    __tablename__ = "convites_clube"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    clube_id = db.Column(
+        db.Integer,
+        db.ForeignKey("clubes.id"),
+        nullable=False
+    )
+
+    remetente_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    destinatario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # pendente | aceita | recusada
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="pendente"
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.now()
+    )
+
+    clube = db.relationship(
+        "Clube",
+        backref="convites"
+    )
+
+    remetente = db.relationship(
+        "Usuario",
+        foreign_keys=[remetente_id],
+        backref="convites_clube_enviados"
+    )
+
+    destinatario = db.relationship(
+        "Usuario",
+        foreign_keys=[destinatario_id],
+        backref="convites_clube_recebidos"
+    )
+
+# DISCUSSÃO DO CLUBE
+class Discussao(db.Model):
+    __tablename__ = "discussoes"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    titulo = db.Column(
+        db.String(150),
+        nullable=True
+    )
+
+    conteudo = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    clube_id = db.Column(
+        db.Integer,
+        db.ForeignKey("clubes.id"),
+        nullable=False
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="discussoes"
+    )
+
+    clube = db.relationship(
+        "Clube",
+        backref=db.backref(
+            "discussoes",
+            lazy=True,
+            cascade="all, delete-orphan"
+        )
+    )
+
+
+# ELOGIO DA ESTANTE
 class ElogioEstante(db.Model):
     __tablename__ = "elogios_estante"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     autor_id = db.Column(
         db.Integer,
@@ -781,92 +852,86 @@ class ElogioEstante(db.Model):
         "Usuario",
         foreign_keys=[destinatario_id]
     )
-    
-class Discussao(db.Model):
-    __tablename__ = 'discussoes'
 
-    id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String(150), nullable=True)
-    conteudo = db.Column(db.Text, nullable=False)
-    data_criacao = db.Column(
-        db.DateTime, default=datetime.utcnow, nullable=False
-    )
 
-    # Chaves estrangeiras
-    clube_id = db.Column(
-        db.Integer, db.ForeignKey('clubes.id'), nullable=False
-    )
-    usuario_id = db.Column(
-        db.Integer, db.ForeignKey('usuarios.id'), nullable=False
-    )
-
-    # Relacionamentos
-    usuario = db.relationship('Usuario', backref='discussoes')
-    clube = db.relationship(
-        'Clube', backref=db.backref('discussoes', lazy=True)
-    )
+# SOLICITAÇÃO DE LIVRO
 class SolicitacaoLivro(db.Model):
     __tablename__ = "solicitacoes_livros"
+
     id = db.Column(
         db.Integer,
         primary_key=True
     )
+
     titulo = db.Column(
         db.String(255),
         nullable=False
     )
+
     autor = db.Column(
         db.String(255),
         nullable=False
     )
+
     descricao = db.Column(
         db.Text,
         nullable=True
     )
+
     capa = db.Column(
         db.String(500),
         nullable=True
     )
+
     genero = db.Column(
         db.String(100),
         nullable=True
     )
+
     editora = db.Column(
         db.String(150),
         nullable=True
     )
+
     paginas = db.Column(
         db.Integer,
         nullable=True
     )
+
     ano = db.Column(
         db.String(20),
         nullable=True
     )
+
     idioma = db.Column(
         db.String(50),
         nullable=True
     )
+
     isbn = db.Column(
         db.String(30),
         nullable=True
     )
+
     solicitante_id = db.Column(
         db.Integer,
         db.ForeignKey("usuarios.id"),
         nullable=False
     )
+
     # pendente | aprovado | recusado
     status = db.Column(
         db.String(20),
         nullable=False,
         default="pendente"
     )
+
     data_solicitacao = db.Column(
         db.DateTime,
         nullable=False,
         default=datetime.utcnow
     )
+
     solicitante = db.relationship(
         "Usuario",
         backref="solicitacoes_livros"
