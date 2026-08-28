@@ -294,39 +294,15 @@ def ver_clube(clube_id):
     )
 
     # ======================================
-    # BUSCAR AMIZADES ACEITAS
+    # IDENTIFICAR O CRIADOR
     # ======================================
 
-    amizades = (
-        Amizade.query
-        .filter(
-            Amizade.status == 'aceita',
-            db.or_(
-                Amizade.usuario_id == current_user.id,
-                Amizade.amigo_id == current_user.id
-            )
-        )
-        .all()
+    usuario_eh_criador = (
+        clube.usuario_id == current_user.id
     )
 
     # ======================================
-    # PEGAR O OUTRO USUÁRIO
-    # ======================================
-
-    amigos = []
-
-    for amizade in amizades:
-
-        if amizade.usuario_id == current_user.id:
-            amigo = amizade.amigo
-        else:
-            amigo = amizade.usuario
-
-        if amigo:
-            amigos.append(amigo)
-
-    # ======================================
-    # BUSCAR MEMBROS
+    # BUSCAR MEMBROS DO CLUBE
     # ======================================
 
     membros = (
@@ -343,7 +319,125 @@ def ver_clube(clube_id):
     }
 
     # ======================================
-    # AMIGOS QUE AINDA NÃO SÃO MEMBROS
+    # VERIFICAR SE O USUÁRIO É MEMBRO
+    # ======================================
+
+    usuario_eh_membro = (
+        current_user.id in membros_ids
+    )
+
+    # ======================================
+    # GARANTIR QUE O CRIADOR SEJA MEMBRO
+    # ======================================
+
+    if usuario_eh_criador and not usuario_eh_membro:
+
+        membro_criador = MembroClube(
+            clube_id=clube.id,
+            usuario_id=current_user.id,
+            paginas_lidas=0,
+            progresso_percentual=0,
+            total_atualizacoes=0
+        )
+
+        db.session.add(
+            membro_criador
+        )
+
+        db.session.commit()
+
+        # Atualiza as informações locais
+        membros = (
+            MembroClube.query
+            .filter_by(
+                clube_id=clube.id
+            )
+            .all()
+        )
+
+        membros_ids = {
+            membro.usuario_id
+            for membro in membros
+        }
+
+        usuario_eh_membro = True
+
+    # ======================================
+    # ATUALIZAR QUANTIDADE DE MEMBROS
+    # ======================================
+
+    quantidade_real = len(
+        membros
+    )
+
+    if clube.quantidade_membros != quantidade_real:
+
+        clube.quantidade_membros = (
+            quantidade_real
+        )
+
+        db.session.commit()
+
+    # ======================================
+    # QUEM PODE CONVIDAR?
+    # ======================================
+
+    if clube.privado:
+
+        # PRIVADO:
+        # somente o criador
+        pode_convidar = (
+            usuario_eh_criador
+        )
+
+    else:
+
+        # PÚBLICO:
+        # qualquer membro
+        pode_convidar = (
+            usuario_eh_membro
+        )
+
+    # ======================================
+    # BUSCAR AMIZADES ACEITAS
+    # ======================================
+
+    amizades = (
+        Amizade.query
+        .filter(
+            Amizade.status == 'aceita',
+            db.or_(
+                Amizade.usuario_id == current_user.id,
+                Amizade.amigo_id == current_user.id
+            )
+        )
+        .all()
+    )
+
+    # ======================================
+    # PEGAR OS AMIGOS
+    # ======================================
+
+    amigos = []
+
+    for amizade in amizades:
+
+        if amizade.usuario_id == current_user.id:
+
+            amigo = amizade.amigo
+
+        else:
+
+            amigo = amizade.usuario
+
+        if amigo:
+            amigos.append(
+                amigo
+            )
+
+    # ======================================
+    # AMIGOS QUE JÁ SÃO MEMBROS
+    # NÃO DEVEM APARECER PARA CONVIDAR
     # ======================================
 
     amigos_disponiveis = [
@@ -352,11 +446,24 @@ def ver_clube(clube_id):
         if amigo.id not in membros_ids
     ]
 
+    # ======================================
+    # RENDERIZAR
+    # ======================================
+
     return render_template(
         'clubes/clube.html',
+
         clube=clube,
+
+        membros=membros,
+
         amigos=amigos_disponiveis,
-        membros=membros
+
+        usuario_eh_criador=usuario_eh_criador,
+
+        usuario_eh_membro=usuario_eh_membro,
+
+        pode_convidar=pode_convidar
     )
 
 
@@ -653,20 +760,52 @@ def enviar_convite(clube_id, usuario_id):
     )
 
     # ======================================
-    # SOMENTE CRIADOR PODE CONVIDAR
+    # VERIFICAR SE QUEM CONVIDA É MEMBRO
     # ======================================
 
-    if clube.usuario_id != current_user.id:
-
-        return redirect(
-            url_for(
-                'clubes.ver_clube',
-                clube_id=clube_id
-            )
+    membro_atual = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id,
+            usuario_id=current_user.id
         )
+        .first()
+    )
 
     # ======================================
-    # NÃO CONVIDAR A SI MESMO
+    # VERIFICAR PERMISSÃO PARA CONVIDAR
+    # ======================================
+
+    if clube.privado:
+
+        # Clube privado:
+        # somente o criador pode convidar
+
+        if clube.usuario_id != current_user.id:
+
+            return redirect(
+                url_for(
+                    'clubes.ver_clube',
+                    clube_id=clube_id
+                )
+            )
+
+    else:
+
+        # Clube público:
+        # qualquer membro pode convidar
+
+        if not membro_atual:
+
+            return redirect(
+                url_for(
+                    'clubes.ver_clube',
+                    clube_id=clube_id
+                )
+            )
+
+    # ======================================
+    # NÃO PODE CONVIDAR A SI MESMO
     # ======================================
 
     if amigo.id == current_user.id:
@@ -701,7 +840,7 @@ def enviar_convite(clube_id, usuario_id):
         )
 
     # ======================================
-    # VERIFICAR CONVITE PENDENTE
+    # VERIFICAR SE JÁ EXISTE CONVITE
     # ======================================
 
     convite_existente = (
@@ -722,6 +861,31 @@ def enviar_convite(clube_id, usuario_id):
                 clube_id=clube_id
             )
         )
+
+    # ======================================
+    # CRIAR CONVITE
+    # ======================================
+
+    novo_convite = ConviteClube(
+        clube_id=clube.id,
+        remetente_id=current_user.id,
+        destinatario_id=amigo.id,
+        status='pendente'
+    )
+
+    db.session.add(
+        novo_convite
+    )
+
+    db.session.commit()
+
+    return redirect(
+        url_for(
+            'clubes.ver_clube',
+            clube_id=clube_id
+        )
+    )
+
 
     # ======================================
     # CRIAR CONVITE

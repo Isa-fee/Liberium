@@ -298,3 +298,141 @@
 .botao-encontrar:hover {
     background-color: #52684f;
 }
+
+/* ==========================================
+   PRIVACIDADE DOS CLUBES
+========================================== */
+
+.clube-imagem {
+    position: relative;
+}
+
+
+/* BADGE SOBRE A IMAGEM */
+
+.badge-privacidade {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.03em;
+
+    backdrop-filter: blur(8px);
+}
+
+
+/* PÚBLICO */
+
+.badge-privacidade.publico {
+    background: rgba(239, 244, 237, 0.94);
+    color: #36503c;
+}
+
+
+/* PRIVADO */
+
+.badge-privacidade.privado {
+    background: rgba(68, 43, 26, 0.9);
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   INFORMAÇÃO DE PRIVACIDADE
+========================================== */
+
+.informacao-privacidade {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin: 10px 0 12px;
+    padding: 10px 12px;
+
+    border-radius: 8px;
+}
+
+.informacao-privacidade strong {
+    font-size: 0.82rem;
+}
+
+.informacao-privacidade span {
+    font-size: 0.76rem;
+    line-height: 1.4;
+}
+
+
+/* PÚBLICO */
+
+.informacao-privacidade.publico {
+    background: #f1f5ef;
+}
+
+.informacao-privacidade.publico strong {
+    color: #36503c;
+}
+
+.informacao-privacidade.publico span {
+    color: #667563;
+}
+
+
+/* PRIVADO */
+
+.informacao-privacidade.privado {
+    background: #f5f0eb;
+}
+
+.informacao-privacidade.privado strong {
+    color: #5b3923;
+}
+
+.informacao-privacidade.privado span {
+    color: #806b5c;
+}
+
+
+/* ==========================================
+   FORM DE ENTRADA
+========================================== */
+
+.form-entrar-clube {
+    width: 100%;
+    margin: 0;
+}
+
+.form-entrar-clube .botao-entrar {
+    width: 100%;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-family: inherit;
+}
+
+
+/* ==========================================
+   BOTÃO DO CLUBE PRIVADO
+========================================== */
+
+.botao-clube-privado {
+    background: transparent;
+
+    border: 1px solid #879d84;
+
+    color: #36503c;
+}
+
+.botao-clube-privado:hover {
+    background: #f1f5ef;
+}
