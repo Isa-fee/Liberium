@@ -871,3 +871,59 @@ class SolicitacaoLivro(db.Model):
         "Usuario",
         backref="solicitacoes_livros"
     )
+class Notificacao(db.Model):
+    __tablename__ = "notificacoes"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # amizade | clube | meta | conquista | comentario | elogio
+    tipo = db.Column(
+        db.String(30),
+        nullable=False
+    )
+
+    titulo = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    mensagem = db.Column(
+        db.String(300),
+        nullable=False
+    )
+
+    # Página para onde o usuário será levado ao clicar
+    link = db.Column(
+        db.String(300),
+        nullable=True
+    )
+
+    lida = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref=db.backref(
+            "notificacoes",
+            lazy=True,
+            cascade="all, delete-orphan"
+        )
+    )
