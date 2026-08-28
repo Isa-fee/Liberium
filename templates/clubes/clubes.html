@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/clube/style.css') }}">
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/clube/style.css') }}"
+>
 {% endblock %}
 
 {% block content %}
@@ -19,14 +22,22 @@
     <div class="clubes-titulo">
 
         <div>
-            <h1>Clubes de leitura</h1>
+
+            <h1>
+                Clubes de leitura
+            </h1>
 
             <p>
-                Encontre pessoas que estão vivendo as mesmas histórias que você.
+                Encontre pessoas que estão vivendo
+                as mesmas histórias que você.
             </p>
+
         </div>
 
-        <a href="{{ url_for('clubes.criar_clube') }}" class="botao-criar-clube">
+        <a
+            href="{{ url_for('clubes.criar_clube') }}"
+            class="botao-criar-clube"
+        >
             + Criar clube
         </a>
 
@@ -69,9 +80,15 @@
     <div class="titulo-secao-clubes">
 
         <div>
-            <span>PARA VOCÊ</span>
 
-            <h2>Clubes em destaque</h2>
+            <span>
+                PARA VOCÊ
+            </span>
+
+            <h2>
+                Clubes em destaque
+            </h2>
+
         </div>
 
         <a href="#">
@@ -89,109 +106,223 @@
 
         {% for clube in clubes %}
 
-        <article class="clube-card">
+            <article class="clube-card">
 
-            <!-- IMAGEM DO CLUBE -->
+                <!-- ==================================
+                     IMAGEM
+                =================================== -->
 
-            <div class="clube-imagem">
+                <div class="clube-imagem">
 
-                {% if clube.imagem %}
+                    {% if clube.imagem %}
 
-                    <img
-                        src="{{ url_for('static', filename=clube.imagem) }}"
-                        alt="{{ clube.nome }}"
-                    >
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=clube.imagem
+                            ) }}"
+                            alt="{{ clube.nome }}"
+                        >
 
-                {% else %}
+                    {% else %}
 
-                    <div class="clube-sem-imagem">
-                        <span>Sem imagem</span>
-                    </div>
+                        <div class="clube-sem-imagem">
 
-                {% endif %}
+                            <span>
+                                Sem imagem
+                            </span>
 
+                        </div>
 
-                <button
-                    class="favoritar-clube"
-                    aria-label="Favoritar clube">
-                </button>
-
-            </div>
-
-
-            <!-- INFORMAÇÕES DO CLUBE -->
-
-            <div class="clube-detalhes">
-
-                <span class="clube-genero">
-                    {{ clube.genero }}
-                </span>
+                    {% endif %}
 
 
-                <h3>
-                    {{ clube.nome }}
-                </h3>
+                    <!-- PRIVACIDADE SOBRE A IMAGEM -->
 
+                    {% if clube.privado %}
 
-                <p class="quantidade-membros">
-                    {{ clube.quantidade_membros }} membros
-                </p>
-
-
-                <div class="leitura-atual">
-
-                    <div>
-
-                        <span>
-                            Criado por
+                        <span class="badge-privacidade privado">
+                            🔒 Privado
                         </span>
 
-                        <strong>
-                            {{ clube.usuario.nome }}
-                        </strong>
+                    {% else %}
 
-                    </div>
+                        <span class="badge-privacidade publico">
+                            Público
+                        </span>
+
+                    {% endif %}
+
+
+                    <button
+                        type="button"
+                        class="favoritar-clube"
+                        aria-label="Favoritar clube"
+                    >
+                    </button>
 
                 </div>
 
 
+                <!-- ==================================
+                     INFORMAÇÕES
+                =================================== -->
 
-                </a> 
-                <a
-                    href="{{ url_for('clubes.ver_clube', clube_id=clube.id) }}"
-                    class="botao-entrar"
-                >
-                    Entrar no clube
-                </a>
+                <div class="clube-detalhes">
 
-            </div>
+                    <span class="clube-genero">
+                        {{ clube.genero }}
+                    </span>
 
-        </article>
+
+                    <h3>
+                        {{ clube.nome }}
+                    </h3>
+
+
+                    <!-- PRIVACIDADE -->
+
+                    {% if clube.privado %}
+
+                        <div class="informacao-privacidade privado">
+
+                            <strong>
+                                Clube privado
+                            </strong>
+
+                            <span>
+                                Participação somente por convite.
+                            </span>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="informacao-privacidade publico">
+
+                            <strong>
+                                Clube público
+                            </strong>
+
+                            <span>
+                                Qualquer pessoa pode participar.
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- MEMBROS -->
+
+                    <p class="quantidade-membros">
+
+                        {{ clube.quantidade_membros }}
+
+                        {% if clube.quantidade_membros == 1 %}
+                            membro
+                        {% else %}
+                            membros
+                        {% endif %}
+
+                    </p>
+
+
+                    <!-- CRIADOR -->
+
+                    <div class="leitura-atual">
+
+                        <div>
+
+                            <span>
+                                Criado por
+                            </span>
+
+                            <strong>
+                                {{ clube.usuario.nome }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================
+                         BOTÃO
+                    =================================== -->
+
+                    {% if clube.privado %}
+
+                        <!-- PRIVADO:
+                             NÃO PERMITE ENTRADA DIRETA -->
+
+                        <a
+                            href="{{ url_for(
+                                'clubes.ver_clube',
+                                clube_id=clube.id
+                            ) }}"
+                            class="botao-entrar botao-clube-privado"
+                        >
+                            Ver clube
+                        </a>
+
+                    {% else %}
+
+                        <!-- PÚBLICO:
+                             PODE ENTRAR -->
+
+                        <form
+                            action="{{ url_for(
+                                'clubes.entrar_clube',
+                                clube_id=clube.id
+                            ) }}"
+                            method="POST"
+                            class="form-entrar-clube"
+                        >
+
+                            <button
+                                type="submit"
+                                class="botao-entrar"
+                            >
+                                Entrar no clube
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
 
         {% else %}
 
-        <!-- ==========================================
-             NENHUM CLUBE
-        =========================================== -->
+            <!-- ======================================
+                 NENHUM CLUBE
+            ======================================= -->
 
-        <div class="nenhum-clube">
+            <div class="nenhum-clube">
 
-            <h3>
-                Ainda não existem clubes.
-            </h3>
+                <h3>
+                    Ainda não existem clubes.
+                </h3>
 
-            <p>
-                Seja o primeiro a criar um clube de leitura!
-            </p>
+                <p>
+                    Seja o primeiro a criar
+                    um clube de leitura!
+                </p>
 
-            <a
-                href="{{ url_for('clubes.criar_clube') }}"
-                class="botao-criar-clube"
-            >
-                + Criar clube
-            </a>
+                <a
+                    href="{{ url_for(
+                        'clubes.criar_clube'
+                    ) }}"
+                    class="botao-criar-clube"
+                >
+                    + Criar clube
+                </a>
 
-        </div>
+            </div>
 
         {% endfor %}
 
@@ -199,7 +330,7 @@
 
 
     <!-- ==========================================
-         ENCONTRAR CLUBE ATRAVÉS DE UM LIVRO
+         ENCONTRAR CLUBE PELO LIVRO
     =========================================== -->
 
     <section class="encontrar-clube">
@@ -222,7 +353,10 @@
 
         </div>
 
-        <a href="#" class="botao-encontrar">
+        <a
+            href="#"
+            class="botao-encontrar"
+        >
             Pesquisar livros
         </a>
 
