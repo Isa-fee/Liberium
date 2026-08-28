@@ -555,6 +555,7 @@ class Clube(db.Model):
         nullable=False
     )
 
+
     imagem = db.Column(
         db.String(255),
         nullable=True

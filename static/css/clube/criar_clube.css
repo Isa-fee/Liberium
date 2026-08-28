@@ -393,3 +393,211 @@
     }
 
 }
+
+/* ========================================
+   PRIVACIDADE DO CLUBE
+======================================== */
+
+.campo-privacidade {
+    margin-top: 8px;
+}
+
+.descricao-privacidade {
+    margin: 6px 0 15px;
+
+    font-size: 0.9rem;
+    color: #7b6a5c;
+}
+
+
+/* ========================================
+   OPÇÕES
+======================================== */
+
+.opcoes-privacidade {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.opcao-privacidade {
+    display: block;
+    cursor: pointer;
+}
+
+.opcao-privacidade input {
+    position: absolute;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card-privacidade {
+    min-height: 95px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    border: 1.5px solid #ddd5cc;
+    border-radius: 12px;
+
+    background: #fff;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* HOVER */
+
+.opcao-privacidade:hover .card-privacidade {
+    border-color: #879d84;
+
+    background: #fafbf9;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   ÍCONE
+======================================== */
+
+.icone-privacidade {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef1eb;
+
+    color: #36503c;
+
+    font-size: 1.4rem;
+}
+
+
+/* ========================================
+   TEXTO
+======================================== */
+
+.texto-privacidade {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.texto-privacidade strong {
+    color: #442b1a;
+
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.texto-privacidade span {
+    color: #786b60;
+
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+
+/* ========================================
+   RADIO PERSONALIZADO
+======================================== */
+
+.radio-personalizado {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    border: 2px solid #c9c0b7;
+    border-radius: 50%;
+
+    position: relative;
+
+    transition: 0.2s ease;
+}
+
+
+/* ========================================
+   SELECIONADO
+======================================== */
+
+.opcao-privacidade
+input:checked
++
+.card-privacidade {
+    border-color: #879d84;
+
+    background: #f4f6f2;
+
+    box-shadow:
+        0 0 0 1px rgba(135, 157, 132, 0.12);
+}
+
+.opcao-privacidade
+input:checked
++
+.card-privacidade
+.radio-personalizado {
+    border-color: #36503c;
+}
+
+.opcao-privacidade
+input:checked
++
+.card-privacidade
+.radio-personalizado::after {
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #36503c;
+}
+
+
+/* ========================================
+   RESPONSIVO
+======================================== */
+
+@media (max-width: 650px) {
+
+    .opcoes-privacidade {
+        grid-template-columns: 1fr;
+    }
+
+}
