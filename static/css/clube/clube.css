@@ -1,220 +1,507 @@
-/* =====================================================
-   VARIÁVEIS
-===================================================== */
-
-:root {
-    --bg-principal: #f4f4f0;
-    --bg-card: #ffffff;
-    --texto-primario: #2d312e;
-    --texto-secundario: #6e736f;
-    --verde: #4d5b4e;
-    --verde-hover: #3c483d;
-    --verde-claro: #e2e7df;
-    --borda: #e5e5e0;
-    --raio: 16px;
-}
+/* =========================================================
+   LIBERIUM — PÁGINA DO CLUBE
+========================================================= */
 
 
-/* =====================================================
-   CONTEÚDO PRINCIPAL
-===================================================== */
+/* =========================================================
+   CONTEÚDO GERAL
+========================================================= */
 
 .clube-conteudo {
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1050px;
     margin: 0 auto;
-    padding: 30px 25px 50px;
-    color: var(--texto-primario);
+    padding: 45px 30px 80px;
+    box-sizing: border-box;
+
+    color: #442b1a;
 }
 
 
-/* =====================================================
-   TOPO
-===================================================== */
+/* =========================================================
+   NAVEGAÇÃO SUPERIOR
+========================================================= */
 
 .clube-topo {
     margin-bottom: 18px;
 }
 
 .btn-voltar {
-    color: var(--texto-secundario);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #6f806c;
+    font-size: 0.86rem;
+    font-weight: 500;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
+
+    transition: 0.2s ease;
 }
 
 .btn-voltar:hover {
-    color: var(--verde);
+    color: #36503c;
+    transform: translateX(-2px);
 }
 
 
-/* =====================================================
-   HEADER DO CLUBE
-===================================================== */
+/* =========================================================
+   CABEÇALHO DO CLUBE
+========================================================= */
 
 .clube-header {
-    background: var(--bg-card);
-    border: 1px solid var(--borda);
-    border-radius: var(--raio);
-    padding: 25px;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    margin-bottom: 25px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.75fr);
+    gap: 35px;
+
+    padding: 30px 32px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 22px rgba(68, 43, 26, 0.05);
 }
+
+
+/* =========================================================
+   CABEÇALHO — PARTE PRINCIPAL
+========================================================= */
 
 .clube-header-principal {
     display: flex;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 22px;
+
     min-width: 0;
 }
 
 
-/* =====================================================
-   AVATAR
-===================================================== */
+/* =========================================================
+   AVATAR DO CLUBE
+========================================================= */
 
 .clube-avatar {
+    width: 105px;
+    height: 105px;
+
     flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #eef2eb;
+
+    border: 1px solid #e2e6df;
+    border-radius: 16px;
 }
 
-.clube-avatar img,
-.clube-avatar-sem-imagem {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
+.clube-avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
     object-fit: cover;
 }
 
 .clube-avatar-sem-imagem {
-    background: var(--verde-claro);
-    color: var(--verde);
+    width: 100%;
+    height: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
-    font-weight: 700;
+
+    color: #60725d;
+
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 
-/* =====================================================
-   INFORMAÇÕES
-===================================================== */
+/* =========================================================
+   INFORMAÇÕES DO CLUBE
+========================================================= */
 
 .clube-informacoes {
-    max-width: 650px;
+    flex: 1;
+    min-width: 0;
 }
 
 .clube-titulo {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 5px;
 }
 
 .clube-titulo h1 {
-    margin: 0;
-    font-size: 28px;
+    margin: 0 6px 0 0;
+
+    color: #442b1a;
+
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.clube-status,
+.clube-privacidade {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 25px;
+
+    padding: 4px 10px;
+
+    box-sizing: border-box;
+
+    border-radius: 20px;
+
+    font-size: 0.69rem;
+    font-weight: 600;
 }
 
 .clube-status {
-    background: var(--verde-claro);
-    color: var(--verde);
-    padding: 5px 11px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
+    background: #edf2e9;
+    color: #53684f;
 }
 
+.clube-privacidade.privado {
+    background: #f5f0e9;
+    color: #654c39;
+}
+
+.clube-privacidade.publico {
+    background: #edf3eb;
+    color: #486046;
+}
+
+
+/* =========================================================
+   META E DESCRIÇÃO
+========================================================= */
+
 .clube-meta {
-    color: var(--texto-secundario);
-    font-size: 14px;
     margin: 7px 0 12px;
+
+    color: #938277;
+
+    font-size: 0.79rem;
 }
 
 .clube-descricao {
-    color: var(--texto-secundario);
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0 0 15px;
+    max-width: 500px;
+
+    margin: 0 0 17px;
+
+    color: #6e5e52;
+
+    font-size: 0.86rem;
+    line-height: 1.55;
+
+    word-break: break-word;
 }
 
 
-/* =====================================================
+/* =========================================================
    LEITURA ATUAL
-===================================================== */
+========================================================= */
 
 .leitura-atual {
-    display: inline-flex;
+    width: fit-content;
+    min-width: 190px;
+    max-width: 100%;
+
+    display: flex;
     flex-direction: column;
-    background: #f7f7f4;
-    border: 1px solid var(--borda);
+
+    padding: 11px 14px;
+
+    box-sizing: border-box;
+
+    background: #faf9f7;
+
+    border: 1px solid #e7e1db;
     border-radius: 10px;
-    padding: 10px 14px;
-    min-width: 180px;
 }
 
 .leitura-label {
-    color: var(--texto-secundario);
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: 700;
     margin-bottom: 3px;
+
+    color: #71816e;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
 }
 
 .leitura-atual strong {
-    font-size: 14px;
+    color: #442b1a;
+
+    font-size: 0.84rem;
+    line-height: 1.3;
 }
 
 .leitura-atual small {
-    color: var(--texto-secundario);
     margin-top: 2px;
+
+    color: #8d7c70;
+
+    font-size: 0.7rem;
 }
 
 
-/* =====================================================
-   AÇÕES
-===================================================== */
+/* =========================================================
+   ÁREA DE AÇÕES
+========================================================= */
 
 .clube-acoes {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 160px;
-    justify-content: center;
+    align-items: stretch;
+
+    min-width: 0;
 }
+
+
+/* =========================================================
+   PAINEL DO CRIADOR
+========================================================= */
+
+.painel-criador {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 21px;
+
+    box-sizing: border-box;
+
+    background: #f6f8f3;
+
+    border: 1px solid #dfe6dc;
+    border-radius: 14px;
+}
+
+.painel-criador-texto {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 17px;
+}
+
+.painel-criador-label {
+    margin-bottom: 6px;
+
+    color: #71816e;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+.painel-criador-texto strong {
+    margin-bottom: 5px;
+
+    color: #442b1a;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.painel-criador-texto small {
+    color: #817267;
+
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOTÕES DO PAINEL DO CRIADOR
+========================================================= */
+
+.painel-criador-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+.painel-criador-acoes .btn-secundario,
+.btn-gerenciar-clube {
+    width: 100%;
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 12px;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* CONVIDAR */
+
+.painel-criador-acoes .btn-secundario {
+    background: #36503c;
+
+    border: 1px solid #36503c;
+
+    color: #ffffff;
+}
+
+.painel-criador-acoes .btn-secundario:hover {
+    background: #2d4433;
+
+    border-color: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* GERENCIAR */
+
+.btn-gerenciar-clube {
+    background: #ffffff;
+
+    border: 1px solid #cdd8ca;
+
+    color: #486046;
+}
+
+.btn-gerenciar-clube:hover {
+    background: #edf2eb;
+
+    border-color: #879d84;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   AVISO CLUBE PRIVADO
+========================================================= */
+
+.aviso-clube-privado {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background: #f8f5f1;
+
+    border: 1px solid #e6ddd4;
+    border-radius: 12px;
+}
+
+.aviso-clube-privado strong {
+    color: #5e4635;
+
+    font-size: 0.9rem;
+}
+
+.aviso-clube-privado span {
+    color: #88776a;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOTÕES GERAIS
+========================================================= */
 
 .btn-primario,
 .btn-secundario {
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 16px;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.8rem;
     font-weight: 600;
-    cursor: pointer;
+
     text-decoration: none;
-    text-align: center;
-    transition: 0.2s;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
 .btn-primario {
-    border: 1px solid var(--verde);
-    background: var(--verde);
-    color: white;
+    background: #36503c;
+
+    border: 1px solid #36503c;
+
+    color: #ffffff;
 }
 
 .btn-primario:hover {
-    background: var(--verde-hover);
-    border-color: var(--verde-hover);
+    background: #2d4433;
 }
 
 .btn-secundario {
-    border: 1px solid var(--borda);
-    background: white;
-    color: var(--texto-primario);
+    background: #ffffff;
+
+    border: 1px solid #879d84;
+
+    color: #486046;
 }
 
 .btn-secundario:hover {
-    border-color: var(--verde);
-    color: var(--verde);
+    background: #edf2eb;
 }
 
 .btn-largura {
@@ -222,42 +509,297 @@
 }
 
 
-/* =====================================================
+/* =========================================================
+   CONVITES
+========================================================= */
+
+.lista-convites {
+    position: relative;
+
+    width: 100%;
+
+    margin: 18px 0 30px;
+    padding: 25px 28px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e6e0da;
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(68, 43, 26, 0.05);
+}
+
+
+/* =========================================================
+   CABEÇALHO DOS CONVITES
+========================================================= */
+
+.convites-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #eee9e4;
+}
+
+.convites-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #71816e;
+
+    font-size: 0.64rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+.convites-cabecalho h3 {
+    margin: 0 0 5px;
+
+    color: #442b1a;
+
+    font-size: 1.12rem;
+    font-weight: 600;
+}
+
+.convites-cabecalho p {
+    max-width: 600px;
+
+    margin: 0;
+
+    color: #817269;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FECHAR CONVITES
+========================================================= */
+
+.btn-fechar-convites {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #f5f2ee;
+
+    border: none;
+    border-radius: 50%;
+
+    color: #6e5d50;
+
+    font-size: 1.1rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.btn-fechar-convites:hover {
+    background: #eae4de;
+}
+
+
+/* =========================================================
+   LISTA DE AMIGOS PARA CONVIDAR
+========================================================= */
+
+.amigos-lista {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding-top: 17px;
+}
+
+.amigo-convite {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    background: #faf9f7;
+
+    border: 1px solid #ebe6e0;
+    border-radius: 10px;
+}
+
+.amigo-convite .membro-avatar {
+    width: 41px;
+    height: 41px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #e7eee4;
+
+    border-radius: 50%;
+
+    color: #53674f;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.amigo-convite .membro-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.amigo-convite .membro-info {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.amigo-convite .membro-info strong {
+    overflow: hidden;
+
+    color: #442b1a;
+
+    font-size: 0.82rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.amigo-convite .membro-info span {
+    color: #998a7f;
+
+    font-size: 0.69rem;
+}
+
+.amigo-convite form {
+    flex-shrink: 0;
+
+    margin: 0;
+}
+
+.amigo-convite .btn-secundario {
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    font-size: 0.71rem;
+}
+
+
+/* =========================================================
+   SEM AMIGOS
+========================================================= */
+
+.sem-amigos-convite {
+    padding: 25px 10px 5px;
+
+    text-align: center;
+}
+
+.sem-amigos-convite p {
+    margin: 0;
+
+    color: #8e7f74;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
    ABAS
-===================================================== */
+========================================================= */
 
 .clube-abas {
     display: flex;
-    gap: 28px;
-    border-bottom: 1px solid var(--borda);
-    margin-bottom: 22px;
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 26px;
+
+    border-bottom: 1px solid #dcd6d0;
 }
 
 .aba-btn {
-    background: none;
-    border: none;
-    padding: 12px 3px;
-    color: var(--texto-secundario);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
     position: relative;
+
+    padding: 12px 18px;
+
+    background: transparent;
+
+    border: none;
+
+    color: #82756b;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.aba-btn:hover {
+    color: #36503c;
 }
 
 .aba-btn.ativo {
-    color: var(--verde);
+    color: #36503c;
 }
 
 .aba-btn.ativo::after {
     content: "";
+
     position: absolute;
-    bottom: -1px;
+
     left: 0;
     right: 0;
-    height: 3px;
-    background: var(--verde);
-    border-radius: 3px 3px 0 0;
+    bottom: -1px;
+
+    height: 2px;
+
+    background: #36503c;
+
+    border-radius: 2px 2px 0 0;
 }
+
+
+/* =========================================================
+   CONTEÚDO DAS ABAS
+========================================================= */
 
 .aba-conteudo {
     display: none;
@@ -268,1060 +810,549 @@
 }
 
 
-/* =====================================================
-   GRID
-===================================================== */
+/* =========================================================
+   GRID PRINCIPAL
+========================================================= */
 
 .clube-grid {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    grid-template-columns: minmax(0, 1fr) 320px;
+
     gap: 22px;
-    align-items: start;
+
+    margin-top: 22px;
+}
+
+.clube-principal {
+    min-width: 0;
+}
+
+.clube-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
 }
 
 
-/* =====================================================
-   CARDS
-===================================================== */
+/* =========================================================
+   CARD PADRÃO
+========================================================= */
 
 .card-clube {
-    background: var(--bg-card);
-    border: 1px solid var(--borda);
-    border-radius: var(--raio);
-    padding: 22px;
-    margin-bottom: 20px;
+    padding: 26px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e9e4de;
+    border-radius: 14px;
+
+    box-shadow: 0 3px 15px rgba(68, 43, 26, 0.035);
 }
 
-.card-clube h2 {
-    margin: 0 0 18px;
-    font-size: 20px;
-}
-
+.card-clube h2,
 .card-clube h3 {
+    color: #442b1a;
+}
+
+.card-clube > h2 {
+    margin: 0 0 22px;
+
+    font-size: 1.25rem;
+}
+
+.card-clube > h3 {
     margin: 0 0 5px;
-    font-size: 17px;
+
+    font-size: 1rem;
 }
 
 .card-subtitulo {
-    color: var(--texto-secundario);
-    font-size: 13px;
-    margin: 0 0 18px;
+    margin: 0 0 20px;
+
+    color: #8c7d72;
+
+    font-size: 0.77rem;
+    line-height: 1.5;
 }
 
 
-/* =====================================================
+/* =========================================================
    LIVRO
-===================================================== */
+========================================================= */
 
 .livro-container {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 25px;
+    display: flex;
+    align-items: flex-start;
+
+    gap: 24px;
 }
 
-.livro-capa img,
-.livro-sem-capa {
-    width: 150px;
-    height: 220px;
+.livro-capa {
+    width: 135px;
+    min-width: 135px;
+
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    background: #f1eee9;
+
+    border: 1px solid #e5ded8;
+    border-radius: 8px;
+}
+
+.livro-capa img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
     object-fit: cover;
-    border-radius: 9px;
 }
 
 .livro-sem-capa {
-    background: var(--verde-claro);
+    width: 100%;
+    height: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--texto-secundario);
-    font-size: 13px;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    color: #9a8c82;
+
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.livro-informacoes {
+    flex: 1;
+    min-width: 0;
 }
 
 .livro-informacoes h3 {
-    font-size: 22px;
-    margin: 0 0 5px;
+    margin: 0 0 4px;
+
+    color: #442b1a;
+
+    font-size: 1.2rem;
 }
 
 .livro-autor {
-    color: var(--texto-secundario);
     margin: 0 0 10px;
+
+    color: #8a796d;
+
+    font-size: 0.8rem;
 }
 
 .livro-genero {
-    display: inline-block;
-    background: var(--verde-claro);
-    color: var(--verde);
-    border-radius: 6px;
+    display: inline-flex;
+
+    margin-bottom: 13px;
     padding: 5px 9px;
-    font-size: 12px;
+
+    background: #edf2eb;
+
+    border-radius: 20px;
+
+    color: #52684f;
+
+    font-size: 0.68rem;
     font-weight: 600;
-    margin-bottom: 12px;
 }
 
 .livro-sinopse {
-    color: var(--texto-secundario);
-    font-size: 14px;
+    margin: 0 0 15px;
+
+    color: #6e5f54;
+
+    font-size: 0.82rem;
     line-height: 1.6;
 }
 
 .livro-especificacoes {
-    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px 18px;
+
+    margin: 0;
     padding: 0;
-    margin: 15px 0 0;
+
+    list-style: none;
 }
 
 .livro-especificacoes li {
-    padding: 5px 0;
-    font-size: 13px;
-    color: var(--texto-secundario);
+    color: #83746a;
+
+    font-size: 0.74rem;
 }
 
 .livro-especificacoes strong {
-    color: var(--texto-primario);
+    color: #5d4a3c;
 }
 
 
-/* =====================================================
+/* =========================================================
    AÇÕES DO LIVRO
-===================================================== */
+========================================================= */
 
 .livro-acoes {
     display: flex;
+    align-items: center;
+
     gap: 10px;
-    border-top: 1px solid var(--borda);
+
     margin-top: 22px;
     padding-top: 18px;
+
+    border-top: 1px solid #eee9e4;
+}
+
+.livro-acoes form {
+    margin: 0;
 }
 
 
-/* =====================================================
+/* =========================================================
    SEM LIVRO
-===================================================== */
+========================================================= */
 
-.sem-livro,
-.sem-comentarios,
-.sem-participantes,
-.sem-progresso {
-    padding: 25px;
+.sem-livro {
+    padding: 35px 20px;
+
+    background: #faf9f7;
+
+    border-radius: 10px;
+
     text-align: center;
-    color: var(--texto-secundario);
-    background: #f8f8f5;
-    border-radius: 10px;
 }
 
-.sem-livro h3,
-.sem-comentarios h3 {
-    color: var(--texto-primario);
-    margin-bottom: 5px;
+.sem-livro h3 {
+    margin: 0 0 5px;
+
+    font-size: 1rem;
 }
 
-
-/* =====================================================
-   CABEÇALHO DOS CARDS
-===================================================== */
-
-.card-cabecalho {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.card-cabecalho h2 {
-    margin-bottom: 5px;
-}
-
-.card-cabecalho p {
-    margin: 0;
-    color: var(--texto-secundario);
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   PARTICIPANTES
-===================================================== */
-
-.lista-participantes {
-    display: flex;
-    flex-direction: column;
-}
-
-.participante {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--borda);
-}
-
-.participante:last-child {
-    border-bottom: none;
-}
-
-.participante-avatar,
-.membro-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--verde-claro);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.participante-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.participante-info strong {
-    font-size: 14px;
-}
-
-.participante-info span {
-    color: var(--texto-secundario);
-    font-size: 12px;
-    margin-top: 2px;
-}
-
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-.clube-sidebar {
-    min-width: 0;
-}
-
-
-/* =====================================================
-   PROGRESSO
-===================================================== */
-
-.progresso-card {
-    padding: 20px;
-}
-
-.barra-progresso {
-    width: 100%;
-    height: 8px;
-    background: var(--borda);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.barra-progresso-preenchida {
-    width: 0%;
-    height: 100%;
-    background: var(--verde);
-    border-radius: 10px;
-}
-
-
-/* =====================================================
-   SIDEBAR PARTICIPANTES
-===================================================== */
-
-.sidebar-cabecalho {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.sidebar-cabecalho h3 {
-    margin: 0;
-}
-
-.sidebar-cabecalho span {
-    color: var(--texto-secundario);
-    font-size: 12px;
-}
-
-.sidebar-membros {
-    margin-bottom: 15px;
-}
-
-.sidebar-membro {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 0;
-}
-
-.membro-avatar {
-    width: 36px;
-    height: 36px;
-    font-size: 13px;
-}
-
-.membro-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.membro-info strong {
-    font-size: 13px;
-}
-
-.membro-info span {
-    color: var(--texto-secundario);
-    font-size: 11px;
-}
-
-
-/* =====================================================
-   DICA
-===================================================== */
-
-.dica-clube {
-    background: var(--verde-claro);
-    border-radius: var(--raio);
-    padding: 18px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 3px;
-}
-
-.dica-clube strong {
-    font-size: 15px;
-}
-
-.dica-clube p {
-    margin: 5px 0 0;
-    color: var(--texto-secundario);
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   RESPONSIVIDADE
-===================================================== */
-
-@media (max-width: 850px) {
-
-    .clube-header {
-        flex-direction: column;
-    }
-
-    .clube-acoes {
-        flex-direction: row;
-    }
-
-    .clube-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .clube-sidebar {
-        order: 2;
-    }
-}
-
-
-@media (max-width: 600px) {
-
-    .clube-conteudo {
-        padding: 20px 15px 40px;
-    }
-
-    .clube-header-principal {
-        flex-direction: column;
-    }
-
-    .clube-avatar img,
-    .clube-avatar-sem-imagem {
-        width: 80px;
-        height: 80px;
-    }
-
-    .clube-titulo h1 {
-        font-size: 23px;
-    }
-
-    .clube-abas {
-        gap: 15px;
-        overflow-x: auto;
-    }
-
-    .aba-btn {
-        white-space: nowrap;
-    }
-
-    .livro-container {
-        grid-template-columns: 1fr;
-    }
-
-    .livro-capa img,
-    .livro-sem-capa {
-        width: 130px;
-        height: 190px;
-    }
-
-    .livro-acoes {
-        flex-direction: column;
-    }
-
-    .clube-acoes {
-        flex-direction: column;
-    }
-
-    .dica-clube {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-}
-
-/* -----------------------------------------------------
-   GRID DOS PARTICIPANTES
------------------------------------------------------ */
-
-.grid-participantes {
-    display: grid;
-
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(280px, 1fr)
-    );
-
-    gap: 16px;
-
-    padding: 10px 0;
-}
-
-
-/* -----------------------------------------------------
-   CARD DO PARTICIPANTE
------------------------------------------------------ */
-
-.card-participante {
-    background: var(--bg-card);
-
-    border: 1px solid var(--borda);
-    border-radius: 12px;
-
-    padding: 18px;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: space-between;
-
-    gap: 14px;
-
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.card-participante:hover {
-    transform: translateY(-2px);
-
-    border-color: #d5dad3;
-
-    box-shadow:
-        0 4px 12px rgba(45, 49, 46, 0.06);
-}
-
-
-/* -----------------------------------------------------
-   CABEÇALHO DO PARTICIPANTE
------------------------------------------------------ */
-
-.participante-header {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-}
-
-
-/* -----------------------------------------------------
-   AVATAR
------------------------------------------------------ */
-
-.participante-avatar {
-    width: 46px;
-    height: 46px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    background: var(--verde-claro);
-
-    color: var(--verde);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.participante-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-
-/* -----------------------------------------------------
-   NOME DO PARTICIPANTE
------------------------------------------------------ */
-
-.participante-nome-linha {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
-}
-
-.participante-nome-linha h4 {
+.sem-livro p {
     margin: 0;
 
-    color: var(--texto-primario);
+    color: #8c7e74;
 
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 
-/* -----------------------------------------------------
-   BADGE "VOCÊ"
------------------------------------------------------ */
-
-.badge-voces {
-    background: var(--verde-claro);
-
-    color: var(--verde);
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    padding: 3px 8px;
-
-    border-radius: 20px;
-
-    text-transform: lowercase;
-}
-
-
-/* -----------------------------------------------------
-   ESTATÍSTICAS
------------------------------------------------------ */
-
-.participante-stats {
-    display: flex;
-
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    gap: 7px;
-
-    margin-top: 5px;
-}
-
-.stat-badge {
-    background: #f7f7f4;
-
-    border: 1px solid var(--borda);
-
-    color: var(--texto-secundario);
-
-    font-size: 11px;
-
-    font-weight: 500;
-
-    padding: 5px 9px;
-
-    border-radius: 20px;
-}
-
-
-/* -----------------------------------------------------
-   TAGS DE SENTIMENTO
------------------------------------------------------ */
-
-.participante-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.tag-sentimento {
-    background: var(--verde-claro);
-    border: 1px solid #d9dfd6;
-    color: var(--verde);
-    font-size: 11px;
-    padding: 5px 9px;
-    border-radius: 20px;
-}
-
-
-/* -----------------------------------------------------
-   BOTÃO VER HISTÓRICO
------------------------------------------------------ */
-
-.btn-historico {
-    width: 100%;
-
-    background: white;
-    border: 1px solid var(--borda);
-    color: var(--texto-primario);
-    border-radius: 9px;
-    padding: 9px 14px;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
-}
-
-.btn-historico:hover {
-    background: var(--verde-claro);
-
-    border-color: var(--verde);
-
-    color: var(--verde);
-}
-
-
-/* -----------------------------------------------------
-   RESPONSIVIDADE
------------------------------------------------------ */
-
-@media (max-width: 600px) {
-
-    .grid-participantes {
-        grid-template-columns: 1fr;
-
-        gap: 12px;
-    }
-
-    .card-participante {
-        padding: 16px;
-    }
-
-}
-
-/* ========================================
-   MODAL DE PROGRESSO
-======================================== */
-
-.modal-overlay {
-    display: none;
-
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.45);
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 9999;
-}
-
-
-.modal-overlay.ativo {
-    display: flex;
-}
-
-
-.modal-card {
-    width: 100%;
-    max-width: 430px;
-
-    background: #ffffff;
-
-    border-radius: 16px;
-
-    padding: 24px;
-
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 20px;
-}
-
-
-.modal-header h3 {
-    margin: 0;
-}
-
-
-.btn-fechar {
-    border: none;
-    background: transparent;
-
-    padding: 0;
-
-    font-size: 28px;
-    line-height: 1;
-
-    cursor: pointer;
-}
-
-
-.modal-card .form-grupo {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-
-.modal-card .form-grupo label {
-    font-weight: 600;
-}
-
-
-.modal-card input[type="number"] {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid #ccc;
-    border-radius: 8px;
-
-    box-sizing: border-box;
-
-    font-family: inherit;
-}
-
-
-.modal-card small {
-    opacity: 0.75;
-}
-
-
-.modal-acoes {
-    display: flex;
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    margin-top: 22px;
-}
-
-/* ========================================
+/* =========================================================
    DISCUSSÕES
-======================================== */
+========================================================= */
 
 .discussao-container {
     padding: 28px;
 }
 
-
-/* ========================================
-   CABEÇALHO
-======================================== */
-
 .discussao-topo {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+
     gap: 25px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid #e5e7e3;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #eee9e4;
 }
 
 .discussao-label {
     display: block;
+
     margin-bottom: 6px;
 
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    color: #71816e;
 
-    color: #6e736f;
+    font-size: 0.63rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
 }
 
 .discussao-topo h2 {
     margin: 0 0 6px;
 
-    font-size: 22px;
-    color: #2d312e;
+    color: #442b1a;
+
+    font-size: 1.25rem;
 }
 
 .discussao-topo p {
+    max-width: 520px;
+
     margin: 0;
 
-    font-size: 14px;
-    line-height: 1.5;
+    color: #87776c;
 
-    color: #777d78;
+    font-size: 0.8rem;
+    line-height: 1.55;
 }
 
 
-/* ========================================
+/* =========================================================
    BOTÃO NOVO COMENTÁRIO
-======================================== */
+========================================================= */
 
-.btn-novo-comentario {
-    border: none;
-    border-radius: 9px;
+.btn-novo-comentario,
+.btn-vazio-comentario {
+    padding: 10px 16px;
 
-    padding: 12px 18px;
+    background: #36503c;
 
-    background: #4d5b4e;
-    color: white;
+    border: 1px solid #36503c;
+    border-radius: 8px;
 
-    font-size: 13px;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 0.76rem;
     font-weight: 600;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
-.btn-novo-comentario:hover {
-    background: #3f4d42;
+.btn-novo-comentario {
+    flex-shrink: 0;
+}
+
+.btn-novo-comentario:hover,
+.btn-vazio-comentario:hover {
+    background: #2d4433;
 }
 
 
-/* ========================================
-   FORMULÁRIO
-======================================== */
+/* =========================================================
+   FORMULÁRIO DE COMENTÁRIO
+========================================================= */
 
 .form-comentario-box {
-    margin-top: 22px;
-    padding: 24px;
+    margin-top: 20px;
+    padding: 20px;
 
-    background: #f7f7f4;
+    background: #faf9f7;
 
-    border: 1px solid #e4e6e1;
-    border-radius: 12px;
+    border: 1px solid #e9e3dd;
+    border-radius: 11px;
 }
 
 .form-comentario-titulo {
-    margin-bottom: 20px;
+    margin-bottom: 17px;
 }
 
 .form-comentario-titulo h3 {
-    margin: 0 0 5px;
+    margin: 0 0 4px;
 
-    font-size: 17px;
-    color: #2d312e;
+    font-size: 0.95rem;
 }
 
 .form-comentario-titulo p {
     margin: 0;
 
-    font-size: 13px;
-    color: #777d78;
+    color: #8b7c71;
+
+    font-size: 0.76rem;
 }
-
-
-/* CAMPOS */
 
 .form-grupo {
     display: flex;
     flex-direction: column;
+
     gap: 7px;
 
-    margin-bottom: 18px;
+    margin-bottom: 15px;
 }
 
 .form-grupo label {
-    font-size: 13px;
-    font-weight: 600;
+    color: #594435;
 
-    color: #3b403c;
+    font-size: 0.78rem;
+    font-weight: 600;
 }
 
 .form-grupo label span {
+    color: #a09287;
+
     font-weight: 400;
-    color: #929791;
 }
 
 .form-grupo input,
 .form-grupo textarea {
     width: 100%;
+
+    padding: 11px 13px;
+
     box-sizing: border-box;
 
-    padding: 12px 14px;
+    background: #ffffff;
 
-    border: 1px solid #d9ddd7;
+    border: 1px solid #ded7d1;
     border-radius: 8px;
-
-    background: white;
-
-    font-family: inherit;
-    font-size: 14px;
-
-    color: #2d312e;
 
     outline: none;
 
-    transition: 0.2s;
+    color: #442b1a;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+
+    transition: 0.2s ease;
 }
 
 .form-grupo textarea {
     resize: vertical;
-    min-height: 120px;
+
+    line-height: 1.55;
 }
 
 .form-grupo input:focus,
 .form-grupo textarea:focus {
     border-color: #879d84;
-    box-shadow: 0 0 0 3px rgba(135, 157, 132, 0.12);
+
+    box-shadow: 0 0 0 3px rgba(135, 157, 132, 0.11);
+}
+
+.form-grupo small {
+    color: #998b80;
+
+    font-size: 0.72rem;
 }
 
 
-/* ========================================
+/* =========================================================
    AÇÕES DO FORMULÁRIO
-======================================== */
+========================================================= */
 
-.form-acoes {
+.form-acoes,
+.modal-acoes {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
-    gap: 10px;
+
+    gap: 9px;
 }
 
 .btn-cancelar,
 .btn-publicar {
-    padding: 11px 17px;
+    padding: 9px 15px;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
     font-family: inherit;
-    font-size: 13px;
+    font-size: 0.75rem;
     font-weight: 600;
 
     cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
 .btn-cancelar {
-    border: 1px solid #dfe2dd;
-    background: white;
-    color: #555b56;
+    background: #ffffff;
+
+    border: 1px solid #d9d1ca;
+
+    color: #715f52;
+}
+
+.btn-cancelar:hover {
+    background: #f3f0ed;
 }
 
 .btn-publicar {
-    border: none;
-    background: #4d5b4e;
-    color: white;
+    background: #36503c;
+
+    border: 1px solid #36503c;
+
+    color: #ffffff;
 }
 
 .btn-publicar:hover {
-    background: #3f4d42;
+    background: #2d4433;
 }
 
 
-/* ========================================
+/* =========================================================
    TÍTULO DAS DISCUSSÕES
-======================================== */
+========================================================= */
 
 .discussoes-titulo {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    margin-top: 28px;
-    margin-bottom: 15px;
+    gap: 15px;
+
+    margin-top: 24px;
+    margin-bottom: 12px;
 }
 
 .discussoes-titulo h3 {
     margin: 0;
 
-    font-size: 16px;
-    color: #2d312e;
+    color: #442b1a;
+
+    font-size: 0.9rem;
 }
 
 .discussoes-titulo span {
-    padding: 5px 10px;
+    color: #918278;
 
-    border-radius: 20px;
-
-    background: #eef1ec;
-
-    font-size: 12px;
-    color: #657064;
+    font-size: 0.72rem;
 }
 
 
-/* ========================================
-   LISTA
-======================================== */
+/* =========================================================
+   LISTA DE DISCUSSÕES
+========================================================= */
 
 .lista-discussoes {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+
+    gap: 11px;
 }
-
-
-/* ========================================
-   CARD DE DISCUSSÃO
-======================================== */
 
 .discussao-card {
-    padding: 18px 20px;
+    padding: 17px;
 
-    background: white;
+    background: #faf9f7;
 
-    border: 1px solid #e5e7e3;
-    border-radius: 11px;
-
-    transition: 0.2s;
+    border: 1px solid #ebe6e0;
+    border-radius: 10px;
 }
-
-.discussao-card:hover {
-    border-color: #d5dad3;
-}
-
-
-/* ========================================
-   AUTOR
-======================================== */
 
 .discussao-header {
-    display: flex;
-    align-items: center;
+    margin-bottom: 12px;
 }
 
 .autor-info {
     display: flex;
     align-items: center;
-    gap: 11px;
+
+    gap: 10px;
 }
 
 .autor-avatar {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -1329,16 +1360,14 @@
 
     overflow: hidden;
 
+    background: #e6eee3;
+
     border-radius: 50%;
 
-    background: #e7ece5;
+    color: #52674f;
 
-    color: #4d5b4e;
-
-    font-size: 15px;
-    font-weight: 700;
-
-    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .autor-avatar img {
@@ -1351,131 +1380,671 @@
 .autor-dados {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+
+    gap: 2px;
 }
 
 .autor-dados strong {
-    font-size: 13px;
-    color: #2d312e;
+    color: #442b1a;
+
+    font-size: 0.8rem;
 }
 
 .discussao-data {
-    font-size: 11px;
-    color: #929791;
-}
+    color: #9a8c82;
 
-
-/* ========================================
-   CONTEÚDO
-======================================== */
-
-.discussao-corpo {
-    margin-top: 14px;
-    padding-left: 51px;
+    font-size: 0.67rem;
 }
 
 .discussao-corpo h4 {
-    margin: 0 0 7px;
+    margin: 0 0 6px;
 
-    font-size: 15px;
-    color: #2d312e;
+    color: #4d392b;
+
+    font-size: 0.88rem;
 }
 
 .discussao-corpo p {
     margin: 0;
 
-    font-size: 14px;
+    color: #716156;
+
+    font-size: 0.8rem;
     line-height: 1.6;
-
-    color: #626862;
 }
-
-
-/* ========================================
-   RODAPÉ
-======================================== */
 
 .discussao-footer {
     margin-top: 12px;
-    padding-left: 51px;
 }
 
 .discussao-footer button {
     padding: 0;
 
-    border: none;
     background: transparent;
 
-    color: #657064;
+    border: none;
+
+    color: #61745e;
 
     font-family: inherit;
-    font-size: 12px;
+    font-size: 0.72rem;
     font-weight: 600;
 
     cursor: pointer;
 }
 
-.discussao-footer button:hover {
-    color: #3f4d42;
-}
 
-
-/* ========================================
-   NENHUM COMENTÁRIO
-======================================== */
+/* =========================================================
+   SEM COMENTÁRIOS
+========================================================= */
 
 .sem-comentarios {
-    margin-top: 25px;
-    padding: 38px 25px;
+    padding: 45px 20px;
 
     text-align: center;
-
-    background: #f8f8f5;
-
-    border: 1px dashed #d9ddd7;
-    border-radius: 11px;
 }
 
 .sem-comentarios-icone {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 
-    font-size: 27px;
+    font-size: 1.6rem;
 }
 
 .sem-comentarios h3 {
-    margin: 0 0 7px;
+    margin: 0 0 5px;
 
-    font-size: 16px;
-    color: #2d312e;
+    color: #442b1a;
+
+    font-size: 1rem;
 }
 
 .sem-comentarios p {
     max-width: 400px;
-    margin: 0 auto 18px;
 
-    font-size: 13px;
+    margin: 0 auto 15px;
+
+    color: #8a7a70;
+
+    font-size: 0.78rem;
     line-height: 1.5;
-
-    color: #808680;
 }
 
-.btn-vazio-comentario {
-    padding: 10px 15px;
 
-    border: 1px solid #d5dad3;
-    border-radius: 8px;
+/* =========================================================
+   PARTICIPANTES — ABA
+========================================================= */
 
-    background: white;
+.grid-participantes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    color: #4d5b4e;
+    gap: 12px;
+}
 
-    font-family: inherit;
-    font-size: 12px;
+.card-participante {
+    padding: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 11px;
+}
+
+.participante-header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.participante-avatar {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #e7eee4;
+
+    border-radius: 50%;
+
+    color: #53674f;
+
+    font-size: 0.85rem;
     font-weight: 600;
+}
+
+.participante-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.participante-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.participante-nome-linha {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+.participante-nome-linha h4 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-size: 0.82rem;
+}
+
+.badge-voces,
+.badge-criador {
+    padding: 3px 7px;
+
+    border-radius: 20px;
+
+    font-size: 0.58rem;
+    font-weight: 600;
+}
+
+.badge-voces {
+    background: #f1eee9;
+    color: #766354;
+}
+
+.badge-criador {
+    background: #edf2eb;
+    color: #52684f;
+}
+
+.participante-stats {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    margin-top: 6px;
+}
+
+.stat-badge {
+    padding: 3px 7px;
+
+    background: #f6f4f1;
+
+    border-radius: 20px;
+
+    color: #89796e;
+
+    font-size: 0.62rem;
+}
+
+
+/* =========================================================
+   SEM PARTICIPANTES
+========================================================= */
+
+.sem-participantes {
+    grid-column: 1 / -1;
+
+    padding: 35px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 11px;
+
+    text-align: center;
+}
+
+.sem-participantes p {
+    margin: 0;
+
+    color: #8c7d72;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.progresso-info {
+    display: flex;
+    align-items: baseline;
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+}
+
+.progresso-porcentagem {
+    color: #36503c;
+
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.progresso-paginas {
+    color: #8e7f74;
+
+    font-size: 0.72rem;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    margin-bottom: 15px;
+
+    background: #ebe8e3;
+
+    border-radius: 20px;
+}
+
+.barra-progresso-preenchida {
+    width: 0;
+    height: 100%;
+
+    background: #879d84;
+
+    border-radius: inherit;
+
+    transition: width 0.4s ease;
+}
+
+.aviso-participacao,
+.sem-progresso {
+    margin: 13px 0 0;
+
+    padding: 10px;
+
+    background: #f7f5f2;
+
+    border-radius: 7px;
+
+    color: #897a70;
+
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SIDEBAR — PARTICIPANTES
+========================================================= */
+
+.sidebar-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.sidebar-cabecalho h3 {
+    margin: 0 0 3px;
+
+    font-size: 0.95rem;
+}
+
+.sidebar-cabecalho span {
+    color: #95867b;
+
+    font-size: 0.7rem;
+}
+
+.sidebar-membros {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.sidebar-membro {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.membro-avatar {
+    width: 37px;
+    height: 37px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #e7eee4;
+
+    border-radius: 50%;
+
+    color: #53674f;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.membro-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.membro-info {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.membro-info strong {
+    overflow: hidden;
+
+    color: #442b1a;
+
+    font-size: 0.77rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.membro-info span {
+    margin-top: 1px;
+
+    color: #9a8c81;
+
+    font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   DICA DO CLUBE
+========================================================= */
+
+.dica-clube {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-top: 22px;
+    padding: 18px 22px;
+
+    background: #eef2eb;
+
+    border: 1px solid #dce5d9;
+    border-radius: 12px;
+}
+
+.dica-clube strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #455842;
+
+    font-size: 0.82rem;
+}
+
+.dica-clube p {
+    margin: 0;
+
+    color: #71806e;
+
+    font-size: 0.74rem;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    background: rgba(39, 31, 25, 0.42);
+
+    backdrop-filter: blur(2px);
+}
+
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow: 0 15px 50px rgba(35, 27, 22, 0.18);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-size: 1.05rem;
+}
+
+.btn-fechar {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #f4f1ed;
+
+    border: none;
+    border-radius: 50%;
+
+    color: #6e5d50;
+
+    font-size: 1.05rem;
 
     cursor: pointer;
 }
 
-.btn-vazio-comentario:hover {
-    background: #f1f3ef;
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .clube-header {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .clube-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .clube-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .clube-conteudo {
+        padding: 30px 18px 60px;
+    }
+
+    .clube-header {
+        padding: 22px;
+    }
+
+    .clube-header-principal {
+        flex-direction: column;
+    }
+
+    .clube-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .painel-criador-acoes {
+        grid-template-columns: 1fr;
+    }
+
+    .amigos-lista {
+        grid-template-columns: 1fr;
+    }
+
+    .lista-convites {
+        padding: 20px;
+    }
+
+    .livro-container {
+        flex-direction: column;
+    }
+
+    .livro-capa {
+        width: 120px;
+        min-width: 120px;
+    }
+
+    .grid-participantes {
+        grid-template-columns: 1fr;
+    }
+
+    .clube-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .discussao-topo {
+        flex-direction: column;
+    }
+
+    .btn-novo-comentario {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .clube-titulo h1 {
+        width: 100%;
+
+        font-size: 1.45rem;
+    }
+
+    .leitura-atual {
+        width: 100%;
+    }
+
+    .clube-abas {
+        overflow-x: auto;
+    }
+
+    .aba-btn {
+        flex-shrink: 0;
+
+        padding: 11px 13px;
+    }
+
+    .amigo-convite {
+        flex-wrap: wrap;
+    }
+
+    .amigo-convite form {
+        width: 100%;
+
+        padding-left: 52px;
+    }
+
+    .amigo-convite .btn-secundario {
+        width: 100%;
+    }
+
+    .livro-acoes {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .livro-acoes a,
+    .livro-acoes form,
+    .livro-acoes button {
+        width: 100%;
+    }
+
+    .dica-clube {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .dica-clube .btn-secundario {
+        width: 100%;
+    }
+
+    .form-acoes,
+    .modal-acoes {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+    .form-acoes button,
+    .modal-acoes button {
+        width: 100%;
+    }
+
 }

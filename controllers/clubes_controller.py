@@ -5,7 +5,9 @@ from flask import (
     redirect,
     render_template,
     request,
-    url_for
+    url_for,
+    jsonify,
+    flash
 )
 
 from flask_login import (
@@ -279,10 +281,8 @@ def criar_clube():
     )
 
 
-# ======================================
-# VER CLUBE
-# ======================================
 
+# VER CLUBE
 @clubes_bp.route(
     '/<int:clube_id>'
 )
@@ -293,18 +293,13 @@ def ver_clube(clube_id):
         clube_id
     )
 
-    # ======================================
-    # IDENTIFICAR O CRIADOR
-    # ======================================
 
+    # IDENTIFICAR O CRIADOR
     usuario_eh_criador = (
         clube.usuario_id == current_user.id
     )
 
-    # ======================================
     # BUSCAR MEMBROS DO CLUBE
-    # ======================================
-
     membros = (
         MembroClube.query
         .filter_by(
@@ -318,18 +313,12 @@ def ver_clube(clube_id):
         for membro in membros
     }
 
-    # ======================================
     # VERIFICAR SE O USUÁRIO É MEMBRO
-    # ======================================
-
     usuario_eh_membro = (
         current_user.id in membros_ids
     )
 
-    # ======================================
     # GARANTIR QUE O CRIADOR SEJA MEMBRO
-    # ======================================
-
     if usuario_eh_criador and not usuario_eh_membro:
 
         membro_criador = MembroClube(
@@ -362,10 +351,8 @@ def ver_clube(clube_id):
 
         usuario_eh_membro = True
 
-    # ======================================
-    # ATUALIZAR QUANTIDADE DE MEMBROS
-    # ======================================
 
+    # ATUALIZAR QUANTIDADE DE MEMBROS
     quantidade_real = len(
         membros
     )
@@ -378,10 +365,7 @@ def ver_clube(clube_id):
 
         db.session.commit()
 
-    # ======================================
     # QUEM PODE CONVIDAR?
-    # ======================================
-
     if clube.privado:
 
         # PRIVADO:
@@ -397,11 +381,7 @@ def ver_clube(clube_id):
         pode_convidar = (
             usuario_eh_membro
         )
-
-    # ======================================
     # BUSCAR AMIZADES ACEITAS
-    # ======================================
-
     amizades = (
         Amizade.query
         .filter(
@@ -414,10 +394,8 @@ def ver_clube(clube_id):
         .all()
     )
 
-    # ======================================
-    # PEGAR OS AMIGOS
-    # ======================================
 
+    # PEGAR OS AMIGOS
     amigos = []
 
     for amizade in amizades:
@@ -434,22 +412,16 @@ def ver_clube(clube_id):
             amigos.append(
                 amigo
             )
-
-    # ======================================
     # AMIGOS QUE JÁ SÃO MEMBROS
     # NÃO DEVEM APARECER PARA CONVIDAR
-    # ======================================
-
     amigos_disponiveis = [
         amigo
         for amigo in amigos
         if amigo.id not in membros_ids
     ]
 
-    # ======================================
-    # RENDERIZAR
-    # ======================================
 
+    # RENDERIZAR
     return render_template(
         'clubes/clube.html',
 
@@ -466,8 +438,257 @@ def ver_clube(clube_id):
         pode_convidar=pode_convidar
     )
 
+#GERENCIAR CLUBE
+@clubes_bp.route(
+    '/<int:clube_id>/gerenciar'
+)
+@login_required
+def gerenciar_clube(clube_id):
 
-# ======================================
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # Somente o criador pode gerenciar
+    if clube.usuario_id != current_user.id:
+
+        flash(
+            'Somente o criador pode gerenciar este clube.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    return render_template(
+        'clubes/gerenciar_clube.html',
+        clube=clube
+    )
+
+# EDITAR CLUBE
+@clubes_bp.route(
+    '/<int:clube_id>/editar',
+    methods=['POST']
+)
+@login_required
+def editar_clube(clube_id):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+    # SOMENTE O CRIADOR
+    if clube.usuario_id != current_user.id:
+
+        flash(
+            'Somente o criador pode editar este clube.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # DADOS
+    nome = request.form.get(
+        'nome',
+        ''
+    ).strip()
+
+    descricao = request.form.get(
+        'descricao',
+        ''
+    ).strip()
+
+    genero = request.form.get(
+        'genero',
+        ''
+    ).strip()
+
+    privacidade = request.form.get(
+        'privacidade',
+        'publico'
+    )
+
+    # VALIDAÇÃO
+    if not nome:
+
+        flash(
+            'O clube precisa ter um nome.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.gerenciar_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # ATUALIZAR
+    clube.nome = nome
+    clube.descricao = descricao
+    clube.genero = genero
+
+    clube.privado = (
+        privacidade == 'privado'
+    )
+
+    # NOVA IMAGEM
+    arquivo_imagem = request.files.get(
+        'imagem'
+    )
+
+    if (
+        arquivo_imagem
+        and arquivo_imagem.filename
+    ):
+
+        nome_arquivo = secure_filename(
+            arquivo_imagem.filename
+        )
+
+        pasta = os.path.join(
+            'static',
+            'img',
+            'clubes'
+        )
+
+        os.makedirs(
+            pasta,
+            exist_ok=True
+        )
+
+        caminho_completo = os.path.join(
+            pasta,
+            nome_arquivo
+        )
+
+        arquivo_imagem.save(
+            caminho_completo
+        )
+
+        clube.imagem = os.path.join(
+            'img',
+            'clubes',
+            nome_arquivo
+        ).replace(
+            '\\',
+            '/'
+        )
+
+    db.session.commit()
+
+    flash(
+        'Clube atualizado com sucesso!',
+        'sucesso'
+    )
+
+    return redirect(
+        url_for(
+            'clubes.ver_clube',
+            clube_id=clube.id
+        )
+    )
+
+# REMOVER MEMBRO DO CLUBE
+@clubes_bp.route(
+    '/<int:clube_id>/remover-membro/<int:usuario_id>',
+    methods=['POST']
+)
+@login_required
+def remover_membro(clube_id, usuario_id):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # SOMENTE O CRIADOR PODE REMOVER
+
+    if clube.usuario_id != current_user.id:
+
+        flash(
+            'Somente o criador pode remover participantes.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # CRIADOR NÃO PODE REMOVER A SI MESMO
+    if usuario_id == clube.usuario_id:
+
+        flash(
+            'O criador não pode ser removido do próprio clube.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.gerenciar_clube',
+                clube_id=clube.id
+            )
+        )
+
+
+    # PROCURAR MEMBRO
+    membro = MembroClube.query.filter_by(
+        clube_id=clube.id,
+        usuario_id=usuario_id
+    ).first()
+
+    if not membro:
+
+        flash(
+            'Este usuário não participa do clube.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.gerenciar_clube',
+                clube_id=clube.id
+            )
+        )
+    # REMOVER
+    db.session.delete(
+        membro
+    )
+    db.session.flush()
+
+    # ATUALIZAR QUANTIDADE
+    clube.quantidade_membros = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id
+        )
+        .count()
+    )
+
+    db.session.commit()
+
+    flash(
+        'Participante removido do clube.',
+        'sucesso'
+    )
+
+    return redirect(
+        url_for(
+            'clubes.gerenciar_clube',
+            clube_id=clube.id
+        )
+    )
+
 # CRIAR DISCUSSÃO
 # ======================================
 
