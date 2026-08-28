@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from datetime import date
+from datetime import date, datetime
 
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 
-from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante
+from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante, ComentarioResenha
 from extensions import db
 
 
@@ -600,11 +600,16 @@ def avaliar(id):
         livro_id=id
     ).first_or_404()
 
-    nota = int(
-        request.form["nota"]
+    # ======================================
+    # NOTA
+    # ======================================
+
+    nota = request.form.get(
+        "nota",
+        type=int
     )
 
-    if nota < 1 or nota > 5:
+    if nota is None or nota < 1 or nota > 5:
 
         flash(
             "A nota deve ser entre 1 e 5.",
@@ -618,26 +623,75 @@ def avaliar(id):
             )
         )
 
+    # ======================================
+    # TÍTULO DA RESENHA
+    # ======================================
+
+    titulo_resenha = request.form.get(
+        "titulo_resenha",
+        ""
+    ).strip()
+
+    # ======================================
+    # TEXTO DA RESENHA
+    # ======================================
+
+    resenha_nova = request.form.get(
+        "resenha",
+        ""
+    ).strip()
+
+    # ======================================
+    # SPOILER
+    # ======================================
+
+    tem_spoiler = (
+        request.form.get("tem_spoiler")
+        == "on"
+    )
+
+    # ======================================
+    # DATA DA LEITURA
+    # ======================================
+
     data_leitura = request.form.get(
         "data_leitura"
     )
 
     if data_leitura:
 
-        data_leitura = date.fromisoformat(
-            data_leitura
-        )
+        try:
+
+            data_leitura = date.fromisoformat(
+                data_leitura
+            )
+
+        except ValueError:
+
+            data_leitura = item.data_leitura
+
+    else:
+
+        data_leitura = item.data_leitura
 
     # ======================================
     # PRIMEIRA AVALIAÇÃO
     # ======================================
 
-    if item.nota is None:
+    primeira_avaliacao = (
+        item.nota is None
+    )
+
+    if primeira_avaliacao:
 
         registrar_atividade(
             current_user,
             "avaliacao",
-            f'Você avaliou "{item.livro.titulo}" com {nota} estrelas.',
+            (
+                f'Você avaliou '
+                f'"{item.livro.titulo}" '
+                f'com {nota} estrelas.'
+            ),
             item.livro
         )
 
@@ -657,17 +711,20 @@ def avaliar(id):
     # PRIMEIRA RESENHA
     # ======================================
 
-    resenha_nova = request.form.get(
-        "resenha",
-        ""
-    ).strip()
+    primeira_resenha = (
+        not item.resenha
+        and bool(resenha_nova)
+    )
 
-    if not item.resenha and resenha_nova:
+    if primeira_resenha:
 
         registrar_atividade(
             current_user,
             "resenha",
-            f'Você escreveu uma resenha para "{item.livro.titulo}".',
+            (
+                f'Você escreveu uma resenha '
+                f'para "{item.livro.titulo}".'
+            ),
             item.livro
         )
 
@@ -684,11 +741,27 @@ def avaliar(id):
         )
 
     # ======================================
-    # SALVAR AVALIAÇÃO
+    # DATA DA RESENHA
+    # ======================================
+
+    # Só registra a data na primeira vez.
+    # Editar depois não muda a data original.
+    if primeira_resenha:
+
+        item.data_resenha = datetime.utcnow()
+
+    # ======================================
+    # SALVAR AVALIAÇÃO / RESENHA
     # ======================================
 
     item.nota = nota
-    item.resenha = resenha_nova
+    item.titulo_resenha = (
+        titulo_resenha or None
+    )
+    item.resenha = (
+        resenha_nova or None
+    )
+    item.tem_spoiler = tem_spoiler
     item.data_leitura = data_leitura
 
     db.session.commit()
@@ -697,7 +770,9 @@ def avaliar(id):
     # VERIFICAR INSÍGNIAS
     # ======================================
 
-    verificar_insignias(current_user)
+    verificar_insignias(
+        current_user
+    )
 
     flash(
         "Avaliação salva!",
@@ -763,4 +838,265 @@ def minhas_resenhas():
     return render_template(
         "books/minhas_resenhas.html",
         resenhas=resenhas
+    )
+
+# ======================================
+# VISUALIZAR RESENHA
+# ======================================
+
+@estante_bp.route("/resenha/<int:resenha_id>")
+@login_required
+def ver_resenha(resenha_id):
+
+    resenha = Estante.query.get_or_404(
+        resenha_id
+    )
+
+    # Só consideramos resenha se houver texto
+    if not resenha.resenha:
+
+        flash(
+            "Essa resenha não está disponível.",
+            "warning"
+        )
+
+        return redirect(
+            url_for("books_bp.ver", id=resenha.livro_id)
+        )
+
+    comentarios = ComentarioResenha.query.filter_by(
+        estante_id=resenha.id
+    ).order_by(
+        ComentarioResenha.data_criacao.asc()
+    ).all()
+
+    return render_template(
+        "books/resenha.html",
+        resenha=resenha,
+        comentarios=comentarios
+    )
+
+
+# ======================================
+# COMENTAR RESENHA
+# ======================================
+
+@estante_bp.route(
+    "/resenha/<int:resenha_id>/comentar",
+    methods=["POST"]
+)
+@login_required
+def comentar_resenha(resenha_id):
+
+    resenha = Estante.query.get_or_404(
+        resenha_id
+    )
+
+    if not resenha.resenha:
+
+        flash(
+            "Essa resenha não está disponível.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "books_bp.ver",
+                id=resenha.livro_id
+            )
+        )
+
+    texto = request.form.get(
+        "texto",
+        ""
+    ).strip()
+
+    if not texto:
+
+        flash(
+            "Digite um comentário.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=resenha.id
+            )
+        )
+
+    if len(texto) > 500:
+
+        flash(
+            "O comentário deve ter no máximo 500 caracteres.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=resenha.id
+            )
+        )
+
+    comentario = ComentarioResenha(
+        estante_id=resenha.id,
+        usuario_id=current_user.id,
+        texto=texto
+    )
+
+    db.session.add(
+        comentario
+    )
+
+    db.session.commit()
+
+    flash(
+        "Comentário publicado!",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "estante_bp.ver_resenha",
+            resenha_id=resenha.id
+        )
+    )
+
+
+# ======================================
+# EDITAR COMENTÁRIO
+# ======================================
+
+@estante_bp.route(
+    "/comentario/<int:comentario_id>/editar",
+    methods=["POST"]
+)
+@login_required
+def editar_comentario(comentario_id):
+
+    comentario = ComentarioResenha.query.get_or_404(
+        comentario_id
+    )
+
+    # ==================================
+    # SOMENTE O AUTOR PODE EDITAR
+    # ==================================
+
+    if comentario.usuario_id != current_user.id:
+
+        flash(
+            "Você não pode editar este comentário.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=comentario.estante_id
+            )
+        )
+
+    texto = request.form.get(
+        "texto",
+        ""
+    ).strip()
+
+    if not texto:
+
+        flash(
+            "O comentário não pode ficar vazio.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=comentario.estante_id
+            )
+        )
+
+    if len(texto) > 500:
+
+        flash(
+            "O comentário deve ter no máximo 500 caracteres.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=comentario.estante_id
+            )
+        )
+
+    comentario.texto = texto
+    comentario.data_edicao = datetime.utcnow()
+
+    db.session.commit()
+
+    flash(
+        "Comentário atualizado!",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "estante_bp.ver_resenha",
+            resenha_id=comentario.estante_id
+        )
+    )
+
+
+# ======================================
+# EXCLUIR COMENTÁRIO
+# ======================================
+
+@estante_bp.route(
+    "/comentario/<int:comentario_id>/excluir",
+    methods=["POST"]
+)
+@login_required
+def excluir_comentario(comentario_id):
+
+    comentario = ComentarioResenha.query.get_or_404(
+        comentario_id
+    )
+
+    # ==================================
+    # SOMENTE O AUTOR PODE EXCLUIR
+    # ==================================
+
+    if comentario.usuario_id != current_user.id:
+
+        flash(
+            "Você não pode excluir este comentário.",
+            "danger"
+        )
+
+        return redirect(
+            url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=comentario.estante_id
+            )
+        )
+
+    resenha_id = comentario.estante_id
+
+    db.session.delete(
+        comentario
+    )
+
+    db.session.commit()
+
+    flash(
+        "Comentário excluído!",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "estante_bp.ver_resenha",
+            resenha_id=resenha_id
+        )
     )

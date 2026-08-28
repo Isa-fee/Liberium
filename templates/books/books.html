@@ -369,6 +369,50 @@
 
                                 </div>
 
+
+                                <!-- ================= TÍTULO ================= -->
+
+                                <label for="titulo-resenha">
+                                    Título da resenha
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="titulo-resenha"
+                                    name="titulo_resenha"
+                                    maxlength="150"
+                                    placeholder="Dê um título para sua resenha"
+                                    value="{{ item_estante.titulo_resenha or '' }}"
+                                >
+
+                                <!-- ================= SPOILER ================= -->
+
+                                <div class="campo-spoiler">
+
+                                    <label class="opcao-spoiler">
+
+                                        <input
+                                            type="checkbox"
+                                            name="tem_spoiler"
+                                            {% if item_estante.tem_spoiler %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        <span>
+                                            Esta resenha contém spoilers
+                                        </span>
+
+                                    </label>
+
+                                    <small>
+                                        Marque esta opção se sua resenha revelar
+                                        acontecimentos importantes do livro.
+                                    </small>
+
+                                </div>
+
+
                                 <label for="resenha">
                                     Compartilhe sua experiência
                                 </label>
@@ -576,6 +620,272 @@
                 </small>
 
             </section>
+
+        {% endif %}
+
+
+        <!-- =========================================
+            RESENHAS DOS LEITORES
+        ========================================== -->
+
+        {% if origem == "banco" %}
+
+        <section class="resenhas-livro">
+
+            <!-- CABEÇALHO -->
+
+            <div class="cabecalho-resenhas-livro">
+
+                <div>
+
+                    <span class="subtitulo-resenhas-livro">
+                        COMUNIDADE
+                    </span>
+
+                    <h2>
+                        Avaliações dos leitores
+                    </h2>
+
+                </div>
+
+
+                {% if resenhas %}
+
+                    <div class="resumo-avaliacoes">
+
+                        {% if media_avaliacoes %}
+
+                            <strong>
+                                {{ media_avaliacoes }}
+                            </strong>
+
+                            <span>
+                                ★
+                            </span>
+
+                        {% endif %}
+
+                        <small>
+
+                            {{ resenhas|length }}
+
+                            {% if resenhas|length == 1 %}
+                                avaliação
+                            {% else %}
+                                avaliações
+                            {% endif %}
+
+                        </small>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =====================================
+                LISTA DE RESENHAS
+            ====================================== -->
+
+            {% if resenhas %}
+
+                <div class="lista-resenhas-livro">
+
+                    {% for resenha in resenhas %}
+
+                        <article class="card-resenha-livro">
+
+
+                            <!-- AUTOR -->
+
+                            <div class="topo-card-resenha">
+
+                                <div class="autor-card-resenha">
+
+
+                                    <!-- FOTO -->
+
+                                    <div class="foto-autor-resenha">
+
+                                        {% if resenha.usuario.foto %}
+
+                                            <img
+                                                src="{{ url_for(
+                                                    'static',
+                                                    filename=resenha.usuario.foto
+                                                ) }}"
+                                                alt="{{ resenha.usuario.nome }}"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="foto-resenha-placeholder">
+                                                {{ resenha.usuario.nome[0]|upper }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- NOME E DATA -->
+
+                                    <div class="dados-autor-resenha">
+
+                                        <strong>
+                                            {{ resenha.usuario.nome }}
+                                        </strong>
+
+                                        {% if resenha.data_resenha %}
+
+                                            <span>
+                                                {{ resenha.data_resenha.strftime(
+                                                    '%d/%m/%Y'
+                                                ) }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ESTRELAS -->
+
+                                <div class="estrelas-card-resenha">
+
+                                    {% for i in range(1, 6) %}
+
+                                        {% if i <= resenha.nota %}
+
+                                            <span class="preenchida">
+                                                ★
+                                            </span>
+
+                                        {% else %}
+
+                                            <span>
+                                                ☆
+                                            </span>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- TÍTULO -->
+
+                            {% if resenha.titulo_resenha %}
+
+                                <h3>
+                                    {{ resenha.titulo_resenha }}
+                                </h3>
+
+                            {% endif %}
+
+
+                            <!-- =================================
+                                SPOILER
+                            ================================== -->
+
+                            {% if resenha.tem_spoiler %}
+
+                                <div class="tag-spoiler">
+                                    ⚠ Contém spoilers
+                                </div>
+
+                                <p class="texto-spoiler-oculto">
+                                    O conteúdo desta resenha está oculto.
+                                    Abra a resenha para visualizar.
+                                </p>
+
+                            {% else %}
+
+                                <!-- PRÉVIA DA RESENHA -->
+
+                                <p class="previa-resenha">
+                                    {{ resenha.resenha|truncate(220) }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- =================================
+                                RODAPÉ
+                            ================================== -->
+
+                            <div class="rodape-card-resenha">
+
+                                <a
+                                    href="{{ url_for(
+                                        'estante_bp.ver_resenha',
+                                        resenha_id=resenha.id
+                                    ) }}"
+                                    class="link-ver-resenha"
+                                >
+                                    Ver resenha →
+                                </a>
+
+
+                                <span class="contador-comentarios">
+
+                                    💬
+
+                                    {{ resenha.comentarios|length }}
+
+                                    {% if resenha.comentarios|length == 1 %}
+
+                                        comentário
+
+                                    {% else %}
+
+                                        comentários
+
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <!-- =====================================
+                    NENHUMA RESENHA
+                ====================================== -->
+
+                <div class="nenhuma-resenha-livro">
+
+                    <div class="icone-sem-resenha">
+                        ♡
+                    </div>
+
+                    <h3>
+                        Este livro ainda não possui resenhas
+                    </h3>
+
+                    <p>
+                        Termine a leitura e seja a primeira pessoa
+                        a compartilhar sua opinião.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
 
         {% endif %}
 

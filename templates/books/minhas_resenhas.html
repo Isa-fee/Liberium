@@ -13,38 +13,60 @@
 
 <div class="pagina-resenhas">
 
-    <!-- CABEÇALHO -->
+    <!-- ========================================
+         CABEÇALHO
+    ========================================= -->
 
     <div class="cabecalho-resenhas">
 
         <div>
+
             <span class="subtitulo-resenhas">
                 MINHA ESTANTE
             </span>
 
-            <h1>Minhas Resenhas</h1>
+            <h1>
+                Minhas Resenhas
+            </h1>
 
             <p>
                 Todas as avaliações e resenhas que você escreveu
                 sobre os livros que leu.
             </p>
+
         </div>
 
+
+        <!-- CONTADOR -->
+
         <div class="contador-resenhas">
-            <strong>{{ resenhas|length }}</strong>
+
+            <strong>
+                {{ resenhas|length }}
+            </strong>
+
             <span>
+
                 {% if resenhas|length == 1 %}
+
                     resenha
+
                 {% else %}
+
                     resenhas
+
                 {% endif %}
+
             </span>
+
         </div>
 
     </div>
 
 
-    <!-- RESENHAS -->
+    <!-- ========================================
+         RESENHAS
+    ========================================= -->
 
     {% if resenhas %}
 
@@ -54,7 +76,10 @@
 
                 <article class="card-resenha">
 
-                    <!-- CAPA -->
+
+                    <!-- ========================================
+                         CAPA
+                    ========================================= -->
 
                     <div class="capa-resenha">
 
@@ -63,6 +88,7 @@
                             {% if item.livro.capa.startswith('http') %}
 
                                 <!-- Livro vindo da API -->
+
                                 <img
                                     src="{{ item.livro.capa }}"
                                     alt="Capa de {{ item.livro.titulo }}"
@@ -71,8 +97,12 @@
                             {% else %}
 
                                 <!-- Livro do banco local -->
+
                                 <img
-                                    src="{{ url_for('static', filename=item.livro.capa) }}"
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=item.livro.capa
+                                    ) }}"
                                     alt="Capa de {{ item.livro.titulo }}"
                                 >
 
@@ -89,9 +119,16 @@
                     </div>
 
 
-                    <!-- CONTEÚDO -->
+                    <!-- ========================================
+                         CONTEÚDO
+                    ========================================= -->
 
                     <div class="conteudo-resenha">
+
+
+                        <!-- ====================================
+                             CABEÇALHO DO CARD
+                        ===================================== -->
 
                         <div class="cabecalho-card-resenha">
 
@@ -102,15 +139,23 @@
                                 </h2>
 
                                 {% if item.livro.autor %}
+
                                     <p class="autor-resenha">
                                         {{ item.livro.autor }}
                                     </p>
+
                                 {% endif %}
 
                             </div>
 
+
+                            <!-- VER LIVRO -->
+
                             <a
-                                href="{{ url_for('books_bp.ver', id=item.livro.id) }}"
+                                href="{{ url_for(
+                                    'books_bp.ver',
+                                    id=item.livro.id
+                                ) }}"
                                 class="btn-ver-livro"
                             >
                                 Ver livro
@@ -119,19 +164,30 @@
                         </div>
 
 
-                        <!-- ESTRELAS -->
+                        <!-- ====================================
+                             NOTA / ESTRELAS
+                        ===================================== -->
 
                         <div class="nota-resenha">
 
                             {% for i in range(1, 6) %}
 
                                 {% if i <= item.nota %}
-                                    <span class="estrela preenchida">★</span>
+
+                                    <span class="estrela preenchida">
+                                        ★
+                                    </span>
+
                                 {% else %}
-                                    <span class="estrela">☆</span>
+
+                                    <span class="estrela">
+                                        ☆
+                                    </span>
+
                                 {% endif %}
 
                             {% endfor %}
+
 
                             <span class="nota-numero">
                                 {{ item.nota }}/5
@@ -140,28 +196,114 @@
                         </div>
 
 
-                        <!-- TEXTO -->
+                        <!-- ====================================
+                             TÍTULO DA RESENHA
+                        ===================================== -->
 
-                        <div class="texto-resenha">
+                        {% if item.titulo_resenha %}
 
-                            <span class="aspas">“</span>
+                            <h3 class="titulo-da-resenha">
+                                {{ item.titulo_resenha }}
+                            </h3>
+
+                        {% endif %}
+
+
+                        <!-- ====================================
+                             AVISO DE SPOILER
+                        ===================================== -->
+
+                        {% if item.tem_spoiler %}
+
+                            <div class="aviso-spoiler">
+
+                                <div class="texto-aviso-spoiler">
+
+                                    <span class="icone-spoiler">
+                                        ⚠️
+                                    </span>
+
+                                    <span>
+                                        Esta resenha contém spoilers
+                                    </span>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    class="btn-revelar-spoiler"
+                                    onclick="alternarSpoiler(this)"
+                                >
+                                    Revelar resenha
+                                </button>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- ====================================
+                             TEXTO DA RESENHA
+                        ===================================== -->
+
+                        <div
+                            class="
+                                texto-resenha
+                                {% if item.tem_spoiler %}
+                                    resenha-escondida
+                                {% endif %}
+                            "
+                        >
+
+                            <span class="aspas">
+                                “
+                            </span>
 
                             <p>
                                 {{ item.resenha }}
                             </p>
 
-                            <span class="aspas final">”</span>
+                            <span class="aspas final">
+                                ”
+                            </span>
 
                         </div>
 
 
-                        <!-- DATA -->
+                        <!-- ====================================
+                             DATA DA LEITURA
+                        ===================================== -->
 
                         {% if item.data_leitura %}
 
                             <div class="data-resenha">
+
                                 📅 Leitura concluída em
-                                {{ item.data_leitura.strftime('%d/%m/%Y') }}
+
+                                {{ item.data_leitura.strftime(
+                                    '%d/%m/%Y'
+                                ) }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- ====================================
+                             DATA DA RESENHA
+                        ===================================== -->
+
+                        {% if item.data_resenha %}
+
+                            <div class="data-publicacao-resenha">
+
+                                Resenha publicada em
+
+                                {{ item.data_resenha.strftime(
+                                    '%d/%m/%Y'
+                                ) }}
+
                             </div>
 
                         {% endif %}
@@ -174,9 +316,13 @@
 
         </div>
 
+
     {% else %}
 
-        <!-- NENHUMA RESENHA -->
+
+        <!-- ========================================
+             NENHUMA RESENHA
+        ========================================= -->
 
         <div class="resenhas-vazias">
 
@@ -184,11 +330,13 @@
                 📖
             </div>
 
-            <h2>Você ainda não escreveu nenhuma resenha</h2>
+            <h2>
+                Você ainda não escreveu nenhuma resenha
+            </h2>
 
             <p>
-                Leia um livro e compartilhe sua opinião com a comunidade
-                do Liberium.
+                Leia um livro e compartilhe sua opinião
+                com a comunidade do Liberium.
             </p>
 
             <a
@@ -203,5 +351,48 @@
     {% endif %}
 
 </div>
+
+
+<!-- ========================================
+     JAVASCRIPT - SPOILER
+========================================= -->
+
+<script>
+
+    function alternarSpoiler(botao) {
+
+        const aviso = botao.closest(
+            ".aviso-spoiler"
+        );
+
+        const resenha = aviso.nextElementSibling;
+
+        const estaEscondida = resenha.classList.contains(
+            "resenha-escondida"
+        );
+
+        if (estaEscondida) {
+
+            resenha.classList.remove(
+                "resenha-escondida"
+            );
+
+            botao.textContent =
+                "Ocultar resenha";
+
+        } else {
+
+            resenha.classList.add(
+                "resenha-escondida"
+            );
+
+            botao.textContent =
+                "Revelar resenha";
+
+        }
+
+    }
+
+</script>
 
 {% endblock %}

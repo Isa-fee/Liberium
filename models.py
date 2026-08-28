@@ -1,8 +1,6 @@
 from extensions import db
 from flask_login import UserMixin
 from datetime import date, datetime
-from datetime import datetime
-
 
 class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
@@ -78,6 +76,8 @@ class Amizade(db.Model):
         foreign_keys=[amigo_id],
         backref="solicitacoes_recebidas"
     )
+
+
 class ConviteClube(db.Model):
     __tablename__ = "convites_clube"
 
@@ -216,15 +216,38 @@ class Estante(db.Model):
         nullable=True
     )
 
+    # ======================================
+    # AVALIAÇÃO / RESENHA
+    # ======================================
+
     # nota de 1 a 5 estrelas
     nota = db.Column(
         db.Integer,
         nullable=True
     )
 
-    # resenha do usuário
+    # título da resenha
+    titulo_resenha = db.Column(
+        db.String(150),
+        nullable=True
+    )
+
+    # texto da resenha
     resenha = db.Column(
         db.Text,
+        nullable=True
+    )
+
+    # indica se a resenha contém spoiler
+    tem_spoiler = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
+
+    # data em que a resenha foi criada
+    data_resenha = db.Column(
+        db.DateTime,
         nullable=True
     )
 
@@ -236,6 +259,62 @@ class Estante(db.Model):
     usuario = db.relationship(
         "Usuario",
         backref="estantes"
+    )
+
+class ComentarioResenha(db.Model):
+    __tablename__ = "comentarios_resenha"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    # resenha que recebeu o comentário
+    estante_id = db.Column(
+        db.Integer,
+        db.ForeignKey("estante.id"),
+        nullable=False
+    )
+
+    # usuário que escreveu o comentário
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    texto = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
+
+    data_edicao = db.Column(
+        db.DateTime,
+        nullable=True
+    )
+
+    # ======================================
+    # RELACIONAMENTOS
+    # ======================================
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="comentarios_resenhas"
+    )
+
+    resenha = db.relationship(
+        "Estante",
+        backref=db.backref(
+            "comentarios",
+            lazy=True,
+            cascade="all, delete-orphan"
+        )
     )
 
 class Insignia(db.Model):
@@ -553,6 +632,12 @@ class Clube(db.Model):
     genero = db.Column(
         db.String(100),
         nullable=False
+    )
+
+    privado = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
     )
 
     imagem = db.Column(

@@ -435,6 +435,8 @@
     color: #444;
 }
 
+
+
 /* ============================= */
 /*            FORM               */
 /* ============================= */
@@ -556,6 +558,198 @@
 .link-autor:hover{
     color:#4d6245;
     text-decoration:underline;
+}
+
+/* ============================= */
+/*      TÍTULO DA RESENHA        */
+/* ============================= */
+
+.form-avaliacao input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+
+    padding: 11px 13px;
+
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+
+    color: #333;
+    background: #fafafa;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-avaliacao input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+.form-avaliacao input[type="text"]:focus {
+    border-color: #8fa382;
+    background: #fff;
+
+    box-shadow: 0 0 0 3px rgba(143, 163, 130, 0.12);
+}
+
+
+/* ============================= */
+/*           SPOILER             */
+/* ============================= */
+
+.campo-spoiler {
+    margin-top: 8px;
+
+    padding: 13px 15px;
+
+    border: 1px solid #e0e4dc;
+    border-radius: 12px;
+
+    background: #f7f9f5;
+}
+
+
+/* Sobrescreve o estilo geral dos labels */
+
+.form-avaliacao .opcao-spoiler {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0;
+
+    color: #4d6245;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* ============================= */
+/*     CHECKBOX PERSONALIZADO    */
+/* ============================= */
+
+.opcao-spoiler input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    border: 2px solid #8fa382;
+    border-radius: 5px;
+
+    background: white;
+
+    cursor: pointer;
+
+    position: relative;
+
+    transition: 0.2s;
+}
+
+.opcao-spoiler input[type="checkbox"]:hover {
+    border-color: #6f8464;
+}
+
+.opcao-spoiler input[type="checkbox"]:checked {
+    background: #8fa382;
+    border-color: #8fa382;
+}
+
+.opcao-spoiler input[type="checkbox"]:checked::after {
+    content: "✓";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -55%);
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ============================= */
+/*      TEXTO EXPLICATIVO        */
+/* ============================= */
+
+.campo-spoiler small {
+    display: block;
+
+    margin-top: 6px;
+    margin-left: 29px;
+
+    color: #888;
+
+    font-size: 0.76rem;
+    line-height: 1.4;
+}
+
+
+/* ============================= */
+/*     ROLAGEM DO MODAL          */
+/* ============================= */
+
+.modal-avaliacao {
+    max-height: 85vh;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #b7c2b0 transparent;
+}
+
+.modal-avaliacao::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-avaliacao::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-avaliacao::-webkit-scrollbar-thumb {
+    background: #b7c2b0;
+    border-radius: 10px;
+}
+
+
+/* ============================= */
+/*         RESPONSIVO            */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    .modal-overlay {
+        padding: 12px;
+    }
+
+    .modal-avaliacao {
+        padding: 22px 18px;
+        max-height: 90vh;
+    }
+
+    .campo-spoiler {
+        padding: 12px;
+    }
+
+    .campo-spoiler small {
+        margin-left: 29px;
+    }
+
 }
 
 /* =========================================
@@ -1041,6 +1235,457 @@
     color: #ffffff;
     transform: translateY(-1px);
 }
+
+
+/* ==========================================
+   RESENHAS DO LIVRO
+========================================== */
+
+.resenhas-livro {
+    margin-top: 55px;
+    padding-top: 38px;
+
+    border-top: 1px solid #e4dfda;
+}
+
+
+/* ==========================================
+   CABEÇALHO DAS RESENHAS
+========================================== */
+
+.cabecalho-resenhas-livro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.subtitulo-resenhas-livro {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #879d84;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.cabecalho-resenhas-livro h2 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+
+/* ==========================================
+   RESUMO DAS AVALIAÇÕES
+========================================== */
+
+.resumo-avaliacoes {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #e2ddd7;
+    border-radius: 20px;
+
+    background: #faf9f7;
+}
+
+.resumo-avaliacoes strong {
+    color: #442b1a;
+
+    font-size: 1rem;
+}
+
+.resumo-avaliacoes > span {
+    color: #d5a936;
+
+    font-size: 1rem;
+}
+
+.resumo-avaliacoes small {
+    margin-left: 3px;
+
+    color: #8c8077;
+
+    font-size: 0.72rem;
+}
+
+
+/* ==========================================
+   LISTA DE RESENHAS
+========================================== */
+
+.lista-resenhas-livro {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+/* ==========================================
+   CARD DA RESENHA
+========================================== */
+
+.card-resenha-livro {
+    padding: 22px 24px;
+
+    border: 1px solid #e8e3dd;
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    box-shadow: 0 4px 16px rgba(68, 43, 26, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card-resenha-livro:hover {
+    transform: translateY(-2px);
+
+    border-color: #d6ddd2;
+
+    box-shadow: 0 7px 22px rgba(68, 43, 26, 0.07);
+}
+
+
+/* ==========================================
+   TOPO DO CARD
+========================================== */
+
+.topo-card-resenha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================
+   AUTOR DA RESENHA
+========================================== */
+
+.autor-card-resenha {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.foto-autor-resenha {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+}
+
+.foto-autor-resenha img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.foto-resenha-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #879d84;
+    color: #ffffff;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.dados-autor-resenha {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.dados-autor-resenha strong {
+    color: #442b1a;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.dados-autor-resenha span {
+    color: #9a8e85;
+
+    font-size: 0.7rem;
+}
+
+
+/* ==========================================
+   ESTRELAS
+========================================== */
+
+.estrelas-card-resenha {
+    display: flex;
+
+    gap: 1px;
+
+    color: #d8d2cc;
+
+    font-size: 1rem;
+
+    white-space: nowrap;
+}
+
+.estrelas-card-resenha .preenchida {
+    color: #d5a936;
+}
+
+
+/* ==========================================
+   TÍTULO DA RESENHA
+========================================== */
+
+.card-resenha-livro h3 {
+    margin: 4px 0 10px;
+
+    color: #4d3a2d;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   PRÉVIA DA RESENHA
+========================================== */
+
+.previa-resenha {
+    margin: 0;
+
+    color: #665950;
+
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   SPOILER
+========================================== */
+
+.tag-spoiler {
+    width: fit-content;
+
+    margin: 7px 0 9px;
+    padding: 5px 10px;
+
+    border: 1px solid #ded7ce;
+    border-radius: 20px;
+
+    background: #f5f1ec;
+    color: #745d49;
+
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.texto-spoiler-oculto {
+    margin: 0;
+
+    color: #95887e;
+
+    font-size: 0.82rem;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   RODAPÉ DO CARD
+========================================== */
+
+.rodape-card-resenha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 18px;
+    padding-top: 14px;
+
+    border-top: 1px solid #eeeae5;
+}
+
+
+/* ==========================================
+   VER RESENHA
+========================================== */
+
+.link-ver-resenha {
+    color: #6f8464;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.link-ver-resenha:hover {
+    color: #4d6245;
+}
+
+
+/* ==========================================
+   CONTADOR DE COMENTÁRIOS
+========================================== */
+
+.contador-comentarios {
+    color: #968a81;
+
+    font-size: 0.72rem;
+}
+
+
+/* ==========================================
+   SEM RESENHAS
+========================================== */
+
+.nenhuma-resenha-livro {
+    padding: 45px 25px;
+
+    border: 1px dashed #ddd7d1;
+    border-radius: 15px;
+
+    background: #faf9f7;
+
+    text-align: center;
+}
+
+.icone-sem-resenha {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef1eb;
+    color: #879d84;
+
+    font-size: 1.5rem;
+}
+
+.nenhuma-resenha-livro h3 {
+    margin: 0 0 7px;
+
+    color: #5a493d;
+
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+.nenhuma-resenha-livro p {
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    color: #95887e;
+
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .resenhas-livro {
+        margin-top: 40px;
+        padding-top: 30px;
+    }
+
+    .cabecalho-resenhas-livro {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .card-resenha-livro {
+        padding: 19px;
+    }
+
+    .topo-card-resenha {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .topo-card-resenha {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .rodape-card-resenha {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 9px;
+    }
+
+    .resumo-avaliacoes {
+        padding: 7px 11px;
+    }
+
+}
+
 
 /* ========================================
    RESPONSIVO
