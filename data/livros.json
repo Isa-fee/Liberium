@@ -474,7 +474,7 @@
         "capa": "img/capas/codigo_da_vinci.jpg",
         "genero": "Suspense",
         "editora": "Arqueiro",
-        "paginas": 432 ,
+        "paginas": 432,
         "ano": "2025",
         "idioma": "Português",
         "avaliacao": 4.7
@@ -750,7 +750,7 @@
         "capa": "img/capas/perfeita_tentacao.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 649 ,
+        "paginas": 649,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -762,7 +762,7 @@
         "capa": "img/capas/o_caos_entre_nos.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 595 ,
+        "paginas": 595,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -774,7 +774,7 @@
         "capa": "img/capas/deslize.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 673 ,
+        "paginas": 673,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -786,7 +786,7 @@
         "capa": "img/capas/jogando_contra_regras.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 494 ,
+        "paginas": 494,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -798,7 +798,7 @@
         "capa": "img/capas/ate_ultimo_tempo.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 301 ,
+        "paginas": 301,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -810,7 +810,7 @@
         "capa": "img/capas/beijos_e_segredos.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 477 ,
+        "paginas": 477,
         "ano": "2024",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -822,7 +822,7 @@
         "capa": "img/capas/acordo_esperanca.jpg",
         "genero": "Comédia Romântica",
         "editora": "---",
-        "paginas": 483 ,
+        "paginas": 483,
         "ano": "2026",
         "idioma": "Português",
         "avaliacao": 4.8
@@ -830,11 +830,11 @@
     {
         "titulo": "O Príncipe Cruel",
         "autor": "Holly Black",
-        "descricao":"Jude foi levada ainda criança para o mundo das fadas e cresceu na corte, onde precisa aprender a sobreviver entre criaturas poderosas e perigosas. Determinada a conquistar seu lugar naquele universo, ela desafia o príncipe Cardan e acaba envolvida em intrigas, alianças e conspirações.",
+        "descricao": "Jude foi levada ainda criança para o mundo das fadas e cresceu na corte, onde precisa aprender a sobreviver entre criaturas poderosas e perigosas. Determinada a conquistar seu lugar naquele universo, ela desafia o príncipe Cardan e acaba envolvida em intrigas, alianças e conspirações.",
         "capa": "img/capas/principecruel.jpg",
         "genero": "Fantasia",
         "editora": "Galera",
-        "paginas": 322 ,
+        "paginas": 322,
         "ano": "2018",
         "idioma": "Português",
         "avaliacao": 4.7
@@ -842,15 +842,14 @@
     {
         "titulo": "O Rei Perverso",
         "autor": "Holly Black",
-        "descricao":"Jude está cada vez mais envolvida nas disputas pelo poder no mundo das fadas. Enquanto tenta manter o controle sobre o reino e proteger aqueles que ama, ela precisa lidar com traições, alianças perigosas e seus sentimentos complicados por Cardan.",
+        "descricao": "Jude está cada vez mais envolvida nas disputas pelo poder no mundo das fadas. Enquanto tenta manter o controle sobre o reino e proteger aqueles que ama, ela precisa lidar com traições, alianças perigosas e seus sentimentos complicados por Cardan.",
         "capa": "img/capas/oreiperverso.jpg",
         "genero": "Fantasia",
         "editora": "Galera",
-        "paginas": 304 ,
+        "paginas": 304,
         "ano": "2019",
         "idioma": "Português",
         "avaliacao": 4.7
-
     },
     {
         "titulo": "A Rainha do Nada",
@@ -865,7 +864,6 @@
         "avaliacao": 4.8
     },
     {
-
         "titulo": "Como o Rei de Elfhame Aprendeu a Odiar Histórias",
         "autor": "Holly Black",
         "descricao": "O livro apresenta histórias sobre Cardan antes, durante e depois dos acontecimentos da trilogia O Povo do Ar, revelando mais sobre seu passado, sua personalidade e sua relação com Jude.",
@@ -876,7 +874,6 @@
         "ano": "2021",
         "idioma": "Português",
         "avaliacao": 4.6
-
     },
     {
         "titulo": "As Irmãs Blue",
@@ -912,7 +909,7 @@
         "paginas": 807,
         "ano": "2016",
         "idioma": "Português",
-        "avaliacao": 4.9   
+        "avaliacao": 4.9
     },
     {
         "titulo": "Corte de asas e ruína ",
@@ -924,19 +921,19 @@
         "paginas": 886,
         "ano": "2017",
         "idioma": "Português",
-        "avaliacao": 4.9   
+        "avaliacao": 4.9
     },
     {
         "titulo": "Corte de chamas prateadas  ",
         "autor": "Sarah J. Maas",
         "descricao": "Nestha Archeron sempre foi orgulhosa, irritável e lenta em perdoar. Ter sido Feita pelo Caldeirão não tornou sua personalidade mais doce. Mas o que poucos sabem é que, por trás da fachada de força, Nestha carrega uma dor que a está corroendo: o arrependimento por não ter feito nada para ajudar a família quando caíram na pobreza e por não ter sido capaz de salvar o pai.",
-        "capa":"img/capas/cortechamas.jpg",
+        "capa": "img/capas/cortechamas.jpg",
         "genero": "Fantasia",
         "editora": "Galera Record",
         "paginas": 714,
         "ano": "2021",
         "idioma": "Português",
-        "avaliacao": 4.8  
+        "avaliacao": 4.8
     },
     {
         "titulo": "Cidade da Lua Crescente",
@@ -953,7 +950,7 @@
     {
         "titulo": "Cidade da Lua Crescente: Casa de céu e sopro",
         "autor": "Sarah J. Maas",
-        "descricao":"Bryce Quinlan e Hunt Athalar fizeram um pacto. Enquanto processam os eventos da última primavera, eles irão manter as coisas... platônicas... até o solstício. Eles salvaram a Cidade da Lua Crescente, mas com tanto frenesi acontecendo ultimamente, eles desejam, mais do que qualquer coisa, uma oportunidade de relaxar.",
+        "descricao": "Bryce Quinlan e Hunt Athalar fizeram um pacto. Enquanto processam os eventos da última primavera, eles irão manter as coisas... platônicas... até o solstício. Eles salvaram a Cidade da Lua Crescente, mas com tanto frenesi acontecendo ultimamente, eles desejam, mais do que qualquer coisa, uma oportunidade de relaxar.",
         "capa": "img/capas/casadeceu.jpg",
         "genero": "Fantasia",
         "editora": "Galera Record",
@@ -965,14 +962,14 @@
     {
         "titulo": "Cidade da Lua Crescente: Casa de chama e sombra",
         "autor": "Sarah J. Maas",
-        "descricao":"Por essa Bryce Quinlan realmente não esperava. Ela nunca imaginou que fosse sair de Midgard, mas os malditos asteri a forçaram a literalmente procurar pelas portas do Inferno. Mas o Inferno está... diferente? Uma grama imaculada e uma linda cidade não eram exatamente o que ela estava esperando encontrar por lá. Isso sem falar dos habitantes do lugar, que são tão belos quanto letais. Onde Bryce foi parar?",
+        "descricao": "Por essa Bryce Quinlan realmente não esperava. Ela nunca imaginou que fosse sair de Midgard, mas os malditos asteri a forçaram a literalmente procurar pelas portas do Inferno. Mas o Inferno está... diferente? Uma grama imaculada e uma linda cidade não eram exatamente o que ela estava esperando encontrar por lá. Isso sem falar dos habitantes do lugar, que são tão belos quanto letais. Onde Bryce foi parar?",
         "capa": "img/capas/casadechama.jpg",
         "genero": "Fantasia",
         "editora": "Galera Record",
         "paginas": 1123,
         "ano": "2024",
         "idioma": "Português",
-        "avaliacao": 4.7  
+        "avaliacao": 4.7
     },
     {
         "titulo": "Os Instrumentos Mortais: Cidade dos Ossos",
@@ -997,7 +994,6 @@
         "ano": "2014",
         "idioma": "Português",
         "avaliacao": 4.7
-
     },
     {
         "titulo": "Instrumentos Mortais: Cidade de Vidro",
@@ -1009,7 +1005,7 @@
         "paginas": 476,
         "ano": "2014",
         "idioma": "Português",
-        "avaliacao": 4.8 
+        "avaliacao": 4.8
     },
     {
         "titulo": "Instrumentos Mortais: Cidade dos Anjos Caídos",
@@ -1046,7 +1042,6 @@
         "ano": "2014",
         "idioma": "Português",
         "avaliacao": 4.8
-
     },
     {
         "titulo": "Caraval",
@@ -1107,7 +1102,6 @@
         "ano": "2022",
         "idioma": "Português",
         "avaliacao": 4.8
-
     },
     {
         "titulo": "A Balada do Felizes para Nunca",
@@ -1120,7 +1114,6 @@
         "ano": "2023",
         "idioma": "Português",
         "avaliacao": 4.8
-
     },
     {
         "titulo": "A Maldição do Verdadeiro Amor",
@@ -1144,7 +1137,7 @@
         "paginas": 392,
         "ano": "2014",
         "idioma": "Português",
-        "avaliacao": 4.6  
+        "avaliacao": 4.6
     },
     {
         "titulo": "Príncipe Mecânico",
@@ -1231,7 +1224,7 @@
         "avaliacao": 4.8
     },
     {
-         "titulo": "A Corrente de Ferro",
+        "titulo": "A Corrente de Ferro",
         "autor": "Cassandra Clare",
         "descricao": "Cordelia Carstairs e seus amigos precisam investigar uma série de assassinatos misteriosos em Londres. Enquanto tenta limpar seu nome, Cordelia descobre que a ameaça é muito maior do que imaginava e que antigos inimigos estão retornando.",
         "capa": "img/capas/correntedeferro.jpg",
@@ -1255,7 +1248,7 @@
         "avaliacao": 4.8
     },
     {
-       "titulo": "As Crônicas de Bane",
+        "titulo": "As Crônicas de Bane",
         "autor": "Cassandra Clare, Sarah Rees Brennan e Maureen Johnson",
         "descricao": "Uma coleção de histórias sobre Magnus Bane, o feiticeiro mais extravagante do mundo dos Caçadores de Sombras. Os contos revelam aventuras e acontecimentos importantes de seu passado.",
         "capa": "img/capas/ascronicasdebane.jpg",
@@ -1264,7 +1257,7 @@
         "paginas": 480,
         "ano": "2015",
         "idioma": "Português",
-        "avaliacao": 4.7 
+        "avaliacao": 4.7
     },
     {
         "titulo": "Contos da Academia dos Caçadores de Sombras",
@@ -1405,7 +1398,7 @@
         "capa": "img/capas/mistborn_o_poco_da_ascensao.jpg",
         "genero": "Alta Fantasia",
         "editora": "Trama",
-        "paginas": 856 ,
+        "paginas": 856,
         "ano": "2025",
         "idioma": "Português",
         "avaliacao": 4.7
@@ -1417,11 +1410,21 @@
         "capa": "img/capas/mistborn_o_heroi_das_eras.jpg",
         "genero": "Alta Fantasia",
         "editora": "Trama",
-        "paginas": 800  ,
+        "paginas": 800,
         "ano": "2025",
         "idioma": "Português",
         "avaliacao": 4.9
+    },
+    {
+        "titulo": "Refeito : Trilogia Recomeços - Livro 3",
+        "autor": "Natália Tilcailo",
+        "descricao": "GRUMPY X SUNSHINE + AMOR DE INFÂNCIA + ELE ODEIA TODO MUNDO MENOS ELA + FOUND FAMILY + HOTS DE TIRAR O FÔLEGO\r\n\r\n“No final, se sair com o coração partido, terá sido só mais uma experiência que ele me deu.”\r\nMilene Duarte está cansada de acompanhar as histórias de amor de todos ao seu redor. Sempre com um livro na mão, esperou a vida toda por uma promessa que jamais seria cumprida.\r\nDecidida a mudar esse cenário, ela quebrará a única barreira que a impede de vivenciar o que tanto deseja. Seu maior obstáculo? Conhecer um homem interessante e decente, em meio a encontros fracassados.\r\nLucas Ribeiro está retornando para sua cidade natal. Frio e calculista, seu único foco é fazer sua construtora crescer, enquanto convive com seus fantasmas do passado.\r\nO que ele não esperava, era reencontrar a garota que conheceu quando era criança, e que ela despertaria sentimentos que jamais imaginou sentir.\r\nQuando a atração se torna irresistível, um acordo é selado. Um prazo é estipulado. E uma única regra é imposta: não se apaixonar!\r\nEla está desesperada.\r\nEle não quer se envolver.\r\nEla nunca o esqueceu.\r\nEle se lembra dela.\r\nUm acordo entre dois opostos, regado à química e muita atração.\r\nPor quanto tempo irão resistir e manter o coração de fora desse relacionamento fadado ao fim?\r\n\r\n\r\nATENÇÃO: Livro contém gatilhos, leia as notas da autora.",
+        "capa": "img/capas/solicitacoes/a45ce406e6954c9e8c2af26d128ed674.jpg",
+        "genero": "Romance Policial",
+        "editora": "Unicorn Books",
+        "paginas": 752,
+        "ano": "2024",
+        "idioma": "Português",
+        "avaliacao": null
     }
 ]
-
-
