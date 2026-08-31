@@ -47,12 +47,15 @@
             <hr>
 
             <span class="titulo-menu">
-                Perfil
+                Atalhos
             </span>
-
+            <a href="{{ url_for('user_bp.perfil') }}">
+                Perfil
+            </a>
             <a href="{{ url_for('user_bp.configuracoes') }}">
                 Configurações
             </a>
+            <a href="{{ url_for('notificacoes.listar') }}" class="menu-ativo"> Notificações </a>
 
             <hr>
 

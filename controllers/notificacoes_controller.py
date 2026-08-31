@@ -1,5 +1,18 @@
-from flask import Blueprint, render_template, redirect, url_for
-from flask_login import login_required, current_user
+from datetime import datetime, timedelta
+
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    url_for,
+    request,
+    abort
+)
+
+from flask_login import (
+    login_required,
+    current_user
+)
 
 from extensions import db
 from models import Notificacao
@@ -13,28 +26,6 @@ notificacoes_bp = Blueprint(
 
 
 # ==========================================
-# FUNÇÃO AUXILIAR
-# ==========================================
-
-def criar_notificacao(
-    usuario_id,
-    tipo,
-    titulo,
-    mensagem,
-    link=None
-):
-    notificacao = Notificacao(
-        usuario_id=usuario_id,
-        tipo=tipo,
-        titulo=titulo,
-        mensagem=mensagem,
-        link=link
-    )
-
-    db.session.add(notificacao)
-
-
-# ==========================================
 # LISTAR NOTIFICAÇÕES
 # ==========================================
 
@@ -42,16 +33,52 @@ def criar_notificacao(
 @login_required
 def listar():
 
-    notificacoes = (
-        Notificacao.query
-        .filter_by(usuario_id=current_user.id)
-        .order_by(Notificacao.data_criacao.desc())
-        .all()
+    # --------------------------------------
+    # Remove notificações com mais de 10 dias
+    # --------------------------------------
+
+    limite = datetime.utcnow() - timedelta(days=10)
+
+    Notificacao.query.filter(
+        Notificacao.usuario_id == current_user.id,
+        Notificacao.data_criacao < limite
+    ).delete(
+        synchronize_session=False
     )
+
+    db.session.commit()
+
+    # --------------------------------------
+    # Filtro por categoria
+    # --------------------------------------
+
+    categoria = request.args.get(
+        "categoria",
+        "todas"
+    )
+
+    consulta = Notificacao.query.filter_by(
+        usuario_id=current_user.id
+    )
+
+    if categoria == "nao_lidas":
+        consulta = consulta.filter_by(
+            lida=False
+        )
+
+    elif categoria != "todas":
+        consulta = consulta.filter_by(
+            categoria=categoria
+        )
+
+    notificacoes = consulta.order_by(
+        Notificacao.data_criacao.desc()
+    ).all()
 
     return render_template(
         "notificacoes/notificacoes.html",
-        notificacoes=notificacoes
+        notificacoes=notificacoes,
+        categoria_atual=categoria
     )
 
 
@@ -59,46 +86,29 @@ def listar():
 # ABRIR NOTIFICAÇÃO
 # ==========================================
 
-@notificacoes_bp.route("/abrir/<int:notificacao_id>")
-@login_required
-def abrir(notificacao_id):
-
-    notificacao = Notificacao.query.filter_by(
-        id=notificacao_id,
-        usuario_id=current_user.id
-    ).first_or_404()
-
-    if not notificacao.lida:
-        notificacao.lida = True
-        db.session.commit()
-
-    if notificacao.link:
-        return redirect(notificacao.link)
-
-    return redirect(
-        url_for("notificacoes.listar")
-    )
-
-
-# ==========================================
-# MARCAR UMA COMO LIDA
-# ==========================================
-
 @notificacoes_bp.route(
-    "/marcar-lida/<int:notificacao_id>",
+    "/<int:notificacao_id>/abrir",
     methods=["POST"]
 )
 @login_required
-def marcar_lida(notificacao_id):
+def abrir(notificacao_id):
 
-    notificacao = Notificacao.query.filter_by(
-        id=notificacao_id,
-        usuario_id=current_user.id
-    ).first_or_404()
+    notificacao = Notificacao.query.get_or_404(
+        notificacao_id
+    )
+
+    # Segurança:
+    # usuário só pode abrir a própria notificação.
+
+    if notificacao.usuario_id != current_user.id:
+        abort(403)
 
     notificacao.lida = True
 
     db.session.commit()
+
+    if notificacao.link:
+        return redirect(notificacao.link)
 
     return redirect(
         url_for("notificacoes.listar")
@@ -124,6 +134,32 @@ def marcar_todas_lidas():
         synchronize_session=False
     )
 
+    db.session.commit()
+
+    return redirect(
+        url_for("notificacoes.listar")
+    )
+
+
+# ==========================================
+# EXCLUIR NOTIFICAÇÃO
+# ==========================================
+
+@notificacoes_bp.route(
+    "/<int:notificacao_id>/excluir",
+    methods=["POST"]
+)
+@login_required
+def excluir(notificacao_id):
+
+    notificacao = Notificacao.query.get_or_404(
+        notificacao_id
+    )
+
+    if notificacao.usuario_id != current_user.id:
+        abort(403)
+
+    db.session.delete(notificacao)
     db.session.commit()
 
     return redirect(

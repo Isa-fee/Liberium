@@ -1017,6 +1017,7 @@ class SolicitacaoLivro(db.Model):
         "Usuario",
         backref="solicitacoes_livros"
     )
+
 class Notificacao(db.Model):
     __tablename__ = "notificacoes"
 
@@ -1031,14 +1032,18 @@ class Notificacao(db.Model):
         nullable=False
     )
 
-    # amizade | clube | meta | conquista | comentario | elogio
-    tipo = db.Column(
+    categoria = db.Column(
         db.String(30),
         nullable=False
     )
 
+    tipo = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
     titulo = db.Column(
-        db.String(150),
+        db.String(120),
         nullable=False
     )
 
@@ -1047,7 +1052,6 @@ class Notificacao(db.Model):
         nullable=False
     )
 
-    # Página para onde o usuário será levado ao clicar
     link = db.Column(
         db.String(300),
         nullable=True
@@ -1055,21 +1059,17 @@ class Notificacao(db.Model):
 
     lida = db.Column(
         db.Boolean,
-        nullable=False,
-        default=False
+        default=False,
+        nullable=False
     )
 
     data_criacao = db.Column(
         db.DateTime,
-        nullable=False,
-        default=datetime.utcnow
+        default=datetime.utcnow,
+        nullable=False
     )
 
     usuario = db.relationship(
         "Usuario",
-        backref=db.backref(
-            "notificacoes",
-            lazy=True,
-            cascade="all, delete-orphan"
-        )
+        backref="notificacoes"
     )
