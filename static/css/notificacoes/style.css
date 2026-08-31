@@ -197,27 +197,40 @@
    ÍCONE
 ========================================= */
 
+/* =========================================
+   ÍCONE DA NOTIFICAÇÃO
+========================================= */
+
 .notificacao-icone {
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
-
-    background: #879d84;
+    /* sem bolinha */
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
 }
-
 
 .notificacao-icone img {
-    width: 38px;
-    height: 38px;
+    width: 52px;
+    height: 52px;
 
     object-fit: contain;
+    display: block;
 }
 
+.btn-excluir img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+}
 
 /* =========================================
    INFORMAÇÕES
@@ -486,4 +499,33 @@
         align-items: center;
     }
 
+}
+
+/* =========================================
+   TAMANHO DOS ÍCONES DAS NOTIFICAÇÕES
+========================================= */
+
+.notificacao-card .notificacao-icone {
+    width: 78px;
+    height: 78px;
+
+    min-width: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+}
+
+.notificacao-card .notificacao-icone img {
+    width: 72px !important;
+    height: 72px !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    object-fit: contain;
+    display: block;
 }

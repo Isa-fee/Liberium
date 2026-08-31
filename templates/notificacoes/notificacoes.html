@@ -257,18 +257,59 @@
 
                             <div class="notificacao-icone">
 
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename='img/notificacoes/'
-                                        ~ notificacao.tipo
-                                        ~ '.png'
-                                    ) }}"
-                                    alt=""
-                                >
-
+                                {% if notificacao.tipo == "livro_aprovado" %}
+                            
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/livro-disponivel.png'
+                                        ) }}"
+                                        alt="Livro disponível"
+                                    >
+                            
+                                {% elif notificacao.tipo == "amizade_aceita" %}
+                            
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/amizade-aceita.png'
+                                        ) }}"
+                                        alt="Amizade aceita"
+                                    >
+                            
+                                {% elif notificacao.categoria == "clubes" %}
+                            
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/clubes.png'
+                                        ) }}"
+                                        alt="Clubes"
+                                    >
+                            
+                                {% elif notificacao.categoria == "conquistas" %}
+                            
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/conquistas.png'
+                                        ) }}"
+                                        alt="Conquista"
+                                    >
+                            
+                                {% else %}
+                            
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/Nenhuma_solicitacao.png'
+                                        ) }}"
+                                        alt="Notificação"
+                                    >
+                            
+                                {% endif %}
+                            
                             </div>
-
 
                             <!-- INFORMAÇÕES -->
 
@@ -338,21 +379,19 @@
                                     method="POST"
                                 >
 
-                                    <button
-                                        type="submit"
-                                        class="btn-excluir"
-                                        title="Excluir notificação"
+                                <button
+                                    type="submit"
+                                    class="btn-excluir"
+                                    title="Excluir notificação"
+                                >
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='img/notificacoes/lixeira.png'
+                                        ) }}"
+                                        alt="Excluir"
                                     >
-
-                                        <img
-                                            src="{{ url_for(
-                                                'static',
-                                                filename='img/notificacoes/excluir.png'
-                                            ) }}"
-                                            alt="Excluir"
-                                        >
-
-                                    </button>
+                                </button>
 
                                 </form>
 
