@@ -16,7 +16,8 @@ def criar_notificacao(
         tipo=tipo,
         titulo=titulo,
         mensagem=mensagem,
-        link=link
+        link=link,
+        lida=False
     )
 
     db.session.add(notificacao)

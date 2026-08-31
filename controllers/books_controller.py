@@ -11,6 +11,7 @@ from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 from utils.google_books import (buscar_google_books, buscar_livro_google)
+from utils.notificacoes import criar_notificacao
 
 from models import (
     Livro,
@@ -18,7 +19,8 @@ from models import (
     DecoracaoEstante,
     SolicitacaoLivro,
     Atividade,
-    Clube
+    Clube,
+    Usuario
 )
 from extensions import db
 
@@ -774,6 +776,28 @@ def solicitar_livro():
         )
 
         db.session.commit()
+        # ==================================
+        # NOTIFICAR ADMINISTRADORES
+        # ==================================
+
+        administradores = Usuario.query.filter_by(
+            tipo="administrador"
+        ).all()
+
+        for administrador in administradores:
+            criar_notificacao(
+                usuario_id=administrador.id,
+                categoria="livros",
+                tipo="solicitacao_livro",
+                titulo="Nova solicitação de livro",
+                mensagem=(
+                    f'{current_user.nome} solicitou o cadastro '
+                    f'do livro "{solicitacao.titulo}".'
+                ),
+                link=url_for(
+                    "books_bp.solicitacoes_admin"
+                )
+            )
 
         flash(
             "Solicitação enviada! "
@@ -1827,6 +1851,21 @@ def aprovar_solicitacao(solicitacao_id):
             livro_existente
         )
 
+        criar_notificacao(
+            usuario_id=solicitacao.solicitante_id,
+            categoria="livros",
+            tipo="livro_aprovado",
+            titulo="Seu livro chegou ao catálogo!",
+            mensagem=(
+                f'O livro "{livro_existente.titulo}", '
+                f"que você solicitou, já está disponível no Liberium."
+            ),
+            link=url_for(
+                "books_bp.ver",
+                id=livro_existente.id
+            )
+        )
+
         flash(
             "O livro já estava cadastrado. "
             "A solicitação foi marcada como aprovada.",
@@ -1865,12 +1904,23 @@ def aprovar_solicitacao(solicitacao_id):
 
     db.session.commit()
 
-    # ==================================
-    # SALVAR TAMBÉM NO JSON
-    # ==================================
-
     adicionar_livro_json(
         novo_livro
+    )
+
+    criar_notificacao(
+        usuario_id=solicitacao.solicitante_id,
+        categoria="livros",
+        tipo="livro_aprovado",
+        titulo="Seu livro chegou ao catálogo!",
+        mensagem=(
+            f'O livro "{novo_livro.titulo}", '
+            f"que você solicitou, foi adicionado ao Liberium."
+        ),
+        link=url_for(
+            "books_bp.ver",
+            id=novo_livro.id
+        )
     )
 
     flash(
@@ -1921,6 +1971,20 @@ def recusar_solicitacao(solicitacao_id):
     solicitacao.status = "recusado"
 
     db.session.commit()
+    
+    criar_notificacao(
+        usuario_id=solicitacao.solicitante_id,
+        categoria="livros",
+        tipo="livro_recusado",
+        titulo="Solicitação de livro analisada",
+        mensagem=(
+            f'A solicitação do livro "{solicitacao.titulo}" '
+            f"não foi aprovada."
+        ),
+        link=url_for(
+            "books_bp.catalogo"
+        )
+    )
 
     flash(
         f'A solicitação de "{solicitacao.titulo}" foi recusada.',

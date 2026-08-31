@@ -19,6 +19,7 @@ from models import (
     DecoracaoEstante,
     ElogioEstante
 )
+from utils.notificacoes import criar_notificacao
 from controllers.estante_controller import montar_prateleira
 from extensions import db
 
@@ -225,7 +226,18 @@ def adicionar_amigo(usuario_id):
 
     db.session.add(nova_amizade)
     db.session.commit()
-
+    
+    criar_notificacao(
+        usuario_id=usuario.id,
+        categoria="social",
+        tipo="amizade",
+        titulo="Nova solicitação de amizade",
+        mensagem=(
+            f"{current_user.nome} enviou uma "
+            "solicitação de amizade para você."
+        ),
+        link=url_for("amigos_bp.solicitacoes")
+    )
 
     flash(
         f"Solicitação enviada para {usuario.nome}!",
@@ -273,7 +285,21 @@ def aceitar_amizade(amizade_id):
     amizade.status = "aceita"
 
     db.session.commit()
-
+    
+    criar_notificacao(
+        usuario_id=amizade.usuario_id,
+        categoria="social",
+        tipo="amizade_aceita",
+        titulo="Solicitação de amizade aceita!",
+        mensagem=(
+            f"{current_user.nome} aceitou sua "
+            "solicitação de amizade."
+        ),
+        link=url_for(
+            "amigos_bp.perfil_usuario",
+            usuario_id=current_user.id
+        )
+    )
 
     flash(
         "Amizade aceita! 🌿",
@@ -651,6 +677,21 @@ def enviar_elogio(usuario_id):
 
     db.session.add(elogio)
     db.session.commit()
+    
+    criar_notificacao(
+        usuario_id=usuario.id,
+        categoria="social",
+        tipo="elogio",
+        titulo="Você recebeu um elogio!",
+        mensagem=(
+            f"{current_user.nome} deixou um elogio "
+            "na sua estante."
+        ),
+        link=url_for(
+            "amigos_bp.estante_amigo",
+            usuario_id=usuario.id
+        )
+    )
 
     flash(
         "Elogio enviado! 💚",
