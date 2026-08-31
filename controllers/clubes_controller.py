@@ -14,7 +14,7 @@ from flask_login import (
     current_user,
     login_required
 )
-
+from utils.notificacoes import criar_notificacao
 from werkzeug.utils import secure_filename
 
 from extensions import db
@@ -751,6 +751,31 @@ def criar_discussao(clube_id):
     )
 
     db.session.commit()
+    membros = (
+        MembroClube.query
+        .filter(
+            MembroClube.clube_id == clube.id,
+            MembroClube.usuario_id != current_user.id
+        )
+        .all()
+        )
+
+    for membro_clube in membros:
+
+        criar_notificacao(
+            usuario_id=membro_clube.usuario_id,
+            categoria="clubes",
+            tipo="discussao",
+            titulo="Nova discussão no clube",
+            mensagem=(
+                f"{current_user.nome} iniciou "
+                f'"{titulo}" no clube {clube.nome}.'
+            ),
+            link=url_for(
+                "clubes.ver_clube",
+                clube_id=clube.id
+            )
+        )
 
     return redirect(
         url_for(
@@ -1100,38 +1125,25 @@ def enviar_convite(clube_id, usuario_id):
 
     db.session.commit()
 
+    criar_notificacao(
+        usuario_id=amigo.id,
+        categoria="clubes",
+        tipo="convite_clube",
+        titulo="Novo convite para clube",
+        mensagem=(
+            f"{current_user.nome} convidou você "
+            f"para participar do clube {clube.nome}."
+        ),
+        link=url_for(
+            "clubes.convites"
+        )
+    )
     return redirect(
         url_for(
             'clubes.ver_clube',
             clube_id=clube_id
         )
     )
-
-
-    # ======================================
-    # CRIAR CONVITE
-    # ======================================
-
-    novo_convite = ConviteClube(
-        clube_id=clube.id,
-        remetente_id=current_user.id,
-        destinatario_id=amigo.id,
-        status='pendente'
-    )
-
-    db.session.add(
-        novo_convite
-    )
-
-    db.session.commit()
-
-    return redirect(
-        url_for(
-            'clubes.ver_clube',
-            clube_id=clube_id
-        )
-    )
-
 
 # ======================================
 # CONVITES RECEBIDOS
@@ -1244,6 +1256,21 @@ def aceitar_convite(convite_id):
     convite.status = 'aceita'
 
     db.session.commit()
+    if clube:
+        criar_notificacao(
+            usuario_id=convite.remetente_id,
+            categoria="clubes",
+            tipo="convite_aceito",
+            titulo="Convite aceito!",
+            mensagem=(
+                f"{current_user.nome} aceitou seu convite "
+                f"para participar do clube {clube.nome}."
+            ),
+            link=url_for(
+                "clubes.ver_clube",
+                clube_id=clube.id
+            )
+    )
 
     return redirect(
         url_for(
