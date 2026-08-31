@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=barcode_scanner" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=barcode_scanner,notifications,notifications_none,menu_book,groups,person" />
 
 </head>
 
@@ -63,27 +63,174 @@
             </a>
 
             {% if current_user.is_authenticated and current_user.tipo == "administrador" %}
+
                 <a href="{{ url_for('admin_bp.painel') }}">
                     Administração
                 </a>
+
             {% endif %}
-        
-            <a href="{{ url_for('user_bp.perfil') }}">
-                {{ current_user.nome }}
-            </a>
-        
+
+
             {% if current_user.is_authenticated %}
-        
+
+                <!-- ======================================
+                    SINO DE NOTIFICAÇÕES
+                ======================================= -->
+
+                <div class="notificacoes-nav">
+
+                    <button
+                        type="button"
+                        class="notificacoes-botao"
+                        id="botaoNotificacoes"
+                        aria-label="Abrir notificações"
+                    >
+
+                        <span class="material-symbols-outlined sino-notificacao">
+                            notifications
+                        </span>
+
+                        {% if quantidade_notificacoes > 0 %}
+
+                            <span class="notificacoes-contador">
+
+                                {% if quantidade_notificacoes > 9 %}
+                                    9+
+                                {% else %}
+                                    {{ quantidade_notificacoes }}
+                                {% endif %}
+
+                            </span>
+
+                        {% endif %}
+
+                    </button>
+
+
+                    <!-- ======================================
+                        DROPDOWN DE NOTIFICAÇÕES
+                    ======================================= -->
+
+                    <div class="notificacoes-dropdown" id="dropdownNotificacoes">
+
+                        <div class="notificacoes-cabecalho">
+
+                            <h3>Notificações</h3>
+
+                            {% if quantidade_notificacoes > 0 %}
+
+                                <span>
+                                    {{ quantidade_notificacoes }}
+                                    nova{% if quantidade_notificacoes != 1 %}s{% endif %}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- LISTA -->
+
+                        <div class="notificacoes-lista">
+
+                            {% for notificacao in notificacoes_navbar %}
+
+                                <a
+                                    href="{{ url_for('notificacoes.listar') }}"
+                                    class="notificacao-item"
+                                >
+
+                                    <div class="notificacao-icone">
+
+                                        {% if notificacao.categoria == "livros" %}
+
+                                            <span class="material-symbols-outlined">
+                                                menu_book
+                                            </span>
+
+                                        {% elif notificacao.categoria == "clubes" %}
+
+                                            <span class="material-symbols-outlined">
+                                                groups
+                                            </span>
+
+                                        {% elif notificacao.categoria == "amigos" %}
+
+                                            <span class="material-symbols-outlined">
+                                                person
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="material-symbols-outlined">
+                                                notifications
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="notificacao-conteudo">
+
+                                        <strong>
+                                            {{ notificacao.titulo }}
+                                        </strong>
+
+                                        <p>
+                                            {{ notificacao.mensagem }}
+                                        </p>
+
+                                    </div>
+
+                                </a>
+
+                            {% else %}
+
+                                <div class="notificacoes-vazio">
+
+                                    <span class="material-symbols-outlined">
+                                        notifications_none
+                                    </span>
+
+                                    <p>
+                                        Nenhuma notificação nova.
+                                    </p>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- RODAPÉ -->
+
+                        <div class="notificacoes-rodape">
+
+                            <a href="{{ url_for('notificacoes.listar') }}">
+                                Ver todas as notificações →
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <a href="{{ url_for('user_bp.perfil') }}">
+                    {{ current_user.nome }}
+                </a>
+
                 <a href="{{ url_for('user_bp.logout') }}">
                     Sair
                 </a>
-        
+
             {% else %}
-        
+
                 <a href="{{ url_for('user_bp.perfil') }}">
                     Perfil
                 </a>
-        
+
             {% endif %}
         
         </div>
@@ -201,6 +348,63 @@
         });
 
     }, 10000);
+
+</script>
+
+<script>
+
+    const botaoNotificacoes =
+        document.getElementById(
+            "botaoNotificacoes"
+        );
+
+    const dropdownNotificacoes =
+        document.getElementById(
+            "dropdownNotificacoes"
+        );
+
+
+    if (
+        botaoNotificacoes &&
+        dropdownNotificacoes
+    ) {
+
+        botaoNotificacoes.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                dropdownNotificacoes.classList.toggle(
+                    "ativo"
+                );
+
+            }
+        );
+
+
+        dropdownNotificacoes.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function() {
+
+                dropdownNotificacoes.classList.remove(
+                    "ativo"
+                );
+
+            }
+        );
+
+    }
 
 </script>
 
