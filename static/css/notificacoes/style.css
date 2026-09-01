@@ -217,20 +217,8 @@
     overflow: visible;
 }
 
-.notificacao-icone img {
-    width: 52px;
-    height: 52px;
 
-    object-fit: contain;
-    display: block;
-}
 
-.btn-excluir img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    display: block;
-}
 
 /* =========================================
    INFORMAÇÕES
@@ -338,8 +326,8 @@
 ========================================= */
 
 .btn-excluir {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
 
     padding: 8px;
 
@@ -368,8 +356,8 @@
 
 
 .btn-excluir img {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
 
     object-fit: contain;
 }
@@ -502,33 +490,36 @@
 }
 
 /* =========================================
-   TAMANHO DOS ÍCONES DAS NOTIFICAÇÕES
+   ÍCONES DAS NOTIFICAÇÕES
 ========================================= */
 
 .notificacao-card .notificacao-icone {
-    width: 78px;
-    height: 78px;
-
-    min-width: 78px;
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border-radius: 50%;
+    overflow: hidden;
 
     background: transparent;
     border: none;
 }
 
 .notificacao-card .notificacao-icone img {
-    width: 72px !important;
-    height: 72px !important;
+    width: 100%;
+    height: 100%;
 
-    max-width: none !important;
-    max-height: none !important;
+    object-fit: cover;
 
-    object-fit: contain;
+    transform: scale(1.25);
+
     display: block;
 }
+
 /* =========================================
    AÇÕES DA NOTIFICAÇÃO
 ========================================= */

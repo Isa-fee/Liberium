@@ -1,47 +1,65 @@
 /* =========================================================
    LIBERIUM — PÁGINA DO CLUBE
+   NOVO DESIGN
 ========================================================= */
 
 
 /* =========================================================
-   CONTEÚDO GERAL
+   PÁGINA
 ========================================================= */
 
-.clube-conteudo {
+.pagina-clube {
     width: 100%;
-    max-width: 1050px;
-    margin: 0 auto;
-    padding: 45px 30px 80px;
-    box-sizing: border-box;
+    min-height: 100vh;
+
+    background: #fdfcfb;
 
     color: #442b1a;
 }
 
 
+.clube-conteudo {
+    width: 100%;
+    max-width: 1280px;
+
+    margin: 0 auto;
+
+    padding: 38px 38px 90px;
+
+    box-sizing: border-box;
+}
+
+
 /* =========================================================
-   NAVEGAÇÃO SUPERIOR
+   VOLTAR
 ========================================================= */
 
 .clube-topo {
-    margin-bottom: 18px;
+    margin-bottom: 22px;
 }
+
 
 .btn-voltar {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
 
-    color: #6f806c;
-    font-size: 0.86rem;
+    color: #71806e;
+
+    font-size: 0.78rem;
     font-weight: 500;
+
     text-decoration: none;
 
-    transition: 0.2s ease;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 .btn-voltar:hover {
     color: #36503c;
-    transform: translateX(-2px);
+
+    transform: translateX(-3px);
 }
 
 
@@ -50,55 +68,83 @@
 ========================================================= */
 
 .clube-header {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.75fr);
-    gap: 35px;
+    position: relative;
 
-    padding: 30px 32px;
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        340px;
+
+    gap: 40px;
+
+    padding: 32px;
+
+    overflow: hidden;
 
     background: #ffffff;
 
     border: 1px solid #e8e3dd;
     border-radius: 18px;
 
-    box-shadow: 0 5px 22px rgba(68, 43, 26, 0.05);
+    box-shadow:
+        0 8px 28px rgba(68, 43, 26, 0.045);
+}
+
+
+/* detalhe decorativo */
+
+.clube-header::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #879d84;
 }
 
 
 /* =========================================================
-   CABEÇALHO — PARTE PRINCIPAL
+   CABEÇALHO — INFORMAÇÕES
 ========================================================= */
 
 .clube-header-principal {
     display: flex;
     align-items: flex-start;
-    gap: 22px;
+
+    gap: 24px;
 
     min-width: 0;
 }
 
 
 /* =========================================================
-   AVATAR DO CLUBE
+   AVATAR
 ========================================================= */
 
 .clube-avatar {
-    width: 105px;
-    height: 105px;
+    width: 118px;
+    height: 118px;
 
     flex-shrink: 0;
+
+    overflow: hidden;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    overflow: hidden;
-
     background: #eef2eb;
 
-    border: 1px solid #e2e6df;
-    border-radius: 16px;
+    border: 1px solid #dfe6dc;
+    border-radius: 17px;
 }
+
 
 .clube-avatar img {
     width: 100%;
@@ -108,6 +154,7 @@
 
     object-fit: cover;
 }
+
 
 .clube-avatar-sem-imagem {
     width: 100%;
@@ -119,19 +166,22 @@
 
     color: #60725d;
 
-    font-size: 2rem;
-    font-weight: 600;
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 2.5rem;
 }
 
 
 /* =========================================================
-   INFORMAÇÕES DO CLUBE
+   INFORMAÇÕES
 ========================================================= */
 
 .clube-informacoes {
     flex: 1;
+
     min-width: 0;
 }
+
 
 .clube-titulo {
     display: flex;
@@ -140,22 +190,26 @@
 
     gap: 8px;
 
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
+
 .clube-titulo h1 {
-    margin: 0 6px 0 0;
+    margin: 0 8px 0 0;
 
     color: #442b1a;
 
-    font-size: 1.7rem;
-    font-weight: 600;
-    line-height: 1.2;
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 2rem;
+    font-weight: 400;
+
+    line-height: 1.15;
 }
 
 
 /* =========================================================
-   STATUS
+   BADGES
 ========================================================= */
 
 .clube-status,
@@ -164,67 +218,73 @@
     align-items: center;
     justify-content: center;
 
-    min-height: 25px;
+    min-height: 24px;
 
     padding: 4px 10px;
 
     box-sizing: border-box;
 
-    border-radius: 20px;
+    border-radius: 50px;
 
-    font-size: 0.69rem;
+    font-size: 0.63rem;
     font-weight: 600;
 }
 
+
 .clube-status {
     background: #edf2e9;
+
     color: #53684f;
 }
 
-.clube-privacidade.privado {
-    background: #f5f0e9;
-    color: #654c39;
-}
 
 .clube-privacidade.publico {
-    background: #edf3eb;
-    color: #486046;
+    background: #f2f5ef;
+
+    color: #52684f;
+}
+
+
+.clube-privacidade.privado {
+    background: #f5f0e9;
+
+    color: #725742;
 }
 
 
 /* =========================================================
-   META E DESCRIÇÃO
+   META
 ========================================================= */
 
 .clube-meta {
-    margin: 7px 0 12px;
+    margin: 0 0 11px;
 
-    color: #938277;
+    color: #9a897d;
 
-    font-size: 0.79rem;
+    font-size: 0.75rem;
 }
 
+
 .clube-descricao {
-    max-width: 500px;
+    max-width: 610px;
 
-    margin: 0 0 17px;
+    margin: 0 0 18px;
 
-    color: #6e5e52;
+    color: #6f6055;
 
-    font-size: 0.86rem;
-    line-height: 1.55;
+    font-size: 0.82rem;
 
-    word-break: break-word;
+    line-height: 1.65;
 }
 
 
 /* =========================================================
-   LEITURA ATUAL
+   LEITURA ATUAL — MINI CARD
 ========================================================= */
 
 .leitura-atual {
     width: fit-content;
-    min-width: 190px;
+    min-width: 230px;
     max-width: 100%;
 
     display: flex;
@@ -232,51 +292,52 @@
 
     padding: 11px 14px;
 
-    box-sizing: border-box;
-
     background: #faf9f7;
 
-    border: 1px solid #e7e1db;
-    border-radius: 10px;
+    border: 1px solid #e8e2dc;
+    border-radius: 9px;
 }
 
+
 .leitura-label {
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 
     color: #71816e;
 
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 700;
 
-    letter-spacing: 0.07em;
+    letter-spacing: 0.09em;
+
     text-transform: uppercase;
 }
+
 
 .leitura-atual strong {
     color: #442b1a;
 
-    font-size: 0.84rem;
-    line-height: 1.3;
+    font-size: 0.82rem;
+    font-weight: 600;
 }
+
 
 .leitura-atual small {
     margin-top: 2px;
 
-    color: #8d7c70;
+    color: #958479;
 
-    font-size: 0.7rem;
+    font-size: 0.68rem;
 }
 
 
 /* =========================================================
-   ÁREA DE AÇÕES
+   AÇÕES
 ========================================================= */
 
 .clube-acoes {
-    display: flex;
-    align-items: stretch;
-
     min-width: 0;
+
+    display: flex;
 }
 
 
@@ -291,97 +352,103 @@
     flex-direction: column;
     justify-content: center;
 
-    padding: 21px;
+    padding: 22px;
 
-    box-sizing: border-box;
+    background: #f7f9f5;
 
-    background: #f6f8f3;
-
-    border: 1px solid #dfe6dc;
-    border-radius: 14px;
+    border: 1px solid #dfe7dc;
+    border-radius: 13px;
 }
+
 
 .painel-criador-texto {
     display: flex;
     flex-direction: column;
 
-    margin-bottom: 17px;
+    margin-bottom: 18px;
 }
+
 
 .painel-criador-label {
     margin-bottom: 6px;
 
     color: #71816e;
 
-    font-size: 0.65rem;
+    font-size: 0.59rem;
     font-weight: 700;
 
     letter-spacing: 0.12em;
 }
+
 
 .painel-criador-texto strong {
     margin-bottom: 5px;
 
     color: #442b1a;
 
+    font-family: "Tenor Sans", sans-serif;
+
     font-size: 1.05rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
-.painel-criador-texto small {
-    color: #817267;
 
-    font-size: 0.76rem;
+.painel-criador-texto small {
+    color: #83746a;
+
+    font-size: 0.71rem;
+
     line-height: 1.5;
 }
 
 
-/* =========================================================
-   BOTÕES DO PAINEL DO CRIADOR
-========================================================= */
-
 .painel-criador-acoes {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 9px;
 }
 
-.painel-criador-acoes .btn-secundario,
-.btn-gerenciar-clube {
-    width: 100%;
-    min-height: 42px;
 
-    display: flex;
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.btn-primario,
+.btn-secundario,
+.btn-gerenciar-clube {
+    min-height: 40px;
+
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    padding: 10px 12px;
+    padding: 9px 15px;
 
     box-sizing: border-box;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
     font-family: inherit;
-    font-size: 0.76rem;
+
+    font-size: 0.72rem;
     font-weight: 600;
 
-    text-align: center;
     text-decoration: none;
 
     cursor: pointer;
 
     transition:
         background 0.2s ease,
-        border-color 0.2s ease,
         color 0.2s ease,
+        border-color 0.2s ease,
         transform 0.2s ease;
 }
 
 
-/* CONVIDAR */
-
-.painel-criador-acoes .btn-secundario {
+.btn-primario {
     background: #36503c;
 
     border: 1px solid #36503c;
@@ -389,24 +456,36 @@
     color: #ffffff;
 }
 
-.painel-criador-acoes .btn-secundario:hover {
-    background: #2d4433;
 
-    border-color: #2d4433;
+.btn-primario:hover {
+    background: #2d4433;
 
     transform: translateY(-1px);
 }
 
 
-/* GERENCIAR */
+.btn-secundario {
+    background: #ffffff;
+
+    border: 1px solid #879d84;
+
+    color: #486046;
+}
+
+
+.btn-secundario:hover {
+    background: #edf2eb;
+}
+
 
 .btn-gerenciar-clube {
     background: #ffffff;
 
-    border: 1px solid #cdd8ca;
+    border: 1px solid #ccd7c9;
 
     color: #486046;
 }
+
 
 .btn-gerenciar-clube:hover {
     background: #edf2eb;
@@ -417,8 +496,27 @@
 }
 
 
+.painel-criador-acoes .btn-secundario {
+    background: #36503c;
+
+    border-color: #36503c;
+
+    color: #ffffff;
+}
+
+
+.painel-criador-acoes .btn-secundario:hover {
+    background: #2d4433;
+}
+
+
+.btn-largura {
+    width: 100%;
+}
+
+
 /* =========================================================
-   AVISO CLUBE PRIVADO
+   CLUBE PRIVADO
 ========================================================= */
 
 .aviso-clube-privado {
@@ -427,85 +525,30 @@
     display: flex;
     flex-direction: column;
 
-    gap: 5px;
+    gap: 6px;
 
     padding: 20px;
 
-    box-sizing: border-box;
-
     background: #f8f5f1;
 
-    border: 1px solid #e6ddd4;
-    border-radius: 12px;
+    border: 1px solid #e7ded5;
+    border-radius: 11px;
 }
+
 
 .aviso-clube-privado strong {
-    color: #5e4635;
+    color: #604936;
 
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
+
 
 .aviso-clube-privado span {
-    color: #88776a;
+    color: #8b796b;
 
-    font-size: 0.78rem;
+    font-size: 0.73rem;
+
     line-height: 1.5;
-}
-
-
-/* =========================================================
-   BOTÕES GERAIS
-========================================================= */
-
-.btn-primario,
-.btn-secundario {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 10px 16px;
-
-    box-sizing: border-box;
-
-    border-radius: 8px;
-
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 600;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.btn-primario {
-    background: #36503c;
-
-    border: 1px solid #36503c;
-
-    color: #ffffff;
-}
-
-.btn-primario:hover {
-    background: #2d4433;
-}
-
-.btn-secundario {
-    background: #ffffff;
-
-    border: 1px solid #879d84;
-
-    color: #486046;
-}
-
-.btn-secundario:hover {
-    background: #edf2eb;
-}
-
-.btn-largura {
-    width: 100%;
 }
 
 
@@ -518,23 +561,20 @@
 
     width: 100%;
 
-    margin: 18px 0 30px;
+    margin: 20px 0 0;
     padding: 25px 28px;
 
     box-sizing: border-box;
 
     background: #ffffff;
 
-    border: 1px solid #e6e0da;
-    border-radius: 15px;
+    border: 1px solid #e7e1db;
+    border-radius: 14px;
 
-    box-shadow: 0 5px 20px rgba(68, 43, 26, 0.05);
+    box-shadow:
+        0 5px 20px rgba(68, 43, 26, 0.04);
 }
 
-
-/* =========================================================
-   CABEÇALHO DOS CONVITES
-========================================================= */
 
 .convites-cabecalho {
     display: flex;
@@ -548,6 +588,7 @@
     border-bottom: 1px solid #eee9e4;
 }
 
+
 .convites-label {
     display: block;
 
@@ -555,40 +596,41 @@
 
     color: #71816e;
 
-    font-size: 0.64rem;
+    font-size: 0.6rem;
     font-weight: 700;
 
     letter-spacing: 0.12em;
 }
+
 
 .convites-cabecalho h3 {
     margin: 0 0 5px;
 
     color: #442b1a;
 
-    font-size: 1.12rem;
-    font-weight: 600;
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.1rem;
+    font-weight: 400;
 }
 
+
 .convites-cabecalho p {
-    max-width: 600px;
+    max-width: 620px;
 
     margin: 0;
 
     color: #817269;
 
-    font-size: 0.78rem;
+    font-size: 0.75rem;
+
     line-height: 1.5;
 }
 
 
-/* =========================================================
-   FECHAR CONVITES
-========================================================= */
-
 .btn-fechar-convites {
-    width: 32px;
-    height: 32px;
+    width: 31px;
+    height: 31px;
 
     flex-shrink: 0;
 
@@ -605,51 +647,582 @@
 
     color: #6e5d50;
 
-    font-size: 1.1rem;
-    line-height: 1;
+    font-size: 1rem;
 
     cursor: pointer;
-
-    transition: 0.2s ease;
 }
 
-.btn-fechar-convites:hover {
-    background: #eae4de;
-}
-
-
-/* =========================================================
-   LISTA DE AMIGOS PARA CONVIDAR
-========================================================= */
 
 .amigos-lista {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
     gap: 10px;
 
     padding-top: 17px;
 }
 
+
 .amigo-convite {
+    min-width: 0;
+
     display: flex;
     align-items: center;
 
     gap: 11px;
-
-    min-width: 0;
 
     padding: 12px 13px;
 
     background: #faf9f7;
 
     border: 1px solid #ebe6e0;
-    border-radius: 10px;
+    border-radius: 9px;
 }
 
-.amigo-convite .membro-avatar {
-    width: 41px;
-    height: 41px;
+
+.amigo-convite .membro-info {
+    flex: 1;
+}
+
+
+.amigo-convite form {
+    margin: 0;
+}
+
+
+.sem-amigos-convite {
+    padding: 25px 10px 5px;
+
+    text-align: center;
+}
+
+
+.sem-amigos-convite p {
+    margin: 0;
+
+    color: #8e7f74;
+
+    font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   ABAS
+========================================================= */
+
+.clube-abas {
+    display: flex;
+    align-items: center;
+
+    gap: 26px;
+
+    margin-top: 32px;
+
+    border-bottom: 1px solid #ddd7d1;
+}
+
+
+.aba-btn {
+    position: relative;
+
+    padding: 12px 2px;
+
+    background: transparent;
+
+    border: none;
+
+    color: #8b7b70;
+
+    font-family: inherit;
+
+    font-size: 0.77rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+
+.aba-btn:hover,
+.aba-btn.ativo {
+    color: #36503c;
+}
+
+
+.aba-btn.ativo::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 2px;
+
+    background: #36503c;
+
+    border-radius: 3px 3px 0 0;
+}
+
+
+/* =========================================================
+   ABAS — CONTEÚDO
+========================================================= */
+
+.aba-conteudo {
+    display: none;
+}
+
+
+.aba-conteudo.ativo {
+    display: block;
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+
+   Aqui está uma das mudanças mais importantes.
+========================================================= */
+
+.clube-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        285px;
+
+    gap: 22px;
+
+    margin-top: 22px;
+}
+
+
+.clube-principal {
+    min-width: 0;
+}
+
+
+.clube-sidebar {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card-clube {
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e9e4de;
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 18px rgba(68, 43, 26, 0.035);
+}
+
+
+.card-clube > h2 {
+    margin: 0 0 25px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.35rem;
+    font-weight: 400;
+}
+
+
+.card-clube > h3 {
+    margin: 0 0 5px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+.card-subtitulo {
+    margin: 0 0 20px;
+
+    color: #95857a;
+
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   LIVRO
+
+   Outra mudança importantíssima.
+========================================================= */
+
+.livro-container {
+    display: grid;
+
+    grid-template-columns:
+        165px
+        minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 30px;
+}
+
+
+/* CAPA */
+
+.livro-capa {
+    width: 165px;
+
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    background: #f1eee9;
+
+    border: 1px solid #e5ded8;
+    border-radius: 8px;
+
+    box-shadow:
+        0 7px 18px rgba(68, 43, 26, 0.1);
+}
+
+
+.livro-capa img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.livro-sem-capa {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    color: #9a8c82;
+
+    font-size: 0.72rem;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO LIVRO
+========================================================= */
+
+.livro-informacoes {
+    min-width: 0;
+}
+
+
+.livro-informacoes h3 {
+    margin: 0 0 4px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.4rem;
+    font-weight: 400;
+
+    line-height: 1.25;
+}
+
+
+.livro-autor {
+    margin: 0 0 11px;
+
+    color: #8b7b70;
+
+    font-size: 0.78rem;
+}
+
+
+.livro-genero {
+    display: inline-flex;
+
+    margin-bottom: 15px;
+    padding: 5px 10px;
+
+    background: #edf2eb;
+
+    border-radius: 30px;
+
+    color: #52684f;
+
+    font-size: 0.63rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SINOPSE
+
+   Agora ela tem espaço horizontal.
+========================================================= */
+
+.livro-sinopse {
+    max-width: 100%;
+
+    margin: 0 0 18px;
+
+    color: #6e5f54;
+
+    font-size: 0.79rem;
+
+    line-height: 1.72;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   ESPECIFICAÇÕES
+========================================================= */
+
+.livro-especificacoes {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px 18px;
+
+    margin: 0;
+    padding: 15px 0 0;
+
+    border-top: 1px solid #eee9e4;
+
+    list-style: none;
+}
+
+
+.livro-especificacoes li {
+    color: #88786d;
+
+    font-size: 0.7rem;
+}
+
+
+.livro-especificacoes strong {
+    color: #5d4a3c;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   AÇÕES DO LIVRO
+========================================================= */
+
+.livro-acoes {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eee9e4;
+}
+
+
+.livro-acoes form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   SEM LIVRO
+========================================================= */
+
+.sem-livro {
+    padding: 40px 20px;
+
+    background: #faf9f7;
+
+    border-radius: 10px;
+
+    text-align: center;
+}
+
+
+.sem-livro h3 {
+    margin: 0 0 5px;
+
+    font-size: 1rem;
+}
+
+
+.sem-livro p {
+    margin: 0;
+
+    color: #8c7e74;
+
+    font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.progresso-card {
+    padding: 23px;
+}
+
+
+.progresso-info {
+    display: flex;
+    align-items: baseline;
+
+    gap: 6px;
+
+    margin-bottom: 11px;
+}
+
+
+.progresso-porcentagem {
+    color: #36503c;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.65rem;
+}
+
+
+.progresso-paginas {
+    color: #918176;
+
+    font-size: 0.68rem;
+}
+
+
+.barra-progresso {
+    width: 100%;
+    height: 7px;
+
+    overflow: hidden;
+
+    margin-bottom: 17px;
+
+    background: #ebe8e3;
+
+    border-radius: 20px;
+}
+
+
+.barra-progresso-preenchida {
+    width: 0;
+    height: 100%;
+
+    background: #879d84;
+
+    border-radius: inherit;
+
+    transition: width 0.4s ease;
+}
+
+
+.aviso-participacao,
+.sem-progresso {
+    margin: 13px 0 0;
+
+    padding: 10px;
+
+    background: #f7f5f2;
+
+    border-radius: 7px;
+
+    color: #897a70;
+
+    font-size: 0.68rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SIDEBAR — PARTICIPANTES
+========================================================= */
+
+.sidebar-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+
+.sidebar-cabecalho h3 {
+    margin: 0 0 3px;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+.sidebar-cabecalho span {
+    color: #95867b;
+
+    font-size: 0.67rem;
+}
+
+
+.sidebar-membros {
+    display: flex;
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+
+.sidebar-membro {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.membro-avatar {
+    width: 38px;
+    height: 38px;
 
     flex-shrink: 0;
 
@@ -665,388 +1238,45 @@
 
     color: #53674f;
 
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
-.amigo-convite .membro-avatar img {
+
+.membro-avatar img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 }
 
-.amigo-convite .membro-info {
-    flex: 1;
+
+.membro-info {
     min-width: 0;
 
     display: flex;
     flex-direction: column;
-
-    gap: 2px;
 }
 
-.amigo-convite .membro-info strong {
+
+.membro-info strong {
     overflow: hidden;
 
     color: #442b1a;
 
-    font-size: 0.82rem;
+    font-size: 0.73rem;
 
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.amigo-convite .membro-info span {
-    color: #998a7f;
 
-    font-size: 0.69rem;
-}
+.membro-info span {
+    margin-top: 2px;
 
-.amigo-convite form {
-    flex-shrink: 0;
+    color: #9a8c81;
 
-    margin: 0;
-}
-
-.amigo-convite .btn-secundario {
-    padding: 8px 12px;
-
-    border-radius: 7px;
-
-    font-size: 0.71rem;
-}
-
-
-/* =========================================================
-   SEM AMIGOS
-========================================================= */
-
-.sem-amigos-convite {
-    padding: 25px 10px 5px;
-
-    text-align: center;
-}
-
-.sem-amigos-convite p {
-    margin: 0;
-
-    color: #8e7f74;
-
-    font-size: 0.8rem;
-}
-
-
-/* =========================================================
-   ABAS
-========================================================= */
-
-.clube-abas {
-    display: flex;
-    align-items: center;
-
-    gap: 4px;
-
-    margin-top: 26px;
-
-    border-bottom: 1px solid #dcd6d0;
-}
-
-.aba-btn {
-    position: relative;
-
-    padding: 12px 18px;
-
-    background: transparent;
-
-    border: none;
-
-    color: #82756b;
-
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.aba-btn:hover {
-    color: #36503c;
-}
-
-.aba-btn.ativo {
-    color: #36503c;
-}
-
-.aba-btn.ativo::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: -1px;
-
-    height: 2px;
-
-    background: #36503c;
-
-    border-radius: 2px 2px 0 0;
-}
-
-
-/* =========================================================
-   CONTEÚDO DAS ABAS
-========================================================= */
-
-.aba-conteudo {
-    display: none;
-}
-
-.aba-conteudo.ativo {
-    display: block;
-}
-
-
-/* =========================================================
-   GRID PRINCIPAL
-========================================================= */
-
-.clube-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
-
-    gap: 22px;
-
-    margin-top: 22px;
-}
-
-.clube-principal {
-    min-width: 0;
-}
-
-.clube-sidebar {
-    display: flex;
-    flex-direction: column;
-
-    gap: 18px;
-}
-
-
-/* =========================================================
-   CARD PADRÃO
-========================================================= */
-
-.card-clube {
-    padding: 26px;
-
-    box-sizing: border-box;
-
-    background: #ffffff;
-
-    border: 1px solid #e9e4de;
-    border-radius: 14px;
-
-    box-shadow: 0 3px 15px rgba(68, 43, 26, 0.035);
-}
-
-.card-clube h2,
-.card-clube h3 {
-    color: #442b1a;
-}
-
-.card-clube > h2 {
-    margin: 0 0 22px;
-
-    font-size: 1.25rem;
-}
-
-.card-clube > h3 {
-    margin: 0 0 5px;
-
-    font-size: 1rem;
-}
-
-.card-subtitulo {
-    margin: 0 0 20px;
-
-    color: #8c7d72;
-
-    font-size: 0.77rem;
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   LIVRO
-========================================================= */
-
-.livro-container {
-    display: flex;
-    align-items: flex-start;
-
-    gap: 24px;
-}
-
-.livro-capa {
-    width: 135px;
-    min-width: 135px;
-
-    aspect-ratio: 2 / 3;
-
-    overflow: hidden;
-
-    background: #f1eee9;
-
-    border: 1px solid #e5ded8;
-    border-radius: 8px;
-}
-
-.livro-capa img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-}
-
-.livro-sem-capa {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 10px;
-
-    box-sizing: border-box;
-
-    color: #9a8c82;
-
-    font-size: 0.75rem;
-    text-align: center;
-}
-
-.livro-informacoes {
-    flex: 1;
-    min-width: 0;
-}
-
-.livro-informacoes h3 {
-    margin: 0 0 4px;
-
-    color: #442b1a;
-
-    font-size: 1.2rem;
-}
-
-.livro-autor {
-    margin: 0 0 10px;
-
-    color: #8a796d;
-
-    font-size: 0.8rem;
-}
-
-.livro-genero {
-    display: inline-flex;
-
-    margin-bottom: 13px;
-    padding: 5px 9px;
-
-    background: #edf2eb;
-
-    border-radius: 20px;
-
-    color: #52684f;
-
-    font-size: 0.68rem;
-    font-weight: 600;
-}
-
-.livro-sinopse {
-    margin: 0 0 15px;
-
-    color: #6e5f54;
-
-    font-size: 0.82rem;
-    line-height: 1.6;
-}
-
-.livro-especificacoes {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 8px 18px;
-
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-}
-
-.livro-especificacoes li {
-    color: #83746a;
-
-    font-size: 0.74rem;
-}
-
-.livro-especificacoes strong {
-    color: #5d4a3c;
-}
-
-
-/* =========================================================
-   AÇÕES DO LIVRO
-========================================================= */
-
-.livro-acoes {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    margin-top: 22px;
-    padding-top: 18px;
-
-    border-top: 1px solid #eee9e4;
-}
-
-.livro-acoes form {
-    margin: 0;
-}
-
-
-/* =========================================================
-   SEM LIVRO
-========================================================= */
-
-.sem-livro {
-    padding: 35px 20px;
-
-    background: #faf9f7;
-
-    border-radius: 10px;
-
-    text-align: center;
-}
-
-.sem-livro h3 {
-    margin: 0 0 5px;
-
-    font-size: 1rem;
-}
-
-.sem-livro p {
-    margin: 0;
-
-    color: #8c7e74;
-
-    font-size: 0.8rem;
+    font-size: 0.62rem;
 }
 
 
@@ -1055,8 +1285,9 @@
 ========================================================= */
 
 .discussao-container {
-    padding: 28px;
+    padding: 30px;
 }
+
 
 .discussao-topo {
     display: flex;
@@ -1065,10 +1296,11 @@
 
     gap: 25px;
 
-    padding-bottom: 20px;
+    padding-bottom: 22px;
 
     border-bottom: 1px solid #eee9e4;
 }
+
 
 .discussao-label {
     display: block;
@@ -1077,19 +1309,24 @@
 
     color: #71816e;
 
-    font-size: 0.63rem;
+    font-size: 0.59rem;
     font-weight: 700;
 
     letter-spacing: 0.12em;
 }
+
 
 .discussao-topo h2 {
     margin: 0 0 6px;
 
     color: #442b1a;
 
-    font-size: 1.25rem;
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.3rem;
+    font-weight: 400;
 }
+
 
 .discussao-topo p {
     max-width: 520px;
@@ -1098,14 +1335,11 @@
 
     color: #87776c;
 
-    font-size: 0.8rem;
+    font-size: 0.76rem;
+
     line-height: 1.55;
 }
 
-
-/* =========================================================
-   BOTÃO NOVO COMENTÁRIO
-========================================================= */
 
 .btn-novo-comentario,
 .btn-vazio-comentario {
@@ -1114,22 +1348,18 @@
     background: #36503c;
 
     border: 1px solid #36503c;
-    border-radius: 8px;
+    border-radius: 7px;
 
     color: #ffffff;
 
     font-family: inherit;
-    font-size: 0.76rem;
+
+    font-size: 0.72rem;
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: 0.2s ease;
 }
 
-.btn-novo-comentario {
-    flex-shrink: 0;
-}
 
 .btn-novo-comentario:hover,
 .btn-vazio-comentario:hover {
@@ -1143,17 +1373,19 @@
 
 .form-comentario-box {
     margin-top: 20px;
-    padding: 20px;
+    padding: 21px;
 
     background: #faf9f7;
 
     border: 1px solid #e9e3dd;
-    border-radius: 11px;
+    border-radius: 10px;
 }
+
 
 .form-comentario-titulo {
     margin-bottom: 17px;
 }
+
 
 .form-comentario-titulo h3 {
     margin: 0 0 4px;
@@ -1161,13 +1393,15 @@
     font-size: 0.95rem;
 }
 
+
 .form-comentario-titulo p {
     margin: 0;
 
     color: #8b7c71;
 
-    font-size: 0.76rem;
+    font-size: 0.72rem;
 }
+
 
 .form-grupo {
     display: flex;
@@ -1178,18 +1412,21 @@
     margin-bottom: 15px;
 }
 
+
 .form-grupo label {
     color: #594435;
 
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 600;
 }
+
 
 .form-grupo label span {
     color: #a09287;
 
     font-weight: 400;
 }
+
 
 .form-grupo input,
 .form-grupo textarea {
@@ -1202,17 +1439,16 @@
     background: #ffffff;
 
     border: 1px solid #ded7d1;
-    border-radius: 8px;
+    border-radius: 7px;
 
     outline: none;
 
     color: #442b1a;
 
     font-family: inherit;
-    font-size: 0.8rem;
-
-    transition: 0.2s ease;
+    font-size: 0.77rem;
 }
+
 
 .form-grupo textarea {
     resize: vertical;
@@ -1220,22 +1456,25 @@
     line-height: 1.55;
 }
 
+
 .form-grupo input:focus,
 .form-grupo textarea:focus {
     border-color: #879d84;
 
-    box-shadow: 0 0 0 3px rgba(135, 157, 132, 0.11);
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.11);
 }
+
 
 .form-grupo small {
     color: #998b80;
 
-    font-size: 0.72rem;
+    font-size: 0.69rem;
 }
 
 
 /* =========================================================
-   AÇÕES DO FORMULÁRIO
+   FORM — BOTÕES
 ========================================================= */
 
 .form-acoes,
@@ -1247,6 +1486,7 @@
     gap: 9px;
 }
 
+
 .btn-cancelar,
 .btn-publicar {
     padding: 9px 15px;
@@ -1254,13 +1494,13 @@
     border-radius: 7px;
 
     font-family: inherit;
-    font-size: 0.75rem;
+
+    font-size: 0.72rem;
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: 0.2s ease;
 }
+
 
 .btn-cancelar {
     background: #ffffff;
@@ -1270,9 +1510,6 @@
     color: #715f52;
 }
 
-.btn-cancelar:hover {
-    background: #f3f0ed;
-}
 
 .btn-publicar {
     background: #36503c;
@@ -1282,13 +1519,9 @@
     color: #ffffff;
 }
 
-.btn-publicar:hover {
-    background: #2d4433;
-}
-
 
 /* =========================================================
-   TÍTULO DAS DISCUSSÕES
+   DISCUSSÕES EXISTENTES
 ========================================================= */
 
 .discussoes-titulo {
@@ -1298,28 +1531,25 @@
 
     gap: 15px;
 
-    margin-top: 24px;
-    margin-bottom: 12px;
+    margin: 24px 0 12px;
 }
+
 
 .discussoes-titulo h3 {
     margin: 0;
 
     color: #442b1a;
 
-    font-size: 0.9rem;
+    font-size: 0.87rem;
 }
+
 
 .discussoes-titulo span {
     color: #918278;
 
-    font-size: 0.72rem;
+    font-size: 0.68rem;
 }
 
-
-/* =========================================================
-   LISTA DE DISCUSSÕES
-========================================================= */
 
 .lista-discussoes {
     display: flex;
@@ -1328,18 +1558,21 @@
     gap: 11px;
 }
 
+
 .discussao-card {
     padding: 17px;
 
     background: #faf9f7;
 
     border: 1px solid #ebe6e0;
-    border-radius: 10px;
+    border-radius: 9px;
 }
+
 
 .discussao-header {
     margin-bottom: 12px;
 }
+
 
 .autor-info {
     display: flex;
@@ -1348,9 +1581,10 @@
     gap: 10px;
 }
 
+
 .autor-avatar {
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39px;
 
     flex-shrink: 0;
 
@@ -1366,9 +1600,10 @@
 
     color: #52674f;
 
-    font-size: 0.8rem;
+    font-size: 0.77rem;
     font-weight: 600;
 }
+
 
 .autor-avatar img {
     width: 100%;
@@ -1377,6 +1612,7 @@
     object-fit: cover;
 }
 
+
 .autor-dados {
     display: flex;
     flex-direction: column;
@@ -1384,38 +1620,45 @@
     gap: 2px;
 }
 
+
 .autor-dados strong {
     color: #442b1a;
 
-    font-size: 0.8rem;
+    font-size: 0.77rem;
 }
+
 
 .discussao-data {
     color: #9a8c82;
 
-    font-size: 0.67rem;
+    font-size: 0.64rem;
 }
+
 
 .discussao-corpo h4 {
     margin: 0 0 6px;
 
     color: #4d392b;
 
-    font-size: 0.88rem;
+    font-size: 0.85rem;
 }
+
 
 .discussao-corpo p {
     margin: 0;
 
     color: #716156;
 
-    font-size: 0.8rem;
-    line-height: 1.6;
+    font-size: 0.77rem;
+
+    line-height: 1.65;
 }
+
 
 .discussao-footer {
     margin-top: 12px;
 }
+
 
 .discussao-footer button {
     padding: 0;
@@ -1427,7 +1670,8 @@
     color: #61745e;
 
     font-family: inherit;
-    font-size: 0.72rem;
+
+    font-size: 0.69rem;
     font-weight: 600;
 
     cursor: pointer;
@@ -1439,24 +1683,27 @@
 ========================================================= */
 
 .sem-comentarios {
-    padding: 45px 20px;
+    padding: 50px 20px;
 
     text-align: center;
 }
 
+
 .sem-comentarios-icone {
     margin-bottom: 10px;
 
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
+
 
 .sem-comentarios h3 {
     margin: 0 0 5px;
 
     color: #442b1a;
 
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
+
 
 .sem-comentarios p {
     max-width: 400px;
@@ -1465,7 +1712,8 @@
 
     color: #8a7a70;
 
-    font-size: 0.78rem;
+    font-size: 0.75rem;
+
     line-height: 1.5;
 }
 
@@ -1476,19 +1724,23 @@
 
 .grid-participantes {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
     gap: 12px;
 }
 
+
 .card-participante {
-    padding: 16px;
+    padding: 17px;
 
     background: #ffffff;
 
     border: 1px solid #e8e3dd;
-    border-radius: 11px;
+    border-radius: 10px;
 }
+
 
 .participante-header {
     display: flex;
@@ -1497,9 +1749,10 @@
     gap: 11px;
 }
 
+
 .participante-avatar {
-    width: 44px;
-    height: 44px;
+    width: 45px;
+    height: 45px;
 
     flex-shrink: 0;
 
@@ -1515,9 +1768,10 @@
 
     color: #53674f;
 
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
 }
+
 
 .participante-avatar img {
     width: 100%;
@@ -1526,10 +1780,13 @@
     object-fit: cover;
 }
 
+
 .participante-info {
     flex: 1;
+
     min-width: 0;
 }
+
 
 .participante-nome-linha {
     display: flex;
@@ -1539,13 +1796,15 @@
     gap: 5px;
 }
 
+
 .participante-nome-linha h4 {
     margin: 0;
 
     color: #442b1a;
 
-    font-size: 0.82rem;
+    font-size: 0.79rem;
 }
+
 
 .badge-voces,
 .badge-criador {
@@ -1553,19 +1812,24 @@
 
     border-radius: 20px;
 
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     font-weight: 600;
 }
 
+
 .badge-voces {
     background: #f1eee9;
+
     color: #766354;
 }
 
+
 .badge-criador {
     background: #edf2eb;
+
     color: #52684f;
 }
+
 
 .participante-stats {
     display: flex;
@@ -1576,6 +1840,7 @@
     margin-top: 6px;
 }
 
+
 .stat-badge {
     padding: 3px 7px;
 
@@ -1585,199 +1850,35 @@
 
     color: #89796e;
 
-    font-size: 0.62rem;
+    font-size: 0.59rem;
 }
 
-
-/* =========================================================
-   SEM PARTICIPANTES
-========================================================= */
 
 .sem-participantes {
     grid-column: 1 / -1;
 
-    padding: 35px;
+    padding: 40px;
 
     background: #ffffff;
 
     border: 1px solid #e8e3dd;
-    border-radius: 11px;
+    border-radius: 10px;
 
     text-align: center;
 }
+
 
 .sem-participantes p {
     margin: 0;
 
     color: #8c7d72;
 
-    font-size: 0.8rem;
-}
-
-
-/* =========================================================
-   PROGRESSO
-========================================================= */
-
-.progresso-info {
-    display: flex;
-    align-items: baseline;
-
-    gap: 6px;
-
-    margin-bottom: 10px;
-}
-
-.progresso-porcentagem {
-    color: #36503c;
-
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
-.progresso-paginas {
-    color: #8e7f74;
-
-    font-size: 0.72rem;
-}
-
-.barra-progresso {
-    width: 100%;
-    height: 8px;
-
-    overflow: hidden;
-
-    margin-bottom: 15px;
-
-    background: #ebe8e3;
-
-    border-radius: 20px;
-}
-
-.barra-progresso-preenchida {
-    width: 0;
-    height: 100%;
-
-    background: #879d84;
-
-    border-radius: inherit;
-
-    transition: width 0.4s ease;
-}
-
-.aviso-participacao,
-.sem-progresso {
-    margin: 13px 0 0;
-
-    padding: 10px;
-
-    background: #f7f5f2;
-
-    border-radius: 7px;
-
-    color: #897a70;
-
-    font-size: 0.72rem;
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   SIDEBAR — PARTICIPANTES
-========================================================= */
-
-.sidebar-cabecalho {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 15px;
-}
-
-.sidebar-cabecalho h3 {
-    margin: 0 0 3px;
-
-    font-size: 0.95rem;
-}
-
-.sidebar-cabecalho span {
-    color: #95867b;
-
-    font-size: 0.7rem;
-}
-
-.sidebar-membros {
-    display: flex;
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-.sidebar-membro {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-}
-
-.membro-avatar {
-    width: 37px;
-    height: 37px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    background: #e7eee4;
-
-    border-radius: 50%;
-
-    color: #53674f;
-
-    font-size: 0.78rem;
-    font-weight: 600;
-}
-
-.membro-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.membro-info {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-}
-
-.membro-info strong {
-    overflow: hidden;
-
-    color: #442b1a;
-
     font-size: 0.77rem;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.membro-info span {
-    margin-top: 1px;
-
-    color: #9a8c81;
-
-    font-size: 0.65rem;
 }
 
 
 /* =========================================================
-   DICA DO CLUBE
+   DICA
 ========================================================= */
 
 .dica-clube {
@@ -1790,11 +1891,12 @@
     margin-top: 22px;
     padding: 18px 22px;
 
-    background: #eef2eb;
+    background: #f1f5ef;
 
     border: 1px solid #dce5d9;
-    border-radius: 12px;
+    border-radius: 11px;
 }
+
 
 .dica-clube strong {
     display: block;
@@ -1803,15 +1905,16 @@
 
     color: #455842;
 
-    font-size: 0.82rem;
+    font-size: 0.77rem;
 }
+
 
 .dica-clube p {
     margin: 0;
 
     color: #71806e;
 
-    font-size: 0.74rem;
+    font-size: 0.7rem;
 }
 
 
@@ -1821,7 +1924,9 @@
 
 .modal-overlay {
     position: fixed;
+
     inset: 0;
+
     z-index: 9999;
 
     display: none;
@@ -1832,29 +1937,35 @@
 
     box-sizing: border-box;
 
-    background: rgba(39, 31, 25, 0.42);
+    background:
+        rgba(39, 31, 25, 0.42);
 
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
 }
+
 
 .modal-overlay.ativo {
     display: flex;
 }
 
+
 .modal-card {
     width: 100%;
     max-width: 430px;
 
-    padding: 24px;
+    padding: 25px;
 
     box-sizing: border-box;
 
     background: #ffffff;
 
+    border: 1px solid #e8e2dc;
     border-radius: 14px;
 
-    box-shadow: 0 15px 50px rgba(35, 27, 22, 0.18);
+    box-shadow:
+        0 18px 55px rgba(35, 27, 22, 0.2);
 }
+
 
 .modal-header {
     display: flex;
@@ -1866,13 +1977,18 @@
     margin-bottom: 20px;
 }
 
+
 .modal-header h3 {
     margin: 0;
 
     color: #442b1a;
 
-    font-size: 1.05rem;
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.1rem;
+    font-weight: 400;
 }
+
 
 .btn-fechar {
     width: 31px;
@@ -1891,31 +2007,176 @@
 
     color: #6e5d50;
 
-    font-size: 1.05rem;
+    font-size: 1rem;
 
     cursor: pointer;
 }
 
+/* =========================================================
+   ADICIONAR À ESTANTE
+========================================================= */
+
+.adicionar-estante-wrapper {
+    position: relative;
+}
+
+.adicionar-estante-wrapper > .btn-primario {
+    gap: 8px;
+}
+
+.seta-estante {
+    font-size: 0.9rem;
+    line-height: 1;
+
+    transition: transform 0.2s ease;
+}
+
+.adicionar-estante-wrapper:has(.opcoes-estante.ativo)
+.seta-estante {
+    transform: rotate(180deg);
+}
+
+
+/* MENU */
+
+.opcoes-estante {
+    position: absolute;
+
+    left: 0;
+    bottom: calc(100% + 8px);
+
+    z-index: 50;
+
+    width: 260px;
+
+    display: none;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e2ddd7;
+    border-radius: 11px;
+
+    box-shadow:
+        0 10px 30px rgba(68, 43, 26, 0.13);
+}
+
+.opcoes-estante.ativo {
+    display: block;
+}
+
+
+/* FORM */
+
+.opcoes-estante form {
+    width: 100%;
+    margin: 0;
+}
+
+.opcoes-estante form + form {
+    border-top: 1px solid #eee9e4;
+}
+
+
+/* OPÇÕES */
+
+.opcoes-estante button {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 3px;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: none;
+
+    color: #442b1a;
+
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.opcoes-estante button:hover {
+    background: #f3f6f1;
+}
+
+.opcao-estante-titulo {
+    color: #40553e;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.opcoes-estante small {
+    color: #918278;
+
+    font-size: 0.67rem;
+    line-height: 1.4;
+}
 
 /* =========================================================
    RESPONSIVIDADE
 ========================================================= */
 
+@media (max-width: 1050px) {
+
+    .clube-header {
+        grid-template-columns:
+            minmax(0, 1fr)
+            300px;
+
+        gap: 25px;
+    }
+
+
+    .clube-grid {
+        grid-template-columns:
+            minmax(0, 1fr)
+            260px;
+    }
+
+
+    .livro-container {
+        grid-template-columns:
+            145px
+            minmax(0, 1fr);
+    }
+
+
+    .livro-capa {
+        width: 145px;
+    }
+
+}
+
+
 @media (max-width: 900px) {
 
     .clube-header {
         grid-template-columns: 1fr;
-
-        gap: 25px;
     }
+
 
     .clube-grid {
         grid-template-columns: 1fr;
     }
 
+
     .clube-sidebar {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
 }
@@ -1924,54 +2185,76 @@
 @media (max-width: 700px) {
 
     .clube-conteudo {
-        padding: 30px 18px 60px;
+        padding:
+            28px 18px
+            60px;
     }
 
+
     .clube-header {
-        padding: 22px;
+        padding: 23px;
     }
+
 
     .clube-header-principal {
         flex-direction: column;
     }
 
+
     .clube-avatar {
-        width: 90px;
-        height: 90px;
+        width: 95px;
+        height: 95px;
     }
+
+
+    .clube-titulo h1 {
+        font-size: 1.65rem;
+    }
+
 
     .painel-criador-acoes {
         grid-template-columns: 1fr;
     }
 
+
     .amigos-lista {
         grid-template-columns: 1fr;
     }
+
 
     .lista-convites {
         padding: 20px;
     }
 
+
     .livro-container {
-        flex-direction: column;
+        grid-template-columns:
+            130px
+            minmax(0, 1fr);
+
+        gap: 20px;
     }
 
+
     .livro-capa {
-        width: 120px;
-        min-width: 120px;
+        width: 130px;
     }
+
 
     .grid-participantes {
         grid-template-columns: 1fr;
     }
 
+
     .clube-sidebar {
         grid-template-columns: 1fr;
     }
 
+
     .discussao-topo {
         flex-direction: column;
     }
+
 
     .btn-novo-comentario {
         width: 100%;
@@ -1980,46 +2263,56 @@
 }
 
 
-@media (max-width: 520px) {
+@media (max-width: 540px) {
+
+    .clube-header-principal {
+        gap: 16px;
+    }
+
 
     .clube-titulo h1 {
         width: 100%;
-
-        font-size: 1.45rem;
     }
+
 
     .leitura-atual {
         width: 100%;
     }
 
+
     .clube-abas {
         overflow-x: auto;
+
+        gap: 18px;
     }
+
 
     .aba-btn {
         flex-shrink: 0;
-
-        padding: 11px 13px;
     }
 
-    .amigo-convite {
-        flex-wrap: wrap;
+
+    .card-clube {
+        padding: 22px;
     }
 
-    .amigo-convite form {
-        width: 100%;
 
-        padding-left: 52px;
+    .livro-container {
+        display: flex;
+        flex-direction: column;
     }
 
-    .amigo-convite .btn-secundario {
-        width: 100%;
+
+    .livro-capa {
+        width: 135px;
     }
+
 
     .livro-acoes {
         align-items: stretch;
         flex-direction: column;
     }
+
 
     .livro-acoes a,
     .livro-acoes form,
@@ -2027,20 +2320,24 @@
         width: 100%;
     }
 
+
     .dica-clube {
         align-items: stretch;
         flex-direction: column;
     }
 
+
     .dica-clube .btn-secundario {
         width: 100%;
     }
+
 
     .form-acoes,
     .modal-acoes {
         align-items: stretch;
         flex-direction: column-reverse;
     }
+
 
     .form-acoes button,
     .modal-acoes button {

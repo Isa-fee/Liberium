@@ -140,31 +140,9 @@ def responder(notificacao_id):
         notificacao_id
     )
 
-    # ======================================
-    # SEGURANÇA
-    # ======================================
-
+    # Segurança
     if notificacao.usuario_id != current_user.id:
         abort(403)
-
-    # ======================================
-    # VERIFICAR SE PODE RESPONDER
-    # ======================================
-
-    if notificacao.tipo not in TIPOS_RESPONDIVEIS:
-
-        flash(
-            "Essa notificação não pode ser respondida.",
-            "warning"
-        )
-
-        return redirect(
-            url_for("notificacoes.listar")
-        )
-
-    # ======================================
-    # VERIFICAR LINK
-    # ======================================
 
     if not notificacao.link:
 
@@ -177,18 +155,22 @@ def responder(notificacao_id):
             url_for("notificacoes.listar")
         )
 
-    # ======================================
-    # MARCAR COMO LIDA
-    # ======================================
-
+    # Marca como lida
     notificacao.lida = True
 
     db.session.commit()
 
     # ======================================
-    # IR PARA O CONTEÚDO RELACIONADO
+    # COMENTÁRIO EM RESENHA
     # ======================================
 
+    if notificacao.tipo == "comentario_resenha":
+
+        return redirect(
+            f"{notificacao.link}#comentarios"
+        )
+
+    # Outros tipos
     return redirect(
         notificacao.link
     )
