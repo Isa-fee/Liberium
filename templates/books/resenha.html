@@ -360,7 +360,7 @@
              COMENTÁRIOS
         ========================================= -->
 
-        <section class="secao-comentarios">
+        <section class="secao-comentarios"  id="comentarios">
 
 
             <!-- ====================================
@@ -436,6 +436,7 @@
                 >
 
                     <textarea
+                        id="campo-comentario"
                         name="texto"
                         maxlength="500"
                         rows="3"
@@ -816,6 +817,26 @@
         if (texto) {
             texto.style.display = "block";
         }
+
+    }
+
+    // =====================================
+    // FOCO AO CLICAR EM "RESPONDER"
+    // =====================================
+
+    if (window.location.hash === "#comentarios") {
+
+    const campoComentario = document.getElementById(
+        "campo-comentario"
+    );
+
+    if (campoComentario) {
+
+        setTimeout(function () {
+            campoComentario.focus();
+        }, 300);
+
+    }
 
     }
 

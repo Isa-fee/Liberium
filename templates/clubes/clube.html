@@ -116,8 +116,12 @@
 
 
                 <p class="clube-descricao">
-                    {{ clube.descricao or
-                    'Este clube ainda não possui uma descrição.' }}
+
+                    {{
+                        clube.descricao
+                        or 'Este clube ainda não possui uma descrição.'
+                    }}
+
                 </p>
 
 
@@ -134,7 +138,10 @@
                         </strong>
 
                         <small>
-                            {{ clube.livro.autor or 'Autor desconhecido' }}
+                            {{
+                                clube.livro.autor
+                                or 'Autor desconhecido'
+                            }}
                         </small>
 
                     </div>
@@ -152,9 +159,8 @@
 
         <div class="clube-acoes">
 
-            <!-- ====================================
-                 CRIADOR
-            ===================================== -->
+
+            <!-- CRIADOR -->
 
             {% if usuario_eh_criador %}
 
@@ -199,26 +205,24 @@
                         >
                             + Convidar amigos
                         </button>
+
+
                         <a
                             href="{{ url_for(
-                            'clubes.gerenciar_clube',
-                            clube_id=clube.id
-                        ) }}"
-                        class="btn-gerenciar-clube"
-                    >
+                                'clubes.gerenciar_clube',
+                                clube_id=clube.id
+                            ) }}"
+                            class="btn-gerenciar-clube"
+                        >
                             Gerenciar clube
                         </a>
-
-
 
                     </div>
 
                 </div>
 
 
-            <!-- ====================================
-                 PARTICIPANTE
-            ===================================== -->
+            <!-- PARTICIPANTE -->
 
             {% elif usuario_eh_membro %}
 
@@ -235,9 +239,7 @@
                 {% endif %}
 
 
-            <!-- ====================================
-                 VISITANTE
-            ===================================== -->
+            <!-- VISITANTE -->
 
             {% else %}
 
@@ -285,13 +287,7 @@
 
 
     <!-- ========================================
-         CAIXA DE CONVITES
-
-         Criador:
-         público ou privado.
-
-         Participante:
-         somente clube público.
+         CONVITES
     ========================================= -->
 
     {% if pode_convidar %}
@@ -313,6 +309,7 @@
                     <h3>
                         Convidar para {{ clube.nome }}
                     </h3>
+
 
                     {% if clube.privado %}
 
@@ -362,8 +359,6 @@
 
                         <div class="amigo-convite">
 
-                            <!-- AVATAR -->
-
                             <div class="membro-avatar">
 
                                 {% if amigo.foto %}
@@ -378,15 +373,16 @@
 
                                 {% else %}
 
-                                    {{ amigo.nome[0]
-                                    if amigo.nome else '?' }}
+                                    {{
+                                        amigo.nome[0]
+                                        if amigo.nome
+                                        else '?'
+                                    }}
 
                                 {% endif %}
 
                             </div>
 
-
-                            <!-- DADOS -->
 
                             <div class="membro-info">
 
@@ -400,8 +396,6 @@
 
                             </div>
 
-
-                            <!-- CONVIDAR -->
 
                             <form
                                 action="{{ url_for(
@@ -513,13 +507,24 @@
 
                                 {% if clube.livro.capa %}
 
-                                    <img
-                                        src="{{ url_for(
-                                            'static',
-                                            filename=clube.livro.capa
-                                        ) }}"
-                                        alt="{{ clube.livro.titulo }}"
-                                    >
+                                    {% if clube.livro.capa.startswith('http') %}
+
+                                        <img
+                                            src="{{ clube.livro.capa }}"
+                                            alt="{{ clube.livro.titulo }}"
+                                        >
+
+                                    {% else %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=clube.livro.capa
+                                            ) }}"
+                                            alt="{{ clube.livro.titulo }}"
+                                        >
+
+                                    {% endif %}
 
                                 {% else %}
 
@@ -541,8 +546,12 @@
                                 </h3>
 
                                 <p class="livro-autor">
-                                    {{ clube.livro.autor or
-                                    'Autor não informado' }}
+
+                                    {{
+                                        clube.livro.autor
+                                        or 'Autor não informado'
+                                    }}
+
                                 </p>
 
 
@@ -619,7 +628,9 @@
                         </div>
 
 
-                        <!-- AÇÕES DO LIVRO -->
+                        <!-- ====================================
+                             AÇÕES DO LIVRO
+                        ===================================== -->
 
                         <div class="livro-acoes">
 
@@ -634,25 +645,47 @@
                             </a>
 
 
+                            <!-- ESCOLHER PRATELEIRA -->
+
                             <form
                                 action="{{ url_for(
                                     'books_bp.adicionar_estante',
                                     livro_id=clube.livro.id
                                 ) }}"
                                 method="POST"
+                                class="form-adicionar-estante"
                             >
 
-                                <input
-                                    type="hidden"
+                                <select
                                     name="status"
-                                    value="quero ler"
+                                    class="select-prateleira"
+                                    required
                                 >
+
+                                    <option value="" selected disabled>
+                                        Escolher prateleira
+                                    </option>
+
+                                    <option value="quero ler">
+                                        Quero ler
+                                    </option>
+
+                                    <option value="lendo">
+                                        Lendo
+                                    </option>
+
+                                    <option value="lido">
+                                        Lido
+                                    </option>
+
+                                </select>
+
 
                                 <button
                                     type="submit"
                                     class="btn-primario"
                                 >
-                                    Adicionar à estante
+                                    Adicionar
                                 </button>
 
                             </form>
@@ -693,6 +726,8 @@
 
                 <div class="card-clube discussao-container">
 
+                    <!-- TOPO -->
+
                     <div class="discussao-topo">
 
                         <div>
@@ -728,7 +763,9 @@
                     </div>
 
 
-                    <!-- FORMULÁRIO -->
+                    <!-- ====================================
+                         FORMULÁRIO DE NOVA DISCUSSÃO
+                    ===================================== -->
 
                     {% if usuario_eh_membro %}
 
@@ -820,9 +857,18 @@
                     {% endif %}
 
 
-                    <!-- DISCUSSÕES EXISTENTES -->
+                    <!-- ====================================
+                         DISCUSSÕES EXISTENTES
+                    ===================================== -->
 
                     {% if clube.discussoes %}
+
+                        {% set discussoes_principais =
+                            clube.discussoes
+                            | selectattr('discussao_pai_id', 'none')
+                            | list
+                        %}
+
 
                         <div class="discussoes-titulo">
 
@@ -832,12 +878,12 @@
 
                             <span>
 
-                                {{ clube.discussoes|length }}
+                                {{ discussoes_principais|length }}
 
-                                {% if clube.discussoes|length == 1 %}
-                                    comentário
+                                {% if discussoes_principais|length == 1 %}
+                                    discussão
                                 {% else %}
-                                    comentários
+                                    discussões
                                 {% endif %}
 
                             </span>
@@ -847,9 +893,14 @@
 
                         <div class="lista-discussoes">
 
-                            {% for discussao in clube.discussoes %}
+                            {% for discussao in discussoes_principais %}
 
                                 <article class="discussao-card">
+
+
+                                    <!-- ==============================
+                                         AUTOR DA DISCUSSÃO
+                                    =============================== -->
 
                                     <div class="discussao-header">
 
@@ -870,9 +921,13 @@
                                                 {% else %}
 
                                                     <span>
-                                                        {{ discussao.usuario.nome[0]
-                                                        if discussao.usuario.nome
-                                                        else '?' }}
+
+                                                        {{
+                                                            discussao.usuario.nome[0]
+                                                            if discussao.usuario.nome
+                                                            else '?'
+                                                        }}
+
                                                     </span>
 
                                                 {% endif %}
@@ -888,9 +943,11 @@
 
                                                 <span class="discussao-data">
 
-                                                    {{ discussao.data_criacao.strftime(
-                                                        '%d/%m/%Y às %H:%M'
-                                                    ) }}
+                                                    {{
+                                                        discussao.data_criacao.strftime(
+                                                            '%d/%m/%Y às %H:%M'
+                                                        )
+                                                    }}
 
                                                 </span>
 
@@ -900,6 +957,10 @@
 
                                     </div>
 
+
+                                    <!-- ==============================
+                                         CONTEÚDO
+                                    =============================== -->
 
                                     <div class="discussao-corpo">
 
@@ -911,6 +972,7 @@
 
                                         {% endif %}
 
+
                                         <p>
                                             {{ discussao.conteudo }}
                                         </p>
@@ -918,13 +980,153 @@
                                     </div>
 
 
+                                    <!-- ==============================
+                                         BOTÃO RESPONDER
+                                    =============================== -->
+
                                     {% if usuario_eh_membro %}
 
                                         <div class="discussao-footer">
 
-                                            <button type="button">
+                                            <button
+                                                type="button"
+                                                onclick="toggleResposta('{{ discussao.id }}')"
+                                            >
                                                 Responder
                                             </button>
+
+                                        </div>
+
+
+                                        <!-- ==========================
+                                             FORMULÁRIO DE RESPOSTA
+                                        =========================== -->
+
+                                        <div
+                                            id="form-resposta-{{ discussao.id }}"
+                                            class="form-resposta"
+                                            style="display: none;"
+                                        >
+
+                                            <form
+                                                action="{{ url_for(
+                                                    'clubes.responder_discussao',
+                                                    clube_id=clube.id,
+                                                    discussao_id=discussao.id
+                                                ) }}"
+                                                method="POST"
+                                            >
+
+                                                <textarea
+                                                    name="conteudo"
+                                                    rows="3"
+                                                    placeholder="Escreva sua resposta..."
+                                                    required
+                                                ></textarea>
+
+
+                                                <div class="form-resposta-acoes">
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn-cancelar"
+                                                        onclick="toggleResposta('{{ discussao.id }}')"
+                                                    >
+                                                        Cancelar
+                                                    </button>
+
+
+                                                    <button
+                                                        type="submit"
+                                                        class="btn-publicar"
+                                                    >
+                                                        Responder
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <!-- ==============================
+                                         RESPOSTAS
+                                    =============================== -->
+
+                                    {% if discussao.respostas %}
+
+                                        <div class="lista-respostas">
+
+                                            {% for resposta in discussao.respostas %}
+
+                                                <div class="resposta-card">
+
+                                                    <div class="resposta-header">
+
+                                                        <div class="autor-avatar resposta-avatar">
+
+                                                            {% if resposta.usuario.foto %}
+
+                                                                <img
+                                                                    src="{{ url_for(
+                                                                        'static',
+                                                                        filename=resposta.usuario.foto
+                                                                    ) }}"
+                                                                    alt="{{ resposta.usuario.nome }}"
+                                                                >
+
+                                                            {% else %}
+
+                                                                <span>
+
+                                                                    {{
+                                                                        resposta.usuario.nome[0]
+                                                                        if resposta.usuario.nome
+                                                                        else '?'
+                                                                    }}
+
+                                                                </span>
+
+                                                            {% endif %}
+
+                                                        </div>
+
+
+                                                        <div class="autor-dados">
+
+                                                            <strong>
+                                                                {{ resposta.usuario.nome }}
+                                                            </strong>
+
+                                                            <span class="discussao-data">
+
+                                                                {{
+                                                                    resposta.data_criacao.strftime(
+                                                                        '%d/%m/%Y às %H:%M'
+                                                                    )
+                                                                }}
+
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="resposta-conteudo">
+
+                                                        <p>
+                                                            {{ resposta.conteudo }}
+                                                        </p>
+
+                                                    </div>
+
+                                                </div>
+
+                                            {% endfor %}
 
                                         </div>
 
@@ -938,6 +1140,10 @@
 
 
                     {% else %}
+
+                        <!-- ====================================
+                             SEM DISCUSSÕES
+                        ===================================== -->
 
                         <div class="sem-comentarios">
 
@@ -1017,9 +1223,13 @@
                                         {% else %}
 
                                             <span>
-                                                {{ membro.usuario.nome[0]
-                                                if membro.usuario.nome
-                                                else '?' }}
+
+                                                {{
+                                                    membro.usuario.nome[0]
+                                                    if membro.usuario.nome
+                                                    else '?'
+                                                }}
+
                                             </span>
 
                                         {% endif %}
@@ -1059,12 +1269,21 @@
                                         <div class="participante-stats">
 
                                             <span class="stat-badge stat-progresso">
-                                                {{ membro.progresso_percentual or 0 }}%
+
+                                                {{
+                                                    membro.progresso_percentual
+                                                    or 0
+                                                }}%
+
                                             </span>
+
 
                                             <span class="stat-badge stat-atualizacoes">
 
-                                                {{ membro.total_atualizacoes or 0 }}
+                                                {{
+                                                    membro.total_atualizacoes
+                                                    or 0
+                                                }}
 
                                                 {% if (membro.total_atualizacoes or 0) == 1 %}
                                                     atualização
@@ -1110,7 +1329,9 @@
         <aside class="clube-sidebar">
 
 
-            <!-- PROGRESSO -->
+            <!-- ====================================
+                 PROGRESSO
+            ===================================== -->
 
             <div class="card-clube progresso-card">
 
@@ -1137,10 +1358,12 @@
                         {% if membro.usuario_id == current_user.id %}
 
                             {% set progresso_user.paginas =
-                                membro.paginas_lidas or 0 %}
+                                membro.paginas_lidas or 0
+                            %}
 
                             {% set progresso_user.percentual =
-                                membro.progresso_percentual or 0 %}
+                                membro.progresso_percentual or 0
+                            %}
 
                         {% endif %}
 
@@ -1217,7 +1440,9 @@
             </div>
 
 
-            <!-- PARTICIPANTES -->
+            <!-- ====================================
+                 PARTICIPANTES DA SIDEBAR
+            ===================================== -->
 
             <div class="card-clube">
 
@@ -1230,6 +1455,7 @@
                         </h3>
 
                         <span>
+
                             {{ clube.quantidade_membros }}
 
                             {% if clube.quantidade_membros == 1 %}
@@ -1237,6 +1463,7 @@
                             {% else %}
                                 membros
                             {% endif %}
+
                         </span>
 
                     </div>
@@ -1266,8 +1493,11 @@
 
                                     {% else %}
 
-                                        {{ membro.usuario.nome[0]
-                                        if membro.usuario.nome else '?' }}
+                                        {{
+                                            membro.usuario.nome[0]
+                                            if membro.usuario.nome
+                                            else '?'
+                                        }}
 
                                     {% endif %}
 
@@ -1349,96 +1579,100 @@
 
 {% if usuario_eh_membro %}
 
-<div
-    id="modal-progresso"
-    class="modal-overlay"
->
+    <div
+        id="modal-progresso"
+        class="modal-overlay"
+    >
 
-    <div class="modal-card">
+        <div class="modal-card">
 
-        <div class="modal-header">
+            <div class="modal-header">
 
-            <h3>
-                Atualizar progresso
-            </h3>
-
-            <button
-                type="button"
-                class="btn-fechar"
-                onclick="fecharModalProgresso()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <form
-            action="{{ url_for(
-                'clubes.atualizar_progresso',
-                clube_id=clube.id
-            ) }}"
-            method="POST"
-        >
-
-            <div class="form-grupo">
-
-                <label for="paginas_lidas">
-                    Em qual página você está?
-                </label>
-
-                <input
-                    type="number"
-                    id="paginas_lidas"
-                    name="paginas_lidas"
-                    min="0"
-                    max="{{ clube.livro.paginas
-                        if clube.livro and clube.livro.paginas
-                        else 9999 }}"
-                    value="{{ progresso_user.paginas
-                        if progresso_user is defined
-                        else 0 }}"
-                    placeholder="Ex: 42"
-                    required
-                >
-
-
-                {% if clube.livro and clube.livro.paginas %}
-
-                    <small>
-                        Total de páginas do livro:
-                        {{ clube.livro.paginas }}
-                    </small>
-
-                {% endif %}
-
-            </div>
-
-
-            <div class="modal-acoes">
+                <h3>
+                    Atualizar progresso
+                </h3>
 
                 <button
                     type="button"
-                    class="btn-secundario"
+                    class="btn-fechar"
                     onclick="fecharModalProgresso()"
                 >
-                    Cancelar
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn-primario"
-                >
-                    Salvar progresso
+                    ×
                 </button>
 
             </div>
 
-        </form>
+
+            <form
+                action="{{ url_for(
+                    'clubes.atualizar_progresso',
+                    clube_id=clube.id
+                ) }}"
+                method="POST"
+            >
+
+                <div class="form-grupo">
+
+                    <label for="paginas_lidas">
+                        Em qual página você está?
+                    </label>
+
+                    <input
+                        type="number"
+                        id="paginas_lidas"
+                        name="paginas_lidas"
+                        min="0"
+                        max="{{
+                            clube.livro.paginas
+                            if clube.livro and clube.livro.paginas
+                            else 9999
+                        }}"
+                        value="{{
+                            progresso_user.paginas
+                            if progresso_user is defined
+                            else 0
+                        }}"
+                        placeholder="Ex: 42"
+                        required
+                    >
+
+
+                    {% if clube.livro and clube.livro.paginas %}
+
+                        <small>
+                            Total de páginas do livro:
+                            {{ clube.livro.paginas }}
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="modal-acoes">
+
+                    <button
+                        type="button"
+                        class="btn-secundario"
+                        onclick="fecharModalProgresso()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primario"
+                    >
+                        Salvar progresso
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
-
-</div>
 
 {% endif %}
 
@@ -1449,42 +1683,67 @@
 
 <script>
 
+
+// ==========================================
+// ABAS
+// ==========================================
+
 function abrirAba(event, idAba) {
 
     document
         .querySelectorAll('.aba-conteudo')
         .forEach(function(aba) {
+
             aba.classList.remove('ativo');
+
         });
+
 
     document
         .querySelectorAll('.aba-btn')
         .forEach(function(botao) {
+
             botao.classList.remove('ativo');
+
         });
+
 
     const abaSelecionada =
         document.getElementById(idAba);
 
+
     if (abaSelecionada) {
+
         abaSelecionada.classList.add('ativo');
+
     }
 
+
     if (event && event.currentTarget) {
+
         event.currentTarget.classList.add('ativo');
+
     }
 
 }
 
 
+// ==========================================
+// CONVITES
+// ==========================================
+
 function abrirConvites() {
 
     const lista =
-        document.getElementById('lista-convites');
+        document.getElementById(
+            'lista-convites'
+        );
+
 
     if (!lista) {
         return;
     }
+
 
     lista.style.display =
         lista.style.display === 'block'
@@ -1497,14 +1756,23 @@ function abrirConvites() {
 function fecharConvites() {
 
     const lista =
-        document.getElementById('lista-convites');
+        document.getElementById(
+            'lista-convites'
+        );
+
 
     if (lista) {
+
         lista.style.display = 'none';
+
     }
 
 }
 
+
+// ==========================================
+// NOVA DISCUSSÃO
+// ==========================================
 
 function toggleFormComentario() {
 
@@ -1513,17 +1781,94 @@ function toggleFormComentario() {
             'form-comentario-container'
         );
 
+
     if (!formBox) {
         return;
     }
+
 
     formBox.style.display =
         formBox.style.display === 'block'
             ? 'none'
             : 'block';
 
+
+    if (formBox.style.display === 'block') {
+
+        const campo =
+            formBox.querySelector(
+                'textarea'
+            );
+
+
+        if (campo) {
+            campo.focus();
+        }
+
+    }
+
 }
 
+
+// ==========================================
+// RESPONDER DISCUSSÃO
+// ==========================================
+
+function toggleResposta(discussaoId) {
+
+    const formulario =
+        document.getElementById(
+            'form-resposta-' + discussaoId
+        );
+
+
+    if (!formulario) {
+        return;
+    }
+
+
+    if (
+        formulario.style.display === 'block'
+    ) {
+
+        formulario.style.display = 'none';
+
+    } else {
+
+        // Fecha outros formulários abertos
+
+        document
+            .querySelectorAll('.form-resposta')
+            .forEach(function(form) {
+
+                form.style.display = 'none';
+
+            });
+
+
+        formulario.style.display = 'block';
+
+
+        const textarea =
+            formulario.querySelector(
+                'textarea'
+            );
+
+
+        if (textarea) {
+
+            textarea.focus();
+
+        }
+
+    }
+
+}
+
+
+// ==========================================
+// MODAL DE PROGRESSO
+// ==========================================
 
 function abrirModalProgresso() {
 
@@ -1532,8 +1877,11 @@ function abrirModalProgresso() {
             'modal-progresso'
         );
 
+
     if (modal) {
+
         modal.classList.add('ativo');
+
     }
 
 }
@@ -1546,17 +1894,25 @@ function fecharModalProgresso() {
             'modal-progresso'
         );
 
+
     if (modal) {
+
         modal.classList.remove('ativo');
+
     }
 
 }
 
 
+// ==========================================
+// FECHAR MODAL CLICANDO FORA
+// ==========================================
+
 const modalProgresso =
     document.getElementById(
         'modal-progresso'
     );
+
 
 if (modalProgresso) {
 
@@ -1565,7 +1921,9 @@ if (modalProgresso) {
         function(event) {
 
             if (event.target === this) {
+
                 fecharModalProgresso();
+
             }
 
         }
@@ -1573,6 +1931,10 @@ if (modalProgresso) {
 
 }
 
+
+// ==========================================
+// BARRA DE PROGRESSO
+// ==========================================
 
 document.addEventListener(
     'DOMContentLoaded',
@@ -1583,12 +1945,14 @@ document.addEventListener(
                 '.barra-progresso-preenchida'
             );
 
+
         if (barra) {
 
             const porcentagem =
                 barra.getAttribute(
                     'data-progresso'
                 ) || 0;
+
 
             barra.style.width =
                 porcentagem + '%';
@@ -1598,6 +1962,9 @@ document.addEventListener(
     }
 );
 
+
 </script>
 
 {% endblock %}
+
+

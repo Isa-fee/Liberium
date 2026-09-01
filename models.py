@@ -843,7 +843,8 @@ class ConviteClube(db.Model):
 
 # DISCUSSÃO DO CLUBE
 class Discussao(db.Model):
-    __tablename__ = "discussoes"
+
+    __tablename__ = 'discussoes'
 
     id = db.Column(
         db.Integer,
@@ -851,7 +852,7 @@ class Discussao(db.Model):
     )
 
     titulo = db.Column(
-        db.String(150),
+        db.String(200),
         nullable=True
     )
 
@@ -862,36 +863,57 @@ class Discussao(db.Model):
 
     data_criacao = db.Column(
         db.DateTime,
-        default=datetime.utcnow,
-        nullable=False
+        default=datetime.utcnow
     )
+
+    # ==========================================
+    # CLUBE
+    # ==========================================
 
     clube_id = db.Column(
         db.Integer,
-        db.ForeignKey("clubes.id"),
+        db.ForeignKey('clubes.id'),
         nullable=False
     )
+
+    # ==========================================
+    # AUTOR
+    # ==========================================
 
     usuario_id = db.Column(
         db.Integer,
-        db.ForeignKey("usuarios.id"),
+        db.ForeignKey('usuarios.id'),
         nullable=False
     )
 
+    # ==========================================
+    # RESPOSTA DE UMA DISCUSSÃO
+    # ==========================================
+
+    discussao_pai_id = db.Column(
+        db.Integer,
+        db.ForeignKey('discussoes.id'),
+        nullable=True
+    )
+
+    # ==========================================
+    # RELACIONAMENTOS
+    # ==========================================
+
     usuario = db.relationship(
-        "Usuario",
-        backref="discussoes"
+        'Usuario',
+        foreign_keys=[usuario_id]
     )
 
-    clube = db.relationship(
-        "Clube",
+    respostas = db.relationship(
+        'Discussao',
         backref=db.backref(
-            "discussoes",
-            lazy=True,
-            cascade="all, delete-orphan"
-        )
+            'discussao_pai',
+            remote_side=[id]
+        ),
+        lazy=True,
+        cascade='all, delete-orphan'
     )
-
 
 # ELOGIO DA ESTANTE
 class ElogioEstante(db.Model):

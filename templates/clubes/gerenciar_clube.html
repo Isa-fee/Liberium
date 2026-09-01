@@ -52,9 +52,11 @@
         </div>
 
     </div>
-    <!-- ==================================
-        LEITURA ATUAL
-    =================================== -->
+
+
+    <!-- ======================================
+         LEITURA ATUAL
+    ======================================= -->
 
     <div class="gerenciar-card leitura-card">
 
@@ -76,14 +78,34 @@
 
             <div class="livro-atual">
 
+                <!-- CAPA -->
+
                 <div class="livro-atual-capa">
 
                     {% if clube.livro.capa %}
 
-                        <img
-                            src="{{ clube.livro.capa }}"
-                            alt="{{ clube.livro.titulo }}"
-                        >
+                        {% if clube.livro.origem == 'google' %}
+
+                            <!-- LIVRO DO GOOGLE BOOKS -->
+
+                            <img
+                                src="{{ clube.livro.capa }}"
+                                alt="{{ clube.livro.titulo }}"
+                            >
+
+                        {% else %}
+
+                            <!-- LIVRO DO CATÁLOGO LIBERIUM -->
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename=clube.livro.capa
+                                ) }}"
+                                alt="{{ clube.livro.titulo }}"
+                            >
+
+                        {% endif %}
 
                     {% else %}
 
@@ -95,6 +117,8 @@
 
                 </div>
 
+
+                <!-- INFORMAÇÕES -->
 
                 <div class="livro-atual-info">
 
@@ -165,7 +189,9 @@
         {% endif %}
 
 
-        <!-- BUSCA DO LIVRO -->
+        <!-- ======================================
+             BUSCA DO LIVRO
+        ======================================= -->
 
         <div
             class="selecao-livro"
@@ -195,6 +221,9 @@
 
                 </div>
 
+
+                <!-- DADOS DO LIVRO SELECIONADO -->
+
                 <input
                     type="hidden"
                     name="livro_id"
@@ -213,10 +242,14 @@
                     id="origem_livro"
                 >
 
+
+                <!-- RESULTADOS -->
+
                 <div
                     class="resultados-livros"
                     id="resultados-livros"
                 ></div>
+
 
                 <button
                     type="submit"
@@ -235,7 +268,7 @@
 
 
     <!-- ======================================
-         FORMULÁRIO
+         FORMULÁRIO PRINCIPAL
     ======================================= -->
 
     <form
@@ -247,6 +280,7 @@
         enctype="multipart/form-data"
         class="formulario-gerenciar"
     >
+
 
         <!-- ==================================
              INFORMAÇÕES
@@ -460,7 +494,7 @@
 
 
         <!-- ==================================
-             IMAGEM
+             IMAGEM DO CLUBE
         =================================== -->
 
         <div class="gerenciar-card">
@@ -539,154 +573,160 @@
             </div>
 
         </div>
+
+
         <!-- ==================================
-     PARTICIPANTES
-=================================== -->
+             PARTICIPANTES
+        =================================== -->
 
-<div class="gerenciar-card">
+        <div class="gerenciar-card">
 
-    <div class="card-cabecalho participantes-cabecalho">
+            <div class="card-cabecalho participantes-cabecalho">
 
-        <div>
+                <div>
 
-            <h2>
-                Participantes
-            </h2>
+                    <h2>
+                        Participantes
+                    </h2>
 
-            <p>
-                Gerencie as pessoas que fazem parte
-                deste clube.
-            </p>
-
-        </div>
-
-        <span class="total-participantes">
-
-            {{ clube.quantidade_membros }}
-
-            {% if clube.quantidade_membros == 1 %}
-                participante
-            {% else %}
-                participantes
-            {% endif %}
-
-        </span>
-
-    </div>
-
-
-    {% if membros %}
-
-        <div class="lista-participantes-gerenciar">
-
-            {% for membro in membros %}
-
-                <div class="participante-gerenciar">
-
-                    <!-- AVATAR -->
-
-                    <div class="participante-gerenciar-avatar">
-
-                        {% if membro.usuario.foto %}
-
-                            <img
-                                src="{{ url_for(
-                                    'static',
-                                    filename=membro.usuario.foto
-                                ) }}"
-                                alt="{{ membro.usuario.nome }}"
-                            >
-
-                        {% else %}
-
-                            <span>
-                                {{ membro.usuario.nome[0]
-                                if membro.usuario.nome
-                                else '?' }}
-                            </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <!-- INFORMAÇÕES -->
-
-                    <div class="participante-gerenciar-info">
-
-                        <strong>
-                            {{ membro.usuario.nome }}
-                        </strong>
-
-                        {% if membro.usuario_id == clube.usuario_id %}
-
-                            <span class="identificacao-criador">
-                                Criador do clube
-                            </span>
-
-                        {% else %}
-
-                            <span>
-                                Participante
-                            </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <!-- AÇÃO -->
-
-                    {% if membro.usuario_id == clube.usuario_id %}
-
-                        <span class="badge-criador-gerenciar">
-                            Criador
-                        </span>
-
-                    {% else %}
-
-                        <form
-                            action="{{ url_for(
-                                'clubes.remover_membro',
-                                clube_id=clube.id,
-                                usuario_id=membro.usuario_id
-                            ) }}"
-                            method="POST"
-                            onsubmit="return confirm(
-                                'Tem certeza que deseja remover este participante do clube?'
-                            );"
-                        >
-
-                            <button
-                                type="submit"
-                                class="botao-remover-membro"
-                            >
-                                Remover
-                            </button>
-
-                        </form>
-
-                    {% endif %}
+                    <p>
+                        Gerencie as pessoas que fazem parte
+                        deste clube.
+                    </p>
 
                 </div>
 
-            {% endfor %}
+                <span class="total-participantes">
+
+                    {{ clube.quantidade_membros }}
+
+                    {% if clube.quantidade_membros == 1 %}
+                        participante
+                    {% else %}
+                        participantes
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            {% if membros %}
+
+                <div class="lista-participantes-gerenciar">
+
+                    {% for membro in membros %}
+
+                        <div class="participante-gerenciar">
+
+
+                            <!-- AVATAR -->
+
+                            <div class="participante-gerenciar-avatar">
+
+                                {% if membro.usuario.foto %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=membro.usuario.foto
+                                        ) }}"
+                                        alt="{{ membro.usuario.nome }}"
+                                    >
+
+                                {% else %}
+
+                                    <span>
+                                        {{
+                                            membro.usuario.nome[0]
+                                            if membro.usuario.nome
+                                            else '?'
+                                        }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- INFORMAÇÕES -->
+
+                            <div class="participante-gerenciar-info">
+
+                                <strong>
+                                    {{ membro.usuario.nome }}
+                                </strong>
+
+                                {% if membro.usuario_id == clube.usuario_id %}
+
+                                    <span class="identificacao-criador">
+                                        Criador do clube
+                                    </span>
+
+                                {% else %}
+
+                                    <span>
+                                        Participante
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- AÇÃO -->
+
+                            {% if membro.usuario_id == clube.usuario_id %}
+
+                                <span class="badge-criador-gerenciar">
+                                    Criador
+                                </span>
+
+                            {% else %}
+
+                                <form
+                                    action="{{ url_for(
+                                        'clubes.remover_membro',
+                                        clube_id=clube.id,
+                                        usuario_id=membro.usuario_id
+                                    ) }}"
+                                    method="POST"
+                                    onsubmit="return confirm(
+                                        'Tem certeza que deseja remover este participante do clube?'
+                                    );"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="botao-remover-membro"
+                                    >
+                                        Remover
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-participantes-gerenciar">
+
+                    <p>
+                        Este clube ainda não possui participantes.
+                    </p>
+
+                </div>
+
+            {% endif %}
 
         </div>
 
-    {% else %}
-
-        <div class="sem-participantes-gerenciar">
-
-            <p>
-                Este clube ainda não possui participantes.
-            </p>
-
-        </div>
-
-    {% endif %}
-
-</div>
 
         <!-- ==================================
              AÇÕES
@@ -718,6 +758,10 @@
 </section>
 
 
+<!-- ======================================
+     PREVIEW DA IMAGEM DO CLUBE
+======================================= -->
+
 <script>
 
 const inputImagem =
@@ -730,385 +774,409 @@ const semImagem =
     document.getElementById('sem-imagem');
 
 
-inputImagem.addEventListener(
-    'change',
+if (inputImagem) {
+
+    inputImagem.addEventListener(
+        'change',
+        function() {
+
+            const arquivo =
+                this.files[0];
+
+            if (!arquivo) {
+                return;
+            }
+
+            const leitor =
+                new FileReader();
+
+            leitor.onload =
+                function(event) {
+
+                    preview.src =
+                        event.target.result;
+
+                    preview.style.display =
+                        'block';
+
+                    if (semImagem) {
+
+                        semImagem.style.display =
+                            'none';
+
+                    }
+
+                };
+
+            leitor.readAsDataURL(
+                arquivo
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+
+<!-- ======================================
+     SELEÇÃO DA LEITURA
+======================================= -->
+
+<script>
+
+const botaoAbrirLivro =
+    document.getElementById(
+        'abrir-selecao-livro'
+    );
+
+const selecaoLivro =
+    document.getElementById(
+        'selecao-livro'
+    );
+
+const campoBusca =
+    document.getElementById(
+        'buscar-livro'
+    );
+
+const resultados =
+    document.getElementById(
+        'resultados-livros'
+    );
+
+const campoLivroId =
+    document.getElementById(
+        'livro_id'
+    );
+
+const campoGoogleId =
+    document.getElementById(
+        'google_id'
+    );
+
+const campoOrigem =
+    document.getElementById(
+        'origem_livro'
+    );
+
+const botaoConfirmar =
+    document.getElementById(
+        'confirmar-livro'
+    );
+
+
+/* ==========================================
+   ABRIR SELEÇÃO
+========================================== */
+
+if (botaoAbrirLivro) {
+
+    botaoAbrirLivro.addEventListener(
+        'click',
+        function() {
+
+            selecaoLivro.classList.toggle(
+                'ativa'
+            );
+
+            if (
+                selecaoLivro.classList.contains(
+                    'ativa'
+                )
+            ) {
+
+                campoBusca.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   BUSCAR LIVROS
+========================================== */
+
+let temporizadorBusca;
+
+campoBusca.addEventListener(
+    'input',
     function() {
 
-        const arquivo =
-            this.files[0];
+        clearTimeout(
+            temporizadorBusca
+        );
 
-        if (!arquivo) {
+        const termo =
+            campoBusca.value.trim();
+
+        campoLivroId.value = '';
+        campoGoogleId.value = '';
+        campoOrigem.value = '';
+
+        botaoConfirmar.disabled = true;
+
+        if (termo.length < 2) {
+
+            resultados.innerHTML = '';
+
             return;
+
         }
 
-        const leitor =
-            new FileReader();
+        resultados.innerHTML = `
+            <div class="buscando-livros">
+                Buscando livros...
+            </div>
+        `;
 
-        leitor.onload =
-            function(event) {
+        temporizadorBusca = setTimeout(
+            function() {
 
-                preview.src =
-                    event.target.result;
+                buscarLivros(
+                    termo
+                );
 
-                preview.style.display =
-                    'block';
-
-                if (semImagem) {
-                    semImagem.style.display =
-                        'none';
-                }
-
-            };
-
-        leitor.readAsDataURL(
-            arquivo
+            },
+            350
         );
 
     }
 );
 
-</script>
 
-<script>
+/* ==========================================
+   REQUISIÇÃO
+========================================== */
 
-    const botaoAbrirLivro =
-        document.getElementById(
-            'abrir-selecao-livro'
+async function buscarLivros(termo) {
+
+    try {
+
+        const resposta = await fetch(
+            `{{ url_for('clubes.buscar_livros') }}?q=${
+                encodeURIComponent(termo)
+            }`
         );
-    
-    const selecaoLivro =
-        document.getElementById(
-            'selecao-livro'
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                'Erro na pesquisa.'
+            );
+
+        }
+
+        const livros =
+            await resposta.json();
+
+        mostrarLivros(
+            livros
         );
-    
-    const campoBusca =
-        document.getElementById(
-            'buscar-livro'
-        );
-    
-    const resultados =
-        document.getElementById(
-            'resultados-livros'
-        );
-    
-    const campoLivroId =
-        document.getElementById(
-            'livro_id'
-        );
-    
-    const campoGoogleId =
-        document.getElementById(
-            'google_id'
-        );
-    
-    const campoOrigem =
-        document.getElementById(
-            'origem_livro'
-        );
-    
-    const botaoConfirmar =
-        document.getElementById(
-            'confirmar-livro'
-        );
-    
-    
-    /* ==========================================
-       ABRIR SELEÇÃO
-    ========================================== */
-    
-    if (botaoAbrirLivro) {
-    
-        botaoAbrirLivro.addEventListener(
-            'click',
-            function() {
-    
-                selecaoLivro.classList.toggle(
-                    'ativa'
-                );
-    
-                if (
-                    selecaoLivro.classList.contains(
-                        'ativa'
-                    )
-                ) {
-    
-                    campoBusca.focus();
-    
-                }
-    
-            }
-        );
-    
+
     }
-    
-    
-    /* ==========================================
-       BUSCAR LIVROS
-    ========================================== */
-    
-    let temporizadorBusca;
-    
-    campoBusca.addEventListener(
-        'input',
-        function() {
-    
-            clearTimeout(
-                temporizadorBusca
-            );
-    
-            const termo =
-                campoBusca.value.trim();
-    
-            campoLivroId.value = '';
-            campoGoogleId.value = '';
-            campoOrigem.value = '';
-    
-            botaoConfirmar.disabled = true;
-    
-            if (termo.length < 2) {
-    
-                resultados.innerHTML = '';
-    
-                return;
-    
-            }
-    
-            resultados.innerHTML = `
-                <div class="buscando-livros">
-                    Buscando livros...
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
+        resultados.innerHTML = `
+            <div class="nenhum-livro-encontrado">
+                Não foi possível realizar a busca.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   MOSTRAR RESULTADOS
+========================================== */
+
+function mostrarLivros(livros) {
+
+    resultados.innerHTML = '';
+
+    if (!livros.length) {
+
+        resultados.innerHTML = `
+            <div class="nenhum-livro-encontrado">
+                Nenhum livro encontrado.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    livros.forEach(
+        function(livro) {
+
+            const card =
+                document.createElement(
+                    'button'
+                );
+
+            card.type = 'button';
+
+            card.className =
+                'resultado-livro-clube';
+
+
+            /* CAPA */
+
+            const capa = livro.capa
+                ? `
+                    <img
+                        src="${livro.capa}"
+                        alt="${livro.titulo}"
+                    >
+                `
+                : `
+                    <div class="resultado-sem-capa">
+                        ◇
+                    </div>
+                `;
+
+
+            /* ORIGEM */
+
+            const origem =
+                livro.origem === 'banco'
+                    ? 'Catálogo Liberium'
+                    : 'Google Books';
+
+
+            card.innerHTML = `
+
+                <div class="resultado-capa">
+                    ${capa}
                 </div>
+
+                <div class="resultado-info">
+
+                    <span class="resultado-origem">
+                        ${origem}
+                    </span>
+
+                    <strong>
+                        ${livro.titulo}
+                    </strong>
+
+                    <p>
+                        ${livro.autor || 'Autor desconhecido'}
+                    </p>
+
+                    ${
+                        livro.paginas
+                            ? `
+                                <small>
+                                    ${livro.paginas} páginas
+                                </small>
+                            `
+                            : ''
+                    }
+
+                </div>
+
+                <span class="resultado-selecionar">
+                    Selecionar
+                </span>
             `;
-    
-            temporizadorBusca = setTimeout(
+
+
+            card.addEventListener(
+                'click',
                 function() {
-    
-                    buscarLivros(
-                        termo
+
+                    selecionarLivro(
+                        card,
+                        livro
                     );
-    
-                },
-                350
+
+                }
             );
-    
+
+
+            resultados.appendChild(
+                card
+            );
+
         }
     );
-    
-    
-    /* ==========================================
-       REQUISIÇÃO
-    ========================================== */
-    
-    async function buscarLivros(termo) {
-    
-        try {
-    
-            const resposta = await fetch(
-                `{{ url_for('clubes.buscar_livros') }}?q=${
-                    encodeURIComponent(termo)
-                }`
-            );
-    
-            if (!resposta.ok) {
-    
-                throw new Error(
-                    'Erro na pesquisa.'
+
+}
+
+
+/* ==========================================
+   SELECIONAR LIVRO
+========================================== */
+
+function selecionarLivro(
+    card,
+    livro
+) {
+
+    document
+        .querySelectorAll(
+            '.resultado-livro-clube'
+        )
+        .forEach(
+            function(item) {
+
+                item.classList.remove(
+                    'selecionado'
                 );
-    
-            }
-    
-            const livros =
-                await resposta.json();
-    
-            mostrarLivros(
-                livros
-            );
-    
-        }
-    
-        catch (erro) {
-    
-            console.error(
-                erro
-            );
-    
-            resultados.innerHTML = `
-                <div class="nenhum-livro-encontrado">
-                    Não foi possível realizar a busca.
-                </div>
-            `;
-    
-        }
-    
-    }
-    
-    
-    /* ==========================================
-       MOSTRAR RESULTADOS
-    ========================================== */
-    
-    function mostrarLivros(livros) {
-    
-        resultados.innerHTML = '';
-    
-        if (!livros.length) {
-    
-            resultados.innerHTML = `
-                <div class="nenhum-livro-encontrado">
-                    Nenhum livro encontrado.
-                </div>
-            `;
-    
-            return;
-    
-        }
-    
-        livros.forEach(
-            function(livro) {
-    
-                const card =
-                    document.createElement(
-                        'button'
-                    );
-    
-                card.type = 'button';
-    
-                card.className =
-                    'resultado-livro-clube';
-    
-                const capa = livro.capa
-                    ? `
-                        <img
-                            src="${livro.capa}"
-                            alt=""
-                        >
-                    `
-                    : `
-                        <div class="resultado-sem-capa">
-                            ◇
-                        </div>
-                    `;
-    
-                const origem =
-                    livro.origem === 'banco'
-                        ? 'Catálogo Liberium'
-                        : 'Google Books';
-    
-                card.innerHTML = `
-    
-                    <div class="resultado-capa">
-                        ${capa}
-                    </div>
-    
-                    <div class="resultado-info">
-    
-                        <span class="resultado-origem">
-                            ${origem}
-                        </span>
-    
-                        <strong>
-                            ${livro.titulo}
-                        </strong>
-    
-                        <p>
-                            ${livro.autor || 'Autor desconhecido'}
-                        </p>
-    
-                        ${
-                            livro.paginas
-                                ? `
-                                    <small>
-                                        ${livro.paginas} páginas
-                                    </small>
-                                `
-                                : ''
-                        }
-    
-                    </div>
-    
-                    <span class="resultado-selecionar">
-                        Selecionar
-                    </span>
-                `;
-    
-                card.addEventListener(
-                    'click',
-                    function() {
-    
-                        selecionarLivro(
-                            card,
-                            livro
-                        );
-    
-                    }
-                );
-    
-                resultados.appendChild(
-                    card
-                );
-    
+
             }
         );
-    
-    }
-    
-    
-    /* ==========================================
-       SELECIONAR
-    ========================================== */
-    
-    function selecionarLivro(
-        card,
-        livro
+
+
+    card.classList.add(
+        'selecionado'
+    );
+
+
+    campoOrigem.value =
+        livro.origem;
+
+
+    if (
+        livro.origem === 'banco'
     ) {
-    
-        document
-            .querySelectorAll(
-                '.resultado-livro-clube'
-            )
-            .forEach(
-                function(item) {
-    
-                    item.classList.remove(
-                        'selecionado'
-                    );
-    
-                }
-            );
-    
-        card.classList.add(
-            'selecionado'
-        );
-    
-        campoOrigem.value =
-            livro.origem;
-    
-        if (
-            livro.origem === 'banco'
-        ) {
-    
-            campoLivroId.value =
-                livro.id;
-    
-            campoGoogleId.value =
-                '';
-    
-        }
-    
-        else {
-    
-            campoGoogleId.value =
-                livro.google_id;
-    
-            campoLivroId.value =
-                '';
-    
-        }
-    
-        botaoConfirmar.disabled =
-            false;
-    
+
+        campoLivroId.value =
+            livro.id;
+
+        campoGoogleId.value =
+            '';
+
     }
-    
-    </script>
+
+    else {
+
+        campoGoogleId.value =
+            livro.google_id;
+
+        campoLivroId.value =
+            '';
+
+    }
+
+
+    botaoConfirmar.disabled =
+        false;
+
+}
+
+</script>
 
 {% endblock %}

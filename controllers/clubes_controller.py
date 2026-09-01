@@ -14,9 +14,14 @@ from flask_login import (
     current_user,
     login_required
 )
-from utils.notificacoes import criar_notificacao
-from utils.google_books import buscar_google_books, buscar_livro_google
+
 from werkzeug.utils import secure_filename
+
+from utils.notificacoes import criar_notificacao
+from utils.google_books import (
+    buscar_google_books,
+    buscar_livro_google
+)
 
 from extensions import db
 
@@ -38,9 +43,9 @@ clubes_bp = Blueprint(
 )
 
 
-# ======================================
+# =========================================================
 # LISTAR CLUBES
-# ======================================
+# =========================================================
 
 @clubes_bp.route('/')
 def listar_clubes():
@@ -53,10 +58,10 @@ def listar_clubes():
     )
 
 
-# ======================================
+# =========================================================
 # PESQUISAR LIVROS PARA O CLUBE
 # BANCO LOCAL + GOOGLE BOOKS
-# ======================================
+# =========================================================
 
 @clubes_bp.route('/buscar-livros')
 @login_required
@@ -72,9 +77,9 @@ def buscar_livros():
 
     resultados = []
 
-    # ======================================
+    # =====================================================
     # 1. BUSCAR NO BANCO LOCAL
-    # ======================================
+    # =====================================================
 
     livros_banco = (
         Livro.query
@@ -112,14 +117,23 @@ def buscar_livros():
             'google_id': None,
             'titulo': livro.titulo,
             'autor': livro.autor or 'Autor desconhecido',
-            'capa': livro.capa,
+
+            'capa': (
+                url_for(
+                    'static',
+                    filename=livro.capa
+                )
+                if livro.capa
+                else None
+            ),
+
             'paginas': livro.paginas,
             'origem': 'banco'
         })
 
-    # ======================================
+    # =====================================================
     # 2. COMPLEMENTAR COM GOOGLE BOOKS
-    # ======================================
+    # =====================================================
 
     try:
 
@@ -140,11 +154,8 @@ def buscar_livros():
             if not titulo:
                 continue
 
-            titulo_normalizado = (
-                titulo.lower()
-            )
+            titulo_normalizado = titulo.lower()
 
-            # Evita mostrar o mesmo livro duas vezes
             if titulo_normalizado in titulos_encontrados:
                 continue
 
@@ -185,9 +196,9 @@ def buscar_livros():
     )
 
 
-# ======================================
+# =========================================================
 # CRIAR CLUBE
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/criar',
@@ -198,9 +209,9 @@ def criar_clube():
 
     if request.method == 'POST':
 
-        # ======================================
+        # =================================================
         # DADOS PRINCIPAIS
-        # ======================================
+        # =================================================
 
         nome = request.form.get(
             'nome',
@@ -217,9 +228,9 @@ def criar_clube():
             ''
         ).strip()
 
-        # ======================================
+        # =================================================
         # VALIDAÇÕES
-        # ======================================
+        # =================================================
 
         if not nome:
 
@@ -260,9 +271,9 @@ def criar_clube():
                 )
             )
 
-        # ======================================
+        # =================================================
         # PRIVACIDADE
-        # ======================================
+        # =================================================
 
         privacidade = request.form.get(
             'privacidade',
@@ -273,9 +284,9 @@ def criar_clube():
             privacidade == 'privado'
         )
 
-        # ======================================
+        # =================================================
         # IMAGEM
-        # ======================================
+        # =================================================
 
         arquivo_imagem = request.files.get(
             'imagem'
@@ -321,9 +332,9 @@ def criar_clube():
                 '/'
             )
 
-        # ======================================
+        # =================================================
         # CRIAR CLUBE
-        # ======================================
+        # =================================================
 
         novo_clube = Clube(
             nome=nome,
@@ -331,10 +342,7 @@ def criar_clube():
             genero=genero,
             imagem=caminho_imagem,
             usuario_id=current_user.id,
-
-            # O clube nasce sem livro.
             livro_id=None,
-
             quantidade_membros=1,
             privado=privado
         )
@@ -343,13 +351,11 @@ def criar_clube():
             novo_clube
         )
 
-        # Precisamos do ID antes de criar
-        # o registro de membro.
         db.session.flush()
 
-        # ======================================
+        # =================================================
         # CRIADOR TAMBÉM É MEMBRO
-        # ======================================
+        # =================================================
 
         membro_criador = MembroClube(
             clube_id=novo_clube.id,
@@ -370,9 +376,6 @@ def criar_clube():
             'sucesso'
         )
 
-        # Em vez de jogar o usuário de volta
-        # para a listagem, vamos direto para
-        # o gerenciamento do clube.
         return redirect(
             url_for(
                 'clubes.gerenciar_clube',
@@ -385,8 +388,10 @@ def criar_clube():
     )
 
 
-
+# =========================================================
 # VER CLUBE
+# =========================================================
+
 @clubes_bp.route(
     '/<int:clube_id>'
 )
@@ -397,13 +402,18 @@ def ver_clube(clube_id):
         clube_id
     )
 
+    # =====================================================
+    # IDENTIFICAR CRIADOR
+    # =====================================================
 
-    # IDENTIFICAR O CRIADOR
     usuario_eh_criador = (
         clube.usuario_id == current_user.id
     )
 
-    # BUSCAR MEMBROS DO CLUBE
+    # =====================================================
+    # MEMBROS
+    # =====================================================
+
     membros = (
         MembroClube.query
         .filter_by(
@@ -417,12 +427,14 @@ def ver_clube(clube_id):
         for membro in membros
     }
 
-    # VERIFICAR SE O USUÁRIO É MEMBRO
     usuario_eh_membro = (
         current_user.id in membros_ids
     )
 
-    # GARANTIR QUE O CRIADOR SEJA MEMBRO
+    # =====================================================
+    # GARANTIR CRIADOR COMO MEMBRO
+    # =====================================================
+
     if usuario_eh_criador and not usuario_eh_membro:
 
         membro_criador = MembroClube(
@@ -439,7 +451,6 @@ def ver_clube(clube_id):
 
         db.session.commit()
 
-        # Atualiza as informações locais
         membros = (
             MembroClube.query
             .filter_by(
@@ -455,8 +466,10 @@ def ver_clube(clube_id):
 
         usuario_eh_membro = True
 
+    # =====================================================
+    # QUANTIDADE REAL DE MEMBROS
+    # =====================================================
 
-    # ATUALIZAR QUANTIDADE DE MEMBROS
     quantidade_real = len(
         membros
     )
@@ -469,23 +482,26 @@ def ver_clube(clube_id):
 
         db.session.commit()
 
-    # QUEM PODE CONVIDAR?
+    # =====================================================
+    # PERMISSÃO PARA CONVIDAR
+    # =====================================================
+
     if clube.privado:
 
-        # PRIVADO:
-        # somente o criador
         pode_convidar = (
             usuario_eh_criador
         )
 
     else:
 
-        # PÚBLICO:
-        # qualquer membro
         pode_convidar = (
             usuario_eh_membro
         )
-    # BUSCAR AMIZADES ACEITAS
+
+    # =====================================================
+    # AMIZADES ACEITAS
+    # =====================================================
+
     amizades = (
         Amizade.query
         .filter(
@@ -498,8 +514,6 @@ def ver_clube(clube_id):
         .all()
     )
 
-
-    # PEGAR OS AMIGOS
     amigos = []
 
     for amizade in amizades:
@@ -513,19 +527,37 @@ def ver_clube(clube_id):
             amigo = amizade.usuario
 
         if amigo:
+
             amigos.append(
                 amigo
             )
-    # AMIGOS QUE JÁ SÃO MEMBROS
-    # NÃO DEVEM APARECER PARA CONVIDAR
+
     amigos_disponiveis = [
         amigo
         for amigo in amigos
         if amigo.id not in membros_ids
     ]
 
+    # =====================================================
+    # DISCUSSÕES PRINCIPAIS
+    #
+    # Não pegamos respostas aqui.
+    # As respostas serão acessadas através de
+    # discussao.respostas no template.
+    # =====================================================
 
-    # RENDERIZAR
+    discussoes = (
+        Discussao.query
+        .filter_by(
+            clube_id=clube.id,
+            discussao_pai_id=None
+        )
+        .order_by(
+            Discussao.data_criacao.desc()
+        )
+        .all()
+    )
+
     return render_template(
         'clubes/clube.html',
 
@@ -535,6 +567,8 @@ def ver_clube(clube_id):
 
         amigos=amigos_disponiveis,
 
+        discussoes=discussoes,
+
         usuario_eh_criador=usuario_eh_criador,
 
         usuario_eh_membro=usuario_eh_membro,
@@ -542,9 +576,10 @@ def ver_clube(clube_id):
         pode_convidar=pode_convidar
     )
 
-# ======================================
+
+# =========================================================
 # GERENCIAR CLUBE
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/gerenciar'
@@ -555,10 +590,6 @@ def gerenciar_clube(clube_id):
     clube = Clube.query.get_or_404(
         clube_id
     )
-
-    # ======================================
-    # SOMENTE O CRIADOR
-    # ======================================
 
     if clube.usuario_id != current_user.id:
 
@@ -573,10 +604,6 @@ def gerenciar_clube(clube_id):
                 clube_id=clube.id
             )
         )
-
-    # ======================================
-    # PARTICIPANTES
-    # ======================================
 
     membros = (
         MembroClube.query
@@ -594,9 +621,11 @@ def gerenciar_clube(clube_id):
         clube=clube,
         membros=membros
     )
-# ======================================
+
+
+# =========================================================
 # DEFINIR LIVRO DO CLUBE
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/definir-livro',
@@ -608,10 +637,6 @@ def definir_livro(clube_id):
     clube = Clube.query.get_or_404(
         clube_id
     )
-
-    # ======================================
-    # SOMENTE O CRIADOR
-    # ======================================
 
     if clube.usuario_id != current_user.id:
 
@@ -634,9 +659,9 @@ def definir_livro(clube_id):
 
     livro = None
 
-    # ======================================
-    # LIVRO DO BANCO
-    # ======================================
+    # =====================================================
+    # LIVRO LOCAL
+    # =====================================================
 
     if origem == 'banco':
 
@@ -660,9 +685,9 @@ def definir_livro(clube_id):
 
                 livro = None
 
-    # ======================================
-    # LIVRO DO GOOGLE BOOKS
-    # ======================================
+    # =====================================================
+    # GOOGLE BOOKS
+    # =====================================================
 
     elif origem == 'google':
 
@@ -673,8 +698,6 @@ def definir_livro(clube_id):
 
         if google_id:
 
-            # Primeiro verificamos se esse livro
-            # já foi salvo anteriormente.
             livro = (
                 Livro.query
                 .filter_by(
@@ -683,8 +706,6 @@ def definir_livro(clube_id):
                 .first()
             )
 
-            # Se ainda não estiver no banco,
-            # buscamos os detalhes na API.
             if not livro:
 
                 try:
@@ -756,13 +777,7 @@ def definir_livro(clube_id):
                         livro
                     )
 
-                    # Gera o ID antes de colocar
-                    # o livro no clube.
                     db.session.flush()
-
-    # ======================================
-    # NÃO ENCONTROU LIVRO
-    # ======================================
 
     if not livro:
 
@@ -778,15 +793,11 @@ def definir_livro(clube_id):
             )
         )
 
-    # ======================================
+    # =====================================================
     # DEFINIR LEITURA
-    # ======================================
+    # =====================================================
 
     clube.livro_id = livro.id
-
-    # ======================================
-    # REINICIAR PROGRESSO DOS MEMBROS
-    # ======================================
 
     membros = (
         MembroClube.query
@@ -816,7 +827,11 @@ def definir_livro(clube_id):
         )
     )
 
+
+# =========================================================
 # EDITAR CLUBE
+# =========================================================
+
 @clubes_bp.route(
     '/<int:clube_id>/editar',
     methods=['POST']
@@ -827,7 +842,7 @@ def editar_clube(clube_id):
     clube = Clube.query.get_or_404(
         clube_id
     )
-    # SOMENTE O CRIADOR
+
     if clube.usuario_id != current_user.id:
 
         flash(
@@ -842,7 +857,6 @@ def editar_clube(clube_id):
             )
         )
 
-    # DADOS
     nome = request.form.get(
         'nome',
         ''
@@ -863,7 +877,6 @@ def editar_clube(clube_id):
         'publico'
     )
 
-    # VALIDAÇÃO
     if not nome:
 
         flash(
@@ -878,7 +891,6 @@ def editar_clube(clube_id):
             )
         )
 
-    # ATUALIZAR
     clube.nome = nome
     clube.descricao = descricao
     clube.genero = genero
@@ -887,7 +899,6 @@ def editar_clube(clube_id):
         privacidade == 'privado'
     )
 
-    # NOVA IMAGEM
     arquivo_imagem = request.files.get(
         'imagem'
     )
@@ -944,7 +955,11 @@ def editar_clube(clube_id):
         )
     )
 
-# REMOVER MEMBRO DO CLUBE
+
+# =========================================================
+# REMOVER MEMBRO
+# =========================================================
+
 @clubes_bp.route(
     '/<int:clube_id>/remover-membro/<int:usuario_id>',
     methods=['POST']
@@ -955,8 +970,6 @@ def remover_membro(clube_id, usuario_id):
     clube = Clube.query.get_or_404(
         clube_id
     )
-
-    # SOMENTE O CRIADOR PODE REMOVER
 
     if clube.usuario_id != current_user.id:
 
@@ -972,7 +985,6 @@ def remover_membro(clube_id, usuario_id):
             )
         )
 
-    # CRIADOR NÃO PODE REMOVER A SI MESMO
     if usuario_id == clube.usuario_id:
 
         flash(
@@ -987,12 +999,14 @@ def remover_membro(clube_id, usuario_id):
             )
         )
 
-
-    # PROCURAR MEMBRO
-    membro = MembroClube.query.filter_by(
-        clube_id=clube.id,
-        usuario_id=usuario_id
-    ).first()
+    membro = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id,
+            usuario_id=usuario_id
+        )
+        .first()
+    )
 
     if not membro:
 
@@ -1007,13 +1021,13 @@ def remover_membro(clube_id, usuario_id):
                 clube_id=clube.id
             )
         )
-    # REMOVER
+
     db.session.delete(
         membro
     )
+
     db.session.flush()
 
-    # ATUALIZAR QUANTIDADE
     clube.quantidade_membros = (
         MembroClube.query
         .filter_by(
@@ -1036,8 +1050,10 @@ def remover_membro(clube_id, usuario_id):
         )
     )
 
+
+# =========================================================
 # CRIAR DISCUSSÃO
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/criar-discussao',
@@ -1050,7 +1066,10 @@ def criar_discussao(clube_id):
         clube_id
     )
 
-    # Só membros podem criar discussões
+    # =====================================================
+    # SOMENTE MEMBROS
+    # =====================================================
+
     membro = (
         MembroClube.query
         .filter_by(
@@ -1062,6 +1081,11 @@ def criar_discussao(clube_id):
 
     if not membro:
 
+        flash(
+            'Você precisa participar do clube para comentar.',
+            'erro'
+        )
+
         return redirect(
             url_for(
                 'clubes.ver_clube',
@@ -1070,14 +1094,21 @@ def criar_discussao(clube_id):
         )
 
     titulo = request.form.get(
-        'titulo'
-    )
+        'titulo',
+        ''
+    ).strip()
 
     conteudo = request.form.get(
-        'conteudo'
-    )
+        'conteudo',
+        ''
+    ).strip()
 
     if not conteudo:
+
+        flash(
+            'Escreva um comentário antes de publicar.',
+            'erro'
+        )
 
         return redirect(
             url_for(
@@ -1087,10 +1118,13 @@ def criar_discussao(clube_id):
         )
 
     nova_discussao = Discussao(
-        titulo=titulo,
+        titulo=titulo or None,
         conteudo=conteudo,
         clube_id=clube.id,
-        usuario_id=current_user.id
+        usuario_id=current_user.id,
+
+        # É uma discussão principal
+        discussao_pai_id=None
     )
 
     db.session.add(
@@ -1098,6 +1132,11 @@ def criar_discussao(clube_id):
     )
 
     db.session.commit()
+
+    # =====================================================
+    # NOTIFICAR OUTROS MEMBROS
+    # =====================================================
+
     membros = (
         MembroClube.query
         .filter(
@@ -1105,7 +1144,13 @@ def criar_discussao(clube_id):
             MembroClube.usuario_id != current_user.id
         )
         .all()
-        )
+    )
+
+    titulo_notificacao = (
+        titulo
+        if titulo
+        else 'Novo comentário'
+    )
 
     for membro_clube in membros:
 
@@ -1115,14 +1160,20 @@ def criar_discussao(clube_id):
             tipo="discussao",
             titulo="Nova discussão no clube",
             mensagem=(
-                f"{current_user.nome} iniciou "
-                f'"{titulo}" no clube {clube.nome}.'
+                f'{current_user.nome} iniciou '
+                f'"{titulo_notificacao}" '
+                f'no clube {clube.nome}.'
             ),
             link=url_for(
-                "clubes.ver_clube",
+                'clubes.ver_clube',
                 clube_id=clube.id
             )
         )
+
+    flash(
+        'Comentário publicado!',
+        'sucesso'
+    )
 
     return redirect(
         url_for(
@@ -1132,9 +1183,176 @@ def criar_discussao(clube_id):
     )
 
 
-# ======================================
+# =========================================================
+# RESPONDER DISCUSSÃO
+# =========================================================
+
+@clubes_bp.route(
+    '/<int:clube_id>/discussao/<int:discussao_id>/responder',
+    methods=['POST']
+)
+@login_required
+def responder_discussao(
+    clube_id,
+    discussao_id
+):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # =====================================================
+    # SOMENTE MEMBROS PODEM RESPONDER
+    # =====================================================
+
+    membro = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id,
+            usuario_id=current_user.id
+        )
+        .first()
+    )
+
+    if not membro:
+
+        flash(
+            'Você precisa participar do clube para responder.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # =====================================================
+    # BUSCAR DISCUSSÃO
+    # =====================================================
+
+    discussao_pai = (
+        Discussao.query
+        .filter_by(
+            id=discussao_id,
+            clube_id=clube.id
+        )
+        .first_or_404()
+    )
+
+    # =====================================================
+    # CONTEÚDO DA RESPOSTA
+    # =====================================================
+
+    conteudo = request.form.get(
+        'conteudo',
+        ''
+    ).strip()
+
+    if not conteudo:
+
+        flash(
+            'Escreva uma resposta antes de enviar.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # =====================================================
+    # SE TENTAR RESPONDER UMA RESPOSTA,
+    # VINCULAMOS À DISCUSSÃO PRINCIPAL.
+    #
+    # Isso evita:
+    #
+    # comentário
+    #   resposta
+    #     resposta
+    #       resposta...
+    #
+    # Todas ficam em um único nível visual.
+    # =====================================================
+
+    if discussao_pai.discussao_pai_id:
+
+        id_discussao_principal = (
+            discussao_pai.discussao_pai_id
+        )
+
+    else:
+
+        id_discussao_principal = (
+            discussao_pai.id
+        )
+
+    nova_resposta = Discussao(
+        titulo=None,
+        conteudo=conteudo,
+        clube_id=clube.id,
+        usuario_id=current_user.id,
+        discussao_pai_id=id_discussao_principal
+    )
+
+    db.session.add(
+        nova_resposta
+    )
+
+    db.session.commit()
+
+    # =====================================================
+    # NOTIFICAR AUTOR DA DISCUSSÃO
+    # =====================================================
+
+    discussao_principal = (
+        db.session.get(
+            Discussao,
+            id_discussao_principal
+        )
+    )
+
+    if (
+        discussao_principal
+        and discussao_principal.usuario_id
+        != current_user.id
+    ):
+
+        criar_notificacao(
+            usuario_id=discussao_principal.usuario_id,
+            categoria='clubes',
+            tipo='resposta_discussao',
+            titulo='Responderam sua discussão',
+            mensagem=(
+                f'{current_user.nome} respondeu '
+                f'seu comentário no clube '
+                f'{clube.nome}.'
+            ),
+            link=url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    flash(
+        'Resposta publicada!',
+        'sucesso'
+    )
+
+    return redirect(
+        url_for(
+            'clubes.ver_clube',
+            clube_id=clube.id
+        )
+    )
+
+
+# =========================================================
 # ENTRAR EM CLUBE PÚBLICO
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/entrar',
@@ -1147,10 +1365,6 @@ def entrar_clube(clube_id):
         clube_id
     )
 
-    # ======================================
-    # BLOQUEAR ENTRADA DIRETA EM PRIVADO
-    # ======================================
-
     if clube.privado:
 
         return redirect(
@@ -1159,10 +1373,6 @@ def entrar_clube(clube_id):
                 clube_id=clube_id
             )
         )
-
-    # ======================================
-    # VERIFICAR SE JÁ É MEMBRO
-    # ======================================
 
     membro_existente = (
         MembroClube.query
@@ -1181,10 +1391,6 @@ def entrar_clube(clube_id):
                 clube_id=clube_id
             )
         )
-
-    # ======================================
-    # ADICIONAR MEMBRO
-    # ======================================
 
     novo_membro = MembroClube(
         clube_id=clube.id,
@@ -1218,9 +1424,9 @@ def entrar_clube(clube_id):
     )
 
 
-# ======================================
-# ATUALIZAR PROGRESSO NO CLUBE
-# ======================================
+# =========================================================
+# ATUALIZAR PROGRESSO
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/atualizar-progresso',
@@ -1242,10 +1448,6 @@ def atualizar_progresso(clube_id):
             )
         )
 
-    # ======================================
-    # SOMENTE MEMBROS PODEM ATUALIZAR
-    # ======================================
-
     membro = (
         MembroClube.query
         .filter_by(
@@ -1263,10 +1465,6 @@ def atualizar_progresso(clube_id):
                 clube_id=clube_id
             )
         )
-
-    # ======================================
-    # PÁGINAS LIDAS
-    # ======================================
 
     try:
 
@@ -1289,6 +1487,7 @@ def atualizar_progresso(clube_id):
     )
 
     if paginas_lidas < 0:
+
         paginas_lidas = 0
 
     if total_paginas > 0:
@@ -1297,10 +1496,6 @@ def atualizar_progresso(clube_id):
             paginas_lidas,
             total_paginas
         )
-
-    # ======================================
-    # ATUALIZAR PROGRESSO
-    # ======================================
 
     membro.paginas_lidas = (
         paginas_lidas
@@ -1333,16 +1528,19 @@ def atualizar_progresso(clube_id):
     )
 
 
-# ======================================
-# ENVIAR CONVITE PARA O CLUBE
-# ======================================
+# =========================================================
+# ENVIAR CONVITE
+# =========================================================
 
 @clubes_bp.route(
     '/<int:clube_id>/enviar-convite/<int:usuario_id>',
     methods=['POST']
 )
 @login_required
-def enviar_convite(clube_id, usuario_id):
+def enviar_convite(
+    clube_id,
+    usuario_id
+):
 
     clube = Clube.query.get_or_404(
         clube_id
@@ -1351,10 +1549,6 @@ def enviar_convite(clube_id, usuario_id):
     amigo = Usuario.query.get_or_404(
         usuario_id
     )
-
-    # ======================================
-    # VERIFICAR SE QUEM CONVIDA É MEMBRO
-    # ======================================
 
     membro_atual = (
         MembroClube.query
@@ -1365,14 +1559,7 @@ def enviar_convite(clube_id, usuario_id):
         .first()
     )
 
-    # ======================================
-    # VERIFICAR PERMISSÃO PARA CONVIDAR
-    # ======================================
-
     if clube.privado:
-
-        # Clube privado:
-        # somente o criador pode convidar
 
         if clube.usuario_id != current_user.id:
 
@@ -1385,9 +1572,6 @@ def enviar_convite(clube_id, usuario_id):
 
     else:
 
-        # Clube público:
-        # qualquer membro pode convidar
-
         if not membro_atual:
 
             return redirect(
@@ -1397,10 +1581,6 @@ def enviar_convite(clube_id, usuario_id):
                 )
             )
 
-    # ======================================
-    # NÃO PODE CONVIDAR A SI MESMO
-    # ======================================
-
     if amigo.id == current_user.id:
 
         return redirect(
@@ -1409,10 +1589,6 @@ def enviar_convite(clube_id, usuario_id):
                 clube_id=clube_id
             )
         )
-
-    # ======================================
-    # VERIFICAR SE JÁ É MEMBRO
-    # ======================================
 
     membro_existente = (
         MembroClube.query
@@ -1431,10 +1607,6 @@ def enviar_convite(clube_id, usuario_id):
                 clube_id=clube_id
             )
         )
-
-    # ======================================
-    # VERIFICAR SE JÁ EXISTE CONVITE
-    # ======================================
 
     convite_existente = (
         ConviteClube.query
@@ -1455,10 +1627,6 @@ def enviar_convite(clube_id, usuario_id):
             )
         )
 
-    # ======================================
-    # CRIAR CONVITE
-    # ======================================
-
     novo_convite = ConviteClube(
         clube_id=clube.id,
         remetente_id=current_user.id,
@@ -1474,17 +1642,18 @@ def enviar_convite(clube_id, usuario_id):
 
     criar_notificacao(
         usuario_id=amigo.id,
-        categoria="clubes",
-        tipo="convite_clube",
-        titulo="Novo convite para clube",
+        categoria='clubes',
+        tipo='convite_clube',
+        titulo='Novo convite para clube',
         mensagem=(
-            f"{current_user.nome} convidou você "
-            f"para participar do clube {clube.nome}."
+            f'{current_user.nome} convidou você '
+            f'para participar do clube {clube.nome}.'
         ),
         link=url_for(
-            "clubes.convites"
+            'clubes.convites'
         )
     )
+
     return redirect(
         url_for(
             'clubes.ver_clube',
@@ -1492,9 +1661,10 @@ def enviar_convite(clube_id, usuario_id):
         )
     )
 
-# ======================================
+
+# =========================================================
 # CONVITES RECEBIDOS
-# ======================================
+# =========================================================
 
 @clubes_bp.route('/convites')
 @login_required
@@ -1518,9 +1688,9 @@ def convites():
     )
 
 
-# ======================================
+# =========================================================
 # ACEITAR CONVITE
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/convites/<int:convite_id>/aceitar',
@@ -1532,10 +1702,6 @@ def aceitar_convite(convite_id):
     convite = ConviteClube.query.get_or_404(
         convite_id
     )
-
-    # ======================================
-    # VERIFICAR DONO DO CONVITE
-    # ======================================
 
     if convite.destinatario_id != current_user.id:
 
@@ -1552,10 +1718,6 @@ def aceitar_convite(convite_id):
                 'clubes.convites'
             )
         )
-
-    # ======================================
-    # VERIFICAR SE JÁ É MEMBRO
-    # ======================================
 
     membro_existente = (
         MembroClube.query
@@ -1582,10 +1744,6 @@ def aceitar_convite(convite_id):
 
         db.session.flush()
 
-    # ======================================
-    # ATUALIZAR QUANTIDADE DE MEMBROS
-    # ======================================
-
     clube = Clube.query.get(
         convite.clube_id
     )
@@ -1603,21 +1761,23 @@ def aceitar_convite(convite_id):
     convite.status = 'aceita'
 
     db.session.commit()
+
     if clube:
+
         criar_notificacao(
             usuario_id=convite.remetente_id,
-            categoria="clubes",
-            tipo="convite_aceito",
-            titulo="Convite aceito!",
+            categoria='clubes',
+            tipo='convite_aceito',
+            titulo='Convite aceito!',
             mensagem=(
-                f"{current_user.nome} aceitou seu convite "
-                f"para participar do clube {clube.nome}."
+                f'{current_user.nome} aceitou seu convite '
+                f'para participar do clube {clube.nome}.'
             ),
             link=url_for(
-                "clubes.ver_clube",
+                'clubes.ver_clube',
                 clube_id=clube.id
             )
-    )
+        )
 
     return redirect(
         url_for(
@@ -1627,9 +1787,9 @@ def aceitar_convite(convite_id):
     )
 
 
-# ======================================
+# =========================================================
 # RECUSAR CONVITE
-# ======================================
+# =========================================================
 
 @clubes_bp.route(
     '/convites/<int:convite_id>/recusar',
@@ -1642,7 +1802,6 @@ def recusar_convite(convite_id):
         convite_id
     )
 
-
     if convite.destinatario_id != current_user.id:
 
         return redirect(
@@ -1651,7 +1810,6 @@ def recusar_convite(convite_id):
             )
         )
 
-
     if convite.status != 'pendente':
 
         return redirect(
@@ -1659,7 +1817,6 @@ def recusar_convite(convite_id):
                 'clubes.convites'
             )
         )
-
 
     convite.status = 'recusada'
 
