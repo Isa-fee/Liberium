@@ -9,7 +9,7 @@
     rel="stylesheet"
     href="{{ url_for(
         'static',
-        filename='css/clube/gerenciar_clube.css'
+        filename='css/clubesliberium/gerenciar_clube.css'
     ) }}"
 >
 {% endblock %}
@@ -48,6 +48,174 @@
                 Atualize as informações e configurações
                 do seu clube de leitura.
             </p>
+
+        </div>
+
+    </div>
+    <!-- ==================================
+        LEITURA ATUAL
+    =================================== -->
+
+    <div class="gerenciar-card leitura-card">
+
+        <div class="card-cabecalho">
+
+            <h2>
+                Leitura atual
+            </h2>
+
+            <p>
+                Escolha o livro que os participantes
+                estão lendo neste momento.
+            </p>
+
+        </div>
+
+
+        {% if clube.livro %}
+
+            <div class="livro-atual">
+
+                <div class="livro-atual-capa">
+
+                    {% if clube.livro.capa %}
+
+                        <img
+                            src="{{ clube.livro.capa }}"
+                            alt="{{ clube.livro.titulo }}"
+                        >
+
+                    {% else %}
+
+                        <div class="livro-sem-capa">
+                            📖
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="livro-atual-info">
+
+                    <span class="livro-label">
+                        LENDO AGORA
+                    </span>
+
+                    <h3>
+                        {{ clube.livro.titulo }}
+                    </h3>
+
+                    <p>
+                        {{ clube.livro.autor or 'Autor desconhecido' }}
+                    </p>
+
+                    {% if clube.livro.paginas %}
+
+                        <small>
+                            {{ clube.livro.paginas }} páginas
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="botao-trocar-livro"
+                    id="abrir-selecao-livro"
+                >
+                    Trocar livro
+                </button>
+
+            </div>
+
+        {% else %}
+
+            <div class="sem-livro-clube">
+
+                <div class="sem-livro-icone">
+                    ◇
+                </div>
+
+                <div class="sem-livro-texto">
+
+                    <strong>
+                        Nenhuma leitura selecionada
+                    </strong>
+
+                    <p>
+                        Escolha o primeiro livro que será
+                        lido pelos participantes do clube.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="botao-selecionar-livro"
+                    id="abrir-selecao-livro"
+                >
+                    Escolher livro
+                </button>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- BUSCA DO LIVRO -->
+
+        <div
+            class="selecao-livro"
+            id="selecao-livro"
+        >
+
+            <form
+                action="{{ url_for(
+                    'clubes.definir_livro',
+                    clube_id=clube.id
+                ) }}"
+                method="POST"
+            >
+
+                <div class="campo-clube">
+
+                    <label for="buscar-livro">
+                        Pesquisar no catálogo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="buscar-livro"
+                        placeholder="Digite o título ou autor..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <input
+                    type="hidden"
+                    name="livro_id"
+                    id="livro_id"
+                >
+
+                <div
+                    class="resultados-livros"
+                    id="resultados-livros"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="botao-confirmar-livro"
+                    id="confirmar-livro"
+                    disabled
+                >
+                    Confirmar leitura
+                </button>
+
+            </form>
 
         </div>
 

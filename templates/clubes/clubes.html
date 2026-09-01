@@ -7,316 +7,41 @@
 {% block styles %}
 <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/clube/style.css') }}"
+    href="{{ url_for('static', filename='css/clubesliberium/clubes.css') }}"
 >
 {% endblock %}
 
 {% block content %}
 
-<section class="clubes-conteudo">
+<main class="pagina-clubes">
 
-    <!-- ==========================================
-         CABEÇALHO
-    =========================================== -->
+    <section class="clubes-conteudo">
 
-    <div class="clubes-titulo">
+        <!-- ==========================================
+             APRESENTAÇÃO
+        =========================================== -->
 
-        <div>
+        <header class="clubes-hero">
 
-            <h1>
-                Clubes de leitura
-            </h1>
-
-            <p>
-                Encontre pessoas que estão vivendo
-                as mesmas histórias que você.
-            </p>
-
-        </div>
-
-        <a
-            href="{{ url_for('clubes.criar_clube') }}"
-            class="botao-criar-clube"
-        >
-            + Criar clube
-        </a>
-
-    </div>
-
-
-    <!-- ==========================================
-         FILTROS
-    =========================================== -->
-
-    <div class="filtros-clubes">
-
-        <button class="filtro-clube ativo">
-            Todos os gêneros
-        </button>
-
-        <button class="filtro-clube">
-            Mais populares
-        </button>
-
-        <button class="filtro-clube">
-            Romance
-        </button>
-
-        <button class="filtro-clube">
-            Fantasia
-        </button>
-
-        <button class="filtro-clube">
-            Suspense
-        </button>
-
-    </div>
-
-
-    <!-- ==========================================
-         TÍTULO DA SEÇÃO
-    =========================================== -->
-
-    <div class="titulo-secao-clubes">
-
-        <div>
-
-            <span>
-                PARA VOCÊ
+            <span class="clubes-label">
+                COMPARTILHE SUAS LEITURAS
             </span>
 
-            <h2>
-                Clubes em destaque
-            </h2>
+            <div class="clubes-hero-linha">
 
-        </div>
+                <div>
+                    <h1>
+                        Encontre seu próximo clube de leitura
+                    </h1>
 
-        <a href="#">
-            Ver todos
-        </a>
-
-    </div>
-
-
-    <!-- ==========================================
-         CLUBES CADASTRADOS
-    =========================================== -->
-
-    <div class="clubes-grid">
-
-        {% for clube in clubes %}
-
-            <article class="clube-card">
-
-                <!-- ==================================
-                     IMAGEM
-                =================================== -->
-
-                <div class="clube-imagem">
-
-                    {% if clube.imagem %}
-
-                        <img
-                            src="{{ url_for(
-                                'static',
-                                filename=clube.imagem
-                            ) }}"
-                            alt="{{ clube.nome }}"
-                        >
-
-                    {% else %}
-
-                        <div class="clube-sem-imagem">
-
-                            <span>
-                                Sem imagem
-                            </span>
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <!-- PRIVACIDADE SOBRE A IMAGEM -->
-
-                    {% if clube.privado %}
-
-                        <span class="badge-privacidade privado">
-                            🔒 Privado
-                        </span>
-
-                    {% else %}
-
-                        <span class="badge-privacidade publico">
-                            Público
-                        </span>
-
-                    {% endif %}
-
-
-                    <button
-                        type="button"
-                        class="favoritar-clube"
-                        aria-label="Favoritar clube"
-                    >
-                    </button>
-
-                </div>
-
-
-                <!-- ==================================
-                     INFORMAÇÕES
-                =================================== -->
-
-                <div class="clube-detalhes">
-
-                    <span class="clube-genero">
-                        {{ clube.genero }}
-                    </span>
-
-
-                    <h3>
-                        {{ clube.nome }}
-                    </h3>
-
-
-                    <!-- PRIVACIDADE -->
-
-                    {% if clube.privado %}
-
-                        <div class="informacao-privacidade privado">
-
-                            <strong>
-                                Clube privado
-                            </strong>
-
-                            <span>
-                                Participação somente por convite.
-                            </span>
-
-                        </div>
-
-                    {% else %}
-
-                        <div class="informacao-privacidade publico">
-
-                            <strong>
-                                Clube público
-                            </strong>
-
-                            <span>
-                                Qualquer pessoa pode participar.
-                            </span>
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <!-- MEMBROS -->
-
-                    <p class="quantidade-membros">
-
-                        {{ clube.quantidade_membros }}
-
-                        {% if clube.quantidade_membros == 1 %}
-                            membro
-                        {% else %}
-                            membros
-                        {% endif %}
-
+                    <p>
+                        Descubra novas histórias, participe de discussões
+                        e conheça leitores com os mesmos interesses.
                     </p>
-
-
-                    <!-- CRIADOR -->
-
-                    <div class="leitura-atual">
-
-                        <div>
-
-                            <span>
-                                Criado por
-                            </span>
-
-                            <strong>
-                                {{ clube.usuario.nome }}
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- ==================================
-                         BOTÃO
-                    =================================== -->
-
-                    {% if clube.privado %}
-
-                        <!-- PRIVADO:
-                             NÃO PERMITE ENTRADA DIRETA -->
-
-                        <a
-                            href="{{ url_for(
-                                'clubes.ver_clube',
-                                clube_id=clube.id
-                            ) }}"
-                            class="botao-entrar botao-clube-privado"
-                        >
-                            Ver clube
-                        </a>
-
-                    {% else %}
-
-                        <!-- PÚBLICO:
-                             PODE ENTRAR -->
-
-                        <form
-                            action="{{ url_for(
-                                'clubes.entrar_clube',
-                                clube_id=clube.id
-                            ) }}"
-                            method="POST"
-                            class="form-entrar-clube"
-                        >
-
-                            <button
-                                type="submit"
-                                class="botao-entrar"
-                            >
-                                Entrar no clube
-                            </button>
-
-                        </form>
-
-                    {% endif %}
-
                 </div>
-
-            </article>
-
-
-        {% else %}
-
-            <!-- ======================================
-                 NENHUM CLUBE
-            ======================================= -->
-
-            <div class="nenhum-clube">
-
-                <h3>
-                    Ainda não existem clubes.
-                </h3>
-
-                <p>
-                    Seja o primeiro a criar
-                    um clube de leitura!
-                </p>
 
                 <a
-                    href="{{ url_for(
-                        'clubes.criar_clube'
-                    ) }}"
+                    href="{{ url_for('clubes.criar_clube') }}"
                     class="botao-criar-clube"
                 >
                     + Criar clube
@@ -324,44 +49,434 @@
 
             </div>
 
-        {% endfor %}
-
-    </div>
+        </header>
 
 
-    <!-- ==========================================
-         ENCONTRAR CLUBE PELO LIVRO
-    =========================================== -->
+        <!-- ==========================================
+             BUSCA E FILTROS
+        =========================================== -->
 
-    <section class="encontrar-clube">
+        <section class="painel-busca-clubes">
 
-        <div class="encontrar-texto">
+            <div class="busca-clubes">
 
-            <span>
-                NÃO SABE POR ONDE COMEÇAR?
-            </span>
+                <span class="icone-busca-clube">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    id="busca-clube"
+                    placeholder="Buscar por nome do clube, gênero ou livro..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="filtros-clubes">
+
+                <button
+                    type="button"
+                    class="filtro-clube ativo"
+                    data-genero="todos"
+                >
+                    Todos
+                </button>
+
+                <button
+                    type="button"
+                    class="filtro-clube"
+                    data-genero="romance"
+                >
+                    Romance
+                </button>
+
+                <button
+                    type="button"
+                    class="filtro-clube"
+                    data-genero="fantasia"
+                >
+                    Fantasia
+                </button>
+
+                <button
+                    type="button"
+                    class="filtro-clube"
+                    data-genero="suspense"
+                >
+                    Suspense
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             CABEÇALHO DA LISTAGEM
+        =========================================== -->
+
+        <div class="cabecalho-listagem-clubes">
 
             <h2>
-                Está procurando um livro?
+                Clubes de leitura
             </h2>
 
+            <span class="contador-clubes">
+                {{ clubes|length }}
+
+                {% if clubes|length == 1 %}
+                    clube
+                {% else %}
+                    clubes
+                {% endif %}
+            </span>
+
+        </div>
+
+
+        <!-- ==========================================
+             CLUBES
+        =========================================== -->
+
+        {% if clubes %}
+
+            <div class="clubes-grid">
+
+                {% for clube in clubes %}
+
+                    <article
+                        class="clube-card"
+                        data-genero="{{ clube.genero|lower if clube.genero else '' }}"
+                        data-nome="{{ clube.nome|lower }}"
+                    >
+
+                        <!-- IMAGEM -->
+
+                        <a
+                            href="{{ url_for(
+                                'clubes.ver_clube',
+                                clube_id=clube.id
+                            ) }}"
+                            class="clube-card-imagem"
+                        >
+
+                            {% if clube.imagem %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=clube.imagem
+                                    ) }}"
+                                    alt="{{ clube.nome }}"
+                                >
+
+                            {% else %}
+
+                                <div class="clube-card-sem-imagem">
+
+                                    <span>
+                                        {{ clube.nome[0]|upper }}
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if clube.privado %}
+
+                                <span class="badge-privacidade privado">
+                                    Privado
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge-privacidade publico">
+                                    Público
+                                </span>
+
+                            {% endif %}
+
+                        </a>
+
+
+                        <!-- INFORMAÇÕES -->
+
+                        <div class="clube-card-conteudo">
+
+                            {% if clube.genero %}
+
+                                <span class="clube-card-genero">
+                                    {{ clube.genero }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <h3>
+                                {{ clube.nome }}
+                            </h3>
+
+
+                            {% if clube.descricao %}
+
+                                <p class="clube-card-descricao">
+                                    {{ clube.descricao }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="clube-card-descricao">
+                                    Um espaço para compartilhar leituras,
+                                    conversar sobre livros e conhecer novos leitores.
+                                </p>
+
+                            {% endif %}
+
+
+                            <div class="clube-card-informacoes">
+
+                                <div>
+
+                                    <span class="info-label">
+                                        MEMBROS
+                                    </span>
+
+                                    <strong>
+                                        {{ clube.quantidade_membros }}
+
+                                        {% if clube.quantidade_membros == 1 %}
+                                            membro
+                                        {% else %}
+                                            membros
+                                        {% endif %}
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <span class="info-label">
+                                        CRIADO POR
+                                    </span>
+
+                                    <strong>
+                                        {{ clube.usuario.nome }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="clube-card-rodape">
+
+                                <a
+                                    href="{{ url_for(
+                                        'clubes.ver_clube',
+                                        clube_id=clube.id
+                                    ) }}"
+                                    class="botao-ver-clube"
+                                >
+                                    Ver clube
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- ======================================
+                 ESTADO VAZIO
+            ======================================= -->
+
+            <div class="nenhum-clube">
+
+                <div class="nenhum-clube-simbolo">
+                    ◇
+                </div>
+
+                <h3>
+                    Nenhum clube por aqui ainda
+                </h3>
+
+                <p>
+                    Os clubes criados pela comunidade aparecerão aqui.
+                    Você pode ser a primeira pessoa a começar uma nova leitura.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Usado pelo JavaScript quando a busca não encontra nada -->
+
+        <div
+            class="nenhum-resultado-clube"
+            id="nenhum-resultado-clube"
+        >
+
+            <h3>
+                Nenhum clube encontrado
+            </h3>
+
             <p>
-                Pesquise pelo livro que você quer ler.
-                Se ele estiver sendo lido por algum clube,
-                você poderá conhecer a comunidade e participar.
+                Tente buscar outro nome ou selecionar outro gênero.
             </p>
 
         </div>
 
-        <a
-            href="#"
-            class="botao-encontrar"
-        >
-            Pesquisar livros
-        </a>
-
     </section>
 
-</section>
+</main>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const campoBusca =
+        document.getElementById("busca-clube");
+
+    const filtros =
+        document.querySelectorAll(".filtro-clube");
+
+    const cards =
+        document.querySelectorAll(".clube-card");
+
+    const nenhumResultado =
+        document.getElementById("nenhum-resultado-clube");
+
+
+    let generoSelecionado = "todos";
+
+
+    function normalizarTexto(texto) {
+
+        return texto
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+
+    }
+
+
+    function filtrarClubes() {
+
+        const busca =
+            normalizarTexto(campoBusca.value.trim());
+
+        let quantidadeVisivel = 0;
+
+
+        cards.forEach(function (card) {
+
+            const nome =
+                normalizarTexto(
+                    card.dataset.nome || ""
+                );
+
+            const genero =
+                normalizarTexto(
+                    card.dataset.genero || ""
+                );
+
+            const textoCompleto =
+                normalizarTexto(
+                    card.innerText
+                );
+
+
+            const correspondeBusca =
+                busca === "" ||
+                nome.includes(busca) ||
+                genero.includes(busca) ||
+                textoCompleto.includes(busca);
+
+
+            const correspondeGenero =
+                generoSelecionado === "todos" ||
+                genero.includes(
+                    normalizarTexto(generoSelecionado)
+                );
+
+
+            if (
+                correspondeBusca &&
+                correspondeGenero
+            ) {
+
+                card.style.display = "";
+                quantidadeVisivel++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        if (
+            cards.length > 0 &&
+            quantidadeVisivel === 0
+        ) {
+
+            nenhumResultado.classList.add("visivel");
+
+        } else {
+
+            nenhumResultado.classList.remove("visivel");
+
+        }
+
+    }
+
+
+    campoBusca.addEventListener(
+        "input",
+        filtrarClubes
+    );
+
+
+    filtros.forEach(function (botao) {
+
+        botao.addEventListener(
+            "click",
+            function () {
+
+                filtros.forEach(function (filtro) {
+                    filtro.classList.remove("ativo");
+                });
+
+
+                botao.classList.add("ativo");
+
+                generoSelecionado =
+                    botao.dataset.genero;
+
+                filtrarClubes();
+
+            }
+        );
+
+    });
+
+});
+
+</script>
 
 {% endblock %}
