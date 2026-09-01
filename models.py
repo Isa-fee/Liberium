@@ -1073,3 +1073,53 @@ class Notificacao(db.Model):
         "Usuario",
         backref="notificacoes"
     )
+    
+# ANOTAÇÃO
+class Anotacao(db.Model):
+    __tablename__ = "anotacoes"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # A notificação é opcional porque futuramente
+    # podemos permitir anotações criadas fora
+    # da página de notificações.
+    notificacao_id = db.Column(
+        db.Integer,
+        db.ForeignKey("notificacoes.id"),
+        nullable=True
+    )
+
+    titulo = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    conteudo = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    data_criacao = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="anotacoes"
+    )
+
+    notificacao = db.relationship(
+        "Notificacao",
+        backref="anotacoes"
+    )

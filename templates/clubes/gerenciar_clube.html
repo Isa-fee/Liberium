@@ -201,6 +201,18 @@
                     id="livro_id"
                 >
 
+                <input
+                    type="hidden"
+                    name="google_id"
+                    id="google_id"
+                >
+
+                <input
+                    type="hidden"
+                    name="origem"
+                    id="origem_livro"
+                >
+
                 <div
                     class="resultados-livros"
                     id="resultados-livros"
@@ -756,5 +768,347 @@ inputImagem.addEventListener(
 );
 
 </script>
+
+<script>
+
+    const botaoAbrirLivro =
+        document.getElementById(
+            'abrir-selecao-livro'
+        );
+    
+    const selecaoLivro =
+        document.getElementById(
+            'selecao-livro'
+        );
+    
+    const campoBusca =
+        document.getElementById(
+            'buscar-livro'
+        );
+    
+    const resultados =
+        document.getElementById(
+            'resultados-livros'
+        );
+    
+    const campoLivroId =
+        document.getElementById(
+            'livro_id'
+        );
+    
+    const campoGoogleId =
+        document.getElementById(
+            'google_id'
+        );
+    
+    const campoOrigem =
+        document.getElementById(
+            'origem_livro'
+        );
+    
+    const botaoConfirmar =
+        document.getElementById(
+            'confirmar-livro'
+        );
+    
+    
+    /* ==========================================
+       ABRIR SELEÇÃO
+    ========================================== */
+    
+    if (botaoAbrirLivro) {
+    
+        botaoAbrirLivro.addEventListener(
+            'click',
+            function() {
+    
+                selecaoLivro.classList.toggle(
+                    'ativa'
+                );
+    
+                if (
+                    selecaoLivro.classList.contains(
+                        'ativa'
+                    )
+                ) {
+    
+                    campoBusca.focus();
+    
+                }
+    
+            }
+        );
+    
+    }
+    
+    
+    /* ==========================================
+       BUSCAR LIVROS
+    ========================================== */
+    
+    let temporizadorBusca;
+    
+    campoBusca.addEventListener(
+        'input',
+        function() {
+    
+            clearTimeout(
+                temporizadorBusca
+            );
+    
+            const termo =
+                campoBusca.value.trim();
+    
+            campoLivroId.value = '';
+            campoGoogleId.value = '';
+            campoOrigem.value = '';
+    
+            botaoConfirmar.disabled = true;
+    
+            if (termo.length < 2) {
+    
+                resultados.innerHTML = '';
+    
+                return;
+    
+            }
+    
+            resultados.innerHTML = `
+                <div class="buscando-livros">
+                    Buscando livros...
+                </div>
+            `;
+    
+            temporizadorBusca = setTimeout(
+                function() {
+    
+                    buscarLivros(
+                        termo
+                    );
+    
+                },
+                350
+            );
+    
+        }
+    );
+    
+    
+    /* ==========================================
+       REQUISIÇÃO
+    ========================================== */
+    
+    async function buscarLivros(termo) {
+    
+        try {
+    
+            const resposta = await fetch(
+                `{{ url_for('clubes.buscar_livros') }}?q=${
+                    encodeURIComponent(termo)
+                }`
+            );
+    
+            if (!resposta.ok) {
+    
+                throw new Error(
+                    'Erro na pesquisa.'
+                );
+    
+            }
+    
+            const livros =
+                await resposta.json();
+    
+            mostrarLivros(
+                livros
+            );
+    
+        }
+    
+        catch (erro) {
+    
+            console.error(
+                erro
+            );
+    
+            resultados.innerHTML = `
+                <div class="nenhum-livro-encontrado">
+                    Não foi possível realizar a busca.
+                </div>
+            `;
+    
+        }
+    
+    }
+    
+    
+    /* ==========================================
+       MOSTRAR RESULTADOS
+    ========================================== */
+    
+    function mostrarLivros(livros) {
+    
+        resultados.innerHTML = '';
+    
+        if (!livros.length) {
+    
+            resultados.innerHTML = `
+                <div class="nenhum-livro-encontrado">
+                    Nenhum livro encontrado.
+                </div>
+            `;
+    
+            return;
+    
+        }
+    
+        livros.forEach(
+            function(livro) {
+    
+                const card =
+                    document.createElement(
+                        'button'
+                    );
+    
+                card.type = 'button';
+    
+                card.className =
+                    'resultado-livro-clube';
+    
+                const capa = livro.capa
+                    ? `
+                        <img
+                            src="${livro.capa}"
+                            alt=""
+                        >
+                    `
+                    : `
+                        <div class="resultado-sem-capa">
+                            ◇
+                        </div>
+                    `;
+    
+                const origem =
+                    livro.origem === 'banco'
+                        ? 'Catálogo Liberium'
+                        : 'Google Books';
+    
+                card.innerHTML = `
+    
+                    <div class="resultado-capa">
+                        ${capa}
+                    </div>
+    
+                    <div class="resultado-info">
+    
+                        <span class="resultado-origem">
+                            ${origem}
+                        </span>
+    
+                        <strong>
+                            ${livro.titulo}
+                        </strong>
+    
+                        <p>
+                            ${livro.autor || 'Autor desconhecido'}
+                        </p>
+    
+                        ${
+                            livro.paginas
+                                ? `
+                                    <small>
+                                        ${livro.paginas} páginas
+                                    </small>
+                                `
+                                : ''
+                        }
+    
+                    </div>
+    
+                    <span class="resultado-selecionar">
+                        Selecionar
+                    </span>
+                `;
+    
+                card.addEventListener(
+                    'click',
+                    function() {
+    
+                        selecionarLivro(
+                            card,
+                            livro
+                        );
+    
+                    }
+                );
+    
+                resultados.appendChild(
+                    card
+                );
+    
+            }
+        );
+    
+    }
+    
+    
+    /* ==========================================
+       SELECIONAR
+    ========================================== */
+    
+    function selecionarLivro(
+        card,
+        livro
+    ) {
+    
+        document
+            .querySelectorAll(
+                '.resultado-livro-clube'
+            )
+            .forEach(
+                function(item) {
+    
+                    item.classList.remove(
+                        'selecionado'
+                    );
+    
+                }
+            );
+    
+        card.classList.add(
+            'selecionado'
+        );
+    
+        campoOrigem.value =
+            livro.origem;
+    
+        if (
+            livro.origem === 'banco'
+        ) {
+    
+            campoLivroId.value =
+                livro.id;
+    
+            campoGoogleId.value =
+                '';
+    
+        }
+    
+        else {
+    
+            campoGoogleId.value =
+                livro.google_id;
+    
+            campoLivroId.value =
+                '';
+    
+        }
+    
+        botaoConfirmar.disabled =
+            false;
+    
+    }
+    
+    </script>
 
 {% endblock %}
