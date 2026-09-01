@@ -1,0 +1,761 @@
+/* =========================================================
+   LIBERIUM — LISTAGEM DE CLUBES
+========================================================= */
+
+
+/* =========================================================
+   PÁGINA
+========================================================= */
+
+.pagina-clubes {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #fdfcfb;
+
+    color: #442b1a;
+}
+
+
+.clubes-conteudo {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 42px 30px 90px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.clubes-hero {
+    margin-bottom: 30px;
+}
+
+
+.clubes-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #879d84;
+
+    font-size: 0.73rem;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+}
+
+
+.clubes-hero-linha {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+.clubes-hero h1 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 2.25rem;
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+
+.clubes-hero p {
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOTÃO CRIAR
+========================================================= */
+
+.botao-criar-clube {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 19px;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.botao-criar-clube:hover {
+    background: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PAINEL DE BUSCA
+========================================================= */
+
+.painel-busca-clubes {
+    margin-bottom: 38px;
+
+    padding: 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #e6e1dc;
+    border-radius: 14px;
+
+    box-shadow:
+        0 6px 20px rgba(68, 43, 26, 0.035);
+}
+
+
+/* =========================================================
+   CAMPO DE BUSCA
+========================================================= */
+
+.busca-clubes {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.icone-busca-clube {
+    position: absolute;
+
+    left: 15px;
+
+    color: #879d84;
+
+    font-size: 1rem;
+
+    pointer-events: none;
+}
+
+
+.busca-clubes input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 16px 0 42px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #ddd8d2;
+    border-radius: 9px;
+
+    outline: none;
+
+    color: #442b1a;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.busca-clubes input::placeholder {
+    color: #a2958b;
+}
+
+
+.busca-clubes input:focus {
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.1);
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.filtros-clubes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 14px;
+}
+
+
+.filtro-clube {
+    padding: 7px 14px;
+
+    background: #f4f0eb;
+
+    border: 1px solid transparent;
+    border-radius: 20px;
+
+    color: #725b49;
+
+    font-family: inherit;
+
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.filtro-clube:hover {
+    background: #e9eee6;
+
+    color: #486046;
+}
+
+
+.filtro-clube.ativo {
+    background: #879d84;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   CABEÇALHO DA LISTAGEM
+========================================================= */
+
+.cabecalho-listagem-clubes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 19px;
+}
+
+
+.cabecalho-listagem-clubes h2 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.55rem;
+    font-weight: 400;
+}
+
+
+.contador-clubes {
+    color: #9a8b80;
+
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.clubes-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.clube-card {
+    min-width: 0;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 13px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.clube-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d8ded5;
+
+    box-shadow:
+        0 10px 26px rgba(68, 43, 26, 0.07);
+}
+
+
+/* =========================================================
+   IMAGEM DO CLUBE
+========================================================= */
+
+.clube-card-imagem {
+    position: relative;
+
+    width: 100%;
+    height: 175px;
+
+    display: block;
+
+    overflow: hidden;
+
+    background: #eef1eb;
+
+    text-decoration: none;
+}
+
+
+.clube-card-imagem img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform 0.35s ease;
+}
+
+
+.clube-card:hover .clube-card-imagem img {
+    transform: scale(1.025);
+}
+
+
+/* =========================================================
+   SEM IMAGEM
+========================================================= */
+
+.clube-card-sem-imagem {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2eb,
+            #e3e9df
+        );
+}
+
+
+.clube-card-sem-imagem span {
+    color: #71806d;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 3rem;
+}
+
+
+/* =========================================================
+   PRIVACIDADE
+========================================================= */
+
+.badge-privacidade {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    background: rgba(255, 255, 255, 0.93);
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(4px);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+
+.badge-privacidade.publico {
+    color: #486046;
+}
+
+
+.badge-privacidade.privado {
+    color: #725742;
+}
+
+
+/* =========================================================
+   CONTEÚDO DO CARD
+========================================================= */
+
+.clube-card-conteudo {
+    padding: 18px;
+}
+
+
+.clube-card-genero {
+    display: inline-flex;
+
+    margin-bottom: 10px;
+
+    padding: 4px 9px;
+
+    background: #edf2eb;
+
+    border-radius: 20px;
+
+    color: #60725d;
+
+    font-size: 0.64rem;
+    font-weight: 600;
+}
+
+
+.clube-card-conteudo h3 {
+    margin: 0 0 8px;
+
+    color: #442b1a;
+
+    font-size: 1.02rem;
+    font-weight: 600;
+
+    line-height: 1.35;
+}
+
+
+.clube-card-descricao {
+    display: -webkit-box;
+
+    min-height: 40px;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #85766c;
+
+    font-size: 0.75rem;
+
+    line-height: 1.55;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES
+========================================================= */
+
+.clube-card-informacoes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 17px;
+    padding-top: 14px;
+
+    border-top: 1px solid #eee9e4;
+}
+
+
+.clube-card-informacoes > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.info-label {
+    color: #9a8c82;
+
+    font-size: 0.56rem;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+}
+
+
+.clube-card-informacoes strong {
+    overflow: hidden;
+
+    color: #5a4739;
+
+    font-size: 0.72rem;
+    font-weight: 500;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RODAPÉ DO CARD
+========================================================= */
+
+.clube-card-rodape {
+    margin-top: 16px;
+}
+
+
+.botao-ver-clube {
+    width: 100%;
+    min-height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    background: transparent;
+
+    border: 1px solid #879d84;
+    border-radius: 7px;
+
+    color: #52684f;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.botao-ver-clube:hover {
+    background: #879d84;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   NENHUM CLUBE
+========================================================= */
+
+.nenhum-clube {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 65px 30px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+
+.nenhum-clube-simbolo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    background: #edf2eb;
+
+    border-radius: 50%;
+
+    color: #61745e;
+
+    font-size: 1.3rem;
+}
+
+
+.nenhum-clube h3 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+.nenhum-clube p {
+    max-width: 430px;
+
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.78rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUSCA SEM RESULTADOS
+========================================================= */
+
+.nenhum-resultado-clube {
+    display: none;
+
+    padding: 55px 30px;
+
+    text-align: center;
+}
+
+
+.nenhum-resultado-clube.visivel {
+    display: block;
+}
+
+
+.nenhum-resultado-clube h3 {
+    margin: 0 0 6px;
+
+    color: #442b1a;
+
+    font-size: 1rem;
+}
+
+
+.nenhum-resultado-clube p {
+    margin: 0;
+
+    color: #918278;
+
+    font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE DA LISTAGEM
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .clubes-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .clubes-conteudo {
+        padding:
+            32px 18px
+            65px;
+    }
+
+
+    .clubes-hero-linha {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .clubes-hero h1 {
+        font-size: 1.8rem;
+    }
+
+
+    .botao-criar-clube {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 580px) {
+
+    .clubes-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .cabecalho-listagem-clubes {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+}

@@ -5,455 +5,547 @@
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/clube/criar_clube.css') }}">
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/clubesliberium/criar_clube.css'
+    ) }}"
+>
 {% endblock %}
+
 
 {% block content %}
 
-<section class="pagina-criar-clube">
+<main class="pagina-criar-clube">
 
-    <!-- CABEÇALHO -->
+    <!-- ==========================================
+         CONTAINER DA PÁGINA
+    =========================================== -->
 
-    <div class="cabecalho-criar-clube">
+    <div class="criar-clube-container">
 
-        <a href="{{ url_for('clubes.listar_clubes') }}" class="botao-voltar">
-            ←
-        </a>
 
-        <div>
-            <h1>Criar clube de leitura</h1>
+        <!-- ==========================================
+             APRESENTAÇÃO
+        =========================================== -->
+
+        <header class="hero-criar-clube">
+
+            <a
+                href="{{ url_for('clubes.listar_clubes') }}"
+                class="voltar-clubes"
+            >
+                ← Voltar para clubes
+            </a>
+
+            <span class="hero-label">
+                LEITURAS QUE APROXIMAM
+            </span>
+
+            <h1>
+                Crie seu clube de leitura
+            </h1>
 
             <p>
-                Preencha as informações abaixo para criar seu clube.
+                Reúna leitores, compartilhe experiências
+                e construa uma comunidade em torno dos livros.
             </p>
-        </div>
 
-    </div>
+        </header>
 
 
-    <!-- FORMULÁRIO -->
+        <!-- ==========================================
+             FORMULÁRIO
+        =========================================== -->
 
-    <form
-        class="formulario-clube"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-
-    <!-- LIVRO -->
-  <div class="campo-clube">
-
-    <label for="livro">
-        Qual será o livro lido?
-    </label>
-
-    <div class="campo-busca">
-
-        <span>⌕</span>
-
-        <input
-            type="text"
-            id="livro"
-            placeholder="Buscar livro por título ou autor..."
-            autocomplete="off"
-            required
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="formulario-clube"
         >
 
-    </div>
+            <!-- ======================================
+                 CABEÇALHO DO FORMULÁRIO
+            ======================================= -->
 
-    <input
-        type="hidden"
-        id="livro_id"
-        name="livro_id"
-    >
+            <div class="formulario-cabecalho">
 
-    <div
-        id="resultados-livros"
-        class="resultados-livros"
-    ></div>
+                <div>
 
-    <small>
-        Pesquise entre os livros cadastrados no Liberium.
-    </small>
+                    <h2>
+                        Informações do clube
+                    </h2>
 
-</div>
+                    <p>
+                        Conte um pouco sobre a comunidade
+                        que você quer criar.
+                    </p>
 
-        <!-- DESCRIÇÃO -->
-
-        <div class="campo-clube">
-
-            <label for="descricao">
-                Descrição do clube
-            </label>
-
-            <textarea
-                id="descricao"
-                name="descricao"
-                maxlength="300"
-                placeholder="Conte um pouco sobre o seu clube, o que vão ler, como vai funcionar..."
-                required
-            ></textarea>
-
-            <small>
-                Seja criativo e convide mais pessoas para participarem!
-            </small>
-
-        </div>
-
-
-        <!-- NOME DO CLUBE -->
-
-        <div class="campo-clube">
-
-            <label for="nome">
-                Nome do clube
-            </label>
-
-            <div class="campo-link">
+                </div>
 
                 <span>
-                    https://liberium.app/clube/
+                    Todos os campos podem ser alterados depois.
                 </span>
+
+            </div>
+
+
+            <!-- ======================================
+                 NOME
+            ======================================= -->
+
+            <div class="campo-clube">
+
+                <label for="nome">
+                    Nome do clube
+                </label>
 
                 <input
                     type="text"
                     id="nome"
                     name="nome"
-                    placeholder="nomedoseuclube"
+                    maxlength="100"
+                    placeholder="Ex.: Entre Páginas"
                     required
-                >
-
-            </div>
-
-            <small>
-                Esse será o nome usado para identificar seu clube.
-            </small>
-
-        </div>
-
-
-        <!-- GÊNERO -->
-
-        <div class="campo-clube">
-
-            <label for="genero">
-                Gênero do clube
-            </label>
-
-            <select
-                id="genero"
-                name="genero"
-                required
-            >
-
-                <option value="" disabled selected>
-                    Selecione um gênero
-                </option>
-
-                <option value="Romance">
-                    Romance
-                </option>
-
-                <option value="Fantasia">
-                    Fantasia
-                </option>
-
-                <option value="Suspense">
-                    Suspense
-                </option>
-
-                <option value="Distopia">
-                    Distopia
-                </option>
-
-                <option value="Ficção">
-                    Ficção
-                </option>
-
-                <option value="Terror">
-                    Terror
-                </option>
-
-                <option value="Aventura">
-                    Aventura
-                </option>
-
-                <option value="Outro">
-                    Outro
-                </option>
-
-            </select>
-
-        </div>
- 
-        <!-- ========================================
-     PRIVACIDADE DO CLUBE
-========================================= -->
-
-<div class="campo-clube campo-privacidade">
-
-    <label>
-        Privacidade do clube
-    </label>
-
-    <p class="descricao-privacidade">
-        Escolha quem poderá participar do seu clube de leitura.
-    </p>
-
-    <div class="opcoes-privacidade">
-
-        <!-- PÚBLICO -->
-
-        <label class="opcao-privacidade">
-
-            <input
-                type="radio"
-                name="privacidade"
-                value="publico"
-                checked
-            >
-
-            <div class="card-privacidade">
-
-                <div class="icone-privacidade">
-                    ♧
-                </div>
-
-                <div class="texto-privacidade">
-
-                    <strong>
-                        Clube público
-                    </strong>
-
-                    <span>
-                        Qualquer pessoa pode encontrar
-                        e entrar neste clube.
-                    </span>
-
-                </div>
-
-                <div class="radio-personalizado"></div>
-
-            </div>
-
-        </label>
-
-
-        <!-- PRIVADO -->
-
-        <label class="opcao-privacidade">
-
-            <input
-                type="radio"
-                name="privacidade"
-                value="privado"
-            >
-
-            <div class="card-privacidade">
-
-                <div class="icone-privacidade">
-                    ♙
-                </div>
-
-                <div class="texto-privacidade">
-
-                    <strong>
-                        Clube privado
-                    </strong>
-
-                    <span>
-                        Apenas pessoas convidadas pelo
-                        criador poderão participar.
-                    </span>
-
-                </div>
-
-                <div class="radio-personalizado"></div>
-
-            </div>
-
-        </label>
-
-    </div>
-
-</div>
-
-        <!-- DATAS -->
-
-        <div class="datas-clube">
-
-            <div class="campo-clube">
-
-                <label for="data_inicio">
-                    Quando começa?
-                </label>
-
-                <input
-                    type="date"
-                    id="data_inicio"
-                    name="data_inicio"
-                    required
-                >
-
-            </div>
-
-
-            <div class="campo-clube">
-
-                <label for="data_fim">
-                    Quando termina?
-                </label>
-
-                <input
-                    type="date"
-                    id="data_fim"
-                    name="data_fim"
-                    required
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- IMAGEM -->
-
-        <div class="campo-clube">
-
-            <label for="imagem">
-                Imagem do clube
-                <span>(opcional)</span>
-            </label>
-
-            <div class="upload-clube">
-
-                <div class="icone-upload">
-                    🖼
-                </div>
-
-                <p>
-                    Envie uma imagem que represente
-                    <br>
-                    seu clube de leitura
-                </p>
-
-                <label for="imagem" class="botao-imagem">
-                    Escolher imagem
-                </label>
-
-                <input
-                    type="file"
-                    id="imagem"
-                    name="imagem"
-                    accept=".jpg,.jpeg,.png,.webp"
                 >
 
                 <small>
-                    Formatos aceitos: JPG, PNG ou WEBP.
-                    Tamanho máximo: 5MB
+                    Escolha um nome que represente
+                    a identidade da sua comunidade.
                 </small>
 
             </div>
 
-        </div>
+
+            <!-- ======================================
+                 DESCRIÇÃO
+            ======================================= -->
+
+            <div class="campo-clube">
+
+                <div class="label-linha">
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <span id="contador-descricao">
+                        0 / 300
+                    </span>
+
+                </div>
+
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    maxlength="300"
+                    placeholder="Conte sobre a proposta do clube, os tipos de leitura e como vocês pretendem compartilhar experiências..."
+                    required
+                ></textarea>
+
+                <small>
+                    Essa descrição aparecerá para
+                    participantes e visitantes.
+                </small>
+
+            </div>
 
 
-        <!-- BOTÕES -->
+            <!-- ======================================
+                 GÊNERO
+            ======================================= -->
 
-        <div class="acoes-clube">
+            <div class="campo-clube">
 
-            <a
-                href="{{ url_for('clubes.listar_clubes') }}"
-                class="botao-cancelar"
-            >
-                Cancelar
-            </a>
+                <label for="genero">
+                    Gênero principal
+                </label>
 
-            <button
-                type="submit"
-                class="botao-criar"
-            >
-                Criar clube
-            </button>
+                <select
+                    id="genero"
+                    name="genero"
+                    required
+                >
 
-        </div>
+                    <option
+                        value=""
+                        disabled
+                        selected
+                    >
+                        Selecione um gênero
+                    </option>
 
-    </form>
+                    <option value="Romance">
+                        Romance
+                    </option>
 
-</section>
+                    <option value="Fantasia">
+                        Fantasia
+                    </option>
+
+                    <option value="Suspense">
+                        Suspense
+                    </option>
+
+                    <option value="Distopia">
+                        Distopia
+                    </option>
+
+                    <option value="Ficção">
+                        Ficção
+                    </option>
+
+                    <option value="Terror">
+                        Terror
+                    </option>
+
+                    <option value="Aventura">
+                        Aventura
+                    </option>
+
+                    <option value="Outro">
+                        Outro
+                    </option>
+
+                </select>
+
+                <small>
+                    Isso ajuda outros leitores a encontrar
+                    clubes que combinam com seus interesses.
+                </small>
+
+            </div>
+
+
+            <!-- ======================================
+                 DIVISOR
+            ======================================= -->
+
+            <div class="divisor-formulario"></div>
+
+
+            <!-- ======================================
+                 PRIVACIDADE
+            ======================================= -->
+
+            <section class="secao-formulario">
+
+                <div class="secao-titulo">
+
+                    <h3>
+                        Privacidade
+                    </h3>
+
+                    <p>
+                        Escolha quem poderá participar
+                        do seu clube.
+                    </p>
+
+                </div>
+
+
+                <div class="opcoes-privacidade">
+
+                    <!-- ===============================
+                         CLUBE PÚBLICO
+                    ================================ -->
+
+                    <label class="opcao-privacidade">
+
+                        <input
+                            type="radio"
+                            name="privacidade"
+                            value="publico"
+                            checked
+                        >
+
+                        <div class="card-privacidade">
+
+                            <span class="icone-privacidade">
+                                ♧
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Clube público
+                                </strong>
+
+                                <p>
+                                    Qualquer leitor pode encontrar
+                                    o clube e participar.
+                                </p>
+
+                            </div>
+
+                            <span class="radio-custom"></span>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ===============================
+                         CLUBE PRIVADO
+                    ================================ -->
+
+                    <label class="opcao-privacidade">
+
+                        <input
+                            type="radio"
+                            name="privacidade"
+                            value="privado"
+                        >
+
+                        <div class="card-privacidade">
+
+                            <span class="icone-privacidade">
+                                ♙
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Clube privado
+                                </strong>
+
+                                <p>
+                                    Somente leitores convidados pelo
+                                    criador poderão participar.
+                                </p>
+
+                            </div>
+
+                            <span class="radio-custom"></span>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                 DIVISOR
+            ======================================= -->
+
+            <div class="divisor-formulario"></div>
+
+
+            <!-- ======================================
+                 IMAGEM DO CLUBE
+            ======================================= -->
+
+            <section class="secao-formulario">
+
+                <div class="secao-titulo">
+
+                    <h3>
+                        Imagem do clube
+                    </h3>
+
+                    <p>
+                        Dê uma identidade visual para sua comunidade.
+                    </p>
+
+                </div>
+
+
+                <div class="area-imagem">
+
+                    <!-- PREVIEW -->
+
+                    <div class="preview-clube">
+
+                        <div
+                            class="preview-placeholder"
+                            id="preview-placeholder"
+                        >
+                            ◇
+                        </div>
+
+                        <img
+                            id="preview-imagem"
+                            alt="Prévia da imagem do clube"
+                        >
+
+                    </div>
+
+
+                    <!-- INFORMAÇÕES -->
+
+                    <div class="imagem-informacoes">
+
+                        <strong>
+                            Escolha uma imagem que represente
+                            seu clube
+                        </strong>
+
+                        <p>
+                            Ela aparecerá na página do clube
+                            e na listagem de comunidades.
+                        </p>
+
+                        <label
+                            for="imagem"
+                            class="botao-escolher-imagem"
+                        >
+                            Escolher imagem
+                        </label>
+
+                        <input
+                            type="file"
+                            id="imagem"
+                            name="imagem"
+                            accept=".jpg,.jpeg,.png,.webp"
+                        >
+
+                        <small>
+                            JPG, PNG ou WEBP
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                 AVISO SOBRE O LIVRO
+            ======================================= -->
+
+            <div class="aviso-livro">
+
+                <div class="aviso-livro-icone">
+                    ♧
+                </div>
+
+                <div>
+
+                    <strong>
+                        A leitura pode ser escolhida depois
+                    </strong>
+
+                    <p>
+                        Depois de criar o clube, você poderá
+                        escolher o primeiro livro na página
+                        de gerenciamento.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================================
+                 BOTÕES
+            ======================================= -->
+
+            <div class="acoes-clube">
+
+                <a
+                    href="{{ url_for('clubes.listar_clubes') }}"
+                    class="botao-cancelar"
+                >
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="botao-criar"
+                >
+                    Criar clube
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+
 <script>
 
-    const campoLivro = document.getElementById("livro");
-    const campoLivroId = document.getElementById("livro_id");
-    const resultadosLivros = document.getElementById("resultados-livros");
-    
-    campoLivro.addEventListener("input", async function () {
-    
-        const termo = campoLivro.value.trim();
-    
-        // Apaga a seleção anterior
-        campoLivroId.value = "";
-    
-        resultadosLivros.innerHTML = "";
-    
-        if (termo.length < 2) {
+/* ==========================================
+   CONTADOR DA DESCRIÇÃO
+========================================== */
+
+const descricao =
+    document.getElementById('descricao');
+
+const contador =
+    document.getElementById('contador-descricao');
+
+
+descricao.addEventListener(
+    'input',
+    function() {
+
+        contador.textContent =
+            `${descricao.value.length} / 300`;
+
+    }
+);
+
+
+/* ==========================================
+   PREVIEW DA IMAGEM
+========================================== */
+
+const inputImagem =
+    document.getElementById('imagem');
+
+const preview =
+    document.getElementById('preview-imagem');
+
+const placeholder =
+    document.getElementById('preview-placeholder');
+
+
+inputImagem.addEventListener(
+    'change',
+    function() {
+
+        const arquivo =
+            this.files[0];
+
+        if (!arquivo) {
             return;
         }
-    
-        try {
-    
-            const resposta = await fetch(
-                `/clubes/buscar-livros?q=${encodeURIComponent(termo)}`
-            );
-    
-            const livros = await resposta.json();
-    
-            if (livros.length === 0) {
-    
-                resultadosLivros.innerHTML = `
-                    <div class="sem-resultados">
-                        Nenhum livro encontrado.
-                    </div>
-                `;
-    
-                return;
-            }
-    
-            livros.forEach(function (livro) {
-    
-                const resultado = document.createElement("button");
-    
-                resultado.type = "button";
-                resultado.className = "resultado-livro";
-    
-                resultado.innerHTML = `
-                    <strong>${livro.titulo}</strong>
-                    <span>${livro.autor || "Autor desconhecido"}</span>
-                `;
-    
-                resultado.addEventListener("click", function () {
-    
-                    campoLivro.value = livro.titulo;
-    
-                    campoLivroId.value = livro.id;
-    
-                    resultadosLivros.innerHTML = "";
-    
-                });
-    
-                resultadosLivros.appendChild(resultado);
-    
-            });
-    
-        } catch (erro) {
-    
-            console.error(
-                "Erro ao pesquisar livros:",
-                erro
-            );
-    
-        }
-    
-    });
-    
-    </script>
+
+
+        const leitor =
+            new FileReader();
+
+
+        leitor.onload =
+            function(event) {
+
+                preview.src =
+                    event.target.result;
+
+                preview.style.display =
+                    'block';
+
+                placeholder.style.display =
+                    'none';
+
+            };
+
+
+        leitor.readAsDataURL(
+            arquivo
+        );
+
+    }
+);
+
+</script>
+
 {% endblock %}

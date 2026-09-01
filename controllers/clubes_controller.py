@@ -114,17 +114,67 @@ def criar_clube():
 
     if request.method == 'POST':
 
+        # ======================================
+        # DADOS PRINCIPAIS
+        # ======================================
+
         nome = request.form.get(
-            'nome'
-        )
+            'nome',
+            ''
+        ).strip()
 
         descricao = request.form.get(
-            'descricao'
-        )
+            'descricao',
+            ''
+        ).strip()
 
         genero = request.form.get(
-            'genero'
-        )
+            'genero',
+            ''
+        ).strip()
+
+        # ======================================
+        # VALIDAÇÕES
+        # ======================================
+
+        if not nome:
+
+            flash(
+                'Digite um nome para o clube.',
+                'erro'
+            )
+
+            return redirect(
+                url_for(
+                    'clubes.criar_clube'
+                )
+            )
+
+        if not descricao:
+
+            flash(
+                'Escreva uma descrição para o clube.',
+                'erro'
+            )
+
+            return redirect(
+                url_for(
+                    'clubes.criar_clube'
+                )
+            )
+
+        if not genero:
+
+            flash(
+                'Selecione o gênero do clube.',
+                'erro'
+            )
+
+            return redirect(
+                url_for(
+                    'clubes.criar_clube'
+                )
+            )
 
         # ======================================
         # PRIVACIDADE
@@ -138,35 +188,6 @@ def criar_clube():
         privado = (
             privacidade == 'privado'
         )
-
-        # ======================================
-        # LIVRO
-        # ======================================
-
-        livro_id = request.form.get(
-            'livro_id'
-        )
-
-        if not livro_id:
-
-            return redirect(
-                url_for(
-                    'clubes.criar_clube'
-                )
-            )
-
-        livro = db.session.get(
-            Livro,
-            int(livro_id)
-        )
-
-        if not livro:
-
-            return redirect(
-                url_for(
-                    'clubes.criar_clube'
-                )
-            )
 
         # ======================================
         # IMAGEM
@@ -226,7 +247,10 @@ def criar_clube():
             genero=genero,
             imagem=caminho_imagem,
             usuario_id=current_user.id,
-            livro_id=livro.id,
+
+            # O clube nasce sem livro.
+            livro_id=None,
+
             quantidade_membros=1,
             privado=privado
         )
@@ -235,11 +259,12 @@ def criar_clube():
             novo_clube
         )
 
-        # Necessário para obter o ID antes do commit
+        # Precisamos do ID antes de criar
+        # o registro de membro.
         db.session.flush()
 
         # ======================================
-        # ADICIONAR CRIADOR COMO MEMBRO
+        # CRIADOR TAMBÉM É MEMBRO
         # ======================================
 
         membro_criador = MembroClube(
@@ -254,25 +279,20 @@ def criar_clube():
             membro_criador
         )
 
-        db.session.flush()
-
-        # ======================================
-        # ATUALIZAR QUANTIDADE DE MEMBROS
-        # ======================================
-
-        novo_clube.quantidade_membros = (
-            MembroClube.query
-            .filter_by(
-                clube_id=novo_clube.id
-            )
-            .count()
-        )
-
         db.session.commit()
 
+        flash(
+            'Clube criado com sucesso! Agora escolha a primeira leitura.',
+            'sucesso'
+        )
+
+        # Em vez de jogar o usuário de volta
+        # para a listagem, vamos direto para
+        # o gerenciamento do clube.
         return redirect(
             url_for(
-                'clubes.listar_clubes'
+                'clubes.gerenciar_clube',
+                clube_id=novo_clube.id
             )
         )
 
@@ -438,7 +458,10 @@ def ver_clube(clube_id):
         pode_convidar=pode_convidar
     )
 
-#GERENCIAR CLUBE
+# ======================================
+# GERENCIAR CLUBE
+# ======================================
+
 @clubes_bp.route(
     '/<int:clube_id>/gerenciar'
 )
@@ -449,7 +472,10 @@ def gerenciar_clube(clube_id):
         clube_id
     )
 
-    # Somente o criador pode gerenciar
+    # ======================================
+    # SOMENTE O CRIADOR
+    # ======================================
+
     if clube.usuario_id != current_user.id:
 
         flash(
@@ -464,9 +490,134 @@ def gerenciar_clube(clube_id):
             )
         )
 
+    # ======================================
+    # PARTICIPANTES
+    # ======================================
+
+    membros = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id
+        )
+        .order_by(
+            MembroClube.data_entrada.asc()
+        )
+        .all()
+    )
+
     return render_template(
         'clubes/gerenciar_clube.html',
-        clube=clube
+        clube=clube,
+        membros=membros
+    )
+# ======================================
+# DEFINIR LIVRO DO CLUBE
+# ======================================
+
+@clubes_bp.route(
+    '/<int:clube_id>/definir-livro',
+    methods=['POST']
+)
+@login_required
+def definir_livro(clube_id):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # ======================================
+    # SOMENTE O CRIADOR
+    # ======================================
+
+    if clube.usuario_id != current_user.id:
+
+        flash(
+            'Somente o criador pode escolher a leitura do clube.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # ======================================
+    # LIVRO SELECIONADO
+    # ======================================
+
+    livro_id = request.form.get(
+        'livro_id'
+    )
+
+    if not livro_id:
+
+        flash(
+            'Selecione um livro.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.gerenciar_clube',
+                clube_id=clube.id
+            )
+        )
+
+    livro = db.session.get(
+        Livro,
+        int(livro_id)
+    )
+
+    if not livro:
+
+        flash(
+            'Livro não encontrado.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.gerenciar_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # ======================================
+    # ALTERAR LEITURA
+    # ======================================
+
+    clube.livro_id = livro.id
+
+    # Quando muda o livro, o progresso dos
+    # participantes precisa começar novamente.
+    membros = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id
+        )
+        .all()
+    )
+
+    for membro in membros:
+
+        membro.paginas_lidas = 0
+        membro.progresso_percentual = 0
+        membro.total_atualizacoes = 0
+
+    db.session.commit()
+
+    flash(
+        f'"{livro.titulo}" agora é a leitura do clube!',
+        'sucesso'
+    )
+
+    return redirect(
+        url_for(
+            'clubes.gerenciar_clube',
+            clube_id=clube.id
+        )
     )
 
 # EDITAR CLUBE

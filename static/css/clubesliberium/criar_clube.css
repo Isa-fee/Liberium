@@ -1,0 +1,878 @@
+/* ==========================================
+   ÁREA DA PÁGINA
+========================================== */
+
+.pagina-criar-clube {
+    width: 100%;
+    margin: 0;
+
+    background: #fdfcfb;
+    color: #442b1a;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   CONTAINER CENTRAL
+========================================== */
+
+.criar-clube-container {
+    width: calc(100% - 60px);
+    max-width: 1250px;
+
+    margin: 0 auto;
+    padding: 55px 0 90px;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   APRESENTAÇÃO
+========================================== */
+
+.hero-criar-clube {
+    margin-bottom: 34px;
+}
+
+
+.voltar-clubes {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 28px;
+
+    color: #78685d;
+
+    font-size: 0.82rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.voltar-clubes:hover {
+    color: #36503c;
+
+    transform: translateX(-3px);
+}
+
+
+.hero-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #879d84;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+
+.hero-criar-clube h1 {
+    margin: 0 0 8px;
+
+    color: #542f1d;
+
+    font-size: 2.55rem;
+    font-weight: 400;
+
+    letter-spacing: 0.01em;
+}
+
+
+.hero-criar-clube > p {
+    max-width: 720px;
+
+    margin: 0;
+
+    color: #8a7d74;
+
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   FORMULÁRIO PRINCIPAL
+========================================== */
+
+.formulario-clube {
+    width: 100%;
+
+    padding: 34px 38px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e1dd;
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(68, 43, 26, 0.035);
+}
+
+
+/* ==========================================
+   CABEÇALHO DO FORMULÁRIO
+========================================== */
+
+.formulario-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 24px;
+    margin-bottom: 27px;
+
+    border-bottom: 1px solid #ece8e4;
+}
+
+
+.formulario-cabecalho h2 {
+    margin: 0 0 5px;
+
+    color: #542f1d;
+
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+
+.formulario-cabecalho p {
+    margin: 0;
+
+    color: #8a7d74;
+
+    font-size: 0.84rem;
+}
+
+
+.formulario-cabecalho > span {
+    margin-top: 4px;
+
+    color: #aaa098;
+
+    font-size: 0.73rem;
+}
+
+
+/* ==========================================
+   CAMPOS
+========================================== */
+
+.campo-clube {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 24px;
+}
+
+
+.campo-clube label {
+    color: #563c2c;
+
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+
+.campo-clube input,
+.campo-clube textarea,
+.campo-clube select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #ddd8d3;
+    border-radius: 9px;
+
+    outline: none;
+
+    color: #442b1a;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.campo-clube input {
+    height: 46px;
+}
+
+
+.campo-clube textarea {
+    min-height: 130px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+
+.campo-clube select {
+    height: 46px;
+
+    cursor: pointer;
+}
+
+
+.campo-clube input::placeholder,
+.campo-clube textarea::placeholder {
+    color: #aaa19a;
+}
+
+
+.campo-clube input:focus,
+.campo-clube textarea:focus,
+.campo-clube select:focus {
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.1);
+}
+
+
+.campo-clube small {
+    color: #a0968e;
+
+    font-size: 0.73rem;
+}
+
+
+.label-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.label-linha span {
+    color: #a0968e;
+
+    font-size: 0.72rem;
+}
+
+
+/* ==========================================
+   DIVISORES
+========================================== */
+
+.divisor-formulario {
+    width: 100%;
+    height: 1px;
+
+    margin: 31px 0;
+
+    background: #ece8e4;
+}
+
+
+/* ==========================================
+   SEÇÕES
+========================================== */
+
+.secao-formulario {
+    margin: 0;
+}
+
+
+.secao-titulo {
+    margin-bottom: 18px;
+}
+
+
+.secao-titulo h3 {
+    margin: 0 0 4px;
+
+    color: #542f1d;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+
+.secao-titulo p {
+    margin: 0;
+
+    color: #91857c;
+
+    font-size: 0.8rem;
+}
+
+
+/* ==========================================
+   PRIVACIDADE
+========================================== */
+
+.opcoes-privacidade {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.opcao-privacidade {
+    position: relative;
+
+    display: block;
+
+    cursor: pointer;
+}
+
+
+.opcao-privacidade > input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.card-privacidade {
+    position: relative;
+
+    min-height: 105px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding:
+        18px
+        48px
+        18px
+        18px;
+
+    box-sizing: border-box;
+
+    background: #fdfcfb;
+
+    border: 1px solid #e3ded9;
+    border-radius: 10px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.opcao-privacidade:hover .card-privacidade {
+    border-color: #aebdaa;
+
+    background: #fbfcfa;
+}
+
+
+.opcao-privacidade > input:checked + .card-privacidade {
+    background: #f3f6f1;
+
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 1px rgba(135, 157, 132, 0.08);
+}
+
+
+.icone-privacidade {
+    width: 39px;
+    height: 39px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e0ddd9;
+    border-radius: 9px;
+
+    color: #61745e;
+
+    font-size: 1.1rem;
+}
+
+
+.card-privacidade strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #503523;
+
+    font-size: 0.87rem;
+}
+
+
+.card-privacidade p {
+    max-width: 330px;
+
+    margin: 0;
+
+    color: #8b7e75;
+
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+
+/* ==========================================
+   RADIO PERSONALIZADO
+========================================== */
+
+.radio-custom {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 15px;
+    height: 15px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1.5px solid #c8c1bb;
+    border-radius: 50%;
+}
+
+
+.opcao-privacidade
+> input:checked
++ .card-privacidade
+.radio-custom {
+    background: #879d84;
+
+    border: 4px solid #ffffff;
+
+    box-shadow:
+        0 0 0 1.5px #879d84;
+}
+
+
+/* ==========================================
+   IMAGEM
+========================================== */
+
+.area-imagem {
+    display: flex;
+    align-items: center;
+
+    gap: 24px;
+}
+
+
+.preview-clube {
+    width: 115px;
+    height: 115px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    background: #edf2eb;
+
+    border: 1px solid #dce4d9;
+    border-radius: 12px;
+}
+
+
+.preview-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #738570;
+
+    font-size: 1.7rem;
+}
+
+
+#preview-imagem {
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    object-fit: cover;
+}
+
+
+.imagem-informacoes {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+
+.imagem-informacoes > strong {
+    margin-bottom: 5px;
+
+    color: #563c2c;
+
+    font-size: 0.87rem;
+}
+
+
+.imagem-informacoes > p {
+    max-width: 460px;
+
+    margin: 0 0 13px;
+
+    color: #8c8077;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+.imagem-informacoes input {
+    display: none;
+}
+
+
+.botao-escolher-imagem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #879d84;
+    border-radius: 8px;
+
+    color: #52684f;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.botao-escolher-imagem:hover {
+    background: #f0f4ee;
+}
+
+
+.imagem-informacoes small {
+    margin-top: 7px;
+
+    color: #a3978f;
+
+    font-size: 0.69rem;
+}
+
+
+/* ==========================================
+   AVISO DO LIVRO
+========================================== */
+
+.aviso-livro {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 32px;
+
+    padding: 17px 19px;
+
+    background: #f1f5ef;
+
+    border: 1px solid #dfe8dc;
+    border-radius: 10px;
+}
+
+
+.aviso-livro-icone {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    color: #61755e;
+
+    font-size: 1rem;
+}
+
+
+.aviso-livro strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #52684f;
+
+    font-size: 0.8rem;
+}
+
+
+.aviso-livro p {
+    margin: 0;
+
+    color: #7e8b7b;
+
+    font-size: 0.73rem;
+    line-height: 1.45;
+}
+
+
+/* ==========================================
+   AÇÕES
+========================================== */
+
+.acoes-clube {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 11px;
+
+    padding-top: 27px;
+}
+
+
+.botao-cancelar,
+.botao-criar {
+    min-width: 130px;
+
+    padding: 11px 19px;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.botao-cancelar {
+    background: #ffffff;
+
+    border: 1px solid #ddd6d0;
+
+    color: #705d50;
+}
+
+
+.botao-cancelar:hover {
+    background: #f7f4f1;
+}
+
+
+.botao-criar {
+    background: #52684f;
+
+    border: 1px solid #52684f;
+
+    color: #ffffff;
+}
+
+
+.botao-criar:hover {
+    background: #435742;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   RESPONSIVO - TABLET
+========================================== */
+
+@media (max-width: 900px) {
+
+    .criar-clube-container {
+        width: calc(100% - 40px);
+
+        padding:
+            45px
+            0
+            70px;
+    }
+
+
+    .formulario-clube {
+        padding:
+            30px
+            28px;
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVO - CELULAR
+========================================== */
+
+@media (max-width: 750px) {
+
+    .criar-clube-container {
+        width: calc(100% - 32px);
+
+        padding:
+            35px
+            0
+            55px;
+    }
+
+
+    .hero-criar-clube {
+        margin-bottom: 27px;
+    }
+
+
+    .voltar-clubes {
+        margin-bottom: 22px;
+    }
+
+
+    .hero-criar-clube h1 {
+        font-size: 2rem;
+    }
+
+
+    .hero-criar-clube > p {
+        font-size: 0.9rem;
+    }
+
+
+    .formulario-clube {
+        padding:
+            25px
+            22px;
+
+        border-radius: 13px;
+    }
+
+
+    .formulario-cabecalho {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .formulario-cabecalho > span {
+        margin-top: 0;
+    }
+
+
+    .opcoes-privacidade {
+        grid-template-columns: 1fr;
+    }
+
+
+    .area-imagem {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .acoes-clube {
+        flex-direction: column-reverse;
+    }
+
+
+    .botao-cancelar,
+    .botao-criar {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   TELAS MUITO PEQUENAS
+========================================== */
+
+@media (max-width: 420px) {
+
+    .criar-clube-container {
+        width: calc(100% - 24px);
+    }
+
+
+    .hero-criar-clube h1 {
+        font-size: 1.75rem;
+    }
+
+
+    .formulario-clube {
+        padding:
+            22px
+            17px;
+    }
+
+
+    .card-privacidade {
+        padding:
+            16px
+            42px
+            16px
+            14px;
+    }
+
+}
