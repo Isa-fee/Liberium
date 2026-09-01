@@ -330,26 +330,56 @@
                                 </p>
 
 
-                                {% if notificacao.link %}
+                                <!-- =========================================
+                                    AÇÕES DA NOTIFICAÇÃO
+                                ========================================= -->
 
-                                    <form
-                                        action="{{ url_for(
-                                            'notificacoes.abrir',
-                                            notificacao_id=notificacao.id
-                                        ) }}"
-                                        method="POST"
-                                    >
+                                <div class="notificacao-botoes">
 
-                                        <button
-                                            type="submit"
-                                            class="notificacao-link"
+                                    {% if notificacao.link %}
+
+                                        <form
+                                            action="{{ url_for(
+                                                'notificacoes.abrir',
+                                                notificacao_id=notificacao.id
+                                            ) }}"
+                                            method="POST"
                                         >
-                                            Clique para ver!
-                                        </button>
 
-                                    </form>
+                                            <button
+                                                type="submit"
+                                                class="notificacao-link"
+                                            >
+                                                Clique para ver!
+                                            </button>
 
-                                {% endif %}
+                                        </form>
+
+                                    {% endif %}
+
+
+                                    {% if notificacao.tipo in tipos_respondiveis %}
+
+                                        <form
+                                            action="{{ url_for(
+                                                'notificacoes.responder',
+                                                notificacao_id=notificacao.id
+                                            ) }}"
+                                            method="POST"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="btn-responder"
+                                            >
+                                                Responder
+                                            </button>
+
+                                        </form>
+
+                                    {% endif %}
+
+                                </div>
 
                             </div>
 

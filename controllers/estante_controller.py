@@ -5,6 +5,7 @@ from datetime import date, datetime
 from utils.gamificacao import adicionar_xp, adicionar_libelulas
 from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
+from utils.notificacoes import criar_notificacao
 
 from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante, ComentarioResenha
 from extensions import db
@@ -934,6 +935,10 @@ def comentar_resenha(resenha_id):
             )
         )
 
+    # ======================================
+    # PEGAR COMENTÁRIO
+    # ======================================
+
     texto = request.form.get(
         "texto",
         ""
@@ -967,6 +972,10 @@ def comentar_resenha(resenha_id):
             )
         )
 
+    # ======================================
+    # CRIAR COMENTÁRIO
+    # ======================================
+
     comentario = ComentarioResenha(
         estante_id=resenha.id,
         usuario_id=current_user.id,
@@ -979,6 +988,29 @@ def comentar_resenha(resenha_id):
 
     db.session.commit()
 
+    # ======================================
+    # NOTIFICAR DONO DA RESENHA
+    # ======================================
+
+    # Não cria notificação se o usuário
+    # comentou na própria resenha.
+    if resenha.usuario_id != current_user.id:
+
+        criar_notificacao(
+            usuario_id=resenha.usuario_id,
+            categoria="social",
+            tipo="comentario_resenha",
+            titulo="Novo comentário na sua resenha",
+            mensagem=(
+                f'{current_user.nome} comentou na sua '
+                f'resenha de "{resenha.livro.titulo}".'
+            ),
+            link=url_for(
+                "estante_bp.ver_resenha",
+                resenha_id=resenha.id
+            )
+        )
+
     flash(
         "Comentário publicado!",
         "success"
@@ -990,8 +1022,6 @@ def comentar_resenha(resenha_id):
             resenha_id=resenha.id
         )
     )
-
-
 # ======================================
 # EDITAR COMENTÁRIO
 # ======================================

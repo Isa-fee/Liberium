@@ -529,3 +529,47 @@
     object-fit: contain;
     display: block;
 }
+/* =========================================
+   AÇÕES DA NOTIFICAÇÃO
+========================================= */
+
+.notificacao-botoes {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.notificacao-botoes form {
+    margin: 0;
+}
+
+
+/* =========================================
+   BOTÃO RESPONDER
+========================================= */
+
+.btn-responder {
+    border: 1px solid #879d84;
+    background-color: #879d84;
+    color: #ffffff;
+    padding: 6px 14px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.btn-responder:hover {
+    background-color: transparent;
+    color: #435342;
+}

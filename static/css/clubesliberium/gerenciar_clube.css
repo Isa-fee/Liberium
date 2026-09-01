@@ -3,14 +3,30 @@
 ========================================== */
 
 .pagina-gerenciar-clube {
-    width: min(1180px, calc(100% - 56px));
+    width: 100%;
 
-    margin: 0 auto;
+    margin: 0;
     padding: 55px 0 90px;
 
     box-sizing: border-box;
 
+    background: #fdfcfb;
     color: #442b1a;
+}
+
+
+/* Limita apenas o conteúdo da página,
+   mantendo o fundo claro de ponta a ponta */
+
+.gerenciar-topo,
+.leitura-card,
+.formulario-gerenciar {
+    width: min(1180px, calc(100% - 56px));
+
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
 }
 
 
@@ -53,6 +69,7 @@
     transition:
         background 0.2s ease,
         border-color 0.2s ease,
+        color 0.2s ease,
         transform 0.2s ease;
 }
 
@@ -136,9 +153,6 @@
         0 5px 18px rgba(68, 43, 26, 0.035);
 }
 
-
-/* O card de leitura fica separado do form,
-   então damos espaço até o próximo bloco */
 
 .leitura-card {
     margin-bottom: 20px;
@@ -227,7 +241,8 @@
 
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
 
@@ -261,6 +276,8 @@
 .campo-clube input:focus,
 .campo-clube textarea:focus,
 .campo-clube select:focus {
+    background: #ffffff;
+
     border-color: #879d84;
 
     box-shadow:
@@ -339,6 +356,8 @@
 
 
 .livro-atual-info {
+    min-width: 0;
+
     flex: 1;
 }
 
@@ -402,13 +421,20 @@
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 
 .botao-trocar-livro:hover,
 .botao-selecionar-livro:hover {
     background: #edf2eb;
+
+    border-color: #738b70;
+
+    transform: translateY(-1px);
 }
 
 
@@ -453,6 +479,8 @@
 
 
 .sem-livro-texto {
+    min-width: 0;
+
     flex: 1;
 }
 
@@ -485,19 +513,29 @@
 .selecao-livro {
     display: none;
 
-    margin-top: 20px;
-    padding-top: 22px;
+    margin-top: 22px;
+    padding-top: 24px;
 
     border-top: 1px solid #ece8e4;
 }
 
 
-/* Quando o JS abrir */
+/* IMPORTANTE:
+   O JavaScript adiciona a classe "ativa". */
 
-.selecao-livro.ativo {
+.selecao-livro.ativa {
     display: block;
 }
 
+
+.selecao-livro .campo-clube {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================
+   RESULTADOS DA BUSCA
+========================================== */
 
 .resultados-livros {
     display: grid;
@@ -505,14 +543,246 @@
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
-    gap: 10px;
+    gap: 12px;
 
-    margin-top: 12px;
-    margin-bottom: 16px;
+    margin-top: 16px;
+    margin-bottom: 18px;
 }
 
 
+/* Cada livro retornado */
+
+.resultado-livro-clube {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e3ded9;
+    border-radius: 11px;
+
+    color: inherit;
+
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.resultado-livro-clube:hover {
+    background: #fdfefd;
+
+    border-color: #aebdaa;
+
+    transform: translateY(-1px);
+}
+
+
+.resultado-livro-clube.selecionado {
+    background: #f2f6f0;
+
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 2px rgba(135, 157, 132, 0.12);
+}
+
+
+/* ==========================================
+   CAPA DO RESULTADO
+========================================== */
+
+.resultado-capa {
+    width: 54px;
+    height: 76px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f0eee9;
+
+    border: 1px solid #e7e2dd;
+    border-radius: 6px;
+}
+
+
+.resultado-capa img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.resultado-sem-capa {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf2eb;
+
+    color: #879d84;
+
+    font-size: 1.25rem;
+}
+
+
+/* ==========================================
+   INFORMAÇÕES DO RESULTADO
+========================================== */
+
+.resultado-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.resultado-origem {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #879d84;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+}
+
+
+.resultado-info strong {
+    display: block;
+
+    overflow: hidden;
+
+    margin-bottom: 4px;
+
+    color: #503523;
+
+    font-size: 0.84rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.resultado-info p {
+    overflow: hidden;
+
+    margin: 0;
+
+    color: #8b7e75;
+
+    font-size: 0.73rem;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.resultado-info small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #a0968e;
+
+    font-size: 0.67rem;
+}
+
+
+.resultado-selecionar {
+    flex-shrink: 0;
+
+    padding: 6px 9px;
+
+    background: #f3f6f1;
+
+    border-radius: 6px;
+
+    color: #60745d;
+
+    font-size: 0.69rem;
+    font-weight: 600;
+}
+
+
+.resultado-livro-clube.selecionado
+.resultado-selecionar {
+    background: #879d84;
+
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   ESTADOS DA PESQUISA
+========================================== */
+
+.buscando-livros,
+.nenhum-livro-encontrado {
+    grid-column: 1 / -1;
+
+    padding: 24px 20px;
+
+    box-sizing: border-box;
+
+    background: #f8f7f5;
+
+    border: 1px solid #ece8e4;
+    border-radius: 9px;
+
+    color: #92867d;
+
+    font-size: 0.8rem;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   CONFIRMAR LIVRO
+========================================== */
+
 .botao-confirmar-livro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 145px;
+
     padding: 10px 17px;
 
     background: #52684f;
@@ -528,12 +798,20 @@
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
 }
 
 
 .botao-confirmar-livro:hover:not(:disabled) {
     background: #435742;
+
+    border-color: #435742;
+
+    transform: translateY(-1px);
 }
 
 
@@ -665,7 +943,7 @@
 }
 
 
-/* Bolinha */
+/* Bolinha personalizada */
 
 .opcao-conteudo::after {
     content: "";
@@ -787,12 +1065,16 @@
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 
 .botao-escolher-imagem:hover {
     background: #f0f4ee;
+
+    border-color: #738b70;
 }
 
 
@@ -912,6 +1194,8 @@
 ========================================== */
 
 .participante-gerenciar-info {
+    min-width: 0;
+
     flex: 1;
 
     display: flex;
@@ -947,6 +1231,8 @@
 ========================================== */
 
 .badge-criador-gerenciar {
+    flex-shrink: 0;
+
     padding: 6px 11px;
 
     background: #edf2eb;
@@ -1071,6 +1357,8 @@
 
 .botao-cancelar:hover {
     background: #f7f4f1;
+
+    border-color: #c9bdb3;
 }
 
 
@@ -1099,9 +1387,14 @@
 @media (max-width: 900px) {
 
     .pagina-gerenciar-clube {
-        width: calc(100% - 40px);
-
         padding-top: 40px;
+    }
+
+
+    .gerenciar-topo,
+    .leitura-card,
+    .formulario-gerenciar {
+        width: calc(100% - 40px);
     }
 
 
@@ -1111,6 +1404,11 @@
 
 
     .opcoes-privacidade {
+        grid-template-columns: 1fr;
+    }
+
+
+    .resultados-livros {
         grid-template-columns: 1fr;
     }
 
@@ -1124,12 +1422,17 @@
 @media (max-width: 650px) {
 
     .pagina-gerenciar-clube {
-        width: calc(100% - 30px);
-
         padding:
             30px
             0
             60px;
+    }
+
+
+    .gerenciar-topo,
+    .leitura-card,
+    .formulario-gerenciar {
+        width: calc(100% - 30px);
     }
 
 
@@ -1143,6 +1446,11 @@
     .botao-voltar {
         width: 36px;
         height: 36px;
+    }
+
+
+    .gerenciar-label {
+        font-size: 0.7rem;
     }
 
 
@@ -1165,11 +1473,24 @@
     }
 
 
+    .card-cabecalho h2 {
+        font-size: 1.15rem;
+    }
+
+
+    /* LEITURA */
+
     .livro-atual,
     .sem-livro-clube {
         align-items: flex-start;
 
         flex-wrap: wrap;
+    }
+
+
+    .livro-atual-capa {
+        width: 72px;
+        height: 102px;
     }
 
 
@@ -1179,10 +1500,24 @@
     }
 
 
+    /* RESULTADOS */
+
     .resultados-livros {
         grid-template-columns: 1fr;
     }
 
+
+    .resultado-selecionar {
+        display: none;
+    }
+
+
+    .botao-confirmar-livro {
+        width: 100%;
+    }
+
+
+    /* IMAGEM */
 
     .imagem-gerenciar {
         align-items: flex-start;
@@ -1190,6 +1525,8 @@
         flex-direction: column;
     }
 
+
+    /* PARTICIPANTES */
 
     .participantes-cabecalho {
         align-items: flex-start;
@@ -1217,6 +1554,8 @@
     }
 
 
+    /* AÇÕES */
+
     .acoes-gerenciar {
         flex-direction: column-reverse;
     }
@@ -1225,6 +1564,51 @@
     .botao-cancelar,
     .botao-salvar {
         width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVO — CELULAR PEQUENO
+========================================== */
+
+@media (max-width: 430px) {
+
+    .gerenciar-topo,
+    .leitura-card,
+    .formulario-gerenciar {
+        width: calc(100% - 24px);
+    }
+
+
+    .gerenciar-card {
+        padding:
+            20px
+            17px;
+    }
+
+
+    .gerenciar-topo h1 {
+        font-size: 1.8rem;
+    }
+
+
+    .resultado-livro-clube {
+        gap: 11px;
+
+        padding: 10px;
+    }
+
+
+    .resultado-capa {
+        width: 48px;
+        height: 68px;
+    }
+
+
+    .participante-gerenciar form {
+        padding-left: 0;
     }
 
 }

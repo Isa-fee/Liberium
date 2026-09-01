@@ -15,6 +15,7 @@ from flask_login import (
     login_required
 )
 from utils.notificacoes import criar_notificacao
+from utils.google_books import buscar_google_books, buscar_livro_google
 from werkzeug.utils import secure_filename
 
 from extensions import db
@@ -53,7 +54,8 @@ def listar_clubes():
 
 
 # ======================================
-# PESQUISAR LIVROS
+# PESQUISAR LIVROS PARA O CLUBE
+# BANCO LOCAL + GOOGLE BOOKS
 # ======================================
 
 @clubes_bp.route('/buscar-livros')
@@ -66,9 +68,15 @@ def buscar_livros():
     ).strip()
 
     if not termo:
-        return []
+        return jsonify([])
 
-    livros = (
+    resultados = []
+
+    # ======================================
+    # 1. BUSCAR NO BANCO LOCAL
+    # ======================================
+
+    livros_banco = (
         Livro.query
         .filter(
             db.or_(
@@ -83,22 +91,98 @@ def buscar_livros():
         .order_by(
             Livro.titulo.asc()
         )
-        .limit(10)
+        .limit(8)
         .all()
     )
 
-    resultados = []
+    titulos_encontrados = set()
 
-    for livro in livros:
+    for livro in livros_banco:
+
+        titulo_normalizado = (
+            livro.titulo or ''
+        ).strip().lower()
+
+        titulos_encontrados.add(
+            titulo_normalizado
+        )
 
         resultados.append({
             'id': livro.id,
+            'google_id': None,
             'titulo': livro.titulo,
-            'autor': livro.autor,
-            'capa': livro.capa
+            'autor': livro.autor or 'Autor desconhecido',
+            'capa': livro.capa,
+            'paginas': livro.paginas,
+            'origem': 'banco'
         })
 
-    return resultados
+    # ======================================
+    # 2. COMPLEMENTAR COM GOOGLE BOOKS
+    # ======================================
+
+    try:
+
+        livros_google = buscar_google_books(
+            termo
+        )
+
+        for livro in livros_google:
+
+            if len(resultados) >= 16:
+                break
+
+            titulo = (
+                livro.get('titulo')
+                or ''
+            ).strip()
+
+            if not titulo:
+                continue
+
+            titulo_normalizado = (
+                titulo.lower()
+            )
+
+            # Evita mostrar o mesmo livro duas vezes
+            if titulo_normalizado in titulos_encontrados:
+                continue
+
+            google_id = (
+                livro.get('google_id')
+                or livro.get('id')
+            )
+
+            if not google_id:
+                continue
+
+            resultados.append({
+                'id': None,
+                'google_id': google_id,
+                'titulo': titulo,
+                'autor': (
+                    livro.get('autor')
+                    or 'Autor desconhecido'
+                ),
+                'capa': livro.get('capa'),
+                'paginas': livro.get('paginas'),
+                'origem': 'google'
+            })
+
+            titulos_encontrados.add(
+                titulo_normalizado
+            )
+
+    except Exception as erro:
+
+        print(
+            'Erro ao consultar Google Books:',
+            erro
+        )
+
+    return jsonify(
+        resultados
+    )
 
 
 # ======================================
@@ -543,37 +627,147 @@ def definir_livro(clube_id):
             )
         )
 
+    origem = request.form.get(
+        'origem',
+        ''
+    ).strip()
+
+    livro = None
+
     # ======================================
-    # LIVRO SELECIONADO
+    # LIVRO DO BANCO
     # ======================================
 
-    livro_id = request.form.get(
-        'livro_id'
-    )
+    if origem == 'banco':
 
-    if not livro_id:
-
-        flash(
-            'Selecione um livro.',
-            'erro'
+        livro_id = request.form.get(
+            'livro_id'
         )
 
-        return redirect(
-            url_for(
-                'clubes.gerenciar_clube',
-                clube_id=clube.id
+        if livro_id:
+
+            try:
+
+                livro = db.session.get(
+                    Livro,
+                    int(livro_id)
+                )
+
+            except (
+                ValueError,
+                TypeError
+            ):
+
+                livro = None
+
+    # ======================================
+    # LIVRO DO GOOGLE BOOKS
+    # ======================================
+
+    elif origem == 'google':
+
+        google_id = request.form.get(
+            'google_id',
+            ''
+        ).strip()
+
+        if google_id:
+
+            # Primeiro verificamos se esse livro
+            # já foi salvo anteriormente.
+            livro = (
+                Livro.query
+                .filter_by(
+                    google_id=google_id
+                )
+                .first()
             )
-        )
 
-    livro = db.session.get(
-        Livro,
-        int(livro_id)
-    )
+            # Se ainda não estiver no banco,
+            # buscamos os detalhes na API.
+            if not livro:
+
+                try:
+
+                    dados_google = (
+                        buscar_livro_google(
+                            google_id
+                        )
+                    )
+
+                except Exception as erro:
+
+                    print(
+                        'Erro ao buscar livro no Google Books:',
+                        erro
+                    )
+
+                    dados_google = None
+
+                if dados_google:
+
+                    livro = Livro(
+                        titulo=(
+                            dados_google.get('titulo')
+                            or 'Título desconhecido'
+                        ),
+
+                        autor=(
+                            dados_google.get('autor')
+                            or 'Autor desconhecido'
+                        ),
+
+                        descricao=(
+                            dados_google.get('descricao')
+                            or ''
+                        ),
+
+                        capa=dados_google.get(
+                            'capa'
+                        ),
+
+                        genero=(
+                            dados_google.get('genero')
+                            or 'Outro'
+                        ),
+
+                        editora=dados_google.get(
+                            'editora'
+                        ),
+
+                        paginas=dados_google.get(
+                            'paginas'
+                        ),
+
+                        ano=dados_google.get(
+                            'ano'
+                        ),
+
+                        idioma=dados_google.get(
+                            'idioma'
+                        ),
+
+                        google_id=google_id,
+
+                        origem='google'
+                    )
+
+                    db.session.add(
+                        livro
+                    )
+
+                    # Gera o ID antes de colocar
+                    # o livro no clube.
+                    db.session.flush()
+
+    # ======================================
+    # NÃO ENCONTROU LIVRO
+    # ======================================
 
     if not livro:
 
         flash(
-            'Livro não encontrado.',
+            'Não foi possível selecionar esse livro.',
             'erro'
         )
 
@@ -585,13 +779,15 @@ def definir_livro(clube_id):
         )
 
     # ======================================
-    # ALTERAR LEITURA
+    # DEFINIR LEITURA
     # ======================================
 
     clube.livro_id = livro.id
 
-    # Quando muda o livro, o progresso dos
-    # participantes precisa começar novamente.
+    # ======================================
+    # REINICIAR PROGRESSO DOS MEMBROS
+    # ======================================
+
     membros = (
         MembroClube.query
         .filter_by(
