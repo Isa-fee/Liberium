@@ -9,374 +9,1011 @@
     --borda: #dfe4dc;
 }
 
+
+/* =========================================================
+   PÁGINA
+========================================================= */
+
 .pagina-configuracoes {
     min-height: calc(100vh - 100px);
+
     display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-columns:
+        250px minmax(0, 1fr);
+
     background: var(--fundo);
 }
 
 
 /* =========================================================
    MENU LATERAL
-   ========================================================= */
+========================================================= */
 
-   .sidebar{
-    background:#d7e2cf;
-    padding:35px 20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+.sidebar {
+    background: #d7e2cf;
+
+    padding: 35px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
-.foto-perfil{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    object-fit:cover;
-    margin-bottom:15px;
-}
+.foto-perfil {
+    width: 120px;
+    height: 120px;
 
-.sidebar h3{
-    margin:0;
-    color:#4b3323;
-    font-size:28px;
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    margin-bottom: 15px;
 }
 
 
-.usuario{
-    color:#8d8d8d;
-    margin-top:5px;
-    margin-bottom:35px;
+.sidebar h3 {
+    margin: 0;
+
+    color: #4b3323;
+
+    font-size: 28px;
 }
 
-.menu-lateral{
-    width:100%;
-    display:flex;
-    flex-direction:column;
+
+.usuario {
+    color: #8d8d8d;
+
+    margin-top: 5px;
+    margin-bottom: 35px;
 }
 
-.titulo-menu{
-    color:#6c5338;
-    font-weight:bold;
-    font-size:.9rem;
-    text-transform:uppercase;
-    margin:18px 0 12px;
+
+.menu-lateral {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.menu-lateral a{
-    text-decoration:none;
-    color:#4b3323;
-    padding:10px;
-    border-radius:8px;
-    transition:.2s;
+
+.titulo-menu {
+    color: #6c5338;
+
+    font-weight: bold;
+    font-size: .9rem;
+
+    text-transform: uppercase;
+
+    margin: 18px 0 12px;
 }
 
-.menu-lateral a:hover{
-    background:white;
+
+.menu-lateral a {
+    text-decoration: none;
+
+    color: #4b3323;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    transition: .2s;
 }
 
-.menu-lateral hr{
-    border:none;
-    border-top:1px solid rgba(0,0,0,.1);
-    margin:20px 0;
+
+.menu-lateral a:hover {
+    background: white;
 }
 
-.card-moedas{
-    background:white;
-    border-radius:12px;
-    padding:18px;
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    margin-top:10px;
+
+.menu-lateral hr {
+    border: none;
+
+    border-top:
+        1px solid rgba(0, 0, 0, .1);
+
+    margin: 20px 0;
 }
+
+
+.card-moedas {
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-top: 10px;
+}
+
 
 .icone-libelula {
     width: 70px;
     height: 70px;
+
     object-fit: contain;
+
     margin: 0 auto 5px;
 }
 
-/* Área principal */
+
+/* =========================================================
+   ÁREA PRINCIPAL
+========================================================= */
 
 .area-configuracoes {
     background: var(--fundo);
+
     padding: 35px 42px 50px;
+
     min-width: 0;
 }
+
 
 .cabecalho-config {
     margin-bottom: 22px;
 }
 
+
 .subtitulo {
     margin: 0 0 5px;
+
     color: var(--verde-principal);
+
     font-size: 11px;
     font-weight: 700;
+
     letter-spacing: 1.2px;
 }
 
+
 .cabecalho-config h2 {
     margin: 0;
+
     color: #30362e;
+
     font-size: 28px;
     font-weight: 750;
 }
 
+
 .cabecalho-config p:last-child {
     margin: 8px 0 0;
+
     color: var(--cinza);
+
     font-size: 13px;
 }
 
-/* Cards */
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
 
 .form-configuracoes {
     display: flex;
     flex-direction: column;
+
     gap: 20px;
+
     max-width: 850px;
 }
 
+
+/* =========================================================
+   CARDS
+========================================================= */
+
 .card-config {
     background: var(--branco);
+
     border-radius: 20px;
+
     padding: 26px;
-    box-shadow: 0 8px 25px rgba(65, 79, 59, 0.08);
-    border: 1px solid rgba(110, 130, 100, 0.07);
+
+    box-shadow:
+        0 8px 25px
+        rgba(65, 79, 59, 0.08);
+
+    border:
+        1px solid
+        rgba(110, 130, 100, 0.07);
 }
+
 
 .titulo-card {
     margin-bottom: 22px;
 }
 
+
 .titulo-card h3 {
     margin: 0 0 5px;
+
     color: #343b31;
+
     font-size: 17px;
 }
 
+
 .titulo-card p {
     margin: 0;
+
     color: #888f85;
+
     font-size: 12px;
+
     line-height: 1.5;
 }
 
-/* Foto */
+
+/* =========================================================
+   FOTO
+========================================================= */
 
 .foto-area {
     display: flex;
     align-items: center;
+
     gap: 25px;
 }
+
 
 .foto-preview {
     width: 120px;
     height: 120px;
+
     border-radius: 50%;
+
     object-fit: cover;
-    border: 5px solid #edf3e9;
-    box-shadow: 0 6px 18px rgba(60, 80, 55, 0.10);
+
+    border:
+        5px solid #edf3e9;
+
+    box-shadow:
+        0 6px 18px
+        rgba(60, 80, 55, 0.10);
 }
+
 
 .foto-acoes {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
     gap: 8px;
 }
+
 
 .btn-foto {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--verde-principal);
+
+    background:
+        var(--verde-principal);
+
     color: white;
+
     padding: 10px 17px;
+
     border-radius: 20px;
+
     font-size: 12px;
     font-weight: 700;
+
     cursor: pointer;
+
     transition: 0.2s ease;
 }
 
+
 .btn-foto:hover {
     background: #5f7559;
+
     transform: translateY(-1px);
 }
 
+
 .foto-acoes span {
     color: #999f97;
+
     font-size: 10px;
 }
 
-/* Campos */
+
+/* =========================================================
+   CAMPOS
+========================================================= */
 
 .campo {
     display: flex;
     flex-direction: column;
+
     gap: 7px;
+
     margin-bottom: 17px;
 }
+
 
 .campo:last-child {
     margin-bottom: 0;
 }
 
+
 .campo label {
     color: #596154;
+
     font-size: 12px;
     font-weight: 600;
 }
 
+
 .campo input {
     width: 100%;
+
     box-sizing: border-box;
-    border: 1px solid var(--borda);
+
+    border:
+        1px solid var(--borda);
+
     background: #fafbf9;
+
     border-radius: 10px;
+
     padding: 12px 13px;
+
     outline: none;
+
     font-family: inherit;
     font-size: 13px;
+
     color: #4b5148;
+
     transition: 0.2s ease;
 }
 
+
 .campo input:focus {
     border-color: #91a88a;
+
     background: var(--branco);
-    box-shadow: 0 0 0 3px rgba(143, 163, 130, 0.15);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(143, 163, 130, 0.15);
 }
+
 
 .campo input::placeholder {
     color: #aeb3ac;
 }
 
-/* Botões */
+
+/* =========================================================
+   BOTÕES DO FORMULÁRIO
+========================================================= */
 
 .acoes-form {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+
     gap: 12px;
 }
+
 
 .btn-cancelar,
 .btn-salvar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     text-decoration: none;
+
     border: none;
     border-radius: 20px;
+
     padding: 11px 20px;
+
     font-family: inherit;
+
     font-size: 12px;
     font-weight: 700;
+
     cursor: pointer;
+
     transition: 0.2s ease;
 }
 
+
 .btn-cancelar {
     background: #e9ede7;
+
     color: #687067;
 }
+
 
 .btn-cancelar:hover {
     background: #dfe5dc;
 }
 
+
 .btn-salvar {
-    background: var(--verde-principal);
+    background:
+        var(--verde-principal);
+
     color: white;
 }
 
+
 .btn-salvar:hover {
     background: #5f7559;
-    box-shadow: 0 5px 12px rgba(80, 105, 75, 0.15);
+
+    box-shadow:
+        0 5px 12px
+        rgba(80, 105, 75, 0.15);
 }
 
-/* Responsividade */
+
+/* =========================================================
+   ZONA DE PERIGO
+========================================================= */
+
+.zona-perigo {
+    max-width: 850px;
+
+    margin-top: 35px;
+}
+
+
+.zona-perigo-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 24px 26px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border:
+        1px solid #eadbd6;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(95, 65, 55, 0.05);
+}
+
+
+.zona-perigo-texto {
+    min-width: 0;
+}
+
+
+.zona-perigo-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #a46655;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+}
+
+
+.zona-perigo h3 {
+    margin: 0 0 6px;
+
+    color: #553a30;
+
+    font-size: 16px;
+}
+
+
+.zona-perigo p {
+    max-width: 570px;
+
+    margin: 0;
+
+    color: #93847e;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.btn-excluir-conta {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #b97866;
+
+    border-radius: 20px;
+
+    color: #a15f4d;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-excluir-conta:hover {
+    background: #a86654;
+
+    border-color: #a86654;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-excluir-conta {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+.modal-excluir-conta.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================================
+   FUNDO DO MODAL
+========================================================= */
+
+.modal-excluir-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(42, 48, 40, 0.45);
+
+    backdrop-filter: blur(3px);
+}
+
+
+/* =========================================================
+   CONTEÚDO DO MODAL
+========================================================= */
+
+.modal-excluir-conteudo {
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+    max-width: 440px;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e6dfdb;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(42, 48, 40, 0.18);
+
+    text-align: center;
+
+    transform: translateY(12px) scale(.98);
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.modal-excluir-conta.ativo
+.modal-excluir-conteudo {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =========================================================
+   FECHAR MODAL
+========================================================= */
+
+.modal-excluir-fechar {
+    position: absolute;
+
+    top: 14px;
+    right: 16px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    color: #9c948f;
+
+    font-family: inherit;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    transition: 0.2s ease;
+}
+
+
+.modal-excluir-fechar:hover {
+    background: #f2f3f0;
+
+    color: #665b55;
+}
+
+
+/* =========================================================
+   ÍCONE
+========================================================= */
+
+.modal-excluir-icone {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    background: #f5e9e5;
+
+    border-radius: 50%;
+
+    color: #a86654;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   TEXTO DO MODAL
+========================================================= */
+
+.modal-excluir-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #a86654;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+
+.modal-excluir-conteudo h2 {
+    margin: 0 0 10px;
+
+    color: #44362f;
+
+    font-family:
+        "Tenor Sans",
+        sans-serif;
+
+    font-size: 24px;
+    font-weight: 400;
+}
+
+
+.modal-excluir-descricao {
+    max-width: 360px;
+
+    margin: 0 auto 23px;
+
+    color: #8b837e;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORMULÁRIO DO MODAL
+========================================================= */
+
+.form-excluir-conta {
+    text-align: left;
+}
+
+
+.campo-senha-exclusao {
+    margin-bottom: 22px;
+}
+
+
+.campo-senha-exclusao input:focus {
+    border-color: #c18b7b;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(181, 116, 96, 0.10);
+}
+
+
+/* =========================================================
+   BOTÕES DO MODAL
+========================================================= */
+
+.modal-excluir-acoes {
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.btn-manter-conta,
+.btn-confirmar-exclusao {
+    min-height: 40px;
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 15px;
+
+    border-radius: 20px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.btn-manter-conta {
+    background: #edf0eb;
+
+    border:
+        1px solid #edf0eb;
+
+    color: #697167;
+}
+
+
+.btn-manter-conta:hover {
+    background: #e2e7df;
+}
+
+
+.btn-confirmar-exclusao {
+    background: #a86654;
+
+    border:
+        1px solid #a86654;
+
+    color: #ffffff;
+}
+
+
+.btn-confirmar-exclusao:hover {
+    background: #945645;
+
+    border-color: #945645;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
 
 @media (max-width: 900px) {
+
     .pagina-configuracoes {
-        grid-template-columns: 200px minmax(0, 1fr);
+        grid-template-columns:
+            200px minmax(0, 1fr);
     }
+
 
     .area-configuracoes {
         padding: 25px;
     }
+
 }
 
+
 @media (max-width: 650px) {
+
     .pagina-configuracoes {
         display: block;
     }
 
-    .sidebar-config {
+
+    .sidebar {
         padding: 20px;
-        border-right: none;
-        border-bottom: 1px solid #d8e1d3;
     }
 
-    .foto-config {
+
+    .foto-perfil {
         width: 85px;
         height: 85px;
     }
 
-    .sidebar-config h1 {
+
+    .sidebar h3 {
         font-size: 21px;
-        margin-bottom: 15px;
     }
+
 
     .menu-lateral {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+
         gap: 5px;
     }
 
+
     .menu-lateral a {
         padding: 8px 10px;
+
         font-size: 11px;
     }
+
 
     .area-configuracoes {
         padding: 20px 15px 35px;
     }
 
+
     .cabecalho-config h2 {
         font-size: 24px;
     }
+
 
     .card-config {
         padding: 20px;
     }
 
+
     .foto-area {
         flex-direction: column;
         align-items: center;
+
         text-align: center;
     }
+
 
     .foto-acoes {
         align-items: center;
     }
 
+
     .acoes-form {
         flex-direction: column-reverse;
+
         align-items: stretch;
     }
+
 
     .btn-cancelar,
     .btn-salvar {
         width: 100%;
     }
+
+
+    /* ZONA DE PERIGO */
+
+    .zona-perigo-conteudo {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 18px;
+
+        padding: 20px;
+    }
+
+
+    .btn-excluir-conta {
+        width: 100%;
+    }
+
+
+    /* MODAL */
+
+    .modal-excluir-conteudo {
+        padding:
+            30px 20px
+            22px;
+    }
+
+
+    .modal-excluir-acoes {
+        flex-direction: column;
+    }
+
+
+    .btn-manter-conta,
+    .btn-confirmar-exclusao {
+        width: 100%;
+    }
+
 }

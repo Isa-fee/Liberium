@@ -3,25 +3,48 @@
 {% block title %}Configurações | Liberium{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/configuracoes/style.css') }}">
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/configuracoes/style.css'
+    ) }}"
+>
+
 {% endblock %}
+
 
 {% block content %}
 
 <section class="pagina-configuracoes">
 
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
     <aside class="sidebar">
 
         <img
-            src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+            src="{{ url_for(
+                'static',
+                filename=current_user.foto
+                if current_user.foto
+                else 'img/perfil_padrão.jpg'
+            ) }}"
             class="foto-perfil"
+            alt="Foto de perfil"
         >
 
-        <h3>{{ current_user.nome }}</h3>
+        <h3>
+            {{ current_user.nome }}
+        </h3>
 
         <p class="usuario">
             @{{ current_user.nome|lower|replace(' ', '') }}
         </p>
+
 
         <nav class="menu-lateral">
 
@@ -33,19 +56,29 @@
                 Perfil
             </a>
 
-            <a href="#lendo" class="link-prateleira">
+            <a
+                href="#lendo"
+                class="link-prateleira"
+            >
                 Lendo
             </a>
 
-            <a href="#lidos" class="link-prateleira">
+            <a
+                href="#lidos"
+                class="link-prateleira"
+            >
                 Lidos
             </a>
 
-            <a href="#quero-ler" class="link-prateleira">
+            <a
+                href="#quero-ler"
+                class="link-prateleira"
+            >
                 Quero ler
             </a>
 
             <hr>
+
 
             <span class="titulo-menu">
                 Coleção
@@ -61,14 +94,18 @@
 
             <hr>
 
-            <!-- ============================= -->
-            <!-- MOEDAS -->
-            <!-- ============================= -->
+
+            <!-- =========================================
+                 MOEDAS
+            ========================================== -->
 
             <div class="card-moedas">
 
                 <img
-                    src="{{ url_for('static', filename='img/gamificacao/Libelula.png') }}"
+                    src="{{ url_for(
+                        'static',
+                        filename='img/gamificacao/Libelula.png'
+                    ) }}"
                     alt="Mini Libélula"
                     class="icone-libelula"
                 >
@@ -85,29 +122,52 @@
 
             <hr>
 
-            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
 
         </nav>
 
     </aside>
 
 
+    <!-- =================================================
+         CONTEÚDO
+    ================================================== -->
+
     <section class="area-configuracoes">
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
 
         <div class="cabecalho-config">
 
             <div>
-                <p class="subtitulo">MEU PERFIL</p>
 
-                <h2>Configurações</h2>
+                <p class="subtitulo">
+                    MEU PERFIL
+                </p>
+
+                <h2>
+                    Configurações
+                </h2>
 
                 <p>
-                    Atualize suas informações pessoais e personalize seu perfil.
+                    Atualize suas informações pessoais
+                    e personalize seu perfil.
                 </p>
+
             </div>
 
         </div>
 
+
+        <!-- =================================================
+             FORMULÁRIO
+        ================================================== -->
 
         <form
             action="{{ url_for('user_bp.configuracoes') }}"
@@ -116,34 +176,51 @@
             class="form-configuracoes"
         >
 
-            <!-- =========================
+
+            <!-- =========================================
                  FOTO
-            ========================== -->
+            ========================================== -->
 
             <section class="card-config foto-card">
 
                 <div class="titulo-card">
-                    <h3>Foto de perfil</h3>
+
+                    <h3>
+                        Foto de perfil
+                    </h3>
 
                     <p>
-                        Escolha uma imagem para representar seu perfil.
+                        Escolha uma imagem para
+                        representar seu perfil.
                     </p>
+
                 </div>
+
 
                 <div class="foto-area">
 
                     <img
-                        src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}"
+                        src="{{ url_for(
+                            'static',
+                            filename=current_user.foto
+                            if current_user.foto
+                            else 'img/perfil_padrão.jpg'
+                        ) }}"
                         class="foto-preview"
                         id="fotoPreview"
                         alt="Foto de perfil"
                     >
 
+
                     <div class="foto-acoes">
 
-                        <label for="foto" class="btn-foto">
+                        <label
+                            for="foto"
+                            class="btn-foto"
+                        >
                             Escolher foto
                         </label>
+
 
                         <input
                             type="file"
@@ -152,6 +229,7 @@
                             accept=".jpg,.jpeg,.png,.webp"
                             hidden
                         >
+
 
                         <span>
                             JPG, JPEG, PNG ou WEBP
@@ -164,18 +242,21 @@
             </section>
 
 
-            <!-- =========================
+            <!-- =========================================
                  INFORMAÇÕES PESSOAIS
-            ========================== -->
+            ========================================== -->
 
             <section class="card-config">
 
                 <div class="titulo-card">
 
-                    <h3>Informações pessoais</h3>
+                    <h3>
+                        Informações pessoais
+                    </h3>
 
                     <p>
-                        Altere seu nome ou endereço de e-mail.
+                        Altere seu nome ou
+                        endereço de e-mail.
                     </p>
 
                 </div>
@@ -217,18 +298,21 @@
             </section>
 
 
-            <!-- =========================
+            <!-- =========================================
                  SENHA
-            ========================== -->
+            ========================================== -->
 
             <section class="card-config">
 
                 <div class="titulo-card">
 
-                    <h3>Alterar senha</h3>
+                    <h3>
+                        Alterar senha
+                    </h3>
 
                     <p>
-                        Deixe os campos vazios caso não queira alterar sua senha.
+                        Deixe os campos vazios caso
+                        não queira alterar sua senha.
                     </p>
 
                 </div>
@@ -284,9 +368,9 @@
             </section>
 
 
-            <!-- =========================
+            <!-- =========================================
                  BOTÕES
-            ========================== -->
+            ========================================== -->
 
             <div class="acoes-form">
 
@@ -308,32 +392,308 @@
 
         </form>
 
+
+        <!-- =================================================
+             ZONA DE PERIGO
+        ================================================== -->
+
+        <section class="zona-perigo">
+
+            <div class="zona-perigo-conteudo">
+
+                <div class="zona-perigo-texto">
+
+                    <span class="zona-perigo-label">
+                        ZONA DE PERIGO
+                    </span>
+
+                    <h3>
+                        Excluir minha conta
+                    </h3>
+
+                    <p>
+                        Ao excluir sua conta, sua estante,
+                        progresso de leitura, conquistas,
+                        coleção e demais informações serão
+                        removidos permanentemente.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-excluir-conta"
+                    id="abrirModalExcluir"
+                >
+                    Excluir conta
+                </button>
+
+            </div>
+
+        </section>
+
     </section>
 
 </section>
 
 
+<!-- =====================================================
+     MODAL DE EXCLUSÃO
+====================================================== -->
+
+<div
+    class="modal-excluir-conta"
+    id="modalExcluirConta"
+>
+
+    <div
+        class="modal-excluir-overlay"
+        id="overlayExcluir"
+    ></div>
+
+
+    <div class="modal-excluir-conteudo">
+
+        <button
+            type="button"
+            class="modal-excluir-fechar"
+            id="fecharModalExcluir"
+            aria-label="Fechar"
+        >
+            ×
+        </button>
+
+
+        <div class="modal-excluir-icone">
+            !
+        </div>
+
+
+        <span class="modal-excluir-label">
+            EXCLUSÃO PERMANENTE
+        </span>
+
+
+        <h2>
+            Excluir sua conta?
+        </h2>
+
+
+        <p class="modal-excluir-descricao">
+            Esta ação não poderá ser desfeita.
+            Seus dados e seu progresso no Liberium
+            serão removidos permanentemente.
+        </p>
+
+
+        <form
+            action="{{ url_for('user_bp.excluir_conta') }}"
+            method="POST"
+            class="form-excluir-conta"
+        >
+
+            <div class="campo campo-senha-exclusao">
+
+                <label for="senha_exclusao">
+                    Digite sua senha para confirmar
+                </label>
+
+                <input
+                    type="password"
+                    id="senha_exclusao"
+                    name="senha_exclusao"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="modal-excluir-acoes">
+
+                <button
+                    type="button"
+                    class="btn-manter-conta"
+                    id="cancelarExclusao"
+                >
+                    Manter minha conta
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn-confirmar-exclusao"
+                >
+                    Excluir permanentemente
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
 <script>
 
-    const inputFoto = document.getElementById("foto");
-    const fotoPreview = document.getElementById("fotoPreview");
+    /* =====================================================
+       PREVIEW DA FOTO
+    ===================================================== */
 
-    inputFoto.addEventListener("change", function () {
+    const inputFoto =
+        document.getElementById("foto");
 
-        const arquivo = this.files[0];
+    const fotoPreview =
+        document.getElementById("fotoPreview");
 
-        if (arquivo) {
 
-            const leitor = new FileReader();
+    inputFoto.addEventListener(
+        "change",
+        function () {
 
-            leitor.onload = function (e) {
-                fotoPreview.src = e.target.result;
-            };
+            const arquivo = this.files[0];
 
-            leitor.readAsDataURL(arquivo);
+            if (arquivo) {
+
+                const leitor = new FileReader();
+
+                leitor.onload = function (e) {
+
+                    fotoPreview.src =
+                        e.target.result;
+
+                };
+
+                leitor.readAsDataURL(
+                    arquivo
+                );
+
+            }
+
         }
+    );
 
-    });
+
+    /* =====================================================
+       MODAL DE EXCLUSÃO
+    ===================================================== */
+
+    const modalExcluir =
+        document.getElementById(
+            "modalExcluirConta"
+        );
+
+    const abrirModalExcluir =
+        document.getElementById(
+            "abrirModalExcluir"
+        );
+
+    const fecharModalExcluir =
+        document.getElementById(
+            "fecharModalExcluir"
+        );
+
+    const cancelarExclusao =
+        document.getElementById(
+            "cancelarExclusao"
+        );
+
+    const overlayExcluir =
+        document.getElementById(
+            "overlayExcluir"
+        );
+
+    const senhaExclusao =
+        document.getElementById(
+            "senha_exclusao"
+        );
+
+
+    function abrirModal() {
+
+        modalExcluir.classList.add(
+            "ativo"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+        setTimeout(
+            function () {
+
+                senhaExclusao.focus();
+
+            },
+            100
+        );
+
+    }
+
+
+    function fecharModal() {
+
+        modalExcluir.classList.remove(
+            "ativo"
+        );
+
+        document.body.style.overflow =
+            "";
+
+        senhaExclusao.value = "";
+
+    }
+
+
+    abrirModalExcluir.addEventListener(
+        "click",
+        abrirModal
+    );
+
+
+    fecharModalExcluir.addEventListener(
+        "click",
+        fecharModal
+    );
+
+
+    cancelarExclusao.addEventListener(
+        "click",
+        fecharModal
+    );
+
+
+    overlayExcluir.addEventListener(
+        "click",
+        fecharModal
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape"
+                &&
+                modalExcluir.classList.contains(
+                    "ativo"
+                )
+            ) {
+
+                fecharModal();
+
+            }
+
+        }
+    );
 
 </script>
 
