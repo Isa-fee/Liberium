@@ -62,6 +62,7 @@
             <a href="{{ url_for('loja_bp.colecao') }}">
                 Minha coleção
             </a>
+
             <hr>
 
             <!-- ============================= -->
@@ -88,8 +89,17 @@
 
             <hr>
 
-            <a href="{{ url_for('user_bp.configuracoes') }}">Configurações</a>
-            <a href="{{ url_for('notificacoes.listar') }}" class="menu-ativo"> Notificações </a>
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
+
+            <a
+                href="{{ url_for('notificacoes.listar') }}"
+                class="menu-ativo"
+            >
+                Notificações
+            </a>
+
         </nav>
 
     </aside>
@@ -132,166 +142,168 @@
             <!-- ================================================= -->
 
             <section
-            id="lendo"
-            class="bloco-prateleira"
+                id="lendo"
+                class="bloco-prateleira"
             >
 
-            <div class="placa-prateleira">
-                LENDO
-            </div>
+                <div
+                    class="linha-prateleira"
+                    data-prateleira="lendo"
+                >
 
-            <div
-                class="linha-prateleira"
-                data-prateleira="lendo"
-            >
+                    {% if itens_lendo %}
 
-                {% if itens_lendo %}
+                        {% for item in itens_lendo %}
 
-                    {% for item in itens_lendo %}
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
 
-                        <!-- ============================= -->
-                        <!-- LIVRO -->
-                        <!-- ============================= -->
+                            {% if item.tipo == "livro" %}
 
-                        {% if item.tipo == "livro" %}
-
-                            <div
-                                class="livro-card item-arrastavel"
-                                data-tipo="livro"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <a
-                                    href="{{ url_for(
-                                        'books_bp.ver',
-                                        id=item.objeto.livro.id
-                                    ) }}"
-                                    class="livro-link"
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-                                    {% if item.objeto.livro.capa %}
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
 
-                                        {% if item.objeto.livro.capa.startswith("http") %}
+                                        {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ item.objeto.livro.capa }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith("http") %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=item.objeto.livro.capa
+                                                    ) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 
-                                            <img
-                                                src="{{ url_for(
-                                                    'static',
-                                                    filename=item.objeto.livro.capa
-                                                ) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            <div class="sem-capa livro-estante">
+                                                Sem capa
+                                            </div>
 
                                         {% endif %}
 
-                                    {% else %}
-
-                                        <div class="sem-capa livro-estante">
-                                            Sem capa
-                                        </div>
-
-                                    {% endif %}
-
-                                </a>
+                                    </a>
 
 
-                                <!-- ============================= -->
-                                <!-- REMOVER LIVRO -->
-                                <!-- ============================= -->
+                                    <!-- ============================= -->
+                                    <!-- REMOVER LIVRO -->
+                                    <!-- ============================= -->
 
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_estante',
-                                        livro_id=item.objeto.livro.id
-                                    ) }}"
-                                    method="POST"
-                                >
-
-                                    <button
-                                        class="btn-remover"
-                                        type="submit"
-                                        title="Remover da estante"
-                                        onclick="return confirm(
-                                            'Remover este livro da estante?'
-                                        )"
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_estante',
+                                            livro_id=item.objeto.livro.id
+                                        ) }}"
+                                        method="POST"
                                     >
-                                        ✖
-                                    </button>
 
-                                </form>
+                                        <button
+                                            class="btn-remover"
+                                            type="submit"
+                                            title="Remover da estante"
+                                            onclick="return confirm(
+                                                'Remover este livro da estante?'
+                                            )"
+                                        >
+                                            ✖
+                                        </button>
 
-                            </div>
+                                    </form>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- DECORAÇÃO -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% else %}
+                            {% else %}
 
-                            <div
-                                class="decoracao-estante item-arrastavel"
-                                data-tipo="decoracao"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=item.objeto.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ item.objeto.usuario_item.item.nome }}"
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-
-                                <!-- REMOVER DECORAÇÃO -->
-
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_decoracao',
-                                        decoracao_id=item.objeto.id
-                                    ) }}"
-                                    method="POST"
-                                    class="form-remover-decoracao"
-                                >
-
-                                    <button
-                                        type="submit"
-                                        class="btn-remover-decoracao"
-                                        title="Retirar da estante"
-                                        onclick="return confirm(
-                                            'Retirar esta decoração da estante?'
-                                        )"
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
                                     >
-                                        ×
-                                    </button>
 
-                                </form>
 
-                            </div>
+                                    <!-- REMOVER DECORAÇÃO -->
 
-                        {% endif %}
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_decoracao',
+                                            decoracao_id=item.objeto.id
+                                        ) }}"
+                                        method="POST"
+                                        class="form-remover-decoracao"
+                                    >
 
-                    {% endfor %}
+                                        <button
+                                            type="submit"
+                                            class="btn-remover-decoracao"
+                                            title="Retirar da estante"
+                                            onclick="return confirm(
+                                                'Retirar esta decoração da estante?'
+                                            )"
+                                        >
+                                            ×
+                                        </button>
 
-                {% else %}
+                                    </form>
 
-                    <p class="mensagem-vazia">
-                        Nenhum livro sendo lido.
-                    </p>
+                                </div>
 
-                {% endif %}
+                            {% endif %}
 
-            </div>
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p class="mensagem-vazia">
+                            Nenhum livro sendo lido.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- A PLACA AGORA ESTÁ EMBAIXO -->
+                <div class="placa-prateleira">
+                    LENDO
+                </div>
 
             </section>
 
@@ -301,167 +313,167 @@
             <!-- ================================================= -->
 
             <section
-            id="lidos"
-            class="bloco-prateleira"
+                id="lidos"
+                class="bloco-prateleira"
             >
 
-            <div
-                class="linha-prateleira"
-                data-prateleira="lidos"
-            >
+                <div
+                    class="linha-prateleira"
+                    data-prateleira="lidos"
+                >
 
-                {% if itens_lidos %}
+                    {% if itens_lidos %}
 
-                    {% for item in itens_lidos %}
+                        {% for item in itens_lidos %}
 
-                        <!-- ============================= -->
-                        <!-- LIVRO -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
 
-                        {% if item.tipo == "livro" %}
+                            {% if item.tipo == "livro" %}
 
-                            <div
-                                class="livro-card item-arrastavel"
-                                data-tipo="livro"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <a
-                                    href="{{ url_for(
-                                        'books_bp.ver',
-                                        id=item.objeto.livro.id
-                                    ) }}"
-                                    class="livro-link"
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-                                    {% if item.objeto.livro.capa %}
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
 
-                                        {% if item.objeto.livro.capa.startswith("http") %}
+                                        {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ item.objeto.livro.capa }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith("http") %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=item.objeto.livro.capa
+                                                    ) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 
-                                            <img
-                                                src="{{ url_for(
-                                                    'static',
-                                                    filename=item.objeto.livro.capa
-                                                ) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            <div class="sem-capa livro-estante">
+                                                Sem capa
+                                            </div>
 
                                         {% endif %}
 
-                                    {% else %}
-
-                                        <div class="sem-capa livro-estante">
-                                            Sem capa
-                                        </div>
-
-                                    {% endif %}
-
-                                </a>
+                                    </a>
 
 
-                                <!-- ============================= -->
-                                <!-- REMOVER LIVRO -->
-                                <!-- ============================= -->
+                                    <!-- ============================= -->
+                                    <!-- REMOVER LIVRO -->
+                                    <!-- ============================= -->
 
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_estante',
-                                        livro_id=item.objeto.livro.id
-                                    ) }}"
-                                    method="POST"
-                                >
-
-                                    <button
-                                        class="btn-remover"
-                                        type="submit"
-                                        title="Remover da estante"
-                                        onclick="return confirm(
-                                            'Remover este livro da estante?'
-                                        )"
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_estante',
+                                            livro_id=item.objeto.livro.id
+                                        ) }}"
+                                        method="POST"
                                     >
-                                        ✖
-                                    </button>
 
-                                </form>
+                                        <button
+                                            class="btn-remover"
+                                            type="submit"
+                                            title="Remover da estante"
+                                            onclick="return confirm(
+                                                'Remover este livro da estante?'
+                                            )"
+                                        >
+                                            ✖
+                                        </button>
 
-                            </div>
+                                    </form>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- DECORAÇÃO -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% else %}
+                            {% else %}
 
-                            <div
-                                class="decoracao-estante item-arrastavel"
-                                data-tipo="decoracao"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=item.objeto.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ item.objeto.usuario_item.item.nome }}"
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-
-                                <!-- REMOVER DECORAÇÃO -->
-
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_decoracao',
-                                        decoracao_id=item.objeto.id
-                                    ) }}"
-                                    method="POST"
-                                    class="form-remover-decoracao"
-                                >
-
-                                    <button
-                                        type="submit"
-                                        class="btn-remover-decoracao"
-                                        title="Retirar da estante"
-                                        onclick="return confirm(
-                                            'Retirar esta decoração da estante?'
-                                        )"
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
                                     >
-                                        ×
-                                    </button>
-
-                                </form>
-
-                            </div>
-
-                        {% endif %}
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <p class="mensagem-vazia">
-                        Nenhum livro foi lido ainda.
-                    </p>
-
-                {% endif %}
-
-            </div>
 
 
-            <div class="placa-prateleira">
-                LIDOS
-            </div>
+                                    <!-- REMOVER DECORAÇÃO -->
+
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_decoracao',
+                                            decoracao_id=item.objeto.id
+                                        ) }}"
+                                        method="POST"
+                                        class="form-remover-decoracao"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-remover-decoracao"
+                                            title="Retirar da estante"
+                                            onclick="return confirm(
+                                                'Retirar esta decoração da estante?'
+                                            )"
+                                        >
+                                            ×
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p class="mensagem-vazia">
+                            Nenhum livro foi lido ainda.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="placa-prateleira">
+                    LIDOS
+                </div>
 
             </section>
 
@@ -471,172 +483,169 @@
             <!-- ================================================= -->
 
             <section
-            id="quero-ler"
-            class="bloco-prateleira"
+                id="quero-ler"
+                class="bloco-prateleira"
             >
 
-            <div
-                class="linha-prateleira"
-                data-prateleira="quero ler"
-            >
+                <div
+                    class="linha-prateleira"
+                    data-prateleira="quero ler"
+                >
 
-                {% if itens_quero_ler %}
+                    {% if itens_quero_ler %}
 
-                    {% for item in itens_quero_ler %}
+                        {% for item in itens_quero_ler %}
 
-                        <!-- ============================= -->
-                        <!-- LIVRO -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- LIVRO -->
+                            <!-- ============================= -->
 
-                        {% if item.tipo == "livro" %}
+                            {% if item.tipo == "livro" %}
 
-                            <div
-                                class="livro-card item-arrastavel"
-                                data-tipo="livro"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <a
-                                    href="{{ url_for(
-                                        'books_bp.ver',
-                                        id=item.objeto.livro.id
-                                    ) }}"
-                                    class="livro-link"
+                                <div
+                                    class="livro-card item-arrastavel"
+                                    data-tipo="livro"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-                                    {% if item.objeto.livro.capa %}
+                                    <a
+                                        href="{{ url_for(
+                                            'books_bp.ver',
+                                            id=item.objeto.livro.id
+                                        ) }}"
+                                        class="livro-link"
+                                    >
 
-                                        {% if item.objeto.livro.capa.startswith("http") %}
+                                        {% if item.objeto.livro.capa %}
 
-                                            <img
-                                                src="{{ item.objeto.livro.capa }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            {% if item.objeto.livro.capa.startswith("http") %}
+
+                                                <img
+                                                    src="{{ item.objeto.livro.capa }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=item.objeto.livro.capa
+                                                    ) }}"
+                                                    class="livro-estante"
+                                                    alt="{{ item.objeto.livro.titulo }}"
+                                                >
+
+                                            {% endif %}
 
                                         {% else %}
 
-                                            <img
-                                                src="{{ url_for(
-                                                    'static',
-                                                    filename=item.objeto.livro.capa
-                                                ) }}"
-                                                class="livro-estante"
-                                                alt="{{ item.objeto.livro.titulo }}"
-                                            >
+                                            <div class="sem-capa livro-estante">
+                                                Sem capa
+                                            </div>
 
                                         {% endif %}
 
-                                    {% else %}
-
-                                        <div class="sem-capa livro-estante">
-                                            Sem capa
-                                        </div>
-
-                                    {% endif %}
-
-                                </a>
+                                    </a>
 
 
-                                <!-- ============================= -->
-                                <!-- REMOVER LIVRO -->
-                                <!-- ============================= -->
+                                    <!-- ============================= -->
+                                    <!-- REMOVER LIVRO -->
+                                    <!-- ============================= -->
 
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_estante',
-                                        livro_id=item.objeto.livro.id
-                                    ) }}"
-                                    method="POST"
-                                >
-
-                                    <button
-                                        class="btn-remover"
-                                        type="submit"
-                                        title="Remover da estante"
-                                        onclick="return confirm(
-                                            'Remover este livro da estante?'
-                                        )"
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_estante',
+                                            livro_id=item.objeto.livro.id
+                                        ) }}"
+                                        method="POST"
                                     >
-                                        ✖
-                                    </button>
 
-                                </form>
+                                        <button
+                                            class="btn-remover"
+                                            type="submit"
+                                            title="Remover da estante"
+                                            onclick="return confirm(
+                                                'Remover este livro da estante?'
+                                            )"
+                                        >
+                                            ✖
+                                        </button>
 
-                            </div>
+                                    </form>
+
+                                </div>
 
 
-                        <!-- ============================= -->
-                        <!-- DECORAÇÃO -->
-                        <!-- ============================= -->
+                            <!-- ============================= -->
+                            <!-- DECORAÇÃO -->
+                            <!-- ============================= -->
 
-                        {% else %}
+                            {% else %}
 
-                            <div
-                                class="decoracao-estante item-arrastavel"
-                                data-tipo="decoracao"
-                                data-id="{{ item.objeto.id }}"
-                            >
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=item.objeto.usuario_item.item.imagem
-                                    ) }}"
-                                    class="item-decoracao-estante"
-                                    alt="{{ item.objeto.usuario_item.item.nome }}"
+                                <div
+                                    class="decoracao-estante item-arrastavel"
+                                    data-tipo="decoracao"
+                                    data-id="{{ item.objeto.id }}"
                                 >
 
-
-                                <!-- REMOVER DECORAÇÃO -->
-
-                                <form
-                                    action="{{ url_for(
-                                        'estante_bp.remover_decoracao',
-                                        decoracao_id=item.objeto.id
-                                    ) }}"
-                                    method="POST"
-                                    class="form-remover-decoracao"
-                                >
-
-                                    <button
-                                        type="submit"
-                                        class="btn-remover-decoracao"
-                                        title="Retirar da estante"
-                                        onclick="return confirm(
-                                            'Retirar esta decoração da estante?'
-                                        )"
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=item.objeto.usuario_item.item.imagem
+                                        ) }}"
+                                        class="item-decoracao-estante"
+                                        alt="{{ item.objeto.usuario_item.item.nome }}"
                                     >
-                                        ×
-                                    </button>
-
-                                </form>
-
-                            </div>
-
-                        {% endif %}
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <p class="mensagem-vazia">
-                        Nenhum livro na lista de desejos.
-                    </p>
-
-                {% endif %}
-
-            </div>
 
 
-            <div class="placa-prateleira">
-                QUERO LER
-            </div>
+                                    <!-- REMOVER DECORAÇÃO -->
+
+                                    <form
+                                        action="{{ url_for(
+                                            'estante_bp.remover_decoracao',
+                                            decoracao_id=item.objeto.id
+                                        ) }}"
+                                        method="POST"
+                                        class="form-remover-decoracao"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn-remover-decoracao"
+                                            title="Retirar da estante"
+                                            onclick="return confirm(
+                                                'Retirar esta decoração da estante?'
+                                            )"
+                                        >
+                                            ×
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p class="mensagem-vazia">
+                            Nenhum livro na lista de desejos.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="placa-prateleira">
+                    QUERO LER
+                </div>
 
             </section>
-
-
-                
 
 
             <!-- ================================================= -->
