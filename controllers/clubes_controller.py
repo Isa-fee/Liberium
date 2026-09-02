@@ -28,6 +28,7 @@ from extensions import db
 from models import (
     Clube,
     Discussao,
+    CurtidaDiscussao,
     Livro,
     MembroClube,
     Amizade,
@@ -1442,6 +1443,110 @@ def criar_discussao(clube_id):
         )
     )
 
+# ======================================
+# CURTIR / DESCURTIR DISCUSSÃO
+# ======================================
+
+@clubes_bp.route(
+    "/<int:clube_id>/discussao/<int:discussao_id>/curtir",
+    methods=["POST"]
+)
+@login_required
+def curtir_discussao(
+    clube_id,
+    discussao_id
+):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # ==================================
+    # VERIFICAR SE É MEMBRO
+    # ==================================
+
+    membro = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id,
+            usuario_id=current_user.id
+        )
+        .first()
+    )
+
+    if not membro:
+
+        flash(
+            "Você precisa participar do clube para curtir.",
+            "erro"
+        )
+
+        return redirect(
+            url_for(
+                "clubes.ver_clube",
+                clube_id=clube.id
+            )
+        )
+
+    # ==================================
+    # BUSCAR DISCUSSÃO / COMENTÁRIO
+    # ==================================
+
+    discussao = (
+        Discussao.query
+        .filter_by(
+            id=discussao_id,
+            clube_id=clube.id
+        )
+        .first_or_404()
+    )
+
+    # ==================================
+    # VERIFICAR SE JÁ CURTIU
+    # ==================================
+
+    curtida_existente = (
+        CurtidaDiscussao.query
+        .filter_by(
+            usuario_id=current_user.id,
+            discussao_id=discussao.id
+        )
+        .first()
+    )
+
+    # ==================================
+    # DESCURTIR
+    # ==================================
+
+    if curtida_existente:
+
+        db.session.delete(
+            curtida_existente
+        )
+
+    # ==================================
+    # CURTIR
+    # ==================================
+
+    else:
+
+        nova_curtida = CurtidaDiscussao(
+            usuario_id=current_user.id,
+            discussao_id=discussao.id
+        )
+
+        db.session.add(
+            nova_curtida
+        )
+
+    db.session.commit()
+
+    return redirect(
+        url_for(
+            "clubes.ver_clube",
+            clube_id=clube.id
+        )
+    )
 
 # ======================================
 # RESPONDER DISCUSSÃO

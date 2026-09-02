@@ -3095,6 +3095,151 @@
     min-width: 110px;
 }
 
+/* =========================================
+   CURTIDAS DAS RESPOSTAS
+========================================= */
+
+.resposta-acoes {
+    display: flex;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.form-curtida {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================
+   BOTÃO CURTIR
+========================================= */
+
+.btn-curtir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 8px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: #727a70;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.btn-curtir:hover {
+    background-color: #f0f3ee;
+    color: #435342;
+}
+
+
+/* =========================================
+   CORAÇÃO
+========================================= */
+
+.icone-curtida {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    line-height: 1;
+
+    color: #879d84;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.btn-curtir:hover .icone-curtida {
+    transform: scale(1.12);
+}
+
+
+/* =========================================
+   CURTIDO
+========================================= */
+
+.btn-curtir.curtido {
+    color: #435342;
+    font-weight: 600;
+}
+
+.btn-curtir.curtido .icone-curtida {
+    color: #435342;
+}
+
+.btn-curtir.curtido:hover .icone-curtida {
+    transform: scale(1.12);
+}
+
+
+/* =========================================
+   TEXTO
+========================================= */
+
+.texto-curtida {
+    line-height: 1;
+}
+
+
+/* =========================================
+   QUANTIDADE
+========================================= */
+
+.quantidade-curtidas {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 6px;
+
+    background-color: #edf1eb;
+    border-radius: 10px;
+
+    color: #52624f;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   VISUALIZAÇÃO PARA NÃO MEMBROS
+========================================= */
+
+.curtidas-visualizacao {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px 8px;
+
+    color: #879d84;
+
+    font-size: 13px;
+}
 
 /* =========================================================
    14. RESPONSIVIDADE
