@@ -684,26 +684,13 @@
 
                             {% else %}
 
-                                <form
-                                    action="{{ url_for(
-                                        'clubes.remover_membro',
-                                        clube_id=clube.id,
-                                        usuario_id=membro.usuario_id
-                                    ) }}"
-                                    method="POST"
-                                    onsubmit="return confirm(
-                                        'Tem certeza que deseja remover este participante do clube?'
-                                    );"
-                                >
-
-                                    <button
-                                        type="submit"
-                                        class="botao-remover-membro"
-                                    >
-                                        Remover
-                                    </button>
-
-                                </form>
+                            <button
+                            type="submit"
+                            class="botao-remover-membro"
+                            form="form-remover-{{ membro.usuario_id }}"
+                            >
+                                Remover
+                            </button>
 
                             {% endif %}
 
@@ -754,6 +741,33 @@
         </div>
 
     </form>
+
+    <!-- ======================================
+         FORMULÁRIOS PARA REMOVER PARTICIPANTES
+    ======================================= -->
+
+    {% for membro in membros %}
+
+        {% if membro.usuario_id != clube.usuario_id %}
+
+            <form
+                id="form-remover-{{ membro.usuario_id }}"
+                action="{{ url_for(
+                    'clubes.remover_membro',
+                    clube_id=clube.id,
+                    usuario_id=membro.usuario_id
+                ) }}"
+                method="POST"
+                onsubmit="return confirm(
+                    'Tem certeza que deseja remover este participante do clube?'
+                );"
+                style="display: none;"
+            >
+            </form>
+
+        {% endif %}
+
+    {% endfor %}
 
 </section>
 

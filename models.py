@@ -1096,8 +1096,12 @@ class Notificacao(db.Model):
         backref="notificacoes"
     )
     
-# ANOTAÇÃO
+# =========================================================
+# ANOTAÇÕES
+# =========================================================
+
 class Anotacao(db.Model):
+
     __tablename__ = "anotacoes"
 
     id = db.Column(
@@ -1105,20 +1109,51 @@ class Anotacao(db.Model):
         primary_key=True
     )
 
+    # =====================================================
+    # USUÁRIO
+    # =====================================================
+
     usuario_id = db.Column(
         db.Integer,
         db.ForeignKey("usuarios.id"),
         nullable=False
     )
 
-    # A notificação é opcional porque futuramente
-    # podemos permitir anotações criadas fora
-    # da página de notificações.
+    # =====================================================
+    # NOTIFICAÇÃO
+    # Opcional, pois a anotação também pode ser criada
+    # diretamente durante uma leitura.
+    # =====================================================
+
     notificacao_id = db.Column(
         db.Integer,
         db.ForeignKey("notificacoes.id"),
         nullable=True
     )
+
+    # =====================================================
+    # CLUBE
+    # =====================================================
+
+    clube_id = db.Column(
+        db.Integer,
+        db.ForeignKey("clubes.id"),
+        nullable=True
+    )
+
+    # =====================================================
+    # LIVRO
+    # =====================================================
+
+    livro_id = db.Column(
+        db.Integer,
+        db.ForeignKey("livros.id"),
+        nullable=True
+    )
+
+    # =====================================================
+    # CONTEÚDO
+    # =====================================================
 
     titulo = db.Column(
         db.String(150),
@@ -1136,6 +1171,10 @@ class Anotacao(db.Model):
         nullable=False
     )
 
+    # =====================================================
+    # RELACIONAMENTOS
+    # =====================================================
+
     usuario = db.relationship(
         "Usuario",
         backref="anotacoes"
@@ -1143,5 +1182,15 @@ class Anotacao(db.Model):
 
     notificacao = db.relationship(
         "Notificacao",
+        backref="anotacoes"
+    )
+
+    clube = db.relationship(
+        "Clube",
+        backref="anotacoes"
+    )
+
+    livro = db.relationship(
+        "Livro",
         backref="anotacoes"
     )

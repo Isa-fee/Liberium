@@ -1,38 +1,159 @@
-from app import create_app
-from extensions import db
+import sqlite3
+import os
 
 
-app = create_app()
+
+#ISSO AQUI É PRA QUANDO PRECISAR FAZER ALGUM AJUSTE NO BANCO SEM PRECISAR EXCLUIR O INSTANCE
+
+# =========================================================
+# LOCALIZAR BANCO
+# =========================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
+
+CAMINHO_BANCO = os.path.join(
+    BASE_DIR,
+    "instance",
+    "liberium.db"
+)
 
 
-with app.app_context():
+# =========================================================
+# VERIFICAR BANCO
+# =========================================================
 
-    try:
+if not os.path.exists(CAMINHO_BANCO):
 
-        db.session.execute(
-            db.text(
-                """
-                ALTER TABLE discussoes
-                ADD COLUMN discussao_pai_id INTEGER
-                REFERENCES discussoes(id)
-                """
-            )
-        )
+    print("❌ Banco não encontrado:")
+    print(CAMINHO_BANCO)
 
-        db.session.commit()
+    exit()
+
+
+print("Banco encontrado:")
+print(CAMINHO_BANCO)
+print()
+
+
+# =========================================================
+# CONECTAR
+# =========================================================
+
+conexao = sqlite3.connect(
+    CAMINHO_BANCO
+)
+
+cursor = conexao.cursor()
+
+
+try:
+
+    # =====================================================
+    # DESCOBRIR COLUNAS DE ANOTACOES
+    # =====================================================
+
+    cursor.execute(
+        "PRAGMA table_info(anotacoes)"
+    )
+
+    colunas = {
+        linha[1]
+        for linha in cursor.fetchall()
+    }
+
+    print("Colunas atuais de anotacoes:")
+
+    for coluna in sorted(colunas):
+        print(f" - {coluna}")
+
+    print()
+
+
+    # =====================================================
+    # ADICIONAR clube_id
+    # =====================================================
+
+    if "clube_id" not in colunas:
+
+        cursor.execute("""
+            ALTER TABLE anotacoes
+            ADD COLUMN clube_id INTEGER
+            REFERENCES clubes(id)
+        """)
+
+        print("✅ Coluna clube_id adicionada.")
+
+    else:
 
         print(
-            "\nColuna discussao_pai_id criada com sucesso!"
+            "ℹ️ clube_id já existe. "
+            "Nenhuma alteração necessária."
         )
 
-    except Exception as erro:
 
-        db.session.rollback()
+    # =====================================================
+    # ADICIONAR livro_id
+    # =====================================================
+
+    if "livro_id" not in colunas:
+
+        cursor.execute("""
+            ALTER TABLE anotacoes
+            ADD COLUMN livro_id INTEGER
+            REFERENCES livros(id)
+        """)
+
+        print("✅ Coluna livro_id adicionada.")
+
+    else:
 
         print(
-            "\nErro ao atualizar o banco:"
+            "ℹ️ livro_id já existe. "
+            "Nenhuma alteração necessária."
         )
 
+
+    # =====================================================
+    # SALVAR
+    # =====================================================
+
+    conexao.commit()
+
+    print()
+    print("==============================")
+    print("BANCO ATUALIZADO COM SUCESSO!")
+    print("==============================")
+
+
+    # =====================================================
+    # MOSTRAR RESULTADO FINAL
+    # =====================================================
+
+    cursor.execute(
+        "PRAGMA table_info(anotacoes)"
+    )
+
+    print()
+    print("Colunas finais de anotacoes:")
+
+    for linha in cursor.fetchall():
+
         print(
-            erro
+            f" - {linha[1]} ({linha[2]})"
         )
+
+
+except Exception as erro:
+
+    conexao.rollback()
+
+    print()
+    print("❌ Erro ao atualizar o banco:")
+    print(erro)
+
+
+finally:
+
+    conexao.close()
