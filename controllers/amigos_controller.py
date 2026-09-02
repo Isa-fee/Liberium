@@ -165,6 +165,239 @@ def amigos():
 
 
 # =========================================================
+# RANKING DE LEITURA
+# =========================================================
+
+@amigos_bp.route("/ranking")
+@login_required
+def ranking():
+
+    # =====================================================
+    # 1. BUSCAR AMIZADES ACEITAS
+    # =====================================================
+
+    amizades = Amizade.query.filter(
+        Amizade.status == "aceita",
+        (
+            (Amizade.usuario_id == current_user.id) |
+            (Amizade.amigo_id == current_user.id)
+        )
+    ).all()
+
+
+    # =====================================================
+    # 2. PEGAR OS AMIGOS DO USUÁRIO
+    # =====================================================
+
+    usuarios_ranking = [current_user]
+
+
+    for amizade in amizades:
+
+        if amizade.usuario_id == current_user.id:
+
+            amigo = amizade.amigo
+
+        else:
+
+            amigo = amizade.usuario
+
+
+        if amigo:
+
+            usuarios_ranking.append(amigo)
+
+
+    # =====================================================
+    # 3. EVITAR USUÁRIOS DUPLICADOS
+    # =====================================================
+
+    usuarios_unicos = {}
+
+    for usuario in usuarios_ranking:
+
+        usuarios_unicos[usuario.id] = usuario
+
+
+    usuarios_ranking = list(
+        usuarios_unicos.values()
+    )
+
+
+    # =====================================================
+    # 4. MONTAR DADOS DO RANKING
+    # =====================================================
+
+    ranking_dados = []
+
+
+    for usuario in usuarios_ranking:
+
+        # -------------------------------------------------
+        # ESTANTE DO USUÁRIO
+        # -------------------------------------------------
+
+        itens_estante = Estante.query.filter_by(
+            usuario_id=usuario.id
+        ).all()
+
+
+        # -------------------------------------------------
+        # LIVROS LIDOS
+        # -------------------------------------------------
+
+        livros_lidos = 0
+
+
+        # -------------------------------------------------
+        # PÁGINAS LIDAS
+        # -------------------------------------------------
+
+        paginas_lidas = 0
+
+
+        for item in itens_estante:
+
+            # =============================================
+            # LIVRO FINALIZADO
+            # =============================================
+
+            if item.status == "lido":
+
+                livros_lidos += 1
+
+
+                if (
+                    item.livro
+                    and item.livro.paginas
+                ):
+
+                    paginas_lidas += (
+                        item.livro.paginas
+                    )
+
+
+            # =============================================
+            # LIVRO SENDO LIDO
+            # =============================================
+
+            elif item.status == "lendo":
+
+                if item.pagina_atual:
+
+                    paginas_lidas += (
+                        item.pagina_atual
+                    )
+
+
+        # -------------------------------------------------
+        # ADICIONAR AO RANKING
+        # -------------------------------------------------
+
+        ranking_dados.append({
+
+            "usuario": usuario,
+
+            "livros_lidos": livros_lidos,
+
+            "paginas_lidas": paginas_lidas,
+
+            "sou_eu": (
+                usuario.id
+                == current_user.id
+            )
+
+        })
+
+
+    # =====================================================
+    # 5. CRITÉRIO ESCOLHIDO
+    # =====================================================
+
+    criterio = request.args.get(
+        "criterio",
+        "livros"
+    )
+
+
+    if criterio not in [
+        "livros",
+        "paginas"
+    ]:
+
+        criterio = "livros"
+
+
+    # =====================================================
+    # 6. ORDENAR RANKING
+    # =====================================================
+
+    if criterio == "paginas":
+
+        ranking_dados.sort(
+            key=lambda pessoa: (
+                pessoa["paginas_lidas"],
+                pessoa["livros_lidos"]
+            ),
+            reverse=True
+        )
+
+    else:
+
+        ranking_dados.sort(
+            key=lambda pessoa: (
+                pessoa["livros_lidos"],
+                pessoa["paginas_lidas"]
+            ),
+            reverse=True
+        )
+
+
+    # =====================================================
+    # 7. DEFINIR POSIÇÃO
+    # =====================================================
+
+    for indice, pessoa in enumerate(
+        ranking_dados,
+        start=1
+    ):
+
+        pessoa["posicao"] = indice
+
+
+    # =====================================================
+    # 8. DESCOBRIR POSIÇÃO DO USUÁRIO LOGADO
+    # =====================================================
+
+    minha_posicao = None
+
+
+    for pessoa in ranking_dados:
+
+        if pessoa["sou_eu"]:
+
+            minha_posicao = pessoa["posicao"]
+
+            break
+
+
+    # =====================================================
+    # 9. RENDERIZAR
+    # =====================================================
+
+    return render_template(
+        "user/ranking.html",
+
+        ranking=ranking_dados,
+
+        criterio=criterio,
+
+        minha_posicao=minha_posicao
+    )
+
+    
+
+# =========================================================
 # ENVIAR SOLICITAÇÃO
 # =========================================================
 

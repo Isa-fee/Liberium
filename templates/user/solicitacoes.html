@@ -42,6 +42,12 @@
                 {% endif %}
             </a>
             <a href="{{ url_for('amigos_bp.encontrar_leitores') }}" class="aba-amigos">Encontrar leitores</a>
+            <a
+                href="{{ url_for('amigos_bp.ranking') }}"
+                class="aba-amigos"
+            >
+                Ranking
+            </a>
         </div>
 
         <div class="layout-amigos">
@@ -60,7 +66,7 @@
                         <div class="card-solicitacao">
 
                             <div class="perfil-solicitacao">
-                                <img src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrao.png') }}" class="foto-solicitacao">
+                                <img src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrão.jpg') }}" class="foto-solicitacao">
 
                                 <div class="dados-solicitacao">
                                     <h3>{{ solicitacao.usuario.nome }}</h3>
