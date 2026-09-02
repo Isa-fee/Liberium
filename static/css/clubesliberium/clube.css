@@ -2782,8 +2782,410 @@
 }
 
 /* =========================================================
-   RESPONSIVIDADE
-========================================================= */
+   RANKING DO CLUBE
+   ========================================================= */
+
+   .ranking-card {
+    padding: 30px;
+}
+
+.ranking-cabecalho {
+    margin-bottom: 28px;
+}
+
+.ranking-label {
+    display: block;
+    margin-bottom: 5px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    color: #71866b;
+}
+
+.ranking-cabecalho h2 {
+    margin: 0 0 6px;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+
+    color: #4b3323;
+}
+
+.ranking-cabecalho p {
+    margin: 0;
+
+    font-size: 14px;
+    color: #858b82;
+}
+
+
+/* =========================================================
+   PÓDIO
+   ========================================================= */
+
+.ranking-podio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    margin-bottom: 32px;
+}
+
+.podio-item {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 24px 15px 20px;
+
+    background: #f8f9f6;
+
+    border: 1px solid #dfe4dc;
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+.podio-posicao-1 {
+    background: #f5f7f1;
+    border-color: #c9d5c4;
+}
+
+.podio-medalha {
+    position: absolute;
+
+    top: -13px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 25px;
+}
+
+.podio-avatar {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    background: #dfe9d9;
+
+    color: #435342;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    overflow: hidden;
+}
+
+.podio-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.podio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.podio-info strong {
+    color: #4b3323;
+    font-size: 15px;
+}
+
+.podio-progresso {
+    margin-top: 4px;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 25px;
+
+    color: #435342;
+}
+
+.podio-info small {
+    color: #858b82;
+    font-size: 12px;
+}
+
+.ranking-badge-voce {
+    padding: 3px 8px;
+
+    background: #dfe9d9;
+
+    border-radius: 20px;
+
+    color: #435342;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   LISTA DO RANKING
+   ========================================================= */
+
+.ranking-lista {
+    border: 1px solid #e3e6df;
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.ranking-lista-cabecalho,
+.ranking-linha {
+    display: grid;
+
+    grid-template-columns:
+        80px
+        minmax(180px, 1.4fr)
+        minmax(180px, 1fr)
+        100px;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.ranking-lista-cabecalho {
+    padding: 12px 18px;
+
+    background: #f5f7f3;
+
+    color: #858b82;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ranking-linha {
+    padding: 16px 18px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8ebe5;
+}
+
+.ranking-linha:first-of-type {
+    border-top: none;
+}
+
+.ranking-linha-voce {
+    background: #f8faf6;
+}
+
+
+/* POSIÇÃO */
+
+.ranking-posicao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #4b3323;
+}
+
+.ranking-medalha {
+    font-size: 21px;
+}
+
+
+/* USUÁRIO */
+
+.ranking-usuario {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.ranking-avatar {
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e5eddf;
+
+    color: #435342;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    overflow: hidden;
+}
+
+.ranking-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.ranking-usuario-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.ranking-usuario-info strong {
+    color: #4b3323;
+
+    font-size: 14px;
+}
+
+.ranking-usuario-info span {
+    color: #92978f;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PROGRESSO DO RANKING
+   ========================================================= */
+
+.ranking-progresso {
+    width: 100%;
+}
+
+.ranking-progresso-topo {
+    margin-bottom: 6px;
+}
+
+.ranking-progresso-topo strong {
+    color: #435342;
+
+    font-size: 13px;
+}
+
+.ranking-barra {
+    width: 100%;
+    height: 7px;
+
+    background: #e7e9e4;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.ranking-barra-preenchida {
+    width: 0;
+    height: 100%;
+
+    background: #879d84;
+
+    border-radius: 999px;
+
+    transition: width 0.5s ease;
+}
+
+
+/* PÁGINAS */
+
+.ranking-paginas {
+    display: flex;
+    align-items: baseline;
+
+    gap: 3px;
+
+    color: #858b82;
+}
+
+.ranking-paginas strong {
+    color: #4b3323;
+
+    font-size: 14px;
+}
+
+.ranking-paginas span {
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RANKING VAZIO
+   ========================================================= */
+
+.ranking-vazio {
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+.ranking-vazio-icone {
+    margin-bottom: 12px;
+
+    font-size: 32px;
+}
+
+.ranking-vazio h3 {
+    margin: 0 0 7px;
+
+    color: #4b3323;
+}
+
+.ranking-vazio p {
+    max-width: 420px;
+
+    margin: 0 auto;
+
+    color: #858b82;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .ranking-podio {
+        grid-template-columns: 1fr;
+    }
+
+    .ranking-lista-cabecalho {
+        display: none;
+    }
+
+    .ranking-linha {
+        grid-template-columns: 50px 1fr;
+    }
+
+    .ranking-progresso,
+    .ranking-paginas {
+        grid-column: 2;
+    }
+
+}
 
 @media (max-width: 1050px) {
 

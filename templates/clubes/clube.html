@@ -16,9 +16,7 @@
 <main class="pagina-clube">
 
     <section class="clube-conteudo">
-        <!-- ========================================
-            NAVEGAÇÃO
-        ========================================= -->
+        <!--NAVEGAÇÃO -->
 
         <div class="clube-topo">
 
@@ -31,17 +29,12 @@
 
         </div>
 
-
-        <!-- ========================================
-            CABEÇALHO DO CLUBE
-        ========================================= -->
-
+        <!-- CABEÇALHO DO CLUBE-->
         <div class="clube-header">
 
             <div class="clube-header-principal">
 
                 <!-- AVATAR -->
-
                 <div class="clube-avatar">
 
                     {% if clube.imagem %}
@@ -468,6 +461,13 @@
                 onclick="abrirAba(event, 'aba-participantes')"
             >
                 Participantes
+            </button>
+            <button
+                type="button"
+                class="aba-btn"
+                onclick="abrirAba(event, 'aba-ranking')"
+            >
+                Ranking
             </button>
 
         </nav>
@@ -1345,7 +1345,395 @@
                     </div>
 
                 </section>
+            
+                <section
+    id="aba-ranking"
+    class="aba-conteudo"
+>
 
+    <div class="card-clube ranking-card">
+
+        <!-- CABEÇALHO -->
+
+        <div class="ranking-cabecalho">
+
+            <div>
+
+                <span class="ranking-label">
+                    DESTAQUES DA LEITURA
+                </span>
+
+                <h2>
+                    Ranking do clube
+                </h2>
+
+                {% if clube.livro %}
+
+                    <p>
+                        Acompanhe quem está avançando na leitura de
+                        <strong>{{ clube.livro.titulo }}</strong>.
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        O ranking será iniciado quando
+                        uma leitura for escolhida.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        {% if clube.livro and ranking %}
+
+            <!-- ====================================
+                PÓDIO
+            ===================================== -->
+
+            <div class="ranking-podio">
+
+                {% for membro in ranking[:3] %}
+
+                    <div
+                        class="
+                            podio-item
+                            podio-posicao-{{ loop.index }}
+                            {% if membro.usuario_id == current_user.id %}
+                                podio-voce
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="podio-medalha">
+
+                            {% if loop.index == 1 %}
+                                🥇
+                            {% elif loop.index == 2 %}
+                                🥈
+                            {% else %}
+                                🥉
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="podio-avatar">
+
+                            {% if membro.usuario.foto %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=membro.usuario.foto
+                                    ) }}"
+                                    alt="{{ membro.usuario.nome }}"
+                                >
+
+                            {% else %}
+
+                                <span>
+                                    {{
+                                        membro.usuario.nome[0]
+                                        if membro.usuario.nome
+                                        else '?'
+                                    }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="podio-info">
+
+                            <strong>
+                                {{ membro.usuario.nome }}
+                            </strong>
+
+
+                            {% if membro.usuario_id == current_user.id %}
+
+                                <span class="ranking-badge-voce">
+                                    você
+                                </span>
+
+                            {% endif %}
+
+
+                            <span class="podio-progresso">
+                                {{
+                                    membro.progresso_percentual
+                                    or 0
+                                }}%
+                            </span>
+
+                            <small>
+
+                                {{
+                                    membro.paginas_lidas
+                                    or 0
+                                }}
+
+                                de
+
+                                {{
+                                    clube.livro.paginas
+                                    or '?'
+                                }}
+
+                                páginas
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ====================================
+                CLASSIFICAÇÃO COMPLETA
+            ===================================== -->
+
+            <div class="ranking-lista">
+
+                <div class="ranking-lista-cabecalho">
+
+                    <span>
+                        Posição
+                    </span>
+
+                    <span>
+                        Leitor
+                    </span>
+
+                    <span>
+                        Progresso
+                    </span>
+
+                    <span>
+                        Páginas
+                    </span>
+
+                </div>
+
+
+                {% for membro in ranking %}
+
+                    <div
+                        class="
+                            ranking-linha
+                            {% if membro.usuario_id == current_user.id %}
+                                ranking-linha-voce
+                            {% endif %}
+                        "
+                    >
+
+                        <!-- POSIÇÃO -->
+
+                        <div class="ranking-posicao">
+
+                            {% if loop.index == 1 %}
+
+                                <span class="ranking-medalha">
+                                    🥇
+                                </span>
+
+                            {% elif loop.index == 2 %}
+
+                                <span class="ranking-medalha">
+                                    🥈
+                                </span>
+
+                            {% elif loop.index == 3 %}
+
+                                <span class="ranking-medalha">
+                                    🥉
+                                </span>
+
+                            {% else %}
+
+                                <strong>
+                                    {{ loop.index }}º
+                                </strong>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- USUÁRIO -->
+
+                        <div class="ranking-usuario">
+
+                            <div class="ranking-avatar">
+
+                                {% if membro.usuario.foto %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=membro.usuario.foto
+                                        ) }}"
+                                        alt="{{ membro.usuario.nome }}"
+                                    >
+
+                                {% else %}
+
+                                    <span>
+
+                                        {{
+                                            membro.usuario.nome[0]
+                                            if membro.usuario.nome
+                                            else '?'
+                                        }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="ranking-usuario-info">
+
+                                <strong>
+                                    {{ membro.usuario.nome }}
+                                </strong>
+
+
+                                {% if membro.usuario_id == current_user.id %}
+
+                                    <span>
+                                        Você
+                                    </span>
+
+                                {% elif membro.usuario_id == clube.usuario_id %}
+
+                                    <span>
+                                        Criador
+                                    </span>
+
+                                {% else %}
+
+                                    <span>
+                                        Membro
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PROGRESSO -->
+
+                        <div class="ranking-progresso">
+
+                            <div class="ranking-progresso-topo">
+
+                                <strong>
+                                    {{
+                                        membro.progresso_percentual
+                                        or 0
+                                    }}%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="ranking-barra">
+                                <div
+                                    class="ranking-barra-preenchida"
+                                    data-progresso="{{ membro.progresso_percentual or 0 }}"
+                            ></div>
+
+
+
+                            </div>
+
+                        </div>
+                        <!-- PÁGINAS -->
+
+                        <div class="ranking-paginas">
+
+                            <strong>
+                                {{
+                                    membro.paginas_lidas
+                                    or 0
+                                }}
+                            </strong>
+
+                            <span>
+                                / {{ clube.livro.paginas or '?' }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% elif not clube.livro %}
+
+            <!-- SEM LEITURA -->
+
+            <div class="ranking-vazio">
+
+                <div class="ranking-vazio-icone">
+                    🏆
+                </div>
+
+                <h3>
+                    O ranking ainda não começou
+                </h3>
+
+                <p>
+                    Quando uma leitura for escolhida para
+                    o clube, o progresso dos participantes
+                    aparecerá aqui.
+                </p>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- SEM PARTICIPANTES -->
+
+            <div class="ranking-vazio">
+
+                <div class="ranking-vazio-icone">
+                    🏆
+                </div>
+
+                <h3>
+                    Nenhum participante no ranking
+                </h3>
+
+                <p>
+                    Os membros aparecerão aqui conforme
+                    participarem da leitura.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
             </main>
 
 
@@ -2291,8 +2679,34 @@ modalAnotacao.addEventListener(
 );
 
 }
+// BARRAS DE PROGRESSO DO RANKING
+document.addEventListener(
+    'DOMContentLoaded',
+    function() {
 
+        const barrasRanking =
+            document.querySelectorAll(
+                '.ranking-barra-preenchida'
+            );
+
+        barrasRanking.forEach(
+            function(barra) {
+
+                const progresso =
+                    barra.getAttribute(
+                        'data-progresso'
+                    ) || 0;
+
+                barra.style.width =
+                    progresso + '%';
+
+            }
+        );
+
+    }
+);
 </script>
+
 
 {% endblock %}
 

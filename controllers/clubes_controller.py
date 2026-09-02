@@ -483,6 +483,18 @@ def ver_clube(clube_id):
 
         db.session.commit()
 
+
+# RANKING DA LEITURA
+    ranking = sorted(
+        membros,
+            key=lambda membro: (
+                membro.progresso_percentual or 0,
+                membro.paginas_lidas or 0,
+                membro.total_atualizacoes or 0
+            ),
+        reverse=True
+)
+
     # =====================================================
     # PERMISSÃO PARA CONVIDAR
     # =====================================================
@@ -539,13 +551,8 @@ def ver_clube(clube_id):
         if amigo.id not in membros_ids
     ]
 
-    # =====================================================
     # DISCUSSÕES PRINCIPAIS
-    #
-    # Não pegamos respostas aqui.
-    # As respostas serão acessadas através de
-    # discussao.respostas no template.
-    # =====================================================
+   
 
     discussoes = (
         Discussao.query
@@ -559,9 +566,8 @@ def ver_clube(clube_id):
         .all()
     )
 
-        # =====================================================
+
     # ANOTAÇÕES PESSOAIS DO USUÁRIO
-    # =====================================================
 
     anotacoes = []
 
@@ -587,6 +593,8 @@ def ver_clube(clube_id):
 
         membros=membros,
 
+        ranking=ranking,
+
         amigos=amigos_disponiveis,
 
         discussoes=discussoes,
@@ -598,6 +606,7 @@ def ver_clube(clube_id):
         pode_convidar=pode_convidar,
 
         anotacoes=anotacoes
+
     )
 
 
@@ -644,6 +653,7 @@ def gerenciar_clube(clube_id):
         'clubes/gerenciar_clube.html',
         clube=clube,
         membros=membros
+
     )
 
 
