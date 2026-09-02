@@ -1678,6 +1678,85 @@
     text-decoration: underline;
 }
 
+/* =========================================
+   FAVORITO
+========================================= */
+
+.favorito-livro {
+    width: 100%;
+    margin: 16px 0 12px;
+}
+
+.favorito-livro form {
+    width: 100%;
+}
+
+.btn-favorito {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+
+    padding: 8px 4px;
+
+    background: transparent;
+    border: none;
+
+    color: #6f756d;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-favorito:hover {
+    color: #435342;
+}
+
+.icone-favorito {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    font-size: 22px;
+    line-height: 1;
+
+    color: #879d84;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.btn-favorito:hover .icone-favorito {
+    transform: scale(1.1);
+}
+
+
+/* =========================================
+   LIVRO FAVORITADO
+========================================= */
+
+.btn-favorito.favoritado {
+    color: #435342;
+    font-weight: 600;
+}
+
+.btn-favorito.favoritado .icone-favorito {
+    color: #435342;
+}
+
 
 /* ==========================================
    RESPONSIVIDADE
@@ -1729,11 +1808,7 @@
 
 }
 
-
-/* ========================================
-   RESPONSIVO
-======================================== */
-
+/* RESPONSIVO */
 @media (max-width: 700px) {
 
     .resultado-vazio {

@@ -612,6 +612,73 @@ def atualizar_progresso(id):
         )
     )
 
+# ======================================
+# FAVORITAR / DESFAVORITAR LIVRO
+# ======================================
+
+@estante_bp.route(
+    "/favoritar/<int:livro_id>",
+    methods=["POST"]
+)
+@login_required
+def favoritar_livro(livro_id):
+
+    item = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=livro_id
+    ).first_or_404()
+
+    # ==================================
+    # SOMENTE LIVROS LIDOS
+    # ==================================
+
+    if item.status != "lido":
+
+        flash(
+            "Você só pode favoritar livros que já terminou de ler.",
+            "warning"
+        )
+
+        return redirect(
+            url_for(
+                "books_bp.ver",
+                id=livro_id
+            )
+        )
+
+    # ==================================
+    # ALTERNAR FAVORITO
+    # ==================================
+
+    item.favorito = not item.favorito
+
+    db.session.commit()
+
+    # ==================================
+    # MENSAGEM
+    # ==================================
+
+    if item.favorito:
+
+        flash(
+            f'"{item.livro.titulo}" foi adicionado aos seus favoritos! ♥',
+            "success"
+        )
+
+    else:
+
+        flash(
+            f'"{item.livro.titulo}" foi removido dos seus favoritos.',
+            "success"
+        )
+
+    return redirect(
+        url_for(
+            "books_bp.ver",
+            id=livro_id
+        )
+    )
+
 
 # ======================================
 # AVALIAR LIVRO / ESCREVER RESENHA
