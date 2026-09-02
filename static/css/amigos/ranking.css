@@ -1,0 +1,825 @@
+/* =========================================================
+   LIBERIUM — RANKING DE LEITURA
+========================================================= */
+
+
+/* =========================================================
+   SEÇÃO
+========================================================= */
+
+.secao-ranking {
+    width: 100%;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.cabecalho-ranking {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 25px;
+}
+
+
+.cabecalho-ranking h1 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.55rem;
+    font-weight: 400;
+}
+
+
+.cabecalho-ranking p {
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.8rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.ranking-filtros {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.filtro-ranking {
+    min-height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    background: #f4f0eb;
+
+    border: 1px solid transparent;
+    border-radius: 20px;
+
+    color: #725b49;
+
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.filtro-ranking:hover {
+    background: #e9eee6;
+
+    color: #486046;
+}
+
+
+.filtro-ranking.ativo {
+    background: #879d84;
+
+    border-color: #879d84;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MINHA POSIÇÃO
+========================================================= */
+
+.minha-posicao-ranking {
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    margin-bottom: 30px;
+
+    padding: 18px 22px;
+
+    box-sizing: border-box;
+
+    background: #edf2eb;
+
+    border: 1px solid #dce5d8;
+    border-radius: 13px;
+}
+
+
+/* =========================================================
+   NÚMERO DA POSIÇÃO
+========================================================= */
+
+.minha-posicao-numero {
+    min-width: 85px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-right: 22px;
+
+    border-right: 1px solid #d5dfd1;
+}
+
+
+.minha-posicao-numero span {
+    margin-bottom: 4px;
+
+    color: #71806d;
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+.minha-posicao-numero strong {
+    color: #36503c;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   TEXTO DA MINHA POSIÇÃO
+========================================================= */
+
+.minha-posicao-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.minha-posicao-info > strong {
+    margin-bottom: 3px;
+
+    color: #442b1a;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+
+.minha-posicao-info p {
+    margin: 0;
+
+    color: #85766c;
+
+    font-size: 0.72rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CABEÇALHO DA LISTA
+========================================================= */
+
+.ranking-cabecalho-lista {
+    display: grid;
+
+    grid-template-columns:
+        75px
+        minmax(220px, 1fr)
+        115px
+        130px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 0 20px 9px;
+}
+
+
+.ranking-cabecalho-lista span {
+    color: #9a8c82;
+
+    font-size: 0.56rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+.ranking-coluna-livros,
+.ranking-coluna-paginas {
+    text-align: center;
+}
+
+
+/* =========================================================
+   LISTA
+========================================================= */
+
+.lista-ranking {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   ITEM DO RANKING
+========================================================= */
+
+.ranking-item {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        75px
+        minmax(220px, 1fr)
+        115px
+        130px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 78px;
+
+    padding: 13px 20px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 12px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.ranking-item:hover {
+    transform: translateY(-2px);
+
+    border-color: #d8ded5;
+
+    box-shadow:
+        0 7px 20px rgba(68, 43, 26, 0.055);
+}
+
+
+/* =========================================================
+   USUÁRIO LOGADO
+========================================================= */
+
+.ranking-item.sou-eu {
+    background: #f4f7f2;
+
+    border-color: #cdd9c9;
+}
+
+
+.ranking-item.sou-eu::before {
+    content: "";
+
+    position: absolute;
+
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+
+    width: 3px;
+
+    background: #879d84;
+
+    border-radius: 0 4px 4px 0;
+}
+
+
+/* =========================================================
+   POSIÇÃO
+========================================================= */
+
+.ranking-posicao {
+    display: flex;
+    align-items: center;
+}
+
+
+.ranking-posicao span {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f0eb;
+
+    border: 1px solid #ebe4de;
+    border-radius: 50%;
+
+    color: #725b49;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   TOP 3
+========================================================= */
+
+.ranking-item.primeiro-lugar .ranking-posicao span {
+    background: #e4eadf;
+
+    border-color: #d4dfce;
+
+    color: #36503c;
+}
+
+
+.ranking-item.segundo-lugar .ranking-posicao span {
+    background: #edf1ea;
+
+    border-color: #dfe5dc;
+
+    color: #60725d;
+}
+
+
+.ranking-item.terceiro-lugar .ranking-posicao span {
+    background: #f2eee9;
+
+    border-color: #e6ddd5;
+
+    color: #725b49;
+}
+
+
+/* =========================================================
+   PERFIL
+========================================================= */
+
+.ranking-perfil {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.ranking-foto-link {
+    flex-shrink: 0;
+
+    display: block;
+
+    text-decoration: none;
+}
+
+
+.ranking-foto {
+    width: 48px;
+    height: 48px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border: 2px solid #edf2eb;
+    border-radius: 50%;
+}
+
+
+.ranking-perfil-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+/* =========================================================
+   NOME
+========================================================= */
+
+.ranking-nome-linha {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.ranking-nome {
+    overflow: hidden;
+
+    color: #442b1a;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+
+.ranking-nome:hover {
+    color: #60725d;
+}
+
+
+.ranking-nivel {
+    overflow: hidden;
+
+    color: #96887e;
+
+    font-size: 0.66rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   BADGE VOCÊ
+========================================================= */
+
+.badge-voce {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3px 7px;
+
+    background: #879d84;
+
+    border-radius: 20px;
+
+    color: #ffffff;
+
+    font-size: 0.55rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   VALORES
+========================================================= */
+
+.ranking-valor {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    padding: 7px 5px;
+
+    border-radius: 8px;
+}
+
+
+.ranking-valor strong {
+    color: #5a4739;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+
+.ranking-valor span {
+    color: #9a8c82;
+
+    font-size: 0.6rem;
+}
+
+
+/* =========================================================
+   VALOR ATIVO
+========================================================= */
+
+.ranking-valor.destaque {
+    background: #edf2eb;
+}
+
+
+.ranking-valor.destaque strong {
+    color: #36503c;
+}
+
+
+.ranking-valor.destaque span {
+    color: #71806d;
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.lista-ranking .estado-vazio {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 55px 30px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 13px;
+
+    text-align: center;
+}
+
+
+.lista-ranking .estado-vazio h2 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+.lista-ranking .estado-vazio p {
+    max-width: 390px;
+
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.76rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BOTÃO ENCONTRAR LEITORES
+========================================================= */
+
+.btn-encontrar-ranking {
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 17px;
+
+    padding: 0 17px;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.btn-encontrar-ranking:hover {
+    background: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .ranking-cabecalho-lista {
+        grid-template-columns:
+            60px
+            minmax(180px, 1fr)
+            90px
+            100px;
+
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            60px
+            minmax(180px, 1fr)
+            90px
+            100px;
+
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .cabecalho-ranking {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+
+    .ranking-filtros {
+        width: 100%;
+    }
+
+
+    .filtro-ranking {
+        flex: 1;
+    }
+
+
+    .ranking-cabecalho-lista {
+        display: none;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            52px
+            minmax(0, 1fr)
+            85px;
+
+        gap: 10px;
+    }
+
+
+    .ranking-item .ranking-valor:last-child {
+        display: none;
+    }
+
+
+    .ranking-foto {
+        width: 43px;
+        height: 43px;
+    }
+
+}
+
+
+@media (max-width: 580px) {
+
+    .minha-posicao-ranking {
+        align-items: flex-start;
+
+        gap: 15px;
+
+        padding: 16px;
+    }
+
+
+    .minha-posicao-numero {
+        min-width: 65px;
+
+        padding-right: 15px;
+    }
+
+
+    .minha-posicao-numero strong {
+        font-size: 1.5rem;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            45px
+            minmax(0, 1fr)
+            70px;
+
+        min-height: 70px;
+
+        padding: 11px 12px;
+    }
+
+
+    .ranking-posicao span {
+        width: 36px;
+        height: 36px;
+
+        font-size: 0.78rem;
+    }
+
+
+    .ranking-foto {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .ranking-nome {
+        font-size: 0.76rem;
+    }
+
+
+    .ranking-nivel {
+        font-size: 0.6rem;
+    }
+
+
+    .ranking-valor strong {
+        font-size: 0.82rem;
+    }
+
+
+    .ranking-valor span {
+        font-size: 0.55rem;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .ranking-foto {
+        display: none;
+    }
+
+
+    .ranking-item {
+        grid-template-columns:
+            42px
+            minmax(0, 1fr)
+            65px;
+    }
+
+
+    .badge-voce {
+        display: none;
+    }
+
+}
