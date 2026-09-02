@@ -1,12 +1,8 @@
 /* =========================================================
-   LIBERIUM — PÁGINA DO CLUBE
-   NOVO DESIGN
+   1. ESTRUTURA DA PÁGINA
 ========================================================= */
 
-
-/* =========================================================
-   PÁGINA
-========================================================= */
+/* Página */
 
 .pagina-clube {
     width: 100%;
@@ -17,6 +13,8 @@
     color: #442b1a;
 }
 
+
+/* Container principal */
 
 .clube-conteudo {
     width: 100%;
@@ -30,9 +28,7 @@
 }
 
 
-/* =========================================================
-   VOLTAR
-========================================================= */
+/* Navegação */
 
 .clube-topo {
     margin-bottom: 22px;
@@ -64,8 +60,10 @@
 
 
 /* =========================================================
-   CABEÇALHO DO CLUBE
+   2. CABEÇALHO DO CLUBE
 ========================================================= */
+
+/* Estrutura */
 
 .clube-header {
     position: relative;
@@ -92,8 +90,6 @@
 }
 
 
-/* detalhe decorativo */
-
 .clube-header::before {
     content: "";
 
@@ -109,10 +105,6 @@
 }
 
 
-/* =========================================================
-   CABEÇALHO — INFORMAÇÕES
-========================================================= */
-
 .clube-header-principal {
     display: flex;
     align-items: flex-start;
@@ -123,9 +115,7 @@
 }
 
 
-/* =========================================================
-   AVATAR
-========================================================= */
+/* Avatar */
 
 .clube-avatar {
     width: 118px;
@@ -167,14 +157,11 @@
     color: #60725d;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 2.5rem;
 }
 
 
-/* =========================================================
-   INFORMAÇÕES
-========================================================= */
+/* Informações */
 
 .clube-informacoes {
     flex: 1;
@@ -200,7 +187,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 2rem;
     font-weight: 400;
 
@@ -208,9 +194,7 @@
 }
 
 
-/* =========================================================
-   BADGES
-========================================================= */
+/* Badges */
 
 .clube-status,
 .clube-privacidade {
@@ -252,9 +236,7 @@
 }
 
 
-/* =========================================================
-   META
-========================================================= */
+/* Meta e descrição */
 
 .clube-meta {
     margin: 0 0 11px;
@@ -278,9 +260,7 @@
 }
 
 
-/* =========================================================
-   LEITURA ATUAL — MINI CARD
-========================================================= */
+/* Leitura atual */
 
 .leitura-atual {
     width: fit-content;
@@ -330,9 +310,7 @@
 }
 
 
-/* =========================================================
-   AÇÕES
-========================================================= */
+/* Ações */
 
 .clube-acoes {
     min-width: 0;
@@ -341,9 +319,7 @@
 }
 
 
-/* =========================================================
-   PAINEL DO CRIADOR
-========================================================= */
+/* Painel do criador */
 
 .painel-criador {
     width: 100%;
@@ -387,7 +363,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.05rem;
     font-weight: 400;
 }
@@ -412,8 +387,43 @@
 }
 
 
+/* Clube privado */
+
+.aviso-clube-privado {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 20px;
+
+    background: #f8f5f1;
+
+    border: 1px solid #e7ded5;
+    border-radius: 11px;
+}
+
+
+.aviso-clube-privado strong {
+    color: #604936;
+
+    font-size: 0.85rem;
+}
+
+
+.aviso-clube-privado span {
+    color: #8b796b;
+
+    font-size: 0.73rem;
+
+    line-height: 1.5;
+}
+
+
 /* =========================================================
-   BOTÕES
+   3. BOTÕES
 ========================================================= */
 
 .btn-primario,
@@ -516,44 +526,7 @@
 
 
 /* =========================================================
-   CLUBE PRIVADO
-========================================================= */
-
-.aviso-clube-privado {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 6px;
-
-    padding: 20px;
-
-    background: #f8f5f1;
-
-    border: 1px solid #e7ded5;
-    border-radius: 11px;
-}
-
-
-.aviso-clube-privado strong {
-    color: #604936;
-
-    font-size: 0.85rem;
-}
-
-
-.aviso-clube-privado span {
-    color: #8b796b;
-
-    font-size: 0.73rem;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   CONVITES
+   4. CONVITES
 ========================================================= */
 
 .lista-convites {
@@ -609,7 +582,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.1rem;
     font-weight: 400;
 }
@@ -709,8 +681,10 @@
 
 
 /* =========================================================
-   ABAS
+   5. ABAS
 ========================================================= */
+
+/* Navegação */
 
 .clube-abas {
     display: flex;
@@ -736,7 +710,6 @@
     color: #8b7b70;
 
     font-family: inherit;
-
     font-size: 0.77rem;
     font-weight: 500;
 
@@ -769,9 +742,7 @@
 }
 
 
-/* =========================================================
-   ABAS — CONTEÚDO
-========================================================= */
+/* Conteúdo */
 
 .aba-conteudo {
     display: none;
@@ -784,10 +755,10 @@
 
 
 /* =========================================================
-   GRID PRINCIPAL
-
-   Aqui está uma das mudanças mais importantes.
+   6. CONTEÚDO PRINCIPAL
 ========================================================= */
+
+/* Grid */
 
 .clube-grid {
     display: grid;
@@ -817,9 +788,7 @@
 }
 
 
-/* =========================================================
-   CARDS
-========================================================= */
+/* Cards */
 
 .card-clube {
     padding: 30px;
@@ -842,7 +811,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.35rem;
     font-weight: 400;
 }
@@ -854,7 +822,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1rem;
     font-weight: 400;
 }
@@ -872,10 +839,10 @@
 
 
 /* =========================================================
-   LIVRO
-
-   Outra mudança importantíssima.
+   7. LIVRO
 ========================================================= */
+
+/* Estrutura */
 
 .livro-container {
     display: grid;
@@ -890,7 +857,7 @@
 }
 
 
-/* CAPA */
+/* Capa */
 
 .livro-capa {
     width: 165px;
@@ -939,9 +906,7 @@
 }
 
 
-/* =========================================================
-   INFORMAÇÕES DO LIVRO
-========================================================= */
+/* Informações */
 
 .livro-informacoes {
     min-width: 0;
@@ -954,7 +919,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.4rem;
     font-weight: 400;
 
@@ -988,11 +952,7 @@
 }
 
 
-/* =========================================================
-   SINOPSE
-
-   Agora ela tem espaço horizontal.
-========================================================= */
+/* Sinopse */
 
 .livro-sinopse {
     max-width: 100%;
@@ -1009,9 +969,7 @@
 }
 
 
-/* =========================================================
-   ESPECIFICAÇÕES
-========================================================= */
+/* Especificações */
 
 .livro-especificacoes {
     display: flex;
@@ -1042,9 +1000,7 @@
 }
 
 
-/* =========================================================
-   AÇÕES DO LIVRO
-========================================================= */
+/* Ações */
 
 .livro-acoes {
     display: flex;
@@ -1064,9 +1020,7 @@
 }
 
 
-/* =========================================================
-   SEM LIVRO
-========================================================= */
+/* Estado sem livro */
 
 .sem-livro {
     padding: 40px 20px;
@@ -1095,8 +1049,155 @@
 }
 
 
+/* Adicionar livro à estante */
+
+.dropdown-estante {
+    position: relative;
+
+    display: inline-block;
+}
+
+
+.btn-adicionar-estante {
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 0 18px;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.btn-adicionar-estante:hover {
+    background: #435f49;
+
+    box-shadow:
+        0 5px 14px rgba(54, 80, 60, 0.15);
+}
+
+
+.seta-estante {
+    font-size: 15px;
+
+    line-height: 1;
+
+    transition: transform 0.2s ease;
+}
+
+
+.dropdown-estante.aberto .seta-estante {
+    transform: rotate(180deg);
+}
+
+
+/* Menu da estante */
+
+.menu-estante {
+    position: absolute;
+
+    top: calc(100% + 7px);
+    right: 0;
+
+    z-index: 100;
+
+    width: 170px;
+
+    padding: 6px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dfd6;
+    border-radius: 8px;
+
+    box-shadow:
+        0 8px 24px rgba(54, 80, 60, 0.14);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-5px);
+
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+}
+
+
+.dropdown-estante.aberto .menu-estante {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+.menu-estante form {
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu-estante button {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    background: transparent;
+
+    border: none;
+    border-radius: 5px;
+
+    color: #442b1a;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.menu-estante button:hover {
+    background: #eef3ec;
+
+    color: #36503c;
+}
+
+
+.menu-estante form + form {
+    border-top: 1px solid #f0eee9;
+}
+
+
 /* =========================================================
-   PROGRESSO
+   8. PROGRESSO
 ========================================================= */
 
 .progresso-card {
@@ -1118,7 +1219,6 @@
     color: #36503c;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.65rem;
 }
 
@@ -1175,8 +1275,10 @@
 
 
 /* =========================================================
-   SIDEBAR — PARTICIPANTES
+   9. PARTICIPANTES
 ========================================================= */
+
+/* Participantes da sidebar */
 
 .sidebar-cabecalho {
     display: flex;
@@ -1191,7 +1293,6 @@
     margin: 0 0 3px;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1rem;
     font-weight: 400;
 }
@@ -1280,447 +1381,7 @@
 }
 
 
-/* =========================================================
-   DISCUSSÕES
-========================================================= */
-
-.discussao-container {
-    padding: 30px;
-}
-
-
-.discussao-topo {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    gap: 25px;
-
-    padding-bottom: 22px;
-
-    border-bottom: 1px solid #eee9e4;
-}
-
-
-.discussao-label {
-    display: block;
-
-    margin-bottom: 6px;
-
-    color: #71816e;
-
-    font-size: 0.75rem;
-    font-weight: 700;
-
-    letter-spacing: 0.12em;
-}
-
-
-.discussao-topo h2 {
-    margin: 0 0 6px;
-
-    color: #442b1a;
-
-    font-family: "Tenor Sans", sans-serif;
-
-    font-size: 1.3rem;
-    font-weight: 400;
-}
-
-
-.discussao-topo p {
-    max-width: 520px;
-
-    margin: 0;
-
-    color: #87776c;
-
-    font-size: 0.85rem;
-
-    line-height: 1.55;
-}
-
-
-.btn-novo-comentario,
-.btn-vazio-comentario {
-    padding: 10px 16px;
-
-    background: #36503c;
-
-    border: 1px solid #36503c;
-    border-radius: 7px;
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-size: 0.75rem;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.btn-novo-comentario:hover,
-.btn-vazio-comentario:hover {
-    background: #2d4433;
-}
-
-
-/* =========================================================
-   FORMULÁRIO DE COMENTÁRIO
-========================================================= */
-
-.form-comentario-box {
-    margin-top: 20px;
-    padding: 21px;
-
-    background: #faf9f7;
-
-    border: 1px solid #e9e3dd;
-    border-radius: 10px;
-}
-
-
-.form-comentario-titulo {
-    margin-bottom: 17px;
-}
-
-
-.form-comentario-titulo h3 {
-    margin: 0 0 4px;
-
-    font-size: 0.95rem;
-}
-
-
-.form-comentario-titulo p {
-    margin: 0;
-
-    color: #8b7c71;
-
-    font-size: 0.72rem;
-}
-
-
-.form-grupo {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-
-    margin-bottom: 15px;
-}
-
-
-.form-grupo label {
-    color: #594435;
-
-    font-size: 0.74rem;
-    font-weight: 600;
-}
-
-
-.form-grupo label span {
-    color: #a09287;
-
-    font-weight: 400;
-}
-
-
-.form-grupo input,
-.form-grupo textarea {
-    width: 100%;
-
-    padding: 11px 13px;
-
-    box-sizing: border-box;
-
-    background: #ffffff;
-
-    border: 1px solid #ded7d1;
-    border-radius: 7px;
-
-    outline: none;
-
-    color: #442b1a;
-
-    font-family: inherit;
-    font-size: 0.77rem;
-}
-
-
-.form-grupo textarea {
-    resize: vertical;
-
-    line-height: 1.55;
-}
-
-
-.form-grupo input:focus,
-.form-grupo textarea:focus {
-    border-color: #879d84;
-
-    box-shadow:
-        0 0 0 3px rgba(135, 157, 132, 0.11);
-}
-
-
-.form-grupo small {
-    color: #998b80;
-
-    font-size: 0.69rem;
-}
-
-
-/* =========================================================
-   FORM — BOTÕES
-========================================================= */
-
-.form-acoes,
-.modal-acoes {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 9px;
-}
-
-
-.btn-cancelar,
-.btn-publicar {
-    padding: 9px 15px;
-
-    border-radius: 7px;
-
-    font-family: inherit;
-
-    font-size: 0.72rem;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.btn-cancelar {
-    background: #ffffff;
-
-    border: 1px solid #d9d1ca;
-
-    color: #715f52;
-}
-
-
-.btn-publicar {
-    background: #36503c;
-
-    border: 1px solid #36503c;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   DISCUSSÕES EXISTENTES
-========================================================= */
-
-.discussoes-titulo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin: 24px 0 12px;
-}
-
-
-.discussoes-titulo h3 {
-    margin: 0;
-
-    color: #442b1a;
-
-    font-size: 0.87rem;
-}
-
-
-.discussoes-titulo span {
-    color: #918278;
-
-    font-size: 0.68rem;
-}
-
-
-.lista-discussoes {
-    display: flex;
-    flex-direction: column;
-
-    gap: 11px;
-}
-
-
-.discussao-card {
-    padding: 17px;
-
-    background: #faf9f7;
-
-    border: 1px solid #ebe6e0;
-    border-radius: 9px;
-}
-
-
-.discussao-header {
-    margin-bottom: 12px;
-}
-
-
-.autor-info {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-}
-
-
-.autor-avatar {
-    width: 39px;
-    height: 39px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    background: #e6eee3;
-
-    border-radius: 50%;
-
-    color: #52674f;
-
-    font-size: 0.77rem;
-    font-weight: 600;
-}
-
-
-.autor-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-
-.autor-dados {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-}
-
-
-.autor-dados strong {
-    color: #442b1a;
-
-    font-size: 0.77rem;
-}
-
-
-.discussao-data {
-    color: #9a8c82;
-
-    font-size: 0.75rem;
-}
-
-
-.discussao-corpo h4 {
-    margin: 0 0 6px;
-
-    color: #4d392b;
-
-    font-size: 0.85rem;
-}
-
-
-.discussao-corpo p {
-    margin: 0;
-
-    color: #716156;
-
-    font-size: 0.77rem;
-
-    line-height: 1.65;
-}
-
-
-.discussao-footer {
-    margin-top: 12px;
-}
-
-
-.discussao-footer button {
-    padding: 0;
-
-    background: transparent;
-
-    border: none;
-
-    color: #61745e;
-
-    font-family: inherit;
-
-    font-size: 0.75rem;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   SEM COMENTÁRIOS
-========================================================= */
-
-.sem-comentarios {
-    padding: 50px 20px;
-
-    text-align: center;
-}
-
-
-.sem-comentarios-icone {
-    margin-bottom: 10px;
-
-    font-size: 1.5rem;
-}
-
-
-.sem-comentarios h3 {
-    margin: 0 0 5px;
-
-    color: #442b1a;
-
-    font-size: 0.95rem;
-}
-
-
-.sem-comentarios p {
-    max-width: 400px;
-
-    margin: 0 auto 15px;
-
-    color: #8a7a70;
-
-    font-size: 0.75rem;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   PARTICIPANTES — ABA
-========================================================= */
+/* Aba de participantes */
 
 .grid-participantes {
     display: grid;
@@ -1878,8 +1539,1028 @@
 
 
 /* =========================================================
-   DICA
+   10. DISCUSSÕES
 ========================================================= */
+
+/* Cabeçalho */
+
+.discussao-container {
+    padding: 30px;
+}
+
+
+.discussao-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid #eee9e4;
+}
+
+
+.discussao-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #71816e;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+
+.discussao-topo h2 {
+    margin: 0 0 6px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+
+.discussao-topo p {
+    max-width: 520px;
+
+    margin: 0;
+
+    color: #87776c;
+
+    font-size: 0.85rem;
+
+    line-height: 1.55;
+}
+
+
+.btn-novo-comentario,
+.btn-vazio-comentario {
+    padding: 10px 16px;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.btn-novo-comentario:hover,
+.btn-vazio-comentario:hover {
+    background: #2d4433;
+}
+
+
+/* Formulário de comentário */
+
+.form-comentario-box {
+    margin-top: 20px;
+    padding: 21px;
+
+    background: #faf9f7;
+
+    border: 1px solid #e9e3dd;
+    border-radius: 10px;
+}
+
+
+.form-comentario-titulo {
+    margin-bottom: 17px;
+}
+
+
+.form-comentario-titulo h3 {
+    margin: 0 0 4px;
+
+    font-size: 0.95rem;
+}
+
+
+.form-comentario-titulo p {
+    margin: 0;
+
+    color: #8b7c71;
+
+    font-size: 0.72rem;
+}
+
+
+/* Campos */
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 15px;
+}
+
+
+.form-grupo label {
+    color: #594435;
+
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+
+.form-grupo label span {
+    color: #a09287;
+
+    font-weight: 400;
+}
+
+
+.form-grupo input,
+.form-grupo textarea {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #ded7d1;
+    border-radius: 7px;
+
+    outline: none;
+
+    color: #442b1a;
+
+    font-family: inherit;
+    font-size: 0.77rem;
+}
+
+
+.form-grupo textarea {
+    resize: vertical;
+
+    line-height: 1.55;
+}
+
+
+.form-grupo input:focus,
+.form-grupo textarea:focus {
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.11);
+}
+
+
+.form-grupo small {
+    color: #998b80;
+
+    font-size: 0.69rem;
+}
+
+
+/* Botões de formulário */
+
+.form-acoes,
+.modal-acoes {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 9px;
+}
+
+
+.btn-cancelar,
+.btn-publicar {
+    padding: 9px 15px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.btn-cancelar {
+    background: #ffffff;
+
+    border: 1px solid #d9d1ca;
+
+    color: #715f52;
+}
+
+
+.btn-publicar {
+    background: #36503c;
+
+    border: 1px solid #36503c;
+
+    color: #ffffff;
+}
+
+
+/* Discussões existentes */
+
+.discussoes-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin: 24px 0 12px;
+}
+
+
+.discussoes-titulo h3 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-size: 0.87rem;
+}
+
+
+.discussoes-titulo span {
+    color: #918278;
+
+    font-size: 0.68rem;
+}
+
+
+.lista-discussoes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+
+.discussao-card {
+    padding: 17px;
+
+    background: #faf9f7;
+
+    border: 1px solid #ebe6e0;
+    border-radius: 9px;
+}
+
+
+.discussao-header {
+    margin-bottom: 12px;
+}
+
+
+.autor-info {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.autor-avatar {
+    width: 39px;
+    height: 39px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #e6eee3;
+
+    border-radius: 50%;
+
+    color: #52674f;
+
+    font-size: 0.77rem;
+    font-weight: 600;
+}
+
+
+.autor-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.autor-dados {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.autor-dados strong {
+    color: #442b1a;
+
+    font-size: 0.77rem;
+}
+
+
+.discussao-data {
+    color: #9a8c82;
+
+    font-size: 0.75rem;
+}
+
+
+.discussao-corpo h4 {
+    margin: 0 0 6px;
+
+    color: #4d392b;
+
+    font-size: 0.85rem;
+}
+
+
+.discussao-corpo p {
+    margin: 0;
+
+    color: #716156;
+
+    font-size: 0.77rem;
+
+    line-height: 1.65;
+}
+
+
+.discussao-footer {
+    margin-top: 12px;
+}
+
+
+.discussao-footer button {
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    color: #61745e;
+
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* Resposta à discussão */
+
+.btn-responder-discussao {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 14px;
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    color: #526650;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.btn-responder-discussao:hover {
+    color: #304633;
+}
+
+
+/* Formulário de resposta */
+
+.form-resposta {
+    display: none;
+
+    margin-top: 12px;
+    padding: 14px 16px;
+
+    background: #f8faf6;
+
+    border: 1px solid #dfe6dc;
+    border-radius: 10px;
+}
+
+
+.form-resposta.ativo {
+    display: block;
+}
+
+
+.form-resposta textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 72px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #d5ddd2;
+    border-radius: 8px;
+
+    outline: none;
+
+    color: #442b1a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    resize: vertical;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.form-resposta textarea::placeholder {
+    color: #aaa097;
+}
+
+
+.form-resposta textarea:focus {
+    border-color: #879d84;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.10);
+}
+
+
+.acoes-resposta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+.btn-cancelar-resposta,
+.btn-enviar-resposta {
+    min-height: 34px;
+
+    padding: 8px 15px;
+
+    border-radius: 7px;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.btn-cancelar-resposta {
+    background: transparent;
+
+    border: 1px solid #d9ddd6;
+
+    color: #776d65;
+}
+
+
+.btn-cancelar-resposta:hover {
+    background: #f0f2ed;
+
+    color: #442b1a;
+}
+
+
+.btn-enviar-resposta {
+    background: #36503c;
+
+    border: 1px solid #36503c;
+
+    color: #ffffff;
+}
+
+
+.btn-enviar-resposta:hover {
+    background: #2e4434;
+
+    border-color: #2e4434;
+
+    transform: translateY(-1px);
+}
+
+
+/* Estado sem comentários */
+
+.sem-comentarios {
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+
+.sem-comentarios-icone {
+    margin-bottom: 10px;
+
+    font-size: 1.5rem;
+}
+
+
+.sem-comentarios h3 {
+    margin: 0 0 5px;
+
+    color: #442b1a;
+
+    font-size: 0.95rem;
+}
+
+
+.sem-comentarios p {
+    max-width: 400px;
+
+    margin: 0 auto 15px;
+
+    color: #8a7a70;
+
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   11. RANKING
+========================================================= */
+
+/* Card */
+
+.ranking-card {
+    padding: 30px;
+}
+
+
+/* Cabeçalho */
+
+.ranking-cabecalho {
+    margin-bottom: 28px;
+}
+
+
+.ranking-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #71866b;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+}
+
+
+.ranking-cabecalho h2 {
+    margin: 0 0 6px;
+
+    color: #4b3323;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+
+.ranking-cabecalho p {
+    margin: 0;
+
+    color: #858b82;
+
+    font-size: 14px;
+}
+
+
+/* Pódio */
+
+.ranking-podio {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 32px;
+}
+
+
+.podio-item {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 24px 15px 20px;
+
+    background: #f8f9f6;
+
+    border: 1px solid #dfe4dc;
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+
+.podio-posicao-1 {
+    background: #f5f7f1;
+
+    border-color: #c9d5c4;
+}
+
+
+.podio-medalha {
+    position: absolute;
+
+    top: -13px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 25px;
+}
+
+
+.podio-avatar {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    overflow: hidden;
+
+    background: #dfe9d9;
+
+    border-radius: 50%;
+
+    color: #435342;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.podio-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.podio-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 4px;
+}
+
+
+.podio-info strong {
+    color: #4b3323;
+
+    font-size: 15px;
+}
+
+
+.podio-progresso {
+    margin-top: 4px;
+
+    color: #435342;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 25px;
+}
+
+
+.podio-info small {
+    color: #858b82;
+
+    font-size: 12px;
+}
+
+
+.ranking-badge-voce {
+    padding: 3px 8px;
+
+    background: #dfe9d9;
+
+    border-radius: 20px;
+
+    color: #435342;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* Lista */
+
+.ranking-lista {
+    overflow: hidden;
+
+    border: 1px solid #e3e6df;
+    border-radius: 12px;
+}
+
+
+.ranking-lista-cabecalho,
+.ranking-linha {
+    display: grid;
+
+    grid-template-columns:
+        80px
+        minmax(180px, 1.4fr)
+        minmax(180px, 1fr)
+        100px;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.ranking-lista-cabecalho {
+    padding: 12px 18px;
+
+    background: #f5f7f3;
+
+    color: #858b82;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+
+    text-transform: uppercase;
+}
+
+
+.ranking-linha {
+    padding: 16px 18px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8ebe5;
+}
+
+
+.ranking-linha:first-of-type {
+    border-top: none;
+}
+
+
+.ranking-linha-voce {
+    background: #f8faf6;
+}
+
+
+/* Posição */
+
+.ranking-posicao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #4b3323;
+}
+
+
+.ranking-medalha {
+    font-size: 21px;
+}
+
+
+/* Usuário */
+
+.ranking-usuario {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.ranking-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #e5eddf;
+
+    border-radius: 50%;
+
+    color: #435342;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.ranking-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.ranking-usuario-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.ranking-usuario-info strong {
+    color: #4b3323;
+
+    font-size: 14px;
+}
+
+
+.ranking-usuario-info span {
+    color: #92978f;
+
+    font-size: 11px;
+}
+
+
+/* Progresso */
+
+.ranking-progresso {
+    width: 100%;
+}
+
+
+.ranking-progresso-topo {
+    margin-bottom: 6px;
+}
+
+
+.ranking-progresso-topo strong {
+    color: #435342;
+
+    font-size: 13px;
+}
+
+
+.ranking-barra {
+    width: 100%;
+    height: 7px;
+
+    overflow: hidden;
+
+    background: #e7e9e4;
+
+    border-radius: 999px;
+}
+
+
+.ranking-barra-preenchida {
+    width: 0;
+    height: 100%;
+
+    background: #879d84;
+
+    border-radius: 999px;
+
+    transition: width 0.5s ease;
+}
+
+
+/* Páginas */
+
+.ranking-paginas {
+    display: flex;
+    align-items: baseline;
+
+    gap: 3px;
+
+    color: #858b82;
+}
+
+
+.ranking-paginas strong {
+    color: #4b3323;
+
+    font-size: 14px;
+}
+
+
+.ranking-paginas span {
+    font-size: 12px;
+}
+
+
+/* Estado vazio */
+
+.ranking-vazio {
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+
+.ranking-vazio-icone {
+    margin-bottom: 12px;
+
+    font-size: 32px;
+}
+
+
+.ranking-vazio h3 {
+    margin: 0 0 7px;
+
+    color: #4b3323;
+}
+
+
+.ranking-vazio p {
+    max-width: 420px;
+
+    margin: 0 auto;
+
+    color: #858b82;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   12. ANOTAÇÕES
+========================================================= */
+
+/* Chamada para criar anotação */
 
 .dica-clube {
     display: flex;
@@ -1918,9 +2599,252 @@
 }
 
 
+/*
+   Regras posteriores existentes no arquivo original.
+   Mantidas para preservar exatamente a cascata visual.
+*/
+
+.dica-clube {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-top: 24px;
+    padding: 18px 22px;
+
+    background: rgba(135, 157, 132, 0.08);
+
+    border: 1px solid rgba(135, 157, 132, 0.16);
+    border-radius: 14px;
+}
+
+
+.dica-clube strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #435342;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+.dica-clube p {
+    margin: 0;
+
+    color: #77706a;
+
+    font-size: 0.82rem;
+
+    line-height: 1.45;
+}
+
+
+.dica-clube .btn-secundario {
+    flex-shrink: 0;
+
+    padding: 9px 15px;
+
+    background: transparent;
+
+    border: 1px solid #879d84;
+    border-radius: 9px;
+
+    color: #435342;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.dica-clube .btn-secundario:hover {
+    background: #879d84;
+
+    color: #fff;
+}
+
+
+/* Container das anotações */
+
+.anotacoes-clube {
+    margin-top: 28px;
+    padding: 26px 28px;
+
+    background: #f8f6f1;
+
+    border: 1px solid rgba(67, 83, 66, 0.12);
+    border-radius: 18px;
+}
+
+
+/* Cabeçalho */
+
+.anotacoes-cabecalho {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+.anotacoes-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #879d84;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+}
+
+
+.anotacoes-cabecalho h2 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+}
+
+
+.anotacoes-quantidade {
+    padding: 6px 11px;
+
+    background: rgba(135, 157, 132, 0.12);
+
+    border-radius: 20px;
+
+    color: #435342;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+
+/* Lista */
+
+.lista-anotacoes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* Card */
+
+.anotacao-card {
+    position: relative;
+
+    padding: 18px 20px 18px 24px;
+
+    background: #fff;
+
+    border: 1px solid rgba(68, 43, 26, 0.08);
+    border-radius: 13px;
+
+    box-shadow:
+        0 3px 12px rgba(68, 43, 26, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.anotacao-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 14px;
+    bottom: 14px;
+    left: 0;
+
+    width: 3px;
+
+    background: #879d84;
+
+    border-radius: 0 4px 4px 0;
+}
+
+
+.anotacao-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px rgba(68, 43, 26, 0.07);
+}
+
+
+/* Topo do card */
+
+.anotacao-card-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 9px;
+}
+
+
+.anotacao-card-topo h3 {
+    margin: 0;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+.anotacao-card-topo span {
+    flex-shrink: 0;
+
+    color: #9a9189;
+
+    font-size: 0.72rem;
+}
+
+
+.anotacao-card p {
+    margin: 0;
+
+    color: #69615b;
+
+    font-size: 0.88rem;
+
+    line-height: 1.65;
+
+    white-space: pre-line;
+}
+
+
 /* =========================================================
-   MODAL
+   13. MODAIS
 ========================================================= */
+
+/* Modal geral */
 
 .modal-overlay {
     position: fixed;
@@ -1984,7 +2908,6 @@
     color: #442b1a;
 
     font-family: "Tenor Sans", sans-serif;
-
     font-size: 1.1rem;
     font-weight: 400;
 }
@@ -2013,510 +2936,7 @@
 }
 
 
-/* =========================================================
-   ADICIONAR LIVRO À ESTANTE
-========================================================= */
-
-.dropdown-estante {
-    position: relative;
-    display: inline-block;
-}
-
-
-/* BOTÃO PRINCIPAL */
-
-.btn-adicionar-estante {
-    min-height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    padding: 0 18px;
-
-    border: 1px solid #36503c;
-    border-radius: 7px;
-
-    background: #36503c;
-    color: #ffffff;
-
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.btn-adicionar-estante:hover {
-    background: #435f49;
-
-    box-shadow:
-        0 5px 14px rgba(54, 80, 60, 0.15);
-}
-
-
-.seta-estante {
-    font-size: 15px;
-    line-height: 1;
-
-    transition: transform 0.2s ease;
-}
-
-
-/* SETA QUANDO ABERTO */
-
-.dropdown-estante.aberto .seta-estante {
-    transform: rotate(180deg);
-}
-
-
-/* =========================================================
-   MENU
-========================================================= */
-
-.menu-estante {
-    position: absolute;
-
-    top: calc(100% + 7px);
-    right: 0;
-
-    width: 170px;
-
-    padding: 6px;
-
-    background: #ffffff;
-
-    border: 1px solid #d9dfd6;
-    border-radius: 8px;
-
-    box-shadow:
-        0 8px 24px rgba(54, 80, 60, 0.14);
-
-    z-index: 100;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transform: translateY(-5px);
-
-    transition:
-        opacity 0.18s ease,
-        transform 0.18s ease,
-        visibility 0.18s ease;
-}
-
-
-/* MENU ABERTO */
-
-.dropdown-estante.aberto .menu-estante {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateY(0);
-}
-
-
-/* FORMULÁRIOS */
-
-.menu-estante form {
-    margin: 0;
-    padding: 0;
-}
-
-
-/* OPÇÕES */
-
-.menu-estante button {
-    width: 100%;
-
-    padding: 10px 12px;
-
-    border: none;
-    border-radius: 5px;
-
-    background: transparent;
-    color: #442b1a;
-
-    font-family: inherit;
-    font-size: 13px;
-    text-align: left;
-
-    cursor: pointer;
-
-    transition:
-        background 0.15s ease,
-        color 0.15s ease;
-}
-
-
-.menu-estante button:hover {
-    background: #eef3ec;
-    color: #36503c;
-}
-
-
-/* Pequena separação entre opções */
-
-.menu-estante form + form {
-    border-top: 1px solid #f0eee9;
-}
-
-/* =========================================================
-   RESPOSTA À DISCUSSÃO
-========================================================= */
-
-.btn-responder-discussao {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    margin-top: 14px;
-
-    padding: 0;
-
-    border: none;
-    background: transparent;
-
-    font-family: 'Raleway', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-
-    color: #526650;
-
-    cursor: pointer;
-
-    transition:
-        color 0.2s ease,
-        opacity 0.2s ease;
-}
-
-.btn-responder-discussao:hover {
-    color: #304633;
-}
-
-
-/* =========================================================
-   FORMULÁRIO DE RESPOSTA
-========================================================= */
-
-.form-resposta {
-    display: none;
-
-    margin-top: 12px;
-    padding: 14px 16px;
-
-    background: #f8faf6;
-
-    border: 1px solid #dfe6dc;
-    border-radius: 10px;
-}
-
-
-/* quando abrir */
-
-.form-resposta.ativo {
-    display: block;
-}
-
-
-/* =========================================================
-   CAMPO
-========================================================= */
-
-.form-resposta textarea {
-    display: block;
-
-    width: 100%;
-    min-height: 72px;
-
-    padding: 11px 13px;
-
-    box-sizing: border-box;
-
-    border: 1px solid #d5ddd2;
-    border-radius: 8px;
-
-    background: #ffffff;
-
-    color: #442b1a;
-
-    font-family: 'Raleway', sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
-
-    resize: vertical;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.form-resposta textarea::placeholder {
-    color: #aaa097;
-}
-
-.form-resposta textarea:focus {
-    border-color: #879d84;
-
-    box-shadow:
-        0 0 0 3px rgba(135, 157, 132, 0.10);
-}
-
-
-/* =========================================================
-   BOTÕES
-========================================================= */
-
-.acoes-resposta {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
-
-    margin-top: 10px;
-}
-
-.btn-cancelar-resposta,
-.btn-enviar-resposta {
-    min-height: 34px;
-
-    padding: 8px 15px;
-
-    border-radius: 7px;
-
-    font-family: 'Raleway', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-/* cancelar */
-
-.btn-cancelar-resposta {
-    border: 1px solid #d9ddd6;
-
-    background: transparent;
-
-    color: #776d65;
-}
-
-.btn-cancelar-resposta:hover {
-    background: #f0f2ed;
-
-    color: #442b1a;
-}
-
-
-/* responder */
-
-.btn-enviar-resposta {
-    border: 1px solid #36503c;
-
-    background: #36503c;
-
-    color: #ffffff;
-}
-
-.btn-enviar-resposta:hover {
-    background: #2e4434;
-    border-color: #2e4434;
-
-    transform: translateY(-1px);
-}
-
-/* =========================================================
-   ANOTAÇÕES DA LEITURA
-========================================================= */
-
-.anotacoes-clube {
-    margin-top: 28px;
-    padding: 26px 28px;
-
-    background: #f8f6f1;
-    border: 1px solid rgba(67, 83, 66, 0.12);
-    border-radius: 18px;
-}
-
-
-/* =========================================================
-   CABEÇALHO
-========================================================= */
-
-.anotacoes-cabecalho {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 20px;
-
-    margin-bottom: 20px;
-}
-
-
-.anotacoes-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.13em;
-
-    color: #879d84;
-}
-
-
-.anotacoes-cabecalho h2 {
-    margin: 0;
-
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 1.35rem;
-    font-weight: 400;
-
-    color: #442b1a;
-}
-
-
-.anotacoes-quantidade {
-    padding: 6px 11px;
-
-    background: rgba(135, 157, 132, 0.12);
-
-    border-radius: 20px;
-
-    font-size: 0.75rem;
-    font-weight: 600;
-
-    color: #435342;
-}
-
-
-/* =========================================================
-   LISTA
-========================================================= */
-
-.lista-anotacoes {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-
-/* =========================================================
-   CARD DA ANOTAÇÃO
-========================================================= */
-
-.anotacao-card {
-    position: relative;
-
-    padding: 18px 20px 18px 24px;
-
-    background: #fff;
-
-    border: 1px solid rgba(68, 43, 26, 0.08);
-    border-radius: 13px;
-
-    box-shadow:
-        0 3px 12px rgba(68, 43, 26, 0.035);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-/* linhazinha lateral */
-
-.anotacao-card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 14px;
-    bottom: 14px;
-    left: 0;
-
-    width: 3px;
-
-    background: #879d84;
-
-    border-radius: 0 4px 4px 0;
-}
-
-
-.anotacao-card:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 6px 18px rgba(68, 43, 26, 0.07);
-}
-
-
-/* =========================================================
-   TOPO DA ANOTAÇÃO
-========================================================= */
-
-.anotacao-card-topo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-
-    margin-bottom: 9px;
-}
-
-
-.anotacao-card-topo h3 {
-    margin: 0;
-
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-
-    color: #442b1a;
-}
-
-
-.anotacao-card-topo span {
-    flex-shrink: 0;
-
-    font-size: 0.72rem;
-
-    color: #9a9189;
-}
-
-
-.anotacao-card p {
-    margin: 0;
-
-    font-size: 0.88rem;
-    line-height: 1.65;
-
-    color: #69615b;
-
-    white-space: pre-line;
-}
-
-
-/* =========================================================
-   MODAL DE ANOTAÇÃO
-========================================================= */
+/* Modal de anotação */
 
 .modal-anotacao-card {
     width: min(520px, calc(100% - 32px));
@@ -2542,22 +2962,23 @@
 
     margin-bottom: 5px;
 
+    color: #879d84;
+
     font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
 
-    color: #879d84;
+    letter-spacing: 0.14em;
 }
 
 
 .modal-anotacao-card .modal-header h3 {
     margin: 0;
 
+    color: #442b1a;
+
     font-family: "Tenor Sans", sans-serif;
     font-size: 1.5rem;
     font-weight: 400;
-
-    color: #442b1a;
 }
 
 
@@ -2567,10 +2988,11 @@
         0
         24px;
 
-    font-size: 0.86rem;
-    line-height: 1.55;
-
     color: #7a716b;
+
+    font-size: 0.86rem;
+
+    line-height: 1.55;
 }
 
 
@@ -2579,9 +3001,7 @@
 }
 
 
-/* =========================================================
-   CAMPOS
-========================================================= */
+/* Campos do modal */
 
 .modal-anotacao-card .form-grupo {
     margin-bottom: 18px;
@@ -2593,11 +3013,12 @@
 
     margin-bottom: 7px;
 
+    color: #435342;
+
     font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
 
-    color: #435342;
+    letter-spacing: 0.03em;
 }
 
 
@@ -2607,19 +3028,19 @@
 
     padding: 12px 14px;
 
+    box-sizing: border-box;
+
     background: #fff;
 
     border: 1px solid #ddd8d1;
     border-radius: 10px;
 
-    font-family: "Raleway", sans-serif;
-    font-size: 0.88rem;
+    outline: none;
 
     color: #442b1a;
 
-    outline: none;
-
-    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.88rem;
 
     transition:
         border-color 0.2s ease,
@@ -2651,14 +3072,13 @@
 }
 
 
-/* =========================================================
-   BOTÕES DO MODAL
-========================================================= */
+/* Botões do modal */
 
 .modal-anotacao-card .modal-acoes {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: flex-end;
+
     gap: 10px;
 
     margin-top: 24px;
@@ -2671,521 +3091,10 @@
 
 
 /* =========================================================
-   RESPONSIVO
+   14. RESPONSIVIDADE
 ========================================================= */
 
-@media (max-width: 600px) {
-
-    .anotacoes-clube {
-        padding: 20px;
-    }
-
-
-    .anotacoes-cabecalho {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-
-    .anotacao-card-topo {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-
-    .modal-anotacao-card {
-        padding: 23px 20px;
-    }
-
-
-    .modal-anotacao-card .modal-acoes {
-        flex-direction: column-reverse;
-    }
-
-
-    .modal-anotacao-card .modal-acoes button {
-        width: 100%;
-    }
-
-}
-
-/* =========================================================
-   CHAMADA PARA CRIAR ANOTAÇÃO
-========================================================= */
-
-.dica-clube {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-
-    margin-top: 24px;
-    padding: 18px 22px;
-
-    background: rgba(135, 157, 132, 0.08);
-
-    border: 1px solid rgba(135, 157, 132, 0.16);
-    border-radius: 14px;
-}
-
-
-.dica-clube strong {
-    display: block;
-
-    margin-bottom: 3px;
-
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-
-    color: #435342;
-}
-
-
-.dica-clube p {
-    margin: 0;
-
-    font-size: 0.82rem;
-    line-height: 1.45;
-
-    color: #77706a;
-}
-
-
-.dica-clube .btn-secundario {
-    flex-shrink: 0;
-
-    padding: 9px 15px;
-
-    background: transparent;
-
-    border: 1px solid #879d84;
-    border-radius: 9px;
-
-    color: #435342;
-
-    font-size: 0.78rem;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-
-.dica-clube .btn-secundario:hover {
-    background: #879d84;
-
-    color: #fff;
-}
-
-/* =========================================================
-   RANKING DO CLUBE
-   ========================================================= */
-
-   .ranking-card {
-    padding: 30px;
-}
-
-.ranking-cabecalho {
-    margin-bottom: 28px;
-}
-
-.ranking-label {
-    display: block;
-    margin-bottom: 5px;
-
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-
-    color: #71866b;
-}
-
-.ranking-cabecalho h2 {
-    margin: 0 0 6px;
-
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 25px;
-    font-weight: 400;
-
-    color: #4b3323;
-}
-
-.ranking-cabecalho p {
-    margin: 0;
-
-    font-size: 14px;
-    color: #858b82;
-}
-
-
-/* =========================================================
-   PÓDIO
-   ========================================================= */
-
-.ranking-podio {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-
-    margin-bottom: 32px;
-}
-
-.podio-item {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 24px 15px 20px;
-
-    background: #f8f9f6;
-
-    border: 1px solid #dfe4dc;
-    border-radius: 14px;
-
-    text-align: center;
-}
-
-.podio-posicao-1 {
-    background: #f5f7f1;
-    border-color: #c9d5c4;
-}
-
-.podio-medalha {
-    position: absolute;
-
-    top: -13px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    font-size: 25px;
-}
-
-.podio-avatar {
-    width: 64px;
-    height: 64px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 12px;
-
-    border-radius: 50%;
-
-    background: #dfe9d9;
-
-    color: #435342;
-
-    font-size: 20px;
-    font-weight: 600;
-
-    overflow: hidden;
-}
-
-.podio-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.podio-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.podio-info strong {
-    color: #4b3323;
-    font-size: 15px;
-}
-
-.podio-progresso {
-    margin-top: 4px;
-
-    font-family: "Tenor Sans", sans-serif;
-    font-size: 25px;
-
-    color: #435342;
-}
-
-.podio-info small {
-    color: #858b82;
-    font-size: 12px;
-}
-
-.ranking-badge-voce {
-    padding: 3px 8px;
-
-    background: #dfe9d9;
-
-    border-radius: 20px;
-
-    color: #435342;
-
-    font-size: 10px;
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   LISTA DO RANKING
-   ========================================================= */
-
-.ranking-lista {
-    border: 1px solid #e3e6df;
-    border-radius: 12px;
-
-    overflow: hidden;
-}
-
-.ranking-lista-cabecalho,
-.ranking-linha {
-    display: grid;
-
-    grid-template-columns:
-        80px
-        minmax(180px, 1.4fr)
-        minmax(180px, 1fr)
-        100px;
-
-    align-items: center;
-
-    gap: 15px;
-}
-
-.ranking-lista-cabecalho {
-    padding: 12px 18px;
-
-    background: #f5f7f3;
-
-    color: #858b82;
-
-    font-size: 11px;
-    font-weight: 600;
-
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.ranking-linha {
-    padding: 16px 18px;
-
-    background: #ffffff;
-
-    border-top: 1px solid #e8ebe5;
-}
-
-.ranking-linha:first-of-type {
-    border-top: none;
-}
-
-.ranking-linha-voce {
-    background: #f8faf6;
-}
-
-
-/* POSIÇÃO */
-
-.ranking-posicao {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #4b3323;
-}
-
-.ranking-medalha {
-    font-size: 21px;
-}
-
-
-/* USUÁRIO */
-
-.ranking-usuario {
-    display: flex;
-    align-items: center;
-
-    gap: 11px;
-}
-
-.ranking-avatar {
-    flex-shrink: 0;
-
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #e5eddf;
-
-    color: #435342;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    overflow: hidden;
-}
-
-.ranking-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.ranking-usuario-info {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-}
-
-.ranking-usuario-info strong {
-    color: #4b3323;
-
-    font-size: 14px;
-}
-
-.ranking-usuario-info span {
-    color: #92978f;
-
-    font-size: 11px;
-}
-
-
-/* =========================================================
-   PROGRESSO DO RANKING
-   ========================================================= */
-
-.ranking-progresso {
-    width: 100%;
-}
-
-.ranking-progresso-topo {
-    margin-bottom: 6px;
-}
-
-.ranking-progresso-topo strong {
-    color: #435342;
-
-    font-size: 13px;
-}
-
-.ranking-barra {
-    width: 100%;
-    height: 7px;
-
-    background: #e7e9e4;
-
-    border-radius: 999px;
-
-    overflow: hidden;
-}
-
-.ranking-barra-preenchida {
-    width: 0;
-    height: 100%;
-
-    background: #879d84;
-
-    border-radius: 999px;
-
-    transition: width 0.5s ease;
-}
-
-
-/* PÁGINAS */
-
-.ranking-paginas {
-    display: flex;
-    align-items: baseline;
-
-    gap: 3px;
-
-    color: #858b82;
-}
-
-.ranking-paginas strong {
-    color: #4b3323;
-
-    font-size: 14px;
-}
-
-.ranking-paginas span {
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   RANKING VAZIO
-   ========================================================= */
-
-.ranking-vazio {
-    padding: 50px 20px;
-
-    text-align: center;
-}
-
-.ranking-vazio-icone {
-    margin-bottom: 12px;
-
-    font-size: 32px;
-}
-
-.ranking-vazio h3 {
-    margin: 0 0 7px;
-
-    color: #4b3323;
-}
-
-.ranking-vazio p {
-    max-width: 420px;
-
-    margin: 0 auto;
-
-    color: #858b82;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
-
-@media (max-width: 800px) {
-
-    .ranking-podio {
-        grid-template-columns: 1fr;
-    }
-
-    .ranking-lista-cabecalho {
-        display: none;
-    }
-
-    .ranking-linha {
-        grid-template-columns: 50px 1fr;
-    }
-
-    .ranking-progresso,
-    .ranking-paginas {
-        grid-column: 2;
-    }
-
-}
+/* Até 1050px */
 
 @media (max-width: 1050px) {
 
@@ -3219,6 +3128,8 @@
 }
 
 
+/* Até 900px */
+
 @media (max-width: 900px) {
 
     .clube-header {
@@ -3240,6 +3151,37 @@
 
 }
 
+
+/* Até 800px */
+
+@media (max-width: 800px) {
+
+    .ranking-podio {
+        grid-template-columns: 1fr;
+    }
+
+
+    .ranking-lista-cabecalho {
+        display: none;
+    }
+
+
+    .ranking-linha {
+        grid-template-columns:
+            50px
+            1fr;
+    }
+
+
+    .ranking-progresso,
+    .ranking-paginas {
+        grid-column: 2;
+    }
+
+}
+
+
+/* Até 700px */
 
 @media (max-width: 700px) {
 
@@ -3321,6 +3263,50 @@
 
 }
 
+
+/* Até 600px */
+
+@media (max-width: 600px) {
+
+    .anotacoes-clube {
+        padding: 20px;
+    }
+
+
+    .anotacoes-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .anotacao-card-topo {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+
+    .modal-anotacao-card {
+        padding: 23px 20px;
+    }
+
+
+    .modal-anotacao-card .modal-acoes {
+        flex-direction: column-reverse;
+    }
+
+
+    .modal-anotacao-card .modal-acoes button {
+        width: 100%;
+    }
+
+}
+
+
+/* Até 540px */
 
 @media (max-width: 540px) {
 
