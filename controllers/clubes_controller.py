@@ -60,6 +60,68 @@ def listar_clubes():
 
 
 # =========================================================
+# MEUS CLUBES
+# =========================================================
+
+@clubes_bp.route('/meus-clubes')
+@login_required
+def meus_clubes():
+
+    # =====================================================
+    # CLUBES CRIADOS PELO USUÁRIO
+    # =====================================================
+
+    clubes_criados = (
+        Clube.query
+        .filter_by(
+            usuario_id=current_user.id
+        )
+        .order_by(
+            Clube.data_criacao.desc()
+        )
+        .all()
+    )
+
+
+    # =====================================================
+    # CLUBES EM QUE O USUÁRIO PARTICIPA
+    #
+    # Excluímos os clubes criados pelo próprio usuário
+    # para eles não aparecerem nas duas seções.
+    # =====================================================
+
+    participacoes = (
+        MembroClube.query
+        .join(
+            Clube,
+            MembroClube.clube_id == Clube.id
+        )
+        .filter(
+            MembroClube.usuario_id == current_user.id,
+            Clube.usuario_id != current_user.id
+        )
+        .order_by(
+            MembroClube.data_entrada.desc()
+        )
+        .all()
+    )
+
+
+    clubes_participando = [
+        participacao.clube
+        for participacao in participacoes
+        if participacao.clube
+    ]
+
+
+    return render_template(
+        'clubes/meus_clubes.html',
+        clubes_criados=clubes_criados,
+        clubes_participando=clubes_participando
+    )
+
+
+# =========================================================
 # PESQUISAR LIVROS PARA O CLUBE
 # BANCO LOCAL + GOOGLE BOOKS
 # =========================================================
