@@ -1,27 +1,46 @@
 {% extends "base.html" %}
 
+
 {% block title %}
     {{ clube.nome }} | Liberium
 {% endblock %}
 
+
 {% block styles %}
+
 <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/clubesliberium/clube.css') }}"
+    href="{{ url_for(
+        'static',
+        filename='css/clubesliberium/clube.css'
+    ) }}"
 >
+
 {% endblock %}
 
+
 {% block content %}
+
+
+<!-- ========================================
+     PÁGINA DO CLUBE
+========================================= -->
 
 <main class="pagina-clube">
 
     <section class="clube-conteudo">
-        <!--NAVEGAÇÃO -->
+
+
+        <!-- ========================================
+             NAVEGAÇÃO
+        ========================================= -->
 
         <div class="clube-topo">
 
             <a
-                href="{{ url_for('clubes.listar_clubes') }}"
+                href="{{ url_for(
+                    'clubes.listar_clubes'
+                ) }}"
                 class="btn-voltar"
             >
                 ← Voltar para clubes
@@ -29,12 +48,18 @@
 
         </div>
 
-        <!-- CABEÇALHO DO CLUBE-->
+
+        <!-- ========================================
+             CABEÇALHO DO CLUBE
+        ========================================= -->
+
         <div class="clube-header">
 
             <div class="clube-header-principal">
 
-                <!-- AVATAR -->
+
+                <!-- Avatar -->
+
                 <div class="clube-avatar">
 
                     {% if clube.imagem %}
@@ -50,7 +75,13 @@
                     {% else %}
 
                         <div class="clube-avatar-sem-imagem">
-                            {{ clube.nome[0] if clube.nome else '?' }}
+
+                            {{
+                                clube.nome[0]
+                                if clube.nome
+                                else '?'
+                            }}
+
                         </div>
 
                     {% endif %}
@@ -58,7 +89,7 @@
                 </div>
 
 
-                <!-- INFORMAÇÕES -->
+                <!-- Informações -->
 
                 <div class="clube-informacoes">
 
@@ -71,6 +102,7 @@
                         <span class="clube-status">
                             Clube ativo
                         </span>
+
 
                         {% if clube.privado %}
 
@@ -94,15 +126,24 @@
                         {{ clube.quantidade_membros }}
 
                         {% if clube.quantidade_membros == 1 %}
+
                             membro
+
                         {% else %}
+
                             membros
+
                         {% endif %}
+
 
                         {% if clube.data_criacao %}
 
                             • Criado em
-                            {{ clube.data_criacao.strftime('%d/%m/%Y') }}
+                            {{
+                                clube.data_criacao.strftime(
+                                    '%d/%m/%Y'
+                                )
+                            }}
 
                         {% endif %}
 
@@ -132,10 +173,12 @@
                             </strong>
 
                             <small>
+
                                 {{
                                     clube.livro.autor
                                     or 'Autor desconhecido'
                                 }}
+
                             </small>
 
                         </div>
@@ -148,13 +191,13 @@
 
 
             <!-- ========================================
-                AÇÕES
+                 AÇÕES DO CLUBE
             ========================================= -->
 
             <div class="clube-acoes">
 
 
-                <!-- CRIADOR -->
+                <!-- Criador -->
 
                 {% if usuario_eh_criador %}
 
@@ -169,6 +212,7 @@
                             <strong>
                                 Você é o criador
                             </strong>
+
 
                             {% if clube.privado %}
 
@@ -216,7 +260,7 @@
                     </div>
 
 
-                <!-- PARTICIPANTE -->
+                <!-- Participante -->
 
                 {% elif usuario_eh_membro %}
 
@@ -233,7 +277,7 @@
                     {% endif %}
 
 
-                <!-- VISITANTE -->
+                <!-- Visitante -->
 
                 {% else %}
 
@@ -281,7 +325,7 @@
 
 
         <!-- ========================================
-            CONVITES
+             CONVITES
         ========================================= -->
 
         {% if pode_convidar %}
@@ -344,6 +388,8 @@
 
                 </div>
 
+
+                <!-- Lista de amigos -->
 
                 {% if amigos %}
 
@@ -415,6 +461,9 @@
 
                     </div>
 
+
+                <!-- Nenhum amigo disponível -->
+
                 {% else %}
 
                     <div class="sem-amigos-convite">
@@ -434,7 +483,7 @@
 
 
         <!-- ========================================
-            ABAS
+             ABAS
         ========================================= -->
 
         <nav class="clube-abas">
@@ -462,6 +511,7 @@
             >
                 Participantes
             </button>
+
             <button
                 type="button"
                 class="aba-btn"
@@ -474,7 +524,7 @@
 
 
         <!-- ========================================
-            CONTEÚDO PRINCIPAL
+             CONTEÚDO PRINCIPAL
         ========================================= -->
 
         <div class="clube-grid">
@@ -482,9 +532,9 @@
             <main class="clube-principal">
 
 
-                <!-- ====================================
-                    SOBRE O LIVRO
-                ===================================== -->
+                <!-- ========================================
+                     SOBRE O LIVRO
+                ========================================= -->
 
                 <section
                     id="aba-livro"
@@ -502,7 +552,8 @@
 
                             <div class="livro-container">
 
-                                <!-- CAPA -->
+
+                                <!-- Capa -->
 
                                 <div class="livro-capa">
 
@@ -538,7 +589,7 @@
                                 </div>
 
 
-                                <!-- INFORMAÇÕES -->
+                                <!-- Informações -->
 
                                 <div class="livro-informacoes">
 
@@ -581,12 +632,17 @@
                                     {% endif %}
 
 
+                                    <!-- Especificações -->
+
                                     <ul class="livro-especificacoes">
 
                                         {% if clube.livro.paginas %}
 
                                             <li>
-                                                <strong>Páginas:</strong>
+                                                <strong>
+                                                    Páginas:
+                                                </strong>
+
                                                 {{ clube.livro.paginas }}
                                             </li>
 
@@ -596,7 +652,10 @@
                                         {% if clube.livro.editora %}
 
                                             <li>
-                                                <strong>Editora:</strong>
+                                                <strong>
+                                                    Editora:
+                                                </strong>
+
                                                 {{ clube.livro.editora }}
                                             </li>
 
@@ -606,7 +665,10 @@
                                         {% if clube.livro.ano %}
 
                                             <li>
-                                                <strong>Publicação:</strong>
+                                                <strong>
+                                                    Publicação:
+                                                </strong>
+
                                                 {{ clube.livro.ano }}
                                             </li>
 
@@ -616,7 +678,10 @@
                                         {% if clube.livro.idioma %}
 
                                             <li>
-                                                <strong>Idioma:</strong>
+                                                <strong>
+                                                    Idioma:
+                                                </strong>
+
                                                 {{ clube.livro.idioma }}
                                             </li>
 
@@ -629,9 +694,7 @@
                             </div>
 
 
-                            <!-- ====================================
-                                AÇÕES DO LIVRO
-                            ===================================== -->
+                            <!-- Ações do livro -->
 
                             <div class="livro-acoes">
 
@@ -646,7 +709,7 @@
                                 </a>
 
 
-                                <!-- ESCOLHER PRATELEIRA -->
+                                <!-- Adicionar à estante -->
 
                                 <div class="dropdown-estante">
 
@@ -655,15 +718,21 @@
                                         class="btn-adicionar-estante"
                                         onclick="toggleEstante(event)"
                                     >
-                                        <span>Adicionar à estante</span>
-                                        <span class="seta-estante">⌄</span>
+                                        <span>
+                                            Adicionar à estante
+                                        </span>
+
+                                        <span class="seta-estante">
+                                            ⌄
+                                        </span>
                                     </button>
-                                
+
+
                                     <div
                                         id="menu-estante"
                                         class="menu-estante"
                                     >
-                                
+
                                         <form
                                             action="{{ url_for(
                                                 'books_bp.adicionar_estante',
@@ -671,18 +740,20 @@
                                             ) }}"
                                             method="POST"
                                         >
+
                                             <input
                                                 type="hidden"
                                                 name="status"
                                                 value="quero ler"
                                             >
-                                
+
                                             <button type="submit">
                                                 Quero ler
                                             </button>
+
                                         </form>
-                                
-                                
+
+
                                         <form
                                             action="{{ url_for(
                                                 'books_bp.adicionar_estante',
@@ -690,18 +761,20 @@
                                             ) }}"
                                             method="POST"
                                         >
+
                                             <input
                                                 type="hidden"
                                                 name="status"
                                                 value="lendo"
                                             >
-                                
+
                                             <button type="submit">
                                                 Lendo
                                             </button>
+
                                         </form>
-                                
-                                
+
+
                                         <form
                                             action="{{ url_for(
                                                 'books_bp.adicionar_estante',
@@ -709,23 +782,27 @@
                                             ) }}"
                                             method="POST"
                                         >
+
                                             <input
                                                 type="hidden"
                                                 name="status"
                                                 value="lido"
                                             >
-                                
+
                                             <button type="submit">
                                                 Lido
                                             </button>
+
                                         </form>
-                                
+
                                     </div>
-                                
+
                                 </div>
 
                             </div>
 
+
+                        <!-- Nenhum livro selecionado -->
 
                         {% else %}
 
@@ -749,9 +826,9 @@
                 </section>
 
 
-                <!-- ====================================
-                    DISCUSSÕES
-                ===================================== -->
+                <!-- ========================================
+                     DISCUSSÕES
+                ========================================= -->
 
                 <section
                     id="aba-discussao"
@@ -760,7 +837,8 @@
 
                     <div class="card-clube discussao-container">
 
-                        <!-- TOPO -->
+
+                        <!-- Cabeçalho -->
 
                         <div class="discussao-topo">
 
@@ -797,9 +875,7 @@
                         </div>
 
 
-                        <!-- ====================================
-                            FORMULÁRIO DE NOVA DISCUSSÃO
-                        ===================================== -->
+                        <!-- Formulário de nova discussão -->
 
                         {% if usuario_eh_membro %}
 
@@ -891,9 +967,7 @@
                         {% endif %}
 
 
-                        <!-- ====================================
-                            DISCUSSÕES EXISTENTES
-                        ===================================== -->
+                        <!-- Discussões existentes -->
 
                         {% if discussoes %}
 
@@ -908,9 +982,13 @@
                                     {{ discussoes|length }}
 
                                     {% if discussoes|length == 1 %}
+
                                         discussão
+
                                     {% else %}
+
                                         discussões
+
                                     {% endif %}
 
                                 </span>
@@ -925,9 +1003,7 @@
                                     <article class="discussao-card">
 
 
-                                        <!-- ==============================
-                                            AUTOR DA DISCUSSÃO
-                                        =============================== -->
+                                        <!-- Autor -->
 
                                         <div class="discussao-header">
 
@@ -985,9 +1061,7 @@
                                         </div>
 
 
-                                        <!-- ==============================
-                                            CONTEÚDO
-                                        =============================== -->
+                                        <!-- Conteúdo -->
 
                                         <div class="discussao-corpo">
 
@@ -999,7 +1073,6 @@
 
                                             {% endif %}
 
-
                                             <p>
                                                 {{ discussao.conteudo }}
                                             </p>
@@ -1007,9 +1080,7 @@
                                         </div>
 
 
-                                        <!-- ==============================
-                                            BOTÃO RESPONDER
-                                        =============================== -->
+                                        <!-- Responder -->
 
                                         {% if usuario_eh_membro %}
 
@@ -1024,10 +1095,6 @@
 
                                             </div>
 
-
-                                            <!-- ==========================
-                                                FORMULÁRIO DE RESPOSTA
-                                            =========================== -->
 
                                             <div
                                                 id="form-resposta-{{ discussao.id }}"
@@ -1062,7 +1129,6 @@
                                                             Cancelar
                                                         </button>
 
-
                                                         <button
                                                             type="submit"
                                                             class="btn-publicar"
@@ -1079,9 +1145,7 @@
                                         {% endif %}
 
 
-                                        <!-- ==============================
-                                            RESPOSTAS
-                                        =============================== -->
+                                        <!-- Respostas -->
 
                                         {% if discussao.respostas %}
 
@@ -1166,11 +1230,9 @@
                             </div>
 
 
-                        {% else %}
+                        <!-- Sem discussões -->
 
-                            <!-- ====================================
-                                SEM DISCUSSÕES
-                            ===================================== -->
+                        {% else %}
 
                             <div class="sem-comentarios">
 
@@ -1216,9 +1278,9 @@
                 </section>
 
 
-                <!-- ====================================
-                    PARTICIPANTES
-                ===================================== -->
+                <!-- ========================================
+                     PARTICIPANTES
+                ========================================= -->
 
                 <section
                     id="aba-participantes"
@@ -1234,6 +1296,9 @@
                                 <div class="card-participante">
 
                                     <div class="participante-header">
+
+
+                                        <!-- Avatar -->
 
                                         <div class="participante-avatar">
 
@@ -1263,6 +1328,8 @@
 
                                         </div>
 
+
+                                        <!-- Informações -->
 
                                         <div class="participante-info">
 
@@ -1313,9 +1380,13 @@
                                                     }}
 
                                                     {% if (membro.total_atualizacoes or 0) == 1 %}
+
                                                         atualização
+
                                                     {% else %}
+
                                                         atualizações
+
                                                     {% endif %}
 
                                                 </span>
@@ -1329,6 +1400,9 @@
                                 </div>
 
                             {% endfor %}
+
+
+                        <!-- Sem participantes -->
 
                         {% else %}
 
@@ -1345,408 +1419,437 @@
                     </div>
 
                 </section>
-            
+
+
+                <!-- ========================================
+                     RANKING
+                ========================================= -->
+
                 <section
-    id="aba-ranking"
-    class="aba-conteudo"
->
+                    id="aba-ranking"
+                    class="aba-conteudo"
+                >
 
-    <div class="card-clube ranking-card">
-
-        <!-- CABEÇALHO -->
-
-        <div class="ranking-cabecalho">
-
-            <div>
-
-                <span class="ranking-label">
-                    DESTAQUES DA LEITURA
-                </span>
-
-                <h2>
-                    Ranking do clube
-                </h2>
-
-                {% if clube.livro %}
-
-                    <p>
-                        Acompanhe quem está avançando na leitura de
-                        <strong>{{ clube.livro.titulo }}</strong>.
-                    </p>
-
-                {% else %}
-
-                    <p>
-                        O ranking será iniciado quando
-                        uma leitura for escolhida.
-                    </p>
-
-                {% endif %}
-
-            </div>
-
-        </div>
+                    <div class="card-clube ranking-card">
 
 
-        {% if clube.livro and ranking %}
+                        <!-- Cabeçalho -->
 
-            <!-- ====================================
-                PÓDIO
-            ===================================== -->
+                        <div class="ranking-cabecalho">
 
-            <div class="ranking-podio">
+                            <div>
 
-                {% for membro in ranking[:3] %}
+                                <span class="ranking-label">
+                                    DESTAQUES DA LEITURA
+                                </span>
 
-                    <div
-                        class="
-                            podio-item
-                            podio-posicao-{{ loop.index }}
-                            {% if membro.usuario_id == current_user.id %}
-                                podio-voce
-                            {% endif %}
-                        "
-                    >
+                                <h2>
+                                    Ranking do clube
+                                </h2>
 
-                        <div class="podio-medalha">
 
-                            {% if loop.index == 1 %}
-                                🥇
-                            {% elif loop.index == 2 %}
-                                🥈
-                            {% else %}
-                                🥉
-                            {% endif %}
+                                {% if clube.livro %}
+
+                                    <p>
+                                        Acompanhe quem está avançando na leitura de
+                                        <strong>
+                                            {{ clube.livro.titulo }}
+                                        </strong>.
+                                    </p>
+
+                                {% else %}
+
+                                    <p>
+                                        O ranking será iniciado quando
+                                        uma leitura for escolhida.
+                                    </p>
+
+                                {% endif %}
+
+                            </div>
 
                         </div>
 
 
-                        <div class="podio-avatar">
-
-                            {% if membro.usuario.foto %}
-
-                                <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=membro.usuario.foto
-                                    ) }}"
-                                    alt="{{ membro.usuario.nome }}"
-                                >
-
-                            {% else %}
-
-                                <span>
-                                    {{
-                                        membro.usuario.nome[0]
-                                        if membro.usuario.nome
-                                        else '?'
-                                    }}
-                                </span>
-
-                            {% endif %}
-
-                        </div>
+                        {% if clube.livro and ranking %}
 
 
-                        <div class="podio-info">
+                            <!-- Pódio -->
 
-                            <strong>
-                                {{ membro.usuario.nome }}
-                            </strong>
+                            <div class="ranking-podio">
 
+                                {% for membro in ranking[:3] %}
 
-                            {% if membro.usuario_id == current_user.id %}
-
-                                <span class="ranking-badge-voce">
-                                    você
-                                </span>
-
-                            {% endif %}
-
-
-                            <span class="podio-progresso">
-                                {{
-                                    membro.progresso_percentual
-                                    or 0
-                                }}%
-                            </span>
-
-                            <small>
-
-                                {{
-                                    membro.paginas_lidas
-                                    or 0
-                                }}
-
-                                de
-
-                                {{
-                                    clube.livro.paginas
-                                    or '?'
-                                }}
-
-                                páginas
-
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                {% endfor %}
-
-            </div>
-
-
-            <!-- ====================================
-                CLASSIFICAÇÃO COMPLETA
-            ===================================== -->
-
-            <div class="ranking-lista">
-
-                <div class="ranking-lista-cabecalho">
-
-                    <span>
-                        Posição
-                    </span>
-
-                    <span>
-                        Leitor
-                    </span>
-
-                    <span>
-                        Progresso
-                    </span>
-
-                    <span>
-                        Páginas
-                    </span>
-
-                </div>
-
-
-                {% for membro in ranking %}
-
-                    <div
-                        class="
-                            ranking-linha
-                            {% if membro.usuario_id == current_user.id %}
-                                ranking-linha-voce
-                            {% endif %}
-                        "
-                    >
-
-                        <!-- POSIÇÃO -->
-
-                        <div class="ranking-posicao">
-
-                            {% if loop.index == 1 %}
-
-                                <span class="ranking-medalha">
-                                    🥇
-                                </span>
-
-                            {% elif loop.index == 2 %}
-
-                                <span class="ranking-medalha">
-                                    🥈
-                                </span>
-
-                            {% elif loop.index == 3 %}
-
-                                <span class="ranking-medalha">
-                                    🥉
-                                </span>
-
-                            {% else %}
-
-                                <strong>
-                                    {{ loop.index }}º
-                                </strong>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <!-- USUÁRIO -->
-
-                        <div class="ranking-usuario">
-
-                            <div class="ranking-avatar">
-
-                                {% if membro.usuario.foto %}
-
-                                    <img
-                                        src="{{ url_for(
-                                            'static',
-                                            filename=membro.usuario.foto
-                                        ) }}"
-                                        alt="{{ membro.usuario.nome }}"
+                                    <div
+                                        class="
+                                            podio-item
+                                            podio-posicao-{{ loop.index }}
+                                            {% if membro.usuario_id == current_user.id %}
+                                                podio-voce
+                                            {% endif %}
+                                        "
                                     >
 
-                                {% else %}
+                                        <div class="podio-medalha">
 
-                                    <span>
+                                            {% if loop.index == 1 %}
 
-                                        {{
-                                            membro.usuario.nome[0]
-                                            if membro.usuario.nome
-                                            else '?'
-                                        }}
+                                                🥇
 
-                                    </span>
+                                            {% elif loop.index == 2 %}
 
-                                {% endif %}
+                                                🥈
+
+                                            {% else %}
+
+                                                🥉
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- Avatar -->
+
+                                        <div class="podio-avatar">
+
+                                            {% if membro.usuario.foto %}
+
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=membro.usuario.foto
+                                                    ) }}"
+                                                    alt="{{ membro.usuario.nome }}"
+                                                >
+
+                                            {% else %}
+
+                                                <span>
+
+                                                    {{
+                                                        membro.usuario.nome[0]
+                                                        if membro.usuario.nome
+                                                        else '?'
+                                                    }}
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- Informações -->
+
+                                        <div class="podio-info">
+
+                                            <strong>
+                                                {{ membro.usuario.nome }}
+                                            </strong>
+
+
+                                            {% if membro.usuario_id == current_user.id %}
+
+                                                <span class="ranking-badge-voce">
+                                                    você
+                                                </span>
+
+                                            {% endif %}
+
+
+                                            <span class="podio-progresso">
+
+                                                {{
+                                                    membro.progresso_percentual
+                                                    or 0
+                                                }}%
+
+                                            </span>
+
+
+                                            <small>
+
+                                                {{
+                                                    membro.paginas_lidas
+                                                    or 0
+                                                }}
+
+                                                de
+
+                                                {{
+                                                    clube.livro.paginas
+                                                    or '?'
+                                                }}
+
+                                                páginas
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
 
                             </div>
 
 
-                            <div class="ranking-usuario-info">
+                            <!-- Classificação completa -->
 
-                                <strong>
-                                    {{ membro.usuario.nome }}
-                                </strong>
+                            <div class="ranking-lista">
 
-
-                                {% if membro.usuario_id == current_user.id %}
+                                <div class="ranking-lista-cabecalho">
 
                                     <span>
-                                        Você
+                                        Posição
                                     </span>
-
-                                {% elif membro.usuario_id == clube.usuario_id %}
 
                                     <span>
-                                        Criador
+                                        Leitor
                                     </span>
-
-                                {% else %}
 
                                     <span>
-                                        Membro
+                                        Progresso
                                     </span>
 
-                                {% endif %}
+                                    <span>
+                                        Páginas
+                                    </span>
+
+                                </div>
+
+
+                                {% for membro in ranking %}
+
+                                    <div
+                                        class="
+                                            ranking-linha
+                                            {% if membro.usuario_id == current_user.id %}
+                                                ranking-linha-voce
+                                            {% endif %}
+                                        "
+                                    >
+
+
+                                        <!-- Posição -->
+
+                                        <div class="ranking-posicao">
+
+                                            {% if loop.index == 1 %}
+
+                                                <span class="ranking-medalha">
+                                                    🥇
+                                                </span>
+
+                                            {% elif loop.index == 2 %}
+
+                                                <span class="ranking-medalha">
+                                                    🥈
+                                                </span>
+
+                                            {% elif loop.index == 3 %}
+
+                                                <span class="ranking-medalha">
+                                                    🥉
+                                                </span>
+
+                                            {% else %}
+
+                                                <strong>
+                                                    {{ loop.index }}º
+                                                </strong>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <!-- Usuário -->
+
+                                        <div class="ranking-usuario">
+
+                                            <div class="ranking-avatar">
+
+                                                {% if membro.usuario.foto %}
+
+                                                    <img
+                                                        src="{{ url_for(
+                                                            'static',
+                                                            filename=membro.usuario.foto
+                                                        ) }}"
+                                                        alt="{{ membro.usuario.nome }}"
+                                                    >
+
+                                                {% else %}
+
+                                                    <span>
+
+                                                        {{
+                                                            membro.usuario.nome[0]
+                                                            if membro.usuario.nome
+                                                            else '?'
+                                                        }}
+
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+
+                                            <div class="ranking-usuario-info">
+
+                                                <strong>
+                                                    {{ membro.usuario.nome }}
+                                                </strong>
+
+
+                                                {% if membro.usuario_id == current_user.id %}
+
+                                                    <span>
+                                                        Você
+                                                    </span>
+
+                                                {% elif membro.usuario_id == clube.usuario_id %}
+
+                                                    <span>
+                                                        Criador
+                                                    </span>
+
+                                                {% else %}
+
+                                                    <span>
+                                                        Membro
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- Progresso -->
+
+                                        <div class="ranking-progresso">
+
+                                            <div class="ranking-progresso-topo">
+
+                                                <strong>
+
+                                                    {{
+                                                        membro.progresso_percentual
+                                                        or 0
+                                                    }}%
+
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="ranking-barra">
+
+                                                <div
+                                                    class="ranking-barra-preenchida"
+                                                    data-progresso="{{
+                                                        membro.progresso_percentual
+                                                        or 0
+                                                    }}"
+                                                ></div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- Páginas -->
+
+                                        <div class="ranking-paginas">
+
+                                            <strong>
+
+                                                {{
+                                                    membro.paginas_lidas
+                                                    or 0
+                                                }}
+
+                                            </strong>
+
+                                            <span>
+                                                / {{ clube.livro.paginas or '?' }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
 
                             </div>
 
-                        </div>
 
+                        <!-- Sem leitura -->
 
-                        <!-- PROGRESSO -->
+                        {% elif not clube.livro %}
 
-                        <div class="ranking-progresso">
+                            <div class="ranking-vazio">
 
-                            <div class="ranking-progresso-topo">
+                                <div class="ranking-vazio-icone">
+                                    🏆
+                                </div>
 
-                                <strong>
-                                    {{
-                                        membro.progresso_percentual
-                                        or 0
-                                    }}%
-                                </strong>
+                                <h3>
+                                    O ranking ainda não começou
+                                </h3>
 
-                            </div>
-
-
-                            <div class="ranking-barra">
-                                <div
-                                    class="ranking-barra-preenchida"
-                                    data-progresso="{{ membro.progresso_percentual or 0 }}"
-                            ></div>
-
-
+                                <p>
+                                    Quando uma leitura for escolhida para
+                                    o clube, o progresso dos participantes
+                                    aparecerá aqui.
+                                </p>
 
                             </div>
 
-                        </div>
-                        <!-- PÁGINAS -->
 
-                        <div class="ranking-paginas">
+                        <!-- Sem participantes -->
 
-                            <strong>
-                                {{
-                                    membro.paginas_lidas
-                                    or 0
-                                }}
-                            </strong>
+                        {% else %}
 
-                            <span>
-                                / {{ clube.livro.paginas or '?' }}
-                            </span>
+                            <div class="ranking-vazio">
 
-                        </div>
+                                <div class="ranking-vazio-icone">
+                                    🏆
+                                </div>
+
+                                <h3>
+                                    Nenhum participante no ranking
+                                </h3>
+
+                                <p>
+                                    Os membros aparecerão aqui conforme
+                                    participarem da leitura.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
 
                     </div>
 
-                {% endfor %}
+                </section>
 
-            </div>
-
-
-        {% elif not clube.livro %}
-
-            <!-- SEM LEITURA -->
-
-            <div class="ranking-vazio">
-
-                <div class="ranking-vazio-icone">
-                    🏆
-                </div>
-
-                <h3>
-                    O ranking ainda não começou
-                </h3>
-
-                <p>
-                    Quando uma leitura for escolhida para
-                    o clube, o progresso dos participantes
-                    aparecerá aqui.
-                </p>
-
-            </div>
-
-
-        {% else %}
-
-            <!-- SEM PARTICIPANTES -->
-
-            <div class="ranking-vazio">
-
-                <div class="ranking-vazio-icone">
-                    🏆
-                </div>
-
-                <h3>
-                    Nenhum participante no ranking
-                </h3>
-
-                <p>
-                    Os membros aparecerão aqui conforme
-                    participarem da leitura.
-                </p>
-
-            </div>
-
-        {% endif %}
-
-    </div>
-
-</section>
             </main>
 
 
             <!-- ========================================
-                SIDEBAR
+                 SIDEBAR
             ========================================= -->
 
             <aside class="clube-sidebar">
 
 
-                <!-- ====================================
-                    PROGRESSO
-                ===================================== -->
+                <!-- Progresso -->
 
                 <div class="card-clube progresso-card">
 
@@ -1760,7 +1863,6 @@
 
 
                     {% if clube.livro %}
-
 
                         {% set progresso_user = namespace(
                             paginas=0,
@@ -1810,7 +1912,9 @@
 
                             <div
                                 class="barra-progresso-preenchida"
-                                data-progresso="{{ progresso_user.percentual }}"
+                                data-progresso="{{
+                                    progresso_user.percentual
+                                }}"
                             ></div>
 
                         </div>
@@ -1855,9 +1959,7 @@
                 </div>
 
 
-                <!-- ====================================
-                    PARTICIPANTES DA SIDEBAR
-                ===================================== -->
+                <!-- Participantes -->
 
                 <div class="card-clube">
 
@@ -1874,9 +1976,13 @@
                                 {{ clube.quantidade_membros }}
 
                                 {% if clube.quantidade_membros == 1 %}
+
                                     membro
+
                                 {% else %}
+
                                     membros
+
                                 {% endif %}
 
                             </span>
@@ -1958,220 +2064,225 @@
 
 
         <!-- ========================================
-            DICA
+             ANOTAÇÕES DA LEITURA
         ========================================= -->
 
-        <!-- ========================================
-     ANOTAÇÕES DA LEITURA
-========================================= -->
+        {% if usuario_eh_membro and clube.livro %}
 
-    {% if usuario_eh_membro and clube.livro %}
-
-        <div class="dica-clube">
-
-            <div>
-
-                <strong>
-                    Anotações da leitura
-                </strong>
-
-                <p>
-                    Guarde pensamentos, trechos e observações
-                    sobre sua leitura.
-                </p>
-
-            </div>
-
-            <button
-                type="button"
-                class="btn-secundario"
-                onclick="abrirModalAnotacao()"
-            >
-                + Criar anotação
-            </button>
-
-        </div>
-
-
-    <!-- ========================================
-         ANOTAÇÕES SALVAS
-    ========================================= -->
-
-    {% if anotacoes %}
-
-        <div class="anotacoes-clube">
-
-            <div class="anotacoes-cabecalho">
+            <div class="dica-clube">
 
                 <div>
 
-                    <span class="anotacoes-label">
-                        SUAS ANOTAÇÕES
-                    </span>
+                    <strong>
+                        Anotações da leitura
+                    </strong>
 
-                    <h2>
-                        Durante a leitura
-                    </h2>
+                    <p>
+                        Guarde pensamentos, trechos e observações
+                        sobre sua leitura.
+                    </p>
 
                 </div>
 
-                <span class="anotacoes-quantidade">
-                    {{ anotacoes|length }}
-
-                    {% if anotacoes|length == 1 %}
-                        anotação
-                    {% else %}
-                        anotações
-                    {% endif %}
-                </span>
+                <button
+                    type="button"
+                    class="btn-secundario"
+                    onclick="abrirModalAnotacao()"
+                >
+                    + Criar anotação
+                </button>
 
             </div>
 
 
-            <div class="lista-anotacoes">
+            <!-- Anotações salvas -->
 
-                {% for anotacao in anotacoes %}
+            {% if anotacoes %}
 
-                    <article class="anotacao-card">
+                <div class="anotacoes-clube">
 
-                        <div class="anotacao-card-topo">
+                    <div class="anotacoes-cabecalho">
 
-                            <h3>
-                                {{ anotacao.titulo }}
-                            </h3>
+                        <div>
 
-                            <span>
-                                {{
-                                    anotacao.data_criacao.strftime(
-                                        '%d/%m/%Y às %H:%M'
-                                    )
-                                }}
+                            <span class="anotacoes-label">
+                                SUAS ANOTAÇÕES
                             </span>
+
+                            <h2>
+                                Durante a leitura
+                            </h2>
 
                         </div>
 
-                        <p>
-                            {{ anotacao.conteudo }}
-                        </p>
 
-                    </article>
+                        <span class="anotacoes-quantidade">
 
-                {% endfor %}
+                            {{ anotacoes|length }}
 
-            </div>
+                            {% if anotacoes|length == 1 %}
 
-        </div>
+                                anotação
 
-    {% endif %}
+                            {% else %}
 
-{% endif %}
+                                anotações
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="lista-anotacoes">
+
+                        {% for anotacao in anotacoes %}
+
+                            <article class="anotacao-card">
+
+                                <div class="anotacao-card-topo">
+
+                                    <h3>
+                                        {{ anotacao.titulo }}
+                                    </h3>
+
+                                    <span>
+
+                                        {{
+                                            anotacao.data_criacao.strftime(
+                                                '%d/%m/%Y às %H:%M'
+                                            )
+                                        }}
+
+                                    </span>
+
+                                </div>
+
+                                <p>
+                                    {{ anotacao.conteudo }}
+                                </p>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
 
     </section>
 
 </main>
 
-    <!-- ========================================
-        MODAL DE PROGRESSO
-    ========================================= -->
 
-    {% if usuario_eh_membro %}
+<!-- ========================================
+     MODAL DE PROGRESSO
+========================================= -->
 
-        <div
-            id="modal-progresso"
-            class="modal-overlay"
-        >
+{% if usuario_eh_membro %}
 
-            <div class="modal-card">
+    <div
+        id="modal-progresso"
+        class="modal-overlay"
+    >
 
-                <div class="modal-header">
+        <div class="modal-card">
 
-                    <h3>
-                        Atualizar progresso
-                    </h3>
+            <div class="modal-header">
 
-                    <button
-                        type="button"
-                        class="btn-fechar"
-                        onclick="fecharModalProgresso()"
+                <h3>
+                    Atualizar progresso
+                </h3>
+
+                <button
+                    type="button"
+                    class="btn-fechar"
+                    onclick="fecharModalProgresso()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form
+                action="{{ url_for(
+                    'clubes.atualizar_progresso',
+                    clube_id=clube.id
+                ) }}"
+                method="POST"
+            >
+
+                <div class="form-grupo">
+
+                    <label for="paginas_lidas">
+                        Em qual página você está?
+                    </label>
+
+                    <input
+                        type="number"
+                        id="paginas_lidas"
+                        name="paginas_lidas"
+                        min="0"
+                        max="{{
+                            clube.livro.paginas
+                            if clube.livro and clube.livro.paginas
+                            else 9999
+                        }}"
+                        value="{{
+                            progresso_user.paginas
+                            if progresso_user is defined
+                            else 0
+                        }}"
+                        placeholder="Ex: 42"
+                        required
                     >
-                        ×
-                    </button>
+
+
+                    {% if clube.livro and clube.livro.paginas %}
+
+                        <small>
+                            Total de páginas do livro:
+                            {{ clube.livro.paginas }}
+                        </small>
+
+                    {% endif %}
 
                 </div>
 
 
-                <form
-                    action="{{ url_for(
-                        'clubes.atualizar_progresso',
-                        clube_id=clube.id
-                    ) }}"
-                    method="POST"
-                >
+                <div class="modal-acoes">
 
-                    <div class="form-grupo">
+                    <button
+                        type="button"
+                        class="btn-secundario"
+                        onclick="fecharModalProgresso()"
+                    >
+                        Cancelar
+                    </button>
 
-                        <label for="paginas_lidas">
-                            Em qual página você está?
-                        </label>
+                    <button
+                        type="submit"
+                        class="btn-primario"
+                    >
+                        Salvar progresso
+                    </button>
 
-                        <input
-                            type="number"
-                            id="paginas_lidas"
-                            name="paginas_lidas"
-                            min="0"
-                            max="{{
-                                clube.livro.paginas
-                                if clube.livro and clube.livro.paginas
-                                else 9999
-                            }}"
-                            value="{{
-                                progresso_user.paginas
-                                if progresso_user is defined
-                                else 0
-                            }}"
-                            placeholder="Ex: 42"
-                            required
-                        >
+                </div>
 
-
-                        {% if clube.livro and clube.livro.paginas %}
-
-                            <small>
-                                Total de páginas do livro:
-                                {{ clube.livro.paginas }}
-                            </small>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <div class="modal-acoes">
-
-                        <button
-                            type="button"
-                            class="btn-secundario"
-                            onclick="fecharModalProgresso()"
-                        >
-                            Cancelar
-                        </button>
-
-                        <button
-                            type="submit"
-                            class="btn-primario"
-                        >
-                            Salvar progresso
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
+            </form>
 
         </div>
 
+    </div>
+
 {% endif %}
+
 
 <!-- ========================================
      MODAL DE ANOTAÇÃO
@@ -2179,113 +2290,121 @@
 
 {% if usuario_eh_membro and clube.livro %}
 
-<div
-    id="modal-anotacao"
-    class="modal-overlay"
->
+    <div
+        id="modal-anotacao"
+        class="modal-overlay"
+    >
 
-    <div class="modal-card modal-anotacao-card">
+        <div class="modal-card modal-anotacao-card">
 
-        <div class="modal-header">
+            <div class="modal-header">
 
-            <div>
+                <div>
 
-                <span class="modal-label">
-                    ANOTAÇÃO PESSOAL
-                </span>
+                    <span class="modal-label">
+                        ANOTAÇÃO PESSOAL
+                    </span>
 
-                <h3>
-                    Nova anotação
-                </h3>
+                    <h3>
+                        Nova anotação
+                    </h3>
 
-            </div>
+                </div>
 
-            <button
-                type="button"
-                class="btn-fechar"
-                onclick="fecharModalAnotacao()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <p class="modal-anotacao-subtitulo">
-            Registre algo que chamou sua atenção durante
-            a leitura de <strong>{{ clube.livro.titulo }}</strong>.
-        </p>
-
-
-        <form
-            action="{{ url_for(
-                'clubes.criar_anotacao',
-                clube_id=clube.id
-            ) }}"
-            method="POST"
-        >
-
-            <div class="form-grupo">
-
-                <label for="anotacao-titulo">
-                    Título
-                </label>
-
-                <input
-                    type="text"
-                    id="anotacao-titulo"
-                    name="titulo"
-                    maxlength="150"
-                    placeholder="Ex: Capítulo que mais gostei"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-grupo">
-
-                <label for="anotacao-conteudo">
-                    Anotação
-                </label>
-
-                <textarea
-                    id="anotacao-conteudo"
-                    name="conteudo"
-                    rows="6"
-                    placeholder="Escreva sua anotação..."
-                    required
-                ></textarea>
-
-            </div>
-
-
-            <div class="modal-acoes">
 
                 <button
                     type="button"
-                    class="btn-secundario"
+                    class="btn-fechar"
                     onclick="fecharModalAnotacao()"
                 >
-                    Cancelar
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn-primario"
-                >
-                    Salvar anotação
+                    ×
                 </button>
 
             </div>
 
-        </form>
+
+            <p class="modal-anotacao-subtitulo">
+
+                Registre algo que chamou sua atenção durante
+                a leitura de
+
+                <strong>
+                    {{ clube.livro.titulo }}
+                </strong>.
+
+            </p>
+
+
+            <form
+                action="{{ url_for(
+                    'clubes.criar_anotacao',
+                    clube_id=clube.id
+                ) }}"
+                method="POST"
+            >
+
+                <div class="form-grupo">
+
+                    <label for="anotacao-titulo">
+                        Título
+                    </label>
+
+                    <input
+                        type="text"
+                        id="anotacao-titulo"
+                        name="titulo"
+                        maxlength="150"
+                        placeholder="Ex: Capítulo que mais gostei"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-grupo">
+
+                    <label for="anotacao-conteudo">
+                        Anotação
+                    </label>
+
+                    <textarea
+                        id="anotacao-conteudo"
+                        name="conteudo"
+                        rows="6"
+                        placeholder="Escreva sua anotação..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="modal-acoes">
+
+                    <button
+                        type="button"
+                        class="btn-secundario"
+                        onclick="fecharModalAnotacao()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primario"
+                    >
+                        Salvar anotação
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
-</div>
-
 {% endif %}
+
 
 <!-- ========================================
      JAVASCRIPT
@@ -2319,19 +2438,25 @@ function abrirAba(event, idAba) {
 
 
     const abaSelecionada =
-        document.getElementById(idAba);
+        document.getElementById(
+            idAba
+        );
 
 
     if (abaSelecionada) {
 
-        abaSelecionada.classList.add('ativo');
+        abaSelecionada.classList.add(
+            'ativo'
+        );
 
     }
 
 
     if (event && event.currentTarget) {
 
-        event.currentTarget.classList.add('ativo');
+        event.currentTarget.classList.add(
+            'ativo'
+        );
 
     }
 
@@ -2412,7 +2537,9 @@ function toggleFormComentario() {
 
 
         if (campo) {
+
             campo.focus();
+
         }
 
     }
@@ -2437,18 +2564,18 @@ function toggleResposta(discussaoId) {
     }
 
 
-    if (
-        formulario.style.display === 'block'
-    ) {
+    if (formulario.style.display === 'block') {
 
         formulario.style.display = 'none';
 
     } else {
 
-        // Fecha outros formulários abertos
+        // Fechar outros formulários
 
         document
-            .querySelectorAll('.form-resposta')
+            .querySelectorAll(
+                '.form-resposta'
+            )
             .forEach(function(form) {
 
                 form.style.display = 'none';
@@ -2490,7 +2617,9 @@ function abrirModalProgresso() {
 
     if (modal) {
 
-        modal.classList.add('ativo');
+        modal.classList.add(
+            'ativo'
+        );
 
     }
 
@@ -2507,16 +2636,16 @@ function fecharModalProgresso() {
 
     if (modal) {
 
-        modal.classList.remove('ativo');
+        modal.classList.remove(
+            'ativo'
+        );
 
     }
 
 }
 
 
-// ==========================================
-// FECHAR MODAL CLICANDO FORA
-// ==========================================
+// Fechar clicando fora
 
 const modalProgresso =
     document.getElementById(
@@ -2571,51 +2700,60 @@ document.addEventListener(
 
     }
 );
+
+
 // ==========================================
 // DROPDOWN DA ESTANTE
 // ==========================================
 
 function toggleEstante(event) {
 
-event.stopPropagation();
+    event.stopPropagation();
 
-const dropdown =
-    event.currentTarget.closest(
-        '.dropdown-estante'
+
+    const dropdown =
+        event.currentTarget.closest(
+            '.dropdown-estante'
+        );
+
+
+    if (!dropdown) {
+        return;
+    }
+
+
+    dropdown.classList.toggle(
+        'aberto'
     );
 
-if (!dropdown) {
-    return;
-}
-
-dropdown.classList.toggle('aberto');
 }
 
 
-// Fecha clicando fora
+// Fechar clicando fora
 
 document.addEventListener(
-'click',
-function(event) {
+    'click',
+    function(event) {
 
-    document
-        .querySelectorAll(
-            '.dropdown-estante.aberto'
-        )
-        .forEach(function(dropdown) {
+        document
+            .querySelectorAll(
+                '.dropdown-estante.aberto'
+            )
+            .forEach(function(dropdown) {
 
-            if (!dropdown.contains(event.target)) {
+                if (!dropdown.contains(event.target)) {
 
-                dropdown.classList.remove(
-                    'aberto'
-                );
+                    dropdown.classList.remove(
+                        'aberto'
+                    );
 
-            }
+                }
 
-        });
+            });
 
-}
+    }
 );
+
 
 // ==========================================
 // MODAL DE ANOTAÇÃO
@@ -2623,63 +2761,86 @@ function(event) {
 
 function abrirModalAnotacao() {
 
-const modal =
-    document.getElementById(
-        'modal-anotacao'
+    const modal =
+        document.getElementById(
+            'modal-anotacao'
+        );
+
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.add(
+        'ativo'
     );
 
-if (!modal) {
-    return;
-}
 
-modal.classList.add('ativo');
+    const titulo =
+        document.getElementById(
+            'anotacao-titulo'
+        );
 
-const titulo =
-    document.getElementById(
-        'anotacao-titulo'
-    );
 
-if (titulo) {
-    titulo.focus();
-}
+    if (titulo) {
+
+        titulo.focus();
+
+    }
+
 }
 
 
 function fecharModalAnotacao() {
 
-const modal =
-    document.getElementById(
-        'modal-anotacao'
-    );
+    const modal =
+        document.getElementById(
+            'modal-anotacao'
+        );
 
-if (modal) {
-    modal.classList.remove('ativo');
-}
+
+    if (modal) {
+
+        modal.classList.remove(
+            'ativo'
+        );
+
+    }
+
 }
 
 
 // Fechar clicando fora
 
 const modalAnotacao =
-document.getElementById(
-    'modal-anotacao'
-);
+    document.getElementById(
+        'modal-anotacao'
+    );
+
 
 if (modalAnotacao) {
 
-modalAnotacao.addEventListener(
-    'click',
-    function(event) {
+    modalAnotacao.addEventListener(
+        'click',
+        function(event) {
 
-        if (event.target === this) {
-            fecharModalAnotacao();
+            if (event.target === this) {
+
+                fecharModalAnotacao();
+
+            }
+
         }
-
-    }
-);
+    );
 
 }
+
+
+// ==========================================
 // BARRAS DE PROGRESSO DO RANKING
+// ==========================================
+
 document.addEventListener(
     'DOMContentLoaded',
     function() {
@@ -2689,6 +2850,7 @@ document.addEventListener(
                 '.ranking-barra-preenchida'
             );
 
+
         barrasRanking.forEach(
             function(barra) {
 
@@ -2696,6 +2858,7 @@ document.addEventListener(
                     barra.getAttribute(
                         'data-progresso'
                     ) || 0;
+
 
                 barra.style.width =
                     progresso + '%';
@@ -2705,9 +2868,9 @@ document.addEventListener(
 
     }
 );
+
+
 </script>
 
 
 {% endblock %}
-
-
