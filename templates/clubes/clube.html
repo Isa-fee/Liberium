@@ -13,190 +13,221 @@
 
 {% block content %}
 
-<section class="clube-conteudo">
+<main class="pagina-clube">
 
-    <!-- ========================================
-         NAVEGAÇÃO
-    ========================================= -->
+    <section class="clube-conteudo">
+        <!-- ========================================
+            NAVEGAÇÃO
+        ========================================= -->
 
-    <div class="clube-topo">
+        <div class="clube-topo">
 
-        <a
-            href="{{ url_for('clubes.listar_clubes') }}"
-            class="btn-voltar"
-        >
-            ← Voltar para clubes
-        </a>
+            <a
+                href="{{ url_for('clubes.listar_clubes') }}"
+                class="btn-voltar"
+            >
+                ← Voltar para clubes
+            </a>
 
-    </div>
-
-
-    <!-- ========================================
-         CABEÇALHO DO CLUBE
-    ========================================= -->
-
-    <div class="clube-header">
-
-        <div class="clube-header-principal">
-
-            <!-- AVATAR -->
-
-            <div class="clube-avatar">
-
-                {% if clube.imagem %}
-
-                    <img
-                        src="{{ url_for(
-                            'static',
-                            filename=clube.imagem
-                        ) }}"
-                        alt="{{ clube.nome }}"
-                    >
-
-                {% else %}
-
-                    <div class="clube-avatar-sem-imagem">
-                        {{ clube.nome[0] if clube.nome else '?' }}
-                    </div>
-
-                {% endif %}
-
-            </div>
+        </div>
 
 
-            <!-- INFORMAÇÕES -->
+        <!-- ========================================
+            CABEÇALHO DO CLUBE
+        ========================================= -->
 
-            <div class="clube-informacoes">
+        <div class="clube-header">
 
-                <div class="clube-titulo">
+            <div class="clube-header-principal">
 
-                    <h1>
-                        {{ clube.nome }}
-                    </h1>
+                <!-- AVATAR -->
 
-                    <span class="clube-status">
-                        Clube ativo
-                    </span>
+                <div class="clube-avatar">
 
-                    {% if clube.privado %}
+                    {% if clube.imagem %}
 
-                        <span class="clube-privacidade privado">
-                            🔒 Privado
-                        </span>
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename=clube.imagem
+                            ) }}"
+                            alt="{{ clube.nome }}"
+                        >
 
                     {% else %}
 
-                        <span class="clube-privacidade publico">
-                            Público
-                        </span>
+                        <div class="clube-avatar-sem-imagem">
+                            {{ clube.nome[0] if clube.nome else '?' }}
+                        </div>
 
                     {% endif %}
 
                 </div>
 
 
-                <p class="clube-meta">
+                <!-- INFORMAÇÕES -->
 
-                    {{ clube.quantidade_membros }}
+                <div class="clube-informacoes">
 
-                    {% if clube.quantidade_membros == 1 %}
-                        membro
-                    {% else %}
-                        membros
-                    {% endif %}
+                    <div class="clube-titulo">
 
-                    {% if clube.data_criacao %}
+                        <h1>
+                            {{ clube.nome }}
+                        </h1>
 
-                        • Criado em
-                        {{ clube.data_criacao.strftime('%d/%m/%Y') }}
-
-                    {% endif %}
-
-                </p>
-
-
-                <p class="clube-descricao">
-
-                    {{
-                        clube.descricao
-                        or 'Este clube ainda não possui uma descrição.'
-                    }}
-
-                </p>
-
-
-                {% if clube.livro %}
-
-                    <div class="leitura-atual">
-
-                        <span class="leitura-label">
-                            Leitura atual
+                        <span class="clube-status">
+                            Clube ativo
                         </span>
-
-                        <strong>
-                            {{ clube.livro.titulo }}
-                        </strong>
-
-                        <small>
-                            {{
-                                clube.livro.autor
-                                or 'Autor desconhecido'
-                            }}
-                        </small>
-
-                    </div>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-
-        <!-- ========================================
-             AÇÕES
-        ========================================= -->
-
-        <div class="clube-acoes">
-
-
-            <!-- CRIADOR -->
-
-            {% if usuario_eh_criador %}
-
-                <div class="painel-criador">
-
-                    <div class="painel-criador-texto">
-
-                        <span class="painel-criador-label">
-                            SEU CLUBE
-                        </span>
-
-                        <strong>
-                            Você é o criador
-                        </strong>
 
                         {% if clube.privado %}
 
-                            <small>
-                                Somente você pode convidar
-                                novos participantes.
-                            </small>
+                            <span class="clube-privacidade privado">
+                                🔒 Privado
+                            </span>
 
                         {% else %}
 
-                            <small>
-                                Este clube é público.
-                                Os participantes também podem
-                                convidar amigos.
-                            </small>
+                            <span class="clube-privacidade publico">
+                                Público
+                            </span>
 
                         {% endif %}
 
                     </div>
 
 
-                    <div class="painel-criador-acoes">
+                    <p class="clube-meta">
+
+                        {{ clube.quantidade_membros }}
+
+                        {% if clube.quantidade_membros == 1 %}
+                            membro
+                        {% else %}
+                            membros
+                        {% endif %}
+
+                        {% if clube.data_criacao %}
+
+                            • Criado em
+                            {{ clube.data_criacao.strftime('%d/%m/%Y') }}
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <p class="clube-descricao">
+
+                        {{
+                            clube.descricao
+                            or 'Este clube ainda não possui uma descrição.'
+                        }}
+
+                    </p>
+
+
+                    {% if clube.livro %}
+
+                        <div class="leitura-atual">
+
+                            <span class="leitura-label">
+                                Leitura atual
+                            </span>
+
+                            <strong>
+                                {{ clube.livro.titulo }}
+                            </strong>
+
+                            <small>
+                                {{
+                                    clube.livro.autor
+                                    or 'Autor desconhecido'
+                                }}
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                AÇÕES
+            ========================================= -->
+
+            <div class="clube-acoes">
+
+
+                <!-- CRIADOR -->
+
+                {% if usuario_eh_criador %}
+
+                    <div class="painel-criador">
+
+                        <div class="painel-criador-texto">
+
+                            <span class="painel-criador-label">
+                                SEU CLUBE
+                            </span>
+
+                            <strong>
+                                Você é o criador
+                            </strong>
+
+                            {% if clube.privado %}
+
+                                <small>
+                                    Somente você pode convidar
+                                    novos participantes.
+                                </small>
+
+                            {% else %}
+
+                                <small>
+                                    Este clube é público.
+                                    Os participantes também podem
+                                    convidar amigos.
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="painel-criador-acoes">
+
+                            <button
+                                type="button"
+                                class="btn-secundario btn-largura"
+                                onclick="abrirConvites()"
+                            >
+                                + Convidar amigos
+                            </button>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'clubes.gerenciar_clube',
+                                    clube_id=clube.id
+                                ) }}"
+                                class="btn-gerenciar-clube"
+                            >
+                                Gerenciar clube
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                <!-- PARTICIPANTE -->
+
+                {% elif usuario_eh_membro %}
+
+                    {% if not clube.privado %}
 
                         <button
                             type="button"
@@ -206,728 +237,1055 @@
                             + Convidar amigos
                         </button>
 
-
-                        <a
-                            href="{{ url_for(
-                                'clubes.gerenciar_clube',
-                                clube_id=clube.id
-                            ) }}"
-                            class="btn-gerenciar-clube"
-                        >
-                            Gerenciar clube
-                        </a>
-
-                    </div>
-
-                </div>
+                    {% endif %}
 
 
-            <!-- PARTICIPANTE -->
-
-            {% elif usuario_eh_membro %}
-
-                {% if not clube.privado %}
-
-                    <button
-                        type="button"
-                        class="btn-secundario btn-largura"
-                        onclick="abrirConvites()"
-                    >
-                        + Convidar amigos
-                    </button>
-
-                {% endif %}
-
-
-            <!-- VISITANTE -->
-
-            {% else %}
-
-                {% if clube.privado %}
-
-                    <div class="aviso-clube-privado">
-
-                        <strong>
-                            🔒 Clube privado
-                        </strong>
-
-                        <span>
-                            Você precisa receber um convite
-                            do criador para participar.
-                        </span>
-
-                    </div>
+                <!-- VISITANTE -->
 
                 {% else %}
 
-                    <form
-                        action="{{ url_for(
-                            'clubes.entrar_clube',
-                            clube_id=clube.id
-                        ) }}"
-                        method="POST"
-                    >
+                    {% if clube.privado %}
 
-                        <button
-                            type="submit"
-                            class="btn-primario btn-largura"
+                        <div class="aviso-clube-privado">
+
+                            <strong>
+                                🔒 Clube privado
+                            </strong>
+
+                            <span>
+                                Você precisa receber um convite
+                                do criador para participar.
+                            </span>
+
+                        </div>
+
+                    {% else %}
+
+                        <form
+                            action="{{ url_for(
+                                'clubes.entrar_clube',
+                                clube_id=clube.id
+                            ) }}"
+                            method="POST"
                         >
-                            Entrar no clube
-                        </button>
 
-                    </form>
+                            <button
+                                type="submit"
+                                class="btn-primario btn-largura"
+                            >
+                                Entrar no clube
+                            </button>
+
+                        </form>
+
+                    {% endif %}
 
                 {% endif %}
 
-            {% endif %}
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================================
-         CONVITES
-    ========================================= -->
-
-    {% if pode_convidar %}
-
-        <div
-            id="lista-convites"
-            class="lista-convites"
-            style="display: none;"
-        >
-
-            <div class="convites-cabecalho">
-
-                <div>
-
-                    <span class="convites-label">
-                        CONVITES
-                    </span>
-
-                    <h3>
-                        Convidar para {{ clube.nome }}
-                    </h3>
-
-
-                    {% if clube.privado %}
-
-                        <p>
-                            🔒 Este clube é privado.
-                            Somente você, como criador,
-                            pode convidar novos membros.
-                        </p>
-
-                    {% elif usuario_eh_criador %}
-
-                        <p>
-                            Este clube é público.
-                            Você e os outros participantes
-                            podem convidar amigos.
-                        </p>
-
-                    {% else %}
-
-                        <p>
-                            Convide um dos seus amigos
-                            para participar deste clube.
-                        </p>
-
-                    {% endif %}
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="btn-fechar-convites"
-                    onclick="fecharConvites()"
-                    aria-label="Fechar"
-                >
-                    ×
-                </button>
-
             </div>
 
-
-            {% if amigos %}
-
-                <div class="amigos-lista">
-
-                    {% for amigo in amigos %}
-
-                        <div class="amigo-convite">
-
-                            <div class="membro-avatar">
-
-                                {% if amigo.foto %}
-
-                                    <img
-                                        src="{{ url_for(
-                                            'static',
-                                            filename=amigo.foto
-                                        ) }}"
-                                        alt="{{ amigo.nome }}"
-                                    >
-
-                                {% else %}
-
-                                    {{
-                                        amigo.nome[0]
-                                        if amigo.nome
-                                        else '?'
-                                    }}
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <div class="membro-info">
-
-                                <strong>
-                                    {{ amigo.nome }}
-                                </strong>
-
-                                <span>
-                                    Amigo
-                                </span>
-
-                            </div>
-
-
-                            <form
-                                action="{{ url_for(
-                                    'clubes.enviar_convite',
-                                    clube_id=clube.id,
-                                    usuario_id=amigo.id
-                                ) }}"
-                                method="POST"
-                            >
-
-                                <button
-                                    type="submit"
-                                    class="btn-secundario"
-                                >
-                                    Convidar
-                                </button>
-
-                            </form>
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-            {% else %}
-
-                <div class="sem-amigos-convite">
-
-                    <p>
-                        Não há amigos disponíveis
-                        para convidar no momento.
-                    </p>
-
-                </div>
-
-            {% endif %}
-
         </div>
 
-    {% endif %}
 
+        <!-- ========================================
+            CONVITES
+        ========================================= -->
 
-    <!-- ========================================
-         ABAS
-    ========================================= -->
+        {% if pode_convidar %}
 
-    <nav class="clube-abas">
-
-        <button
-            type="button"
-            class="aba-btn ativo"
-            onclick="abrirAba(event, 'aba-livro')"
-        >
-            Sobre o livro
-        </button>
-
-        <button
-            type="button"
-            class="aba-btn"
-            onclick="abrirAba(event, 'aba-discussao')"
-        >
-            Discussões
-        </button>
-
-        <button
-            type="button"
-            class="aba-btn"
-            onclick="abrirAba(event, 'aba-participantes')"
-        >
-            Participantes
-        </button>
-
-    </nav>
-
-
-    <!-- ========================================
-         CONTEÚDO PRINCIPAL
-    ========================================= -->
-
-    <div class="clube-grid">
-
-        <main class="clube-principal">
-
-
-            <!-- ====================================
-                 SOBRE O LIVRO
-            ===================================== -->
-
-            <section
-                id="aba-livro"
-                class="aba-conteudo ativo"
+            <div
+                id="lista-convites"
+                class="lista-convites"
+                style="display: none;"
             >
 
-                <div class="card-clube">
+                <div class="convites-cabecalho">
 
-                    <h2>
-                        Sobre o livro
-                    </h2>
+                    <div>
 
+                        <span class="convites-label">
+                            CONVITES
+                        </span>
 
-                    {% if clube.livro %}
+                        <h3>
+                            Convidar para {{ clube.nome }}
+                        </h3>
 
-                        <div class="livro-container">
 
-                            <!-- CAPA -->
-
-                            <div class="livro-capa">
-
-                                {% if clube.livro.capa %}
-
-                                    {% if clube.livro.capa.startswith('http') %}
-
-                                        <img
-                                            src="{{ clube.livro.capa }}"
-                                            alt="{{ clube.livro.titulo }}"
-                                        >
-
-                                    {% else %}
-
-                                        <img
-                                            src="{{ url_for(
-                                                'static',
-                                                filename=clube.livro.capa
-                                            ) }}"
-                                            alt="{{ clube.livro.titulo }}"
-                                        >
-
-                                    {% endif %}
-
-                                {% else %}
-
-                                    <div class="livro-sem-capa">
-                                        Sem capa
-                                    </div>
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <!-- INFORMAÇÕES -->
-
-                            <div class="livro-informacoes">
-
-                                <h3>
-                                    {{ clube.livro.titulo }}
-                                </h3>
-
-                                <p class="livro-autor">
-
-                                    {{
-                                        clube.livro.autor
-                                        or 'Autor não informado'
-                                    }}
-
-                                </p>
-
-
-                                {% if clube.livro.genero %}
-
-                                    <span class="livro-genero">
-                                        {{ clube.livro.genero }}
-                                    </span>
-
-                                {% endif %}
-
-
-                                {% if clube.livro.descricao %}
-
-                                    <p class="livro-sinopse">
-                                        {{ clube.livro.descricao }}
-                                    </p>
-
-                                {% else %}
-
-                                    <p class="livro-sinopse">
-                                        Nenhuma descrição cadastrada
-                                        para este livro.
-                                    </p>
-
-                                {% endif %}
-
-
-                                <ul class="livro-especificacoes">
-
-                                    {% if clube.livro.paginas %}
-
-                                        <li>
-                                            <strong>Páginas:</strong>
-                                            {{ clube.livro.paginas }}
-                                        </li>
-
-                                    {% endif %}
-
-
-                                    {% if clube.livro.editora %}
-
-                                        <li>
-                                            <strong>Editora:</strong>
-                                            {{ clube.livro.editora }}
-                                        </li>
-
-                                    {% endif %}
-
-
-                                    {% if clube.livro.ano %}
-
-                                        <li>
-                                            <strong>Publicação:</strong>
-                                            {{ clube.livro.ano }}
-                                        </li>
-
-                                    {% endif %}
-
-
-                                    {% if clube.livro.idioma %}
-
-                                        <li>
-                                            <strong>Idioma:</strong>
-                                            {{ clube.livro.idioma }}
-                                        </li>
-
-                                    {% endif %}
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- ====================================
-                             AÇÕES DO LIVRO
-                        ===================================== -->
-
-                        <div class="livro-acoes">
-
-                            <a
-                                href="{{ url_for(
-                                    'books_bp.ver',
-                                    id=clube.livro.id
-                                ) }}"
-                                class="btn-secundario"
-                            >
-                                Ver no catálogo
-                            </a>
-
-
-                            <!-- ESCOLHER PRATELEIRA -->
-
-                            <form
-                                action="{{ url_for(
-                                    'books_bp.adicionar_estante',
-                                    livro_id=clube.livro.id
-                                ) }}"
-                                method="POST"
-                                class="form-adicionar-estante"
-                            >
-
-                                <select
-                                    name="status"
-                                    class="select-prateleira"
-                                    required
-                                >
-
-                                    <option value="" selected disabled>
-                                        Escolher prateleira
-                                    </option>
-
-                                    <option value="quero ler">
-                                        Quero ler
-                                    </option>
-
-                                    <option value="lendo">
-                                        Lendo
-                                    </option>
-
-                                    <option value="lido">
-                                        Lido
-                                    </option>
-
-                                </select>
-
-
-                                <button
-                                    type="submit"
-                                    class="btn-primario"
-                                >
-                                    Adicionar
-                                </button>
-
-                            </form>
-
-                        </div>
-
-
-                    {% else %}
-
-                        <div class="sem-livro">
-
-                            <h3>
-                                Nenhum livro selecionado
-                            </h3>
+                        {% if clube.privado %}
 
                             <p>
-                                Este clube ainda não possui
-                                uma leitura atual.
+                                🔒 Este clube é privado.
+                                Somente você, como criador,
+                                pode convidar novos membros.
                             </p>
 
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </section>
-
-
-            <!-- ====================================
-                 DISCUSSÕES
-            ===================================== -->
-
-            <section
-                id="aba-discussao"
-                class="aba-conteudo"
-            >
-
-                <div class="card-clube discussao-container">
-
-                    <!-- TOPO -->
-
-                    <div class="discussao-topo">
-
-                        <div>
-
-                            <span class="discussao-label">
-                                COMUNIDADE
-                            </span>
-
-                            <h2>
-                                Comentários e discussões
-                            </h2>
+                        {% elif usuario_eh_criador %}
 
                             <p>
-                                Compartilhe suas reflexões e converse
-                                com os membros sobre a leitura.
+                                Este clube é público.
+                                Você e os outros participantes
+                                podem convidar amigos.
                             </p>
 
-                        </div>
+                        {% else %}
 
-
-                        {% if usuario_eh_membro %}
-
-                            <button
-                                type="button"
-                                class="btn-novo-comentario"
-                                onclick="toggleFormComentario()"
-                            >
-                                + Novo comentário
-                            </button>
+                            <p>
+                                Convide um dos seus amigos
+                                para participar deste clube.
+                            </p>
 
                         {% endif %}
 
                     </div>
 
 
-                    <!-- ====================================
-                         FORMULÁRIO DE NOVA DISCUSSÃO
-                    ===================================== -->
+                    <button
+                        type="button"
+                        class="btn-fechar-convites"
+                        onclick="fecharConvites()"
+                        aria-label="Fechar"
+                    >
+                        ×
+                    </button>
 
-                    {% if usuario_eh_membro %}
+                </div>
 
-                        <div
-                            id="form-comentario-container"
-                            class="form-comentario-box"
-                            style="display: none;"
-                        >
 
-                            <div class="form-comentario-titulo">
+                {% if amigos %}
+
+                    <div class="amigos-lista">
+
+                        {% for amigo in amigos %}
+
+                            <div class="amigo-convite">
+
+                                <div class="membro-avatar">
+
+                                    {% if amigo.foto %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=amigo.foto
+                                            ) }}"
+                                            alt="{{ amigo.nome }}"
+                                        >
+
+                                    {% else %}
+
+                                        {{
+                                            amigo.nome[0]
+                                            if amigo.nome
+                                            else '?'
+                                        }}
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="membro-info">
+
+                                    <strong>
+                                        {{ amigo.nome }}
+                                    </strong>
+
+                                    <span>
+                                        Amigo
+                                    </span>
+
+                                </div>
+
+
+                                <form
+                                    action="{{ url_for(
+                                        'clubes.enviar_convite',
+                                        clube_id=clube.id,
+                                        usuario_id=amigo.id
+                                    ) }}"
+                                    method="POST"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn-secundario"
+                                    >
+                                        Convidar
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="sem-amigos-convite">
+
+                        <p>
+                            Não há amigos disponíveis
+                            para convidar no momento.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ========================================
+            ABAS
+        ========================================= -->
+
+        <nav class="clube-abas">
+
+            <button
+                type="button"
+                class="aba-btn ativo"
+                onclick="abrirAba(event, 'aba-livro')"
+            >
+                Sobre o livro
+            </button>
+
+            <button
+                type="button"
+                class="aba-btn"
+                onclick="abrirAba(event, 'aba-discussao')"
+            >
+                Discussões
+            </button>
+
+            <button
+                type="button"
+                class="aba-btn"
+                onclick="abrirAba(event, 'aba-participantes')"
+            >
+                Participantes
+            </button>
+
+        </nav>
+
+
+        <!-- ========================================
+            CONTEÚDO PRINCIPAL
+        ========================================= -->
+
+        <div class="clube-grid">
+
+            <main class="clube-principal">
+
+
+                <!-- ====================================
+                    SOBRE O LIVRO
+                ===================================== -->
+
+                <section
+                    id="aba-livro"
+                    class="aba-conteudo ativo"
+                >
+
+                    <div class="card-clube">
+
+                        <h2>
+                            Sobre o livro
+                        </h2>
+
+
+                        {% if clube.livro %}
+
+                            <div class="livro-container">
+
+                                <!-- CAPA -->
+
+                                <div class="livro-capa">
+
+                                    {% if clube.livro.capa %}
+
+                                        {% if clube.livro.capa.startswith('http') %}
+
+                                            <img
+                                                src="{{ clube.livro.capa }}"
+                                                alt="{{ clube.livro.titulo }}"
+                                            >
+
+                                        {% else %}
+
+                                            <img
+                                                src="{{ url_for(
+                                                    'static',
+                                                    filename=clube.livro.capa
+                                                ) }}"
+                                                alt="{{ clube.livro.titulo }}"
+                                            >
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <div class="livro-sem-capa">
+                                            Sem capa
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- INFORMAÇÕES -->
+
+                                <div class="livro-informacoes">
+
+                                    <h3>
+                                        {{ clube.livro.titulo }}
+                                    </h3>
+
+                                    <p class="livro-autor">
+
+                                        {{
+                                            clube.livro.autor
+                                            or 'Autor não informado'
+                                        }}
+
+                                    </p>
+
+
+                                    {% if clube.livro.genero %}
+
+                                        <span class="livro-genero">
+                                            {{ clube.livro.genero }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if clube.livro.descricao %}
+
+                                        <p class="livro-sinopse">
+                                            {{ clube.livro.descricao }}
+                                        </p>
+
+                                    {% else %}
+
+                                        <p class="livro-sinopse">
+                                            Nenhuma descrição cadastrada
+                                            para este livro.
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <ul class="livro-especificacoes">
+
+                                        {% if clube.livro.paginas %}
+
+                                            <li>
+                                                <strong>Páginas:</strong>
+                                                {{ clube.livro.paginas }}
+                                            </li>
+
+                                        {% endif %}
+
+
+                                        {% if clube.livro.editora %}
+
+                                            <li>
+                                                <strong>Editora:</strong>
+                                                {{ clube.livro.editora }}
+                                            </li>
+
+                                        {% endif %}
+
+
+                                        {% if clube.livro.ano %}
+
+                                            <li>
+                                                <strong>Publicação:</strong>
+                                                {{ clube.livro.ano }}
+                                            </li>
+
+                                        {% endif %}
+
+
+                                        {% if clube.livro.idioma %}
+
+                                            <li>
+                                                <strong>Idioma:</strong>
+                                                {{ clube.livro.idioma }}
+                                            </li>
+
+                                        {% endif %}
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ====================================
+                                AÇÕES DO LIVRO
+                            ===================================== -->
+
+                            <div class="livro-acoes">
+
+                                <a
+                                    href="{{ url_for(
+                                        'books_bp.ver',
+                                        id=clube.livro.id
+                                    ) }}"
+                                    class="btn-secundario"
+                                >
+                                    Ver no catálogo
+                                </a>
+
+
+                                <!-- ESCOLHER PRATELEIRA -->
+
+                                <div class="dropdown-estante">
+
+                                    <button
+                                        type="button"
+                                        class="btn-adicionar-estante"
+                                        onclick="toggleEstante(event)"
+                                    >
+                                        <span>Adicionar à estante</span>
+                                        <span class="seta-estante">⌄</span>
+                                    </button>
+                                
+                                    <div
+                                        id="menu-estante"
+                                        class="menu-estante"
+                                    >
+                                
+                                        <form
+                                            action="{{ url_for(
+                                                'books_bp.adicionar_estante',
+                                                livro_id=clube.livro.id
+                                            ) }}"
+                                            method="POST"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="status"
+                                                value="quero ler"
+                                            >
+                                
+                                            <button type="submit">
+                                                Quero ler
+                                            </button>
+                                        </form>
+                                
+                                
+                                        <form
+                                            action="{{ url_for(
+                                                'books_bp.adicionar_estante',
+                                                livro_id=clube.livro.id
+                                            ) }}"
+                                            method="POST"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="status"
+                                                value="lendo"
+                                            >
+                                
+                                            <button type="submit">
+                                                Lendo
+                                            </button>
+                                        </form>
+                                
+                                
+                                        <form
+                                            action="{{ url_for(
+                                                'books_bp.adicionar_estante',
+                                                livro_id=clube.livro.id
+                                            ) }}"
+                                            method="POST"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="status"
+                                                value="lido"
+                                            >
+                                
+                                            <button type="submit">
+                                                Lido
+                                            </button>
+                                        </form>
+                                
+                                    </div>
+                                
+                                </div>
+
+                            </div>
+
+
+                        {% else %}
+
+                            <div class="sem-livro">
 
                                 <h3>
-                                    Novo comentário
+                                    Nenhum livro selecionado
                                 </h3>
 
                                 <p>
-                                    Compartilhe o que você está pensando
-                                    sobre a leitura.
+                                    Este clube ainda não possui
+                                    uma leitura atual.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+
+                <!-- ====================================
+                    DISCUSSÕES
+                ===================================== -->
+
+                <section
+                    id="aba-discussao"
+                    class="aba-conteudo"
+                >
+
+                    <div class="card-clube discussao-container">
+
+                        <!-- TOPO -->
+
+                        <div class="discussao-topo">
+
+                            <div>
+
+                                <span class="discussao-label">
+                                    COMUNIDADE
+                                </span>
+
+                                <h2>
+                                    Comentários e discussões
+                                </h2>
+
+                                <p>
+                                    Compartilhe suas reflexões e converse
+                                    com os membros sobre a leitura.
                                 </p>
 
                             </div>
 
 
-                            <form
-                                action="{{ url_for(
-                                    'clubes.criar_discussao',
-                                    clube_id=clube.id
-                                ) }}"
-                                method="POST"
+                            {% if usuario_eh_membro %}
+
+                                <button
+                                    type="button"
+                                    class="btn-novo-comentario"
+                                    onclick="toggleFormComentario()"
+                                >
+                                    + Novo comentário
+                                </button>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ====================================
+                            FORMULÁRIO DE NOVA DISCUSSÃO
+                        ===================================== -->
+
+                        {% if usuario_eh_membro %}
+
+                            <div
+                                id="form-comentario-container"
+                                class="form-comentario-box"
+                                style="display: none;"
                             >
 
-                                <div class="form-grupo">
+                                <div class="form-comentario-titulo">
 
-                                    <label for="titulo">
-                                        Título
-                                        <span>(opcional)</span>
-                                    </label>
+                                    <h3>
+                                        Novo comentário
+                                    </h3>
 
-                                    <input
-                                        type="text"
-                                        id="titulo"
-                                        name="titulo"
-                                        placeholder="Ex: O que acharam do capítulo 3?"
-                                    >
+                                    <p>
+                                        Compartilhe o que você está pensando
+                                        sobre a leitura.
+                                    </p>
 
                                 </div>
 
 
-                                <div class="form-grupo">
+                                <form
+                                    action="{{ url_for(
+                                        'clubes.criar_discussao',
+                                        clube_id=clube.id
+                                    ) }}"
+                                    method="POST"
+                                >
 
-                                    <label for="conteudo">
-                                        Seu comentário
-                                    </label>
+                                    <div class="form-grupo">
 
-                                    <textarea
-                                        id="conteudo"
-                                        name="conteudo"
-                                        rows="5"
-                                        placeholder="Escreva sua opinião, dúvida, teoria ou reflexão..."
-                                        required
-                                    ></textarea>
+                                        <label for="titulo">
+                                            Título
+                                            <span>(opcional)</span>
+                                        </label>
 
+                                        <input
+                                            type="text"
+                                            id="titulo"
+                                            name="titulo"
+                                            placeholder="Ex: O que acharam do capítulo 3?"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-grupo">
+
+                                        <label for="conteudo">
+                                            Seu comentário
+                                        </label>
+
+                                        <textarea
+                                            id="conteudo"
+                                            name="conteudo"
+                                            rows="5"
+                                            placeholder="Escreva sua opinião, dúvida, teoria ou reflexão..."
+                                            required
+                                        ></textarea>
+
+                                    </div>
+
+
+                                    <div class="form-acoes">
+
+                                        <button
+                                            type="button"
+                                            class="btn-cancelar"
+                                            onclick="toggleFormComentario()"
+                                        >
+                                            Cancelar
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="btn-publicar"
+                                        >
+                                            Publicar comentário
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- ====================================
+                            DISCUSSÕES EXISTENTES
+                        ===================================== -->
+
+                        {% if discussoes %}
+
+                            <div class="discussoes-titulo">
+
+                                <h3>
+                                    Discussões recentes
+                                </h3>
+
+                                <span>
+
+                                    {{ discussoes|length }}
+
+                                    {% if discussoes|length == 1 %}
+                                        discussão
+                                    {% else %}
+                                        discussões
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="lista-discussoes">
+
+                                {% for discussao in discussoes %}
+
+                                    <article class="discussao-card">
+
+
+                                        <!-- ==============================
+                                            AUTOR DA DISCUSSÃO
+                                        =============================== -->
+
+                                        <div class="discussao-header">
+
+                                            <div class="autor-info">
+
+                                                <div class="autor-avatar">
+
+                                                    {% if discussao.usuario.foto %}
+
+                                                        <img
+                                                            src="{{ url_for(
+                                                                'static',
+                                                                filename=discussao.usuario.foto
+                                                            ) }}"
+                                                            alt="{{ discussao.usuario.nome }}"
+                                                        >
+
+                                                    {% else %}
+
+                                                        <span>
+
+                                                            {{
+                                                                discussao.usuario.nome[0]
+                                                                if discussao.usuario.nome
+                                                                else '?'
+                                                            }}
+
+                                                        </span>
+
+                                                    {% endif %}
+
+                                                </div>
+
+
+                                                <div class="autor-dados">
+
+                                                    <strong>
+                                                        {{ discussao.usuario.nome }}
+                                                    </strong>
+
+                                                    <span class="discussao-data">
+
+                                                        {{
+                                                            discussao.data_criacao.strftime(
+                                                                '%d/%m/%Y às %H:%M'
+                                                            )
+                                                        }}
+
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <!-- ==============================
+                                            CONTEÚDO
+                                        =============================== -->
+
+                                        <div class="discussao-corpo">
+
+                                            {% if discussao.titulo %}
+
+                                                <h4>
+                                                    {{ discussao.titulo }}
+                                                </h4>
+
+                                            {% endif %}
+
+
+                                            <p>
+                                                {{ discussao.conteudo }}
+                                            </p>
+
+                                        </div>
+
+
+                                        <!-- ==============================
+                                            BOTÃO RESPONDER
+                                        =============================== -->
+
+                                        {% if usuario_eh_membro %}
+
+                                            <div class="discussao-footer">
+
+                                                <button
+                                                    type="button"
+                                                    onclick="toggleResposta('{{ discussao.id }}')"
+                                                >
+                                                    Responder
+                                                </button>
+
+                                            </div>
+
+
+                                            <!-- ==========================
+                                                FORMULÁRIO DE RESPOSTA
+                                            =========================== -->
+
+                                            <div
+                                                id="form-resposta-{{ discussao.id }}"
+                                                class="form-resposta"
+                                                style="display: none;"
+                                            >
+
+                                                <form
+                                                    action="{{ url_for(
+                                                        'clubes.responder_discussao',
+                                                        clube_id=clube.id,
+                                                        discussao_id=discussao.id
+                                                    ) }}"
+                                                    method="POST"
+                                                >
+
+                                                    <textarea
+                                                        name="conteudo"
+                                                        rows="3"
+                                                        placeholder="Escreva sua resposta..."
+                                                        required
+                                                    ></textarea>
+
+
+                                                    <div class="form-resposta-acoes">
+
+                                                        <button
+                                                            type="button"
+                                                            class="btn-cancelar"
+                                                            onclick="toggleResposta('{{ discussao.id }}')"
+                                                        >
+                                                            Cancelar
+                                                        </button>
+
+
+                                                        <button
+                                                            type="submit"
+                                                            class="btn-publicar"
+                                                        >
+                                                            Responder
+                                                        </button>
+
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <!-- ==============================
+                                            RESPOSTAS
+                                        =============================== -->
+
+                                        {% if discussao.respostas %}
+
+                                            <div class="lista-respostas">
+
+                                                {% for resposta in discussao.respostas %}
+
+                                                    <div class="resposta-card">
+
+                                                        <div class="resposta-header">
+
+                                                            <div class="autor-avatar resposta-avatar">
+
+                                                                {% if resposta.usuario.foto %}
+
+                                                                    <img
+                                                                        src="{{ url_for(
+                                                                            'static',
+                                                                            filename=resposta.usuario.foto
+                                                                        ) }}"
+                                                                        alt="{{ resposta.usuario.nome }}"
+                                                                    >
+
+                                                                {% else %}
+
+                                                                    <span>
+
+                                                                        {{
+                                                                            resposta.usuario.nome[0]
+                                                                            if resposta.usuario.nome
+                                                                            else '?'
+                                                                        }}
+
+                                                                    </span>
+
+                                                                {% endif %}
+
+                                                            </div>
+
+
+                                                            <div class="autor-dados">
+
+                                                                <strong>
+                                                                    {{ resposta.usuario.nome }}
+                                                                </strong>
+
+                                                                <span class="discussao-data">
+
+                                                                    {{
+                                                                        resposta.data_criacao.strftime(
+                                                                            '%d/%m/%Y às %H:%M'
+                                                                        )
+                                                                    }}
+
+                                                                </span>
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <div class="resposta-conteudo">
+
+                                                            <p>
+                                                                {{ resposta.conteudo }}
+                                                            </p>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                {% endfor %}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </article>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                        {% else %}
+
+                            <!-- ====================================
+                                SEM DISCUSSÕES
+                            ===================================== -->
+
+                            <div class="sem-comentarios">
+
+                                <div class="sem-comentarios-icone">
+                                    💬
                                 </div>
 
+                                <h3>
+                                    Ainda não há discussões
+                                </h3>
 
-                                <div class="form-acoes">
+
+                                {% if usuario_eh_membro %}
+
+                                    <p>
+                                        Seja a primeira pessoa a compartilhar
+                                        uma reflexão sobre o livro.
+                                    </p>
 
                                     <button
                                         type="button"
-                                        class="btn-cancelar"
+                                        class="btn-vazio-comentario"
                                         onclick="toggleFormComentario()"
                                     >
-                                        Cancelar
+                                        Iniciar uma discussão
                                     </button>
 
-                                    <button
-                                        type="submit"
-                                        class="btn-publicar"
-                                    >
-                                        Publicar comentário
-                                    </button>
-
-                                </div>
-
-                            </form>
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <!-- ====================================
-                         DISCUSSÕES EXISTENTES
-                    ===================================== -->
-
-                    {% if clube.discussoes %}
-
-                        {% set discussoes_principais =
-                            clube.discussoes
-                            | selectattr('discussao_pai_id', 'none')
-                            | list
-                        %}
-
-
-                        <div class="discussoes-titulo">
-
-                            <h3>
-                                Discussões recentes
-                            </h3>
-
-                            <span>
-
-                                {{ discussoes_principais|length }}
-
-                                {% if discussoes_principais|length == 1 %}
-                                    discussão
                                 {% else %}
-                                    discussões
+
+                                    <p>
+                                        Participe do clube para iniciar
+                                        uma discussão.
+                                    </p>
+
                                 {% endif %}
 
-                            </span>
+                            </div>
 
-                        </div>
+                        {% endif %}
 
+                    </div>
 
-                        <div class="lista-discussoes">
-
-                            {% for discussao in discussoes_principais %}
-
-                                <article class="discussao-card">
+                </section>
 
 
-                                    <!-- ==============================
-                                         AUTOR DA DISCUSSÃO
-                                    =============================== -->
+                <!-- ====================================
+                    PARTICIPANTES
+                ===================================== -->
 
-                                    <div class="discussao-header">
+                <section
+                    id="aba-participantes"
+                    class="aba-conteudo"
+                >
 
-                                        <div class="autor-info">
+                    <div class="grid-participantes">
 
-                                            <div class="autor-avatar">
+                        {% if membros %}
 
-                                                {% if discussao.usuario.foto %}
+                            {% for membro in membros %}
 
-                                                    <img
-                                                        src="{{ url_for(
-                                                            'static',
-                                                            filename=discussao.usuario.foto
-                                                        ) }}"
-                                                        alt="{{ discussao.usuario.nome }}"
-                                                    >
+                                <div class="card-participante">
 
-                                                {% else %}
+                                    <div class="participante-header">
 
-                                                    <span>
+                                        <div class="participante-avatar">
 
-                                                        {{
-                                                            discussao.usuario.nome[0]
-                                                            if discussao.usuario.nome
-                                                            else '?'
-                                                        }}
+                                            {% if membro.usuario.foto %}
 
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=membro.usuario.foto
+                                                    ) }}"
+                                                    alt="{{ membro.usuario.nome }}"
+                                                >
+
+                                            {% else %}
+
+                                                <span>
+
+                                                    {{
+                                                        membro.usuario.nome[0]
+                                                        if membro.usuario.nome
+                                                        else '?'
+                                                    }}
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="participante-info">
+
+                                            <div class="participante-nome-linha">
+
+                                                <h4>
+                                                    {{ membro.usuario.nome }}
+                                                </h4>
+
+
+                                                {% if membro.usuario_id == current_user.id %}
+
+                                                    <span class="badge-voces">
+                                                        você
+                                                    </span>
+
+                                                {% endif %}
+
+
+                                                {% if membro.usuario_id == clube.usuario_id %}
+
+                                                    <span class="badge-criador">
+                                                        Criador
                                                     </span>
 
                                                 {% endif %}
@@ -935,19 +1293,30 @@
                                             </div>
 
 
-                                            <div class="autor-dados">
+                                            <div class="participante-stats">
 
-                                                <strong>
-                                                    {{ discussao.usuario.nome }}
-                                                </strong>
-
-                                                <span class="discussao-data">
+                                                <span class="stat-badge stat-progresso">
 
                                                     {{
-                                                        discussao.data_criacao.strftime(
-                                                            '%d/%m/%Y às %H:%M'
-                                                        )
+                                                        membro.progresso_percentual
+                                                        or 0
+                                                    }}%
+
+                                                </span>
+
+
+                                                <span class="stat-badge stat-atualizacoes">
+
+                                                    {{
+                                                        membro.total_atualizacoes
+                                                        or 0
                                                     }}
+
+                                                    {% if (membro.total_atualizacoes or 0) == 1 %}
+                                                        atualização
+                                                    {% else %}
+                                                        atualizações
+                                                    {% endif %}
 
                                                 </span>
 
@@ -957,258 +1326,187 @@
 
                                     </div>
 
-
-                                    <!-- ==============================
-                                         CONTEÚDO
-                                    =============================== -->
-
-                                    <div class="discussao-corpo">
-
-                                        {% if discussao.titulo %}
-
-                                            <h4>
-                                                {{ discussao.titulo }}
-                                            </h4>
-
-                                        {% endif %}
-
-
-                                        <p>
-                                            {{ discussao.conteudo }}
-                                        </p>
-
-                                    </div>
-
-
-                                    <!-- ==============================
-                                         BOTÃO RESPONDER
-                                    =============================== -->
-
-                                    {% if usuario_eh_membro %}
-
-                                        <div class="discussao-footer">
-
-                                            <button
-                                                type="button"
-                                                onclick="toggleResposta('{{ discussao.id }}')"
-                                            >
-                                                Responder
-                                            </button>
-
-                                        </div>
-
-
-                                        <!-- ==========================
-                                             FORMULÁRIO DE RESPOSTA
-                                        =========================== -->
-
-                                        <div
-                                            id="form-resposta-{{ discussao.id }}"
-                                            class="form-resposta"
-                                            style="display: none;"
-                                        >
-
-                                            <form
-                                                action="{{ url_for(
-                                                    'clubes.responder_discussao',
-                                                    clube_id=clube.id,
-                                                    discussao_id=discussao.id
-                                                ) }}"
-                                                method="POST"
-                                            >
-
-                                                <textarea
-                                                    name="conteudo"
-                                                    rows="3"
-                                                    placeholder="Escreva sua resposta..."
-                                                    required
-                                                ></textarea>
-
-
-                                                <div class="form-resposta-acoes">
-
-                                                    <button
-                                                        type="button"
-                                                        class="btn-cancelar"
-                                                        onclick="toggleResposta('{{ discussao.id }}')"
-                                                    >
-                                                        Cancelar
-                                                    </button>
-
-
-                                                    <button
-                                                        type="submit"
-                                                        class="btn-publicar"
-                                                    >
-                                                        Responder
-                                                    </button>
-
-                                                </div>
-
-                                            </form>
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    <!-- ==============================
-                                         RESPOSTAS
-                                    =============================== -->
-
-                                    {% if discussao.respostas %}
-
-                                        <div class="lista-respostas">
-
-                                            {% for resposta in discussao.respostas %}
-
-                                                <div class="resposta-card">
-
-                                                    <div class="resposta-header">
-
-                                                        <div class="autor-avatar resposta-avatar">
-
-                                                            {% if resposta.usuario.foto %}
-
-                                                                <img
-                                                                    src="{{ url_for(
-                                                                        'static',
-                                                                        filename=resposta.usuario.foto
-                                                                    ) }}"
-                                                                    alt="{{ resposta.usuario.nome }}"
-                                                                >
-
-                                                            {% else %}
-
-                                                                <span>
-
-                                                                    {{
-                                                                        resposta.usuario.nome[0]
-                                                                        if resposta.usuario.nome
-                                                                        else '?'
-                                                                    }}
-
-                                                                </span>
-
-                                                            {% endif %}
-
-                                                        </div>
-
-
-                                                        <div class="autor-dados">
-
-                                                            <strong>
-                                                                {{ resposta.usuario.nome }}
-                                                            </strong>
-
-                                                            <span class="discussao-data">
-
-                                                                {{
-                                                                    resposta.data_criacao.strftime(
-                                                                        '%d/%m/%Y às %H:%M'
-                                                                    )
-                                                                }}
-
-                                                            </span>
-
-                                                        </div>
-
-                                                    </div>
-
-
-                                                    <div class="resposta-conteudo">
-
-                                                        <p>
-                                                            {{ resposta.conteudo }}
-                                                        </p>
-
-                                                    </div>
-
-                                                </div>
-
-                                            {% endfor %}
-
-                                        </div>
-
-                                    {% endif %}
-
-                                </article>
+                                </div>
 
                             {% endfor %}
 
+                        {% else %}
+
+                            <div class="sem-participantes">
+
+                                <p>
+                                    Ainda não há participantes.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+            </main>
+
+
+            <!-- ========================================
+                SIDEBAR
+            ========================================= -->
+
+            <aside class="clube-sidebar">
+
+
+                <!-- ====================================
+                    PROGRESSO
+                ===================================== -->
+
+                <div class="card-clube progresso-card">
+
+                    <h3>
+                        Progresso da leitura
+                    </h3>
+
+                    <p class="card-subtitulo">
+                        Acompanhe seu progresso durante a leitura.
+                    </p>
+
+
+                    {% if clube.livro %}
+
+
+                        {% set progresso_user = namespace(
+                            paginas=0,
+                            percentual=0
+                        ) %}
+
+
+                        {% for membro in membros %}
+
+                            {% if membro.usuario_id == current_user.id %}
+
+                                {% set progresso_user.paginas =
+                                    membro.paginas_lidas or 0
+                                %}
+
+                                {% set progresso_user.percentual =
+                                    membro.progresso_percentual or 0
+                                %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        <div class="progresso-info">
+
+                            <span class="progresso-porcentagem">
+                                {{ progresso_user.percentual }}%
+                            </span>
+
+                            <small class="progresso-paginas">
+
+                                {{ progresso_user.paginas }}
+
+                                de
+
+                                {{ clube.livro.paginas or '?' }}
+
+                                pág.
+
+                            </small>
+
                         </div>
+
+
+                        <div class="barra-progresso">
+
+                            <div
+                                class="barra-progresso-preenchida"
+                                data-progresso="{{ progresso_user.percentual }}"
+                            ></div>
+
+                        </div>
+
+
+                        {% if usuario_eh_membro %}
+
+                            <button
+                                type="button"
+                                class="btn-secundario btn-largura"
+                                onclick="abrirModalProgresso()"
+                            >
+                                Atualizar progresso
+                            </button>
+
+                        {% elif clube.privado %}
+
+                            <p class="aviso-participacao">
+                                🔒 Você precisa participar do clube
+                                para registrar seu progresso.
+                            </p>
+
+                        {% else %}
+
+                            <p class="aviso-participacao">
+                                Entre no clube para registrar
+                                seu progresso.
+                            </p>
+
+                        {% endif %}
 
 
                     {% else %}
 
-                        <!-- ====================================
-                             SEM DISCUSSÕES
-                        ===================================== -->
-
-                        <div class="sem-comentarios">
-
-                            <div class="sem-comentarios-icone">
-                                💬
-                            </div>
-
-                            <h3>
-                                Ainda não há discussões
-                            </h3>
-
-
-                            {% if usuario_eh_membro %}
-
-                                <p>
-                                    Seja a primeira pessoa a compartilhar
-                                    uma reflexão sobre o livro.
-                                </p>
-
-                                <button
-                                    type="button"
-                                    class="btn-vazio-comentario"
-                                    onclick="toggleFormComentario()"
-                                >
-                                    Iniciar uma discussão
-                                </button>
-
-                            {% else %}
-
-                                <p>
-                                    Participe do clube para iniciar
-                                    uma discussão.
-                                </p>
-
-                            {% endif %}
-
-                        </div>
+                        <p class="sem-progresso">
+                            Este clube ainda não possui
+                            uma leitura atual.
+                        </p>
 
                     {% endif %}
 
                 </div>
 
-            </section>
 
+                <!-- ====================================
+                    PARTICIPANTES DA SIDEBAR
+                ===================================== -->
 
-            <!-- ====================================
-                 PARTICIPANTES
-            ===================================== -->
+                <div class="card-clube">
 
-            <section
-                id="aba-participantes"
-                class="aba-conteudo"
-            >
+                    <div class="sidebar-cabecalho">
 
-                <div class="grid-participantes">
+                        <div>
+
+                            <h3>
+                                Participantes
+                            </h3>
+
+                            <span>
+
+                                {{ clube.quantidade_membros }}
+
+                                {% if clube.quantidade_membros == 1 %}
+                                    membro
+                                {% else %}
+                                    membros
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
 
                     {% if membros %}
 
-                        {% for membro in membros %}
+                        <div class="sidebar-membros">
 
-                            <div class="card-participante">
+                            {% for membro in membros %}
 
-                                <div class="participante-header">
+                                <div class="sidebar-membro">
 
-                                    <div class="participante-avatar">
+                                    <div class="membro-avatar">
 
                                         {% if membro.usuario.foto %}
 
@@ -1222,94 +1520,43 @@
 
                                         {% else %}
 
-                                            <span>
-
-                                                {{
-                                                    membro.usuario.nome[0]
-                                                    if membro.usuario.nome
-                                                    else '?'
-                                                }}
-
-                                            </span>
+                                            {{
+                                                membro.usuario.nome[0]
+                                                if membro.usuario.nome
+                                                else '?'
+                                            }}
 
                                         {% endif %}
 
                                     </div>
 
 
-                                    <div class="participante-info">
+                                    <div class="membro-info">
 
-                                        <div class="participante-nome-linha">
-
-                                            <h4>
-                                                {{ membro.usuario.nome }}
-                                            </h4>
+                                        <strong>
+                                            {{ membro.usuario.nome }}
+                                        </strong>
 
 
-                                            {% if membro.usuario_id == current_user.id %}
+                                        {% if membro.usuario_id == clube.usuario_id %}
 
-                                                <span class="badge-voces">
-                                                    você
-                                                </span>
-
-                                            {% endif %}
-
-
-                                            {% if membro.usuario_id == clube.usuario_id %}
-
-                                                <span class="badge-criador">
-                                                    Criador
-                                                </span>
-
-                                            {% endif %}
-
-                                        </div>
-
-
-                                        <div class="participante-stats">
-
-                                            <span class="stat-badge stat-progresso">
-
-                                                {{
-                                                    membro.progresso_percentual
-                                                    or 0
-                                                }}%
-
+                                            <span>
+                                                Criador
                                             </span>
 
+                                        {% else %}
 
-                                            <span class="stat-badge stat-atualizacoes">
-
-                                                {{
-                                                    membro.total_atualizacoes
-                                                    or 0
-                                                }}
-
-                                                {% if (membro.total_atualizacoes or 0) == 1 %}
-                                                    atualização
-                                                {% else %}
-                                                    atualizações
-                                                {% endif %}
-
+                                            <span>
+                                                Membro
                                             </span>
 
-                                        </div>
+                                        {% endif %}
 
                                     </div>
 
                                 </div>
 
-                            </div>
-
-                        {% endfor %}
-
-                    {% else %}
-
-                        <div class="sem-participantes">
-
-                            <p>
-                                Ainda não há participantes.
-                            </p>
+                            {% endfor %}
 
                         </div>
 
@@ -1317,365 +1564,340 @@
 
                 </div>
 
-            </section>
+            </aside>
 
-        </main>
+        </div>
 
 
         <!-- ========================================
-             SIDEBAR
+            DICA
         ========================================= -->
 
-        <aside class="clube-sidebar">
+        <!-- ========================================
+     ANOTAÇÕES DA LEITURA
+========================================= -->
 
+    {% if usuario_eh_membro and clube.livro %}
 
-            <!-- ====================================
-                 PROGRESSO
-            ===================================== -->
+        <div class="dica-clube">
 
-            <div class="card-clube progresso-card">
+            <div>
 
-                <h3>
-                    Progresso da leitura
-                </h3>
+                <strong>
+                    Anotações da leitura
+                </strong>
 
-                <p class="card-subtitulo">
-                    Acompanhe seu progresso durante a leitura.
+                <p>
+                    Guarde pensamentos, trechos e observações
+                    sobre sua leitura.
                 </p>
 
+            </div>
 
-                {% if clube.livro %}
+            <button
+                type="button"
+                class="btn-secundario"
+                onclick="abrirModalAnotacao()"
+            >
+                + Criar anotação
+            </button>
 
-
-                    {% set progresso_user = namespace(
-                        paginas=0,
-                        percentual=0
-                    ) %}
-
-
-                    {% for membro in membros %}
-
-                        {% if membro.usuario_id == current_user.id %}
-
-                            {% set progresso_user.paginas =
-                                membro.paginas_lidas or 0
-                            %}
-
-                            {% set progresso_user.percentual =
-                                membro.progresso_percentual or 0
-                            %}
-
-                        {% endif %}
-
-                    {% endfor %}
+        </div>
 
 
-                    <div class="progresso-info">
+    <!-- ========================================
+         ANOTAÇÕES SALVAS
+    ========================================= -->
 
-                        <span class="progresso-porcentagem">
-                            {{ progresso_user.percentual }}%
-                        </span>
+    {% if anotacoes %}
 
-                        <small class="progresso-paginas">
+        <div class="anotacoes-clube">
 
-                            {{ progresso_user.paginas }}
+            <div class="anotacoes-cabecalho">
 
-                            de
+                <div>
 
-                            {{ clube.livro.paginas or '?' }}
+                    <span class="anotacoes-label">
+                        SUAS ANOTAÇÕES
+                    </span>
 
-                            pág.
+                    <h2>
+                        Durante a leitura
+                    </h2>
 
-                        </small>
+                </div>
 
-                    </div>
+                <span class="anotacoes-quantidade">
+                    {{ anotacoes|length }}
 
-
-                    <div class="barra-progresso">
-
-                        <div
-                            class="barra-progresso-preenchida"
-                            data-progresso="{{ progresso_user.percentual }}"
-                        ></div>
-
-                    </div>
-
-
-                    {% if usuario_eh_membro %}
-
-                        <button
-                            type="button"
-                            class="btn-secundario btn-largura"
-                            onclick="abrirModalProgresso()"
-                        >
-                            Atualizar progresso
-                        </button>
-
-                    {% elif clube.privado %}
-
-                        <p class="aviso-participacao">
-                            🔒 Você precisa participar do clube
-                            para registrar seu progresso.
-                        </p>
-
+                    {% if anotacoes|length == 1 %}
+                        anotação
                     {% else %}
-
-                        <p class="aviso-participacao">
-                            Entre no clube para registrar
-                            seu progresso.
-                        </p>
-
+                        anotações
                     {% endif %}
-
-
-                {% else %}
-
-                    <p class="sem-progresso">
-                        Este clube ainda não possui
-                        uma leitura atual.
-                    </p>
-
-                {% endif %}
+                </span>
 
             </div>
 
 
-            <!-- ====================================
-                 PARTICIPANTES DA SIDEBAR
-            ===================================== -->
+            <div class="lista-anotacoes">
 
-            <div class="card-clube">
+                {% for anotacao in anotacoes %}
 
-                <div class="sidebar-cabecalho">
+                    <article class="anotacao-card">
 
-                    <div>
+                        <div class="anotacao-card-topo">
 
-                        <h3>
-                            Participantes
-                        </h3>
+                            <h3>
+                                {{ anotacao.titulo }}
+                            </h3>
 
-                        <span>
+                            <span>
+                                {{
+                                    anotacao.data_criacao.strftime(
+                                        '%d/%m/%Y às %H:%M'
+                                    )
+                                }}
+                            </span>
 
-                            {{ clube.quantidade_membros }}
+                        </div>
 
-                            {% if clube.quantidade_membros == 1 %}
-                                membro
-                            {% else %}
-                                membros
-                            {% endif %}
+                        <p>
+                            {{ anotacao.conteudo }}
+                        </p>
 
-                        </span>
+                    </article>
 
-                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+    </section>
+
+</main>
+
+    <!-- ========================================
+        MODAL DE PROGRESSO
+    ========================================= -->
+
+    {% if usuario_eh_membro %}
+
+        <div
+            id="modal-progresso"
+            class="modal-overlay"
+        >
+
+            <div class="modal-card">
+
+                <div class="modal-header">
+
+                    <h3>
+                        Atualizar progresso
+                    </h3>
+
+                    <button
+                        type="button"
+                        class="btn-fechar"
+                        onclick="fecharModalProgresso()"
+                    >
+                        ×
+                    </button>
 
                 </div>
 
 
-                {% if membros %}
+                <form
+                    action="{{ url_for(
+                        'clubes.atualizar_progresso',
+                        clube_id=clube.id
+                    ) }}"
+                    method="POST"
+                >
 
-                    <div class="sidebar-membros">
+                    <div class="form-grupo">
 
-                        {% for membro in membros %}
+                        <label for="paginas_lidas">
+                            Em qual página você está?
+                        </label>
 
-                            <div class="sidebar-membro">
-
-                                <div class="membro-avatar">
-
-                                    {% if membro.usuario.foto %}
-
-                                        <img
-                                            src="{{ url_for(
-                                                'static',
-                                                filename=membro.usuario.foto
-                                            ) }}"
-                                            alt="{{ membro.usuario.nome }}"
-                                        >
-
-                                    {% else %}
-
-                                        {{
-                                            membro.usuario.nome[0]
-                                            if membro.usuario.nome
-                                            else '?'
-                                        }}
-
-                                    {% endif %}
-
-                                </div>
-
-
-                                <div class="membro-info">
-
-                                    <strong>
-                                        {{ membro.usuario.nome }}
-                                    </strong>
+                        <input
+                            type="number"
+                            id="paginas_lidas"
+                            name="paginas_lidas"
+                            min="0"
+                            max="{{
+                                clube.livro.paginas
+                                if clube.livro and clube.livro.paginas
+                                else 9999
+                            }}"
+                            value="{{
+                                progresso_user.paginas
+                                if progresso_user is defined
+                                else 0
+                            }}"
+                            placeholder="Ex: 42"
+                            required
+                        >
 
 
-                                    {% if membro.usuario_id == clube.usuario_id %}
+                        {% if clube.livro and clube.livro.paginas %}
 
-                                        <span>
-                                            Criador
-                                        </span>
+                            <small>
+                                Total de páginas do livro:
+                                {{ clube.livro.paginas }}
+                            </small>
 
-                                    {% else %}
-
-                                        <span>
-                                            Membro
-                                        </span>
-
-                                    {% endif %}
-
-                                </div>
-
-                            </div>
-
-                        {% endfor %}
+                        {% endif %}
 
                     </div>
 
-                {% endif %}
+
+                    <div class="modal-acoes">
+
+                        <button
+                            type="button"
+                            class="btn-secundario"
+                            onclick="fecharModalProgresso()"
+                        >
+                            Cancelar
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn-primario"
+                        >
+                            Salvar progresso
+                        </button>
+
+                    </div>
+
+                </form>
 
             </div>
 
-        </aside>
+        </div>
 
-    </div>
+{% endif %}
 
+<!-- ========================================
+     MODAL DE ANOTAÇÃO
+========================================= -->
 
-    <!-- ========================================
-         DICA
-    ========================================= -->
+{% if usuario_eh_membro and clube.livro %}
 
-    <div class="dica-clube">
+<div
+    id="modal-anotacao"
+    class="modal-overlay"
+>
 
-        <div>
+    <div class="modal-card modal-anotacao-card">
 
-            <strong>
-                Dica do clube
-            </strong>
+        <div class="modal-header">
 
-            <p>
-                Anote suas partes favoritas para
-                compartilhar durante a leitura.
-            </p>
+            <div>
+
+                <span class="modal-label">
+                    ANOTAÇÃO PESSOAL
+                </span>
+
+                <h3>
+                    Nova anotação
+                </h3>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-fechar"
+                onclick="fecharModalAnotacao()"
+            >
+                ×
+            </button>
 
         </div>
 
-        <button
-            type="button"
-            class="btn-secundario"
+
+        <p class="modal-anotacao-subtitulo">
+            Registre algo que chamou sua atenção durante
+            a leitura de <strong>{{ clube.livro.titulo }}</strong>.
+        </p>
+
+
+        <form
+            action="{{ url_for(
+                'clubes.criar_anotacao',
+                clube_id=clube.id
+            ) }}"
+            method="POST"
         >
-            Criar anotação
-        </button>
 
-    </div>
+            <div class="form-grupo">
 
-</section>
+                <label for="anotacao-titulo">
+                    Título
+                </label>
+
+                <input
+                    type="text"
+                    id="anotacao-titulo"
+                    name="titulo"
+                    maxlength="150"
+                    placeholder="Ex: Capítulo que mais gostei"
+                    required
+                >
+
+            </div>
 
 
-<!-- ========================================
-     MODAL DE PROGRESSO
-========================================= -->
+            <div class="form-grupo">
 
-{% if usuario_eh_membro %}
+                <label for="anotacao-conteudo">
+                    Anotação
+                </label>
 
-    <div
-        id="modal-progresso"
-        class="modal-overlay"
-    >
+                <textarea
+                    id="anotacao-conteudo"
+                    name="conteudo"
+                    rows="6"
+                    placeholder="Escreva sua anotação..."
+                    required
+                ></textarea>
 
-        <div class="modal-card">
+            </div>
 
-            <div class="modal-header">
 
-                <h3>
-                    Atualizar progresso
-                </h3>
+            <div class="modal-acoes">
 
                 <button
                     type="button"
-                    class="btn-fechar"
-                    onclick="fecharModalProgresso()"
+                    class="btn-secundario"
+                    onclick="fecharModalAnotacao()"
                 >
-                    ×
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-primario"
+                >
+                    Salvar anotação
                 </button>
 
             </div>
 
-
-            <form
-                action="{{ url_for(
-                    'clubes.atualizar_progresso',
-                    clube_id=clube.id
-                ) }}"
-                method="POST"
-            >
-
-                <div class="form-grupo">
-
-                    <label for="paginas_lidas">
-                        Em qual página você está?
-                    </label>
-
-                    <input
-                        type="number"
-                        id="paginas_lidas"
-                        name="paginas_lidas"
-                        min="0"
-                        max="{{
-                            clube.livro.paginas
-                            if clube.livro and clube.livro.paginas
-                            else 9999
-                        }}"
-                        value="{{
-                            progresso_user.paginas
-                            if progresso_user is defined
-                            else 0
-                        }}"
-                        placeholder="Ex: 42"
-                        required
-                    >
-
-
-                    {% if clube.livro and clube.livro.paginas %}
-
-                        <small>
-                            Total de páginas do livro:
-                            {{ clube.livro.paginas }}
-                        </small>
-
-                    {% endif %}
-
-                </div>
-
-
-                <div class="modal-acoes">
-
-                    <button
-                        type="button"
-                        class="btn-secundario"
-                        onclick="fecharModalProgresso()"
-                    >
-                        Cancelar
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn-primario"
-                    >
-                        Salvar progresso
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
-{% endif %}
+</div>
 
+{% endif %}
 
 <!-- ========================================
      JAVASCRIPT
@@ -1961,7 +2183,114 @@ document.addEventListener(
 
     }
 );
+// ==========================================
+// DROPDOWN DA ESTANTE
+// ==========================================
 
+function toggleEstante(event) {
+
+event.stopPropagation();
+
+const dropdown =
+    event.currentTarget.closest(
+        '.dropdown-estante'
+    );
+
+if (!dropdown) {
+    return;
+}
+
+dropdown.classList.toggle('aberto');
+}
+
+
+// Fecha clicando fora
+
+document.addEventListener(
+'click',
+function(event) {
+
+    document
+        .querySelectorAll(
+            '.dropdown-estante.aberto'
+        )
+        .forEach(function(dropdown) {
+
+            if (!dropdown.contains(event.target)) {
+
+                dropdown.classList.remove(
+                    'aberto'
+                );
+
+            }
+
+        });
+
+}
+);
+
+// ==========================================
+// MODAL DE ANOTAÇÃO
+// ==========================================
+
+function abrirModalAnotacao() {
+
+const modal =
+    document.getElementById(
+        'modal-anotacao'
+    );
+
+if (!modal) {
+    return;
+}
+
+modal.classList.add('ativo');
+
+const titulo =
+    document.getElementById(
+        'anotacao-titulo'
+    );
+
+if (titulo) {
+    titulo.focus();
+}
+}
+
+
+function fecharModalAnotacao() {
+
+const modal =
+    document.getElementById(
+        'modal-anotacao'
+    );
+
+if (modal) {
+    modal.classList.remove('ativo');
+}
+}
+
+
+// Fechar clicando fora
+
+const modalAnotacao =
+document.getElementById(
+    'modal-anotacao'
+);
+
+if (modalAnotacao) {
+
+modalAnotacao.addEventListener(
+    'click',
+    function(event) {
+
+        if (event.target === this) {
+            fecharModalAnotacao();
+        }
+
+    }
+);
+
+}
 
 </script>
 

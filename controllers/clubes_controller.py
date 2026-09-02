@@ -32,7 +32,8 @@ from models import (
     MembroClube,
     Amizade,
     Usuario,
-    ConviteClube
+    ConviteClube,
+    Anotacao
 )
 
 
@@ -558,6 +559,27 @@ def ver_clube(clube_id):
         .all()
     )
 
+        # =====================================================
+    # ANOTAÇÕES PESSOAIS DO USUÁRIO
+    # =====================================================
+
+    anotacoes = []
+
+    if clube.livro:
+
+        anotacoes = (
+            Anotacao.query
+            .filter_by(
+                usuario_id=current_user.id,
+                clube_id=clube.id,
+                livro_id=clube.livro.id
+            )
+            .order_by(
+                Anotacao.data_criacao.desc()
+            )
+            .all()
+        )
+
     return render_template(
         'clubes/clube.html',
 
@@ -573,7 +595,9 @@ def ver_clube(clube_id):
 
         usuario_eh_membro=usuario_eh_membro,
 
-        pode_convidar=pode_convidar
+        pode_convidar=pode_convidar,
+
+        anotacoes=anotacoes
     )
 
 
@@ -1527,6 +1551,137 @@ def atualizar_progresso(clube_id):
         )
     )
 
+# =========================================================
+# CRIAR ANOTAÇÃO DA LEITURA
+# =========================================================
+
+@clubes_bp.route(
+    '/<int:clube_id>/criar-anotacao',
+    methods=['POST']
+)
+@login_required
+def criar_anotacao(clube_id):
+
+    clube = Clube.query.get_or_404(
+        clube_id
+    )
+
+    # =====================================================
+    # SOMENTE MEMBROS
+    # =====================================================
+
+    membro = (
+        MembroClube.query
+        .filter_by(
+            clube_id=clube.id,
+            usuario_id=current_user.id
+        )
+        .first()
+    )
+
+    if not membro:
+
+        flash(
+            'Você precisa participar do clube para criar anotações.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # =====================================================
+    # PRECISA EXISTIR UMA LEITURA
+    # =====================================================
+
+    if not clube.livro:
+
+        flash(
+            'Este clube ainda não possui uma leitura.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # =====================================================
+    # DADOS
+    # =====================================================
+
+    titulo = request.form.get(
+        'titulo',
+        ''
+    ).strip()
+
+    conteudo = request.form.get(
+        'conteudo',
+        ''
+    ).strip()
+
+    if not titulo:
+
+        flash(
+            'Digite um título para a anotação.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    if not conteudo:
+
+        flash(
+            'Escreva alguma coisa na anotação.',
+            'erro'
+        )
+
+        return redirect(
+            url_for(
+                'clubes.ver_clube',
+                clube_id=clube.id
+            )
+        )
+
+    # =====================================================
+    # CRIAR
+    # =====================================================
+
+    nova_anotacao = Anotacao(
+        usuario_id=current_user.id,
+        clube_id=clube.id,
+        livro_id=clube.livro.id,
+        titulo=titulo,
+        conteudo=conteudo
+    )
+
+    db.session.add(
+        nova_anotacao
+    )
+
+    db.session.commit()
+
+    flash(
+        'Anotação salva!',
+        'sucesso'
+    )
+
+    return redirect(
+        url_for(
+            'clubes.ver_clube',
+            clube_id=clube.id
+        )
+    )
 
 # =========================================================
 # ENVIAR CONVITE
