@@ -1,7 +1,10 @@
 import sqlite3
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
 CAMINHO_BANCO = os.path.join(
     BASE_DIR,
@@ -9,50 +12,94 @@ CAMINHO_BANCO = os.path.join(
     "liberium.db"
 )
 
+
 print("Banco encontrado:")
 print(CAMINHO_BANCO)
+
 
 conn = sqlite3.connect(CAMINHO_BANCO)
 cursor = conn.cursor()
 
-# Verifica as colunas atuais da tabela estante
-cursor.execute("PRAGMA table_info(estante)")
-colunas = [coluna[1] for coluna in cursor.fetchall()]
 
-print("\nColunas atuais de estante:")
+# ==========================================
+# VERIFICAR SE A TABELA JÁ EXISTE
+# ==========================================
 
-for coluna in colunas:
-    print(" -", coluna)
+cursor.execute("""
+    SELECT name
+    FROM sqlite_master
+    WHERE type = 'table'
+    AND name = 'curtidas_discussao'
+""")
 
-# Adiciona favorito somente se ainda não existir
-if "favorito" not in colunas:
+tabela_existe = cursor.fetchone()
+
+
+# ==========================================
+# CRIAR TABELA
+# ==========================================
+
+if not tabela_existe:
 
     cursor.execute("""
-        ALTER TABLE estante
-        ADD COLUMN favorito BOOLEAN
-        NOT NULL DEFAULT 0
+        CREATE TABLE curtidas_discussao (
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            usuario_id INTEGER NOT NULL,
+
+            discussao_id INTEGER NOT NULL,
+
+            data_criacao DATETIME,
+
+            CONSTRAINT uq_usuario_curtida_discussao
+                UNIQUE (usuario_id, discussao_id),
+
+            FOREIGN KEY (usuario_id)
+                REFERENCES usuarios(id),
+
+            FOREIGN KEY (discussao_id)
+                REFERENCES discussoes(id)
+                ON DELETE CASCADE
+        )
     """)
 
     conn.commit()
 
-    print("\n✅ Coluna favorito adicionada.")
+    print(
+        "\n✅ Tabela curtidas_discussao criada."
+    )
 
 else:
-    print("\n⚠️ A coluna favorito já existe.")
 
-# Confere o resultado
-cursor.execute("PRAGMA table_info(estante)")
-colunas_finais = cursor.fetchall()
+    print(
+        "\n⚠️ A tabela curtidas_discussao já existe."
+    )
+
+
+# ==========================================
+# MOSTRAR COLUNAS
+# ==========================================
+
+cursor.execute(
+    "PRAGMA table_info(curtidas_discussao)"
+)
+
+colunas = cursor.fetchall()
+
 
 print("\n==============================")
 print("BANCO ATUALIZADO COM SUCESSO!")
 print("==============================")
 
-print("\nColunas finais de estante:")
 
-for coluna in colunas_finais:
+print("\nColunas de curtidas_discussao:")
+
+for coluna in colunas:
+
     print(
         f" - {coluna[1]} ({coluna[2]})"
     )
+
 
 conn.close()

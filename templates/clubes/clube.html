@@ -1214,6 +1214,113 @@
                                                             </p>
 
                                                         </div>
+                                                        <div class="resposta-conteudo">
+
+                                                            <p>
+                                                                {{ resposta.conteudo }}
+                                                            </p>
+                                                        
+                                                        </div>
+                                                        
+                                                        
+                                                        <!-- ==================================
+                                                             CURTIDA DA RESPOSTA
+                                                        ================================== -->
+                                                        
+                                                        <div class="resposta-acoes">
+                                                        
+                                                            {% if usuario_eh_membro %}
+                                                        
+                                                                {% set usuario_curtiu = namespace(valor=false) %}
+                                                        
+                                                                {% for curtida in resposta.curtidas %}
+                                                        
+                                                                    {% if curtida.usuario_id == current_user.id %}
+                                                        
+                                                                        {% set usuario_curtiu.valor = true %}
+                                                        
+                                                                    {% endif %}
+                                                        
+                                                                {% endfor %}
+                                                        
+                                                        
+                                                                <form
+                                                                    action="{{ url_for(
+                                                                        'clubes.curtir_discussao',
+                                                                        clube_id=clube.id,
+                                                                        discussao_id=resposta.id
+                                                                    ) }}"
+                                                                    method="POST"
+                                                                    class="form-curtida"
+                                                                >
+                                                        
+                                                                    <button
+                                                                        type="submit"
+                                                                        class="
+                                                                            btn-curtir
+                                                                            {% if usuario_curtiu.valor %}
+                                                                                curtido
+                                                                            {% endif %}
+                                                                        "
+                                                                    >
+                                                        
+                                                                        <span class="icone-curtida">
+                                                        
+                                                                            {% if usuario_curtiu.valor %}
+                                                                                ♥
+                                                                            {% else %}
+                                                                                ♡
+                                                                            {% endif %}
+                                                        
+                                                                        </span>
+                                                        
+                                                        
+                                                                        <span class="texto-curtida">
+                                                        
+                                                                            {% if usuario_curtiu.valor %}
+                                                                                Curtido
+                                                                            {% else %}
+                                                                                Curtir
+                                                                            {% endif %}
+                                                        
+                                                                        </span>
+                                                        
+                                                        
+                                                                        {% if resposta.curtidas|length > 0 %}
+                                                        
+                                                                            <span class="quantidade-curtidas">
+                                                                                {{ resposta.curtidas|length }}
+                                                                            </span>
+                                                        
+                                                                        {% endif %}
+                                                        
+                                                                    </button>
+                                                        
+                                                                </form>
+                                                        
+                                                        
+                                                            {% else %}
+                                                        
+                                                                <!-- Visitante pode ver quantidade,
+                                                                     mas não pode curtir -->
+                                                        
+                                                                {% if resposta.curtidas|length > 0 %}
+                                                        
+                                                                    <div class="curtidas-visualizacao">
+                                                        
+                                                                        <span>♡</span>
+                                                        
+                                                                        <span>
+                                                                            {{ resposta.curtidas|length }}
+                                                                        </span>
+                                                        
+                                                                    </div>
+                                                        
+                                                                {% endif %}
+                                                        
+                                                            {% endif %}
+                                                        
+                                                        </div>
 
                                                     </div>
 

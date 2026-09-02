@@ -920,6 +920,78 @@ class Discussao(db.Model):
         cascade='all, delete-orphan'
     )
 
+# ==========================================
+# CURTIDAS DAS DISCUSSÕES / COMENTÁRIOS
+# ==========================================
+
+class CurtidaDiscussao(db.Model):
+
+    __tablename__ = "curtidas_discussao"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    # ==========================================
+    # USUÁRIO QUE CURTIU
+    # ==========================================
+
+    usuario_id = db.Column(
+        db.Integer,
+        db.ForeignKey("usuarios.id"),
+        nullable=False
+    )
+
+    # ==========================================
+    # DISCUSSÃO / COMENTÁRIO CURTIDO
+    # ==========================================
+
+    discussao_id = db.Column(
+        db.Integer,
+        db.ForeignKey("discussoes.id"),
+        nullable=False
+    )
+
+    # ==========================================
+    # DATA
+    # ==========================================
+
+    data_criacao = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+    # ==========================================
+    # IMPEDIR CURTIDA DUPLICADA
+    # ==========================================
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "usuario_id",
+            "discussao_id",
+            name="uq_usuario_curtida_discussao"
+        ),
+    )
+
+    # ==========================================
+    # RELACIONAMENTOS
+    # ==========================================
+
+    usuario = db.relationship(
+        "Usuario",
+        backref="curtidas_discussao"
+    )
+
+    discussao = db.relationship(
+        "Discussao",
+        backref=db.backref(
+            "curtidas",
+            lazy=True,
+            cascade="all, delete-orphan"
+        )
+    )
+
 # ELOGIO DA ESTANTE
 class ElogioEstante(db.Model):
     __tablename__ = "elogios_estante"
