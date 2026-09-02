@@ -1,0 +1,499 @@
+/* =========================================================
+   LIBERIUM — CONVITES PARA CLUBES
+========================================================= */
+
+
+/* =========================================================
+   PÁGINA
+========================================================= */
+
+.convites-container {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 42px max(30px, calc((100% - 1200px) / 2)) 90px;
+
+    box-sizing: border-box;
+
+    background: #fdfcfb;
+
+    color: #442b1a;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.convites-header {
+    margin-bottom: 30px;
+}
+
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 16px;
+
+    color: #60725d;
+
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.btn-voltar:hover {
+    color: #36503c;
+
+    transform: translateX(-2px);
+}
+
+
+.convites-header h1 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 2.25rem;
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+
+.convites-header p {
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   LISTA DE CONVITES
+========================================================= */
+
+.lista-convites-recebidos {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   CARD DO CONVITE
+========================================================= */
+
+.card-convite {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 13px;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.card-convite:hover {
+    transform: translateY(-2px);
+
+    border-color: #d8ded5;
+
+    box-shadow:
+        0 8px 22px rgba(68, 43, 26, 0.05);
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO CONVITE
+========================================================= */
+
+.convite-informacoes {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   IMAGEM DO CLUBE
+========================================================= */
+
+.convite-capa {
+    width: 78px;
+    height: 78px;
+
+    display: block;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    background: #eef1eb;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   SEM IMAGEM
+========================================================= */
+
+.convite-avatar {
+    width: 78px;
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2eb,
+            #e3e9df
+        );
+
+    border-radius: 10px;
+
+    color: #71806d;
+
+    font-family: "Tenor Sans", sans-serif;
+
+    font-size: 2rem;
+}
+
+
+/* =========================================================
+   TEXTO
+========================================================= */
+
+.convite-texto {
+    min-width: 0;
+}
+
+
+.convite-texto h2 {
+    margin: 0 0 5px;
+
+    color: #442b1a;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    line-height: 1.35;
+}
+
+
+.convite-texto p {
+    margin: 0;
+
+    color: #85766c;
+
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+}
+
+
+.convite-texto p strong {
+    color: #5a4739;
+
+    font-weight: 600;
+}
+
+
+.convite-texto span {
+    display: inline-flex;
+    align-items: center;
+
+    margin-top: 7px;
+
+    padding: 4px 9px;
+
+    background: #edf2eb;
+
+    border-radius: 20px;
+
+    color: #60725d;
+
+    font-size: 0.64rem;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.convite-acoes {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.convite-acoes form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   BOTÃO ACEITAR
+========================================================= */
+
+.btn-primario {
+    min-width: 92px;
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 17px;
+
+    box-sizing: border-box;
+
+    background: #36503c;
+
+    border: 1px solid #36503c;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.btn-primario:hover {
+    background: #2d4433;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTÃO RECUSAR
+========================================================= */
+
+.btn-secundario {
+    min-width: 92px;
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 17px;
+
+    box-sizing: border-box;
+
+    background: transparent;
+
+    border: 1px solid #879d84;
+    border-radius: 7px;
+
+    color: #52684f;
+
+    font-family: inherit;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.btn-secundario:hover {
+    background: #879d84;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   SEM CONVITES
+========================================================= */
+
+.sem-convites {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 65px 30px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e2dc;
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+
+.sem-convites::before {
+    content: "✦";
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    background: #edf2eb;
+
+    border-radius: 50%;
+
+    color: #61745e;
+
+    font-size: 1.3rem;
+}
+
+
+.sem-convites h2 {
+    margin: 0 0 7px;
+
+    color: #442b1a;
+
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+.sem-convites p {
+    max-width: 430px;
+
+    margin: 0;
+
+    color: #8b7c72;
+
+    font-size: 0.78rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .convites-container {
+        padding: 32px 18px 65px;
+    }
+
+
+    .convites-header h1 {
+        font-size: 1.8rem;
+    }
+
+
+    .card-convite {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .convite-acoes {
+        width: 100%;
+    }
+
+
+    .convite-acoes form {
+        flex: 1;
+    }
+
+
+    .btn-primario,
+    .btn-secundario {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .convite-informacoes {
+        align-items: flex-start;
+    }
+
+
+    .convite-capa,
+    .convite-avatar {
+        width: 65px;
+        height: 65px;
+    }
+
+
+    .convite-acoes {
+        flex-direction: column;
+    }
+
+
+    .convite-acoes form {
+        width: 100%;
+    }
+
+}

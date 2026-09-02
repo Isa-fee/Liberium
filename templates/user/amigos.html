@@ -158,7 +158,7 @@
                             <div class="perfil-amigo">
 
                                 <img
-                                    src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrao.png') }}"
+                                    src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrão.jpg') }}"
                                     class="foto-amigo"
                                     alt="Foto de {{ usuario.nome }}"
                                 >
@@ -261,7 +261,7 @@
                             <div class="perfil-solicitacao">
 
                                 <img
-                                    src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrao.png') }}"
+                                    src="{{ url_for('static', filename=solicitacao.usuario.foto if solicitacao.usuario.foto else 'img/perfil_padrão.jpg') }}"
                                     alt="Foto de {{ solicitacao.usuario.nome }}"
                                     class="foto-solicitacao"
                                 >
@@ -378,7 +378,7 @@
                             <div class="perfil-amigo">
 
                                 <img
-                                    src="{{ url_for('static', filename=amigo.foto if amigo.foto else 'img/perfil_padrao.png') }}"
+                                    src="{{ url_for('static', filename=amigo.foto if amigo.foto else 'img/perfil_padrão.jpg') }}"
                                     alt="Foto de {{ amigo.nome }}"
                                     class="foto-amigo"
                                 >
