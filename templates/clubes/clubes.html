@@ -40,12 +40,23 @@
                     </p>
                 </div>
 
-                <a
-                    href="{{ url_for('clubes.criar_clube') }}"
-                    class="botao-criar-clube"
-                >
-                    + Criar clube
-                </a>
+                <div class="acoes-clubes-hero">
+
+                    <a
+                        href="{{ url_for('clubes.meus_clubes') }}"
+                        class="botao-meus-clubes"
+                    >
+                        Meus clubes
+                    </a>
+                
+                    <a
+                        href="{{ url_for('clubes.criar_clube') }}"
+                        class="botao-criar-clube"
+                    >
+                        + Criar clube
+                    </a>
+                
+                </div>
 
             </div>
 

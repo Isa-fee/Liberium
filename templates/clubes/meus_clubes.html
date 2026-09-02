@@ -1,0 +1,606 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Meus Clubes | Liberium
+{% endblock %}
+
+
+{% block styles %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/clubesliberium/meus_clubes.css'
+    ) }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<main class="pagina-meus-clubes">
+
+    <div class="meus-clubes-conteudo">
+
+
+        <!-- =================================================
+             VOLTAR
+        ================================================== -->
+
+        <a
+            href="{{ url_for('clubes.listar_clubes') }}"
+            class="voltar-clubes"
+        >
+            ← Voltar para clubes
+        </a>
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="meus-clubes-header">
+
+            <div class="meus-clubes-header-linha">
+
+                <div>
+
+                    <span class="meus-clubes-label">
+                        SUA COMUNIDADE
+                    </span>
+
+                    <h1>
+                        Meus clubes
+                    </h1>
+
+                    <p>
+                        Acompanhe os clubes que você criou
+                        e aqueles dos quais participa.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('clubes.criar_clube') }}"
+                    class="botao-criar-clube"
+                >
+                    + Criar clube
+                </a>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CLUBES QUE CRIEI
+        ================================================== -->
+
+        <section class="secao-meus-clubes">
+
+            <div class="titulo-secao-clubes">
+
+                <div>
+
+                    <span class="secao-label">
+                        SOB SUA ADMINISTRAÇÃO
+                    </span>
+
+                    <h2>
+                        Clubes que criei
+                    </h2>
+
+                </div>
+
+
+                <span class="contador-meus-clubes">
+
+                    {{ clubes_criados|length }}
+
+                    {% if clubes_criados|length == 1 %}
+                        clube
+                    {% else %}
+                        clubes
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            {% if clubes_criados %}
+
+                <div class="meus-clubes-grid">
+
+                    {% for clube in clubes_criados %}
+
+                        <article class="meu-clube-card">
+
+
+                            <!-- =============================
+                                 IMAGEM DO CLUBE
+                            ============================== -->
+
+                            <a
+                                href="{{ url_for(
+                                    'clubes.ver_clube',
+                                    clube_id=clube.id
+                                ) }}"
+                                class="meu-clube-imagem"
+                            >
+
+                                {% if clube.imagem %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=clube.imagem
+                                        ) }}"
+                                        alt="{{ clube.nome }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="meu-clube-sem-imagem">
+
+                                        <span>
+                                            {{ clube.nome[0]|upper }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <!-- PAPEL -->
+
+                                <span class="badge-papel criador">
+                                    Criador
+                                </span>
+
+
+                                <!-- PRIVACIDADE -->
+
+                                {% if clube.privado %}
+
+                                    <span class="badge-privacidade privado">
+                                        Privado
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge-privacidade publico">
+                                        Público
+                                    </span>
+
+                                {% endif %}
+
+                            </a>
+
+
+
+                            <!-- =============================
+                                 INFORMAÇÕES
+                            ============================== -->
+
+                            <div class="meu-clube-conteudo">
+
+
+                                {% if clube.genero %}
+
+                                    <span class="meu-clube-genero">
+                                        {{ clube.genero }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                <h3>
+                                    {{ clube.nome }}
+                                </h3>
+
+
+                                {% if clube.descricao %}
+
+                                    <p class="meu-clube-descricao">
+                                        {{ clube.descricao }}
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="meu-clube-descricao">
+                                        Um espaço para compartilhar
+                                        leituras e conversar sobre livros.
+                                    </p>
+
+                                {% endif %}
+
+
+
+                                <!-- =========================
+                                     INFORMAÇÕES DO CLUBE
+                                ========================== -->
+
+                                <div class="meu-clube-dados">
+
+
+                                    <div>
+
+                                        <span>
+                                            MEMBROS
+                                        </span>
+
+                                        <strong>
+                                            {{ clube.quantidade_membros }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <span>
+                                            LEITURA ATUAL
+                                        </span>
+
+                                        <strong>
+
+                                            {% if clube.livro %}
+
+                                                {{ clube.livro.titulo }}
+
+                                            {% else %}
+
+                                                Ainda não definida
+
+                                            {% endif %}
+
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- =========================
+                                     BOTÕES
+                                ========================== -->
+
+                                <div class="meu-clube-acoes">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'clubes.ver_clube',
+                                            clube_id=clube.id
+                                        ) }}"
+                                        class="btn-ver-clube"
+                                    >
+                                        Ver clube
+                                    </a>
+
+
+                                    <a
+                                        href="{{ url_for(
+                                            'clubes.gerenciar_clube',
+                                            clube_id=clube.id
+                                        ) }}"
+                                        class="btn-gerenciar-clube"
+                                    >
+                                        Gerenciar
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- =============================
+                     NENHUM CLUBE CRIADO
+                ============================== -->
+
+                <div class="estado-vazio-clubes">
+
+                    <div class="estado-vazio-simbolo">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Você ainda não criou nenhum clube
+                    </h3>
+
+                    <p>
+                        Crie um espaço para reunir leitores,
+                        escolher leituras e compartilhar ideias.
+                    </p>
+
+                    <a
+                        href="{{ url_for('clubes.criar_clube') }}"
+                        class="btn-vazio-criar"
+                    >
+                        + Criar meu primeiro clube
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- =================================================
+             CLUBES QUE PARTICIPO
+        ================================================== -->
+
+        <section class="secao-meus-clubes secao-participando">
+
+            <div class="titulo-secao-clubes">
+
+                <div>
+
+                    <span class="secao-label">
+                        SUAS LEITURAS EM GRUPO
+                    </span>
+
+                    <h2>
+                        Clubes que participo
+                    </h2>
+
+                </div>
+
+
+                <span class="contador-meus-clubes">
+
+                    {{ clubes_participando|length }}
+
+                    {% if clubes_participando|length == 1 %}
+                        clube
+                    {% else %}
+                        clubes
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            {% if clubes_participando %}
+
+                <div class="meus-clubes-grid">
+
+                    {% for clube in clubes_participando %}
+
+                        <article class="meu-clube-card">
+
+
+                            <!-- =============================
+                                 IMAGEM DO CLUBE
+                            ============================== -->
+
+                            <a
+                                href="{{ url_for(
+                                    'clubes.ver_clube',
+                                    clube_id=clube.id
+                                ) }}"
+                                class="meu-clube-imagem"
+                            >
+
+                                {% if clube.imagem %}
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename=clube.imagem
+                                        ) }}"
+                                        alt="{{ clube.nome }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="meu-clube-sem-imagem">
+
+                                        <span>
+                                            {{ clube.nome[0]|upper }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <!-- PAPEL -->
+
+                                <span class="badge-papel membro">
+                                    Membro
+                                </span>
+
+
+                                <!-- PRIVACIDADE -->
+
+                                {% if clube.privado %}
+
+                                    <span class="badge-privacidade privado">
+                                        Privado
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge-privacidade publico">
+                                        Público
+                                    </span>
+
+                                {% endif %}
+
+                            </a>
+
+
+
+                            <!-- =============================
+                                 INFORMAÇÕES
+                            ============================== -->
+
+                            <div class="meu-clube-conteudo">
+
+
+                                {% if clube.genero %}
+
+                                    <span class="meu-clube-genero">
+                                        {{ clube.genero }}
+                                    </span>
+
+                                {% endif %}
+
+
+                                <h3>
+                                    {{ clube.nome }}
+                                </h3>
+
+
+                                {% if clube.descricao %}
+
+                                    <p class="meu-clube-descricao">
+                                        {{ clube.descricao }}
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="meu-clube-descricao">
+                                        Um espaço para compartilhar
+                                        leituras e conversar sobre livros.
+                                    </p>
+
+                                {% endif %}
+
+
+
+                                <!-- =========================
+                                     INFORMAÇÕES
+                                ========================== -->
+
+                                <div class="meu-clube-dados">
+
+
+                                    <div>
+
+                                        <span>
+                                            MEMBROS
+                                        </span>
+
+                                        <strong>
+                                            {{ clube.quantidade_membros }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <span>
+                                            CRIADO POR
+                                        </span>
+
+                                        <strong>
+
+                                            {% if clube.usuario %}
+
+                                                {{ clube.usuario.nome }}
+
+                                            {% else %}
+
+                                                Liberium
+
+                                            {% endif %}
+
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- =========================
+                                     BOTÃO
+                                ========================== -->
+
+                                <div class="meu-clube-acoes">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'clubes.ver_clube',
+                                            clube_id=clube.id
+                                        ) }}"
+                                        class="btn-ver-clube largura-total"
+                                    >
+                                        Ver clube
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- =============================
+                     NÃO PARTICIPA DE CLUBES
+                ============================== -->
+
+                <div class="estado-vazio-clubes pequeno">
+
+                    <div class="estado-vazio-simbolo">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Você ainda não participa de outros clubes
+                    </h3>
+
+                    <p>
+                        Explore os clubes da comunidade e encontre
+                        uma leitura para acompanhar.
+                    </p>
+
+                    <a
+                        href="{{ url_for('clubes.listar_clubes') }}"
+                        class="btn-explorar-clubes"
+                    >
+                        Explorar clubes
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+    </div>
+
+</main>
+
+{% endblock %}

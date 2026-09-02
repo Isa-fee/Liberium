@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Ranking | Liberium
+{% endblock %}
+
+
+{% block styles %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/amigos/style.css'
+    ) }}"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/amigos/ranking.css'
+    ) }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="pagina-amigos">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename=current_user.foto
+                if current_user.foto
+                else 'img/perfil_padrão.jpg'
+            ) }}"
+            class="foto-perfil"
+            alt="Foto de perfil"
+        >
+
+        <h3>
+            {{ current_user.nome }}
+        </h3>
+
+        <p class="usuario">
+            @{{ current_user.nome|lower|replace(' ', '') }}
+        </p>
+
+
+        <nav class="menu-lateral">
+
+            <a href="{{ url_for('estante_bp.estante') }}">
+                Minha Estante
+            </a>
+
+            <a href="{{ url_for('clubes.listar_clubes') }}">
+                Clubes de leitura
+            </a>
+
+            <hr>
+
+
+            <span class="titulo-menu">
+                Coleção
+            </span>
+
+            <a href="{{ url_for('loja_bp.loja') }}">
+                Loja de decorações
+            </a>
+
+            <a href="{{ url_for('loja_bp.colecao') }}">
+                Minha coleção
+            </a>
+
+            <hr>
+
+
+            <span class="titulo-menu">
+                Perfil
+            </span>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
+
+            <hr>
+
+
+            <div class="card-moedas">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/gamificacao/Libelula.png'
+                    ) }}"
+                    class="icone-libelula"
+                    alt="Mini Libélula"
+                >
+
+                <strong>
+                    {{ current_user.libelulas }}
+                </strong>
+
+                <span>
+                    Mini Libélulas
+                </span>
+
+            </div>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =================================================
+         ÁREA PRINCIPAL
+    ================================================== -->
+
+    <div class="conteudo">
+
+
+        <!-- =================================================
+             ABAS
+        ================================================== -->
+
+        <div class="navegacao-amigos">
+
+            <a
+                href="{{ url_for('amigos_bp.amigos') }}"
+                class="aba-amigos"
+            >
+                Amigos
+            </a>
+
+
+            <a
+                href="{{ url_for('amigos_bp.solicitacoes') }}"
+                class="aba-amigos"
+            >
+                Solicitações
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'amigos_bp.encontrar_leitores'
+                ) }}"
+                class="aba-amigos"
+            >
+                Encontrar leitores
+            </a>
+
+
+            <a
+                href="{{ url_for('amigos_bp.ranking') }}"
+                class="aba-amigos ativa"
+            >
+                Ranking
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+
+        <div class="layout-amigos">
+
+            <main class="conteudo-amigos">
+
+
+                <section class="secao-ranking">
+
+
+                    <!-- =====================================
+                         CABEÇALHO
+                    ====================================== -->
+
+                    <div class="cabecalho-secao cabecalho-ranking">
+
+                        <div>
+
+                            <h1>
+                                Ranking de leitura
+                            </h1>
+
+                            <p>
+                                Veja quem mais está lendo
+                                entre você e seus amigos.
+                            </p>
+
+                        </div>
+
+
+                        <!-- =================================
+                             FILTROS DO RANKING
+                        ================================== -->
+
+                        <div class="ranking-filtros">
+
+                            <a
+                                href="{{ url_for(
+                                    'amigos_bp.ranking',
+                                    criterio='livros'
+                                ) }}"
+                                class="
+                                    filtro-ranking
+                                    {% if criterio == 'livros' %}
+                                        ativo
+                                    {% endif %}
+                                "
+                            >
+                                Livros lidos
+                            </a>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'amigos_bp.ranking',
+                                    criterio='paginas'
+                                ) }}"
+                                class="
+                                    filtro-ranking
+                                    {% if criterio == 'paginas' %}
+                                        ativo
+                                    {% endif %}
+                                "
+                            >
+                                Páginas lidas
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         MINHA POSIÇÃO
+                    ================================================== -->
+
+                    <div class="minha-posicao-ranking">
+
+
+                        <div class="minha-posicao-numero">
+
+                            <span>
+                                SUA POSIÇÃO
+                            </span>
+
+                            <strong>
+                                {% if minha_posicao %}
+                                    {{ minha_posicao }}º
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="minha-posicao-info">
+
+                            <strong>
+                                {{ current_user.nome }}
+                            </strong>
+
+                            <p>
+
+                                {% if criterio == "paginas" %}
+
+                                    Sua colocação no ranking
+                                    de páginas lidas.
+
+                                {% else %}
+
+                                    Sua colocação no ranking
+                                    de livros concluídos.
+
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CABEÇALHO DA LISTA
+                    ================================================== -->
+
+                    <div class="ranking-cabecalho-lista">
+
+                        <span class="ranking-coluna-posicao">
+                            POSIÇÃO
+                        </span>
+
+                        <span class="ranking-coluna-leitor">
+                            LEITOR
+                        </span>
+
+                        <span class="ranking-coluna-livros">
+                            LIVROS
+                        </span>
+
+                        <span class="ranking-coluna-paginas">
+                            PÁGINAS
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LISTA DO RANKING
+                    ================================================== -->
+
+                    <div class="lista-ranking">
+
+                        {% for pessoa in ranking %}
+
+
+                            <article
+                                class="
+                                    ranking-item
+
+                                    {% if pessoa.sou_eu %}
+                                        sou-eu
+                                    {% endif %}
+
+                                    {% if pessoa.posicao == 1 %}
+                                        primeiro-lugar
+                                    {% elif pessoa.posicao == 2 %}
+                                        segundo-lugar
+                                    {% elif pessoa.posicao == 3 %}
+                                        terceiro-lugar
+                                    {% endif %}
+                                "
+                            >
+
+
+                                <!-- =============================
+                                     POSIÇÃO
+                                ============================== -->
+
+                                <div class="ranking-posicao">
+
+                                    <span>
+                                        {{ pessoa.posicao }}º
+                                    </span>
+
+                                </div>
+
+
+                                <!-- =============================
+                                     LEITOR
+                                ============================== -->
+
+                                <div class="ranking-perfil">
+
+
+                                    <a
+                                        href="{{ url_for(
+                                            'amigos_bp.perfil_usuario',
+                                            usuario_id=pessoa.usuario.id
+                                        ) }}"
+                                        class="ranking-foto-link"
+                                    >
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename=pessoa.usuario.foto
+                                                if pessoa.usuario.foto
+                                                else 'img/perfil_padrão.jpg'
+                                            ) }}"
+                                            class="ranking-foto"
+                                            alt="{{ pessoa.usuario.nome }}"
+                                        >
+
+                                    </a>
+
+
+                                    <div class="ranking-perfil-info">
+
+
+                                        <div class="ranking-nome-linha">
+
+                                            <a
+                                                href="{{ url_for(
+                                                    'amigos_bp.perfil_usuario',
+                                                    usuario_id=pessoa.usuario.id
+                                                ) }}"
+                                                class="ranking-nome"
+                                            >
+                                                {{ pessoa.usuario.nome }}
+                                            </a>
+
+
+                                            {% if pessoa.sou_eu %}
+
+                                                <span class="badge-voce">
+                                                    Você
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <span class="ranking-nivel">
+
+                                            {% if pessoa.usuario.nivel %}
+
+                                                {{ pessoa.usuario.nivel }}
+
+                                            {% else %}
+
+                                                Iniciante
+
+                                            {% endif %}
+
+                                        </span>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- =============================
+                                     LIVROS LIDOS
+                                ============================== -->
+
+                                <div
+                                    class="
+                                        ranking-valor
+
+                                        {% if criterio == 'livros' %}
+                                            destaque
+                                        {% endif %}
+                                    "
+                                >
+
+                                    <strong>
+                                        {{ pessoa.livros_lidos }}
+                                    </strong>
+
+                                    <span>
+
+                                        {% if pessoa.livros_lidos == 1 %}
+
+                                            livro
+
+                                        {% else %}
+
+                                            livros
+
+                                        {% endif %}
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- =============================
+                                     PÁGINAS LIDAS
+                                ============================== -->
+
+                                <div
+                                    class="
+                                        ranking-valor
+
+                                        {% if criterio == 'paginas' %}
+                                            destaque
+                                        {% endif %}
+                                    "
+                                >
+
+                                    <strong>
+                                        {{ pessoa.paginas_lidas }}
+                                    </strong>
+
+                                    <span>
+                                        páginas
+                                    </span>
+
+                                </div>
+
+
+                            </article>
+
+
+                        {% else %}
+
+
+                            <!-- =================================
+                                 ESTADO VAZIO
+                            ================================== -->
+
+                            <div class="estado-vazio">
+
+                                <h2>
+                                    O ranking ainda está vazio
+                                </h2>
+
+                                <p>
+                                    Adicione outros leitores aos seus
+                                    amigos para começar a comparar
+                                    suas leituras.
+                                </p>
+
+                                <a
+                                    href="{{ url_for(
+                                        'amigos_bp.encontrar_leitores'
+                                    ) }}"
+                                    class="btn-encontrar-ranking"
+                                >
+                                    Encontrar leitores
+                                </a>
+
+                            </div>
+
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

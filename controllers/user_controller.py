@@ -7,7 +7,25 @@ from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 
 from extensions import db
-from models import Usuario, Estante, UsuarioInsignia, MetaLeitura, Atividade, UsuarioColecionavel
+from models import (
+    Usuario,
+    Estante,
+    ComentarioResenha,
+    UsuarioInsignia,
+    UsuarioColecionavel,
+    DecoracaoEstante,
+    MetaLeitura,
+    Atividade,
+    Amizade,
+    Clube,
+    MembroClube,
+    ConviteClube,
+    Discussao,
+    ElogioEstante,
+    SolicitacaoLivro,
+    Notificacao,
+    Anotacao
+)
 from utils.insignias import verificar_insignias
 from utils.gamificacao import atualizar_meta_leitura
 
@@ -412,6 +430,385 @@ def configuracoes():
     return render_template(
         "user/configuracoes.html"
     )
+
+@user_bp.route("/excluir-conta", methods=["POST"])
+@login_required
+def excluir_conta():
+
+    usuario_id = current_user.id
+
+    # =====================================================
+    # CONFIRMAÇÃO
+    # =====================================================
+
+    senha = request.form.get(
+        "senha_exclusao",
+        ""
+    )
+
+    if not senha:
+
+        flash(
+            "Digite sua senha para confirmar a exclusão da conta.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.configuracoes")
+        )
+
+    if not check_password_hash(
+        current_user.senha,
+        senha
+    ):
+
+        flash(
+            "Senha incorreta. A conta não foi excluída.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.configuracoes")
+        )
+
+    try:
+
+        # =================================================
+        # FOTO DO PERFIL
+        # Guardamos o caminho para apagar depois.
+        # =================================================
+
+        foto_usuario = current_user.foto
+
+
+        # =================================================
+        # CLUBES CRIADOS PELO USUÁRIO
+        # =================================================
+
+        clubes_criados = Clube.query.filter_by(
+            usuario_id=usuario_id
+        ).all()
+
+        for clube in clubes_criados:
+
+            # Procura outro membro para assumir o clube.
+            novo_criador = MembroClube.query.filter(
+                MembroClube.clube_id == clube.id,
+                MembroClube.usuario_id != usuario_id
+            ).order_by(
+                MembroClube.data_entrada.asc(),
+                MembroClube.id.asc()
+            ).first()
+
+            if novo_criador:
+
+                # -----------------------------------------
+                # TRANSFERE O CLUBE
+                # -----------------------------------------
+
+                clube.usuario_id = novo_criador.usuario_id
+
+            else:
+
+                # -----------------------------------------
+                # NINGUÉM MAIS ESTÁ NO CLUBE
+                # EXCLUI TUDO RELACIONADO AO CLUBE
+                # -----------------------------------------
+
+                Anotacao.query.filter_by(
+                    clube_id=clube.id
+                ).update(
+                    {
+                        Anotacao.clube_id: None
+                    },
+                    synchronize_session=False
+                )
+
+                Discussao.query.filter_by(
+                    clube_id=clube.id
+                ).delete(
+                    synchronize_session=False
+                )
+
+                ConviteClube.query.filter_by(
+                    clube_id=clube.id
+                ).delete(
+                    synchronize_session=False
+                )
+
+                MembroClube.query.filter_by(
+                    clube_id=clube.id
+                ).delete(
+                    synchronize_session=False
+                )
+
+                db.session.delete(clube)
+
+
+        # =================================================
+        # CONVITES DE CLUBES
+        # =================================================
+
+        ConviteClube.query.filter(
+            db.or_(
+                ConviteClube.remetente_id == usuario_id,
+                ConviteClube.destinatario_id == usuario_id
+            )
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # MEMBRO DE CLUBES
+        # =================================================
+
+        MembroClube.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # DISCUSSÕES DO USUÁRIO
+        # =================================================
+
+        Discussao.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # ELOGIOS
+        # =================================================
+
+        ElogioEstante.query.filter(
+            db.or_(
+                ElogioEstante.autor_id == usuario_id,
+                ElogioEstante.destinatario_id == usuario_id
+            )
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # AMIZADES
+        # =================================================
+
+        Amizade.query.filter(
+            db.or_(
+                Amizade.usuario_id == usuario_id,
+                Amizade.amigo_id == usuario_id
+            )
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # ANOTAÇÕES
+        # =================================================
+
+        Anotacao.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # NOTIFICAÇÕES
+        # =================================================
+
+        Notificacao.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # SOLICITAÇÕES DE LIVROS
+        # =================================================
+
+        SolicitacaoLivro.query.filter_by(
+            solicitante_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # DECORAÇÕES
+        # Deve vir antes da coleção.
+        # =================================================
+
+        DecoracaoEstante.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # COLEÇÃO
+        # =================================================
+
+        UsuarioColecionavel.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # INSÍGNIAS
+        # =================================================
+
+        UsuarioInsignia.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # METAS
+        # =================================================
+
+        MetaLeitura.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # ATIVIDADES
+        # =================================================
+
+        Atividade.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # COMENTÁRIOS EM RESENHAS
+        # =================================================
+
+        ComentarioResenha.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # ESTANTE
+        # Comentários das próprias resenhas precisam sair
+        # antes das entradas da estante.
+        # =================================================
+
+        estantes_usuario = Estante.query.filter_by(
+            usuario_id=usuario_id
+        ).all()
+
+        ids_estantes = [
+            item.id
+            for item in estantes_usuario
+        ]
+
+        if ids_estantes:
+
+            ComentarioResenha.query.filter(
+                ComentarioResenha.estante_id.in_(
+                    ids_estantes
+                )
+            ).delete(
+                synchronize_session=False
+            )
+
+        Estante.query.filter_by(
+            usuario_id=usuario_id
+        ).delete(
+            synchronize_session=False
+        )
+
+
+        # =================================================
+        # USUÁRIO
+        # =================================================
+
+        usuario = db.session.get(
+            Usuario,
+            usuario_id
+        )
+
+        logout_user()
+
+        db.session.delete(usuario)
+
+        db.session.commit()
+
+
+        # =================================================
+        # APAGAR FOTO DO DISCO
+        # =================================================
+
+        if (
+            foto_usuario
+            and foto_usuario.startswith("img/perfis/")
+        ):
+
+            caminho_foto = os.path.join(
+                current_app.static_folder,
+                foto_usuario
+            )
+
+            if os.path.isfile(caminho_foto):
+
+                try:
+                    os.remove(caminho_foto)
+
+                except OSError:
+                    pass
+
+
+        flash(
+            "Sua conta foi excluída permanentemente.",
+            "success"
+        )
+
+        return redirect(
+            url_for("user_bp.login")
+        )
+
+
+    except Exception:
+
+        db.session.rollback()
+
+        current_app.logger.exception(
+            "Erro ao excluir conta do usuário %s.",
+            usuario_id
+        )
+
+        flash(
+            "Não foi possível excluir sua conta. "
+            "Tente novamente.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("user_bp.configuracoes")
+        )
+
 
 @user_bp.route("/meta", methods=["POST"])
 @login_required
