@@ -229,10 +229,15 @@ class Estante(db.Model):
         nullable=True
     )
 
-    # ======================================
-    # AVALIAÇÃO / RESENHA
-    # ======================================
+    # indica se o livro foi marcado como favorito
+    favorito = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
 
+
+    # AVALIAÇÃO / RESENHA
     # nota de 1 a 5 estrelas
     nota = db.Column(
         db.Integer,

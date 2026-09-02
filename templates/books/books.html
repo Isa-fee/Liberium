@@ -254,6 +254,46 @@
                 <!-- ================= AVALIAÇÃO ================= -->
 
                 {% if item_estante.status == "lido" %}
+                    
+                    <!-- ================= FAVORITO ================= -->
+
+<div class="favorito-livro">
+
+    <form
+        action="{{ url_for(
+            'estante_bp.favoritar_livro',
+            livro_id=livro.id
+        ) }}"
+        method="POST"
+    >
+
+        <button
+            type="submit"
+            class="btn-favorito {% if item_estante.favorito %}favoritado{% endif %}"
+            title="{% if item_estante.favorito %}Remover dos favoritos{% else %}Adicionar aos favoritos{% endif %}"
+        >
+
+            <span class="icone-favorito">
+                {% if item_estante.favorito %}
+                    ♥
+                {% else %}
+                    ♡
+                {% endif %}
+            </span>
+
+            <span>
+                {% if item_estante.favorito %}
+                    Favorito
+                {% else %}
+                    Adicionar aos favoritos
+                {% endif %}
+            </span>
+
+        </button>
+
+    </form>
+
+</div>
 
                     <div class="avaliacao-usuario">
 

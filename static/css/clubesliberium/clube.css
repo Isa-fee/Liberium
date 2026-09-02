@@ -167,6 +167,8 @@
     flex: 1;
 
     min-width: 0;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -248,6 +250,7 @@
 
 
 .clube-descricao {
+    width: 100%;
     max-width: 610px;
 
     margin: 0 0 18px;
@@ -257,6 +260,9 @@
     font-size: 0.82rem;
 
     line-height: 1.65;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 
