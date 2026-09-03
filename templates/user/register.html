@@ -56,6 +56,38 @@
 
             </div>
 
+            <div class="campo-auth">
+
+                <label for="username">
+                    Nome de usuário
+                </label>
+
+                <div class="campo-username">
+
+                    <span class="username-prefixo">
+                        @
+                    </span>
+
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder="seuusuario"
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="30"
+                        pattern="[A-Za-z0-9._]+"
+                        required
+                    >
+
+                </div>
+
+                <small class="username-ajuda">
+                    Será usado para encontrar você no Liberium.
+                </small>
+
+            </div>
+
 
             <div class="campo-auth">
 

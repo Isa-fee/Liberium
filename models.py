@@ -23,6 +23,12 @@ class Usuario(UserMixin, db.Model):
         unique=True,
         nullable=False
     )
+    
+    username = db.Column(
+    db.String(30),
+    unique=True,
+    nullable=False
+    )
 
     senha = db.Column(
         db.String(200),

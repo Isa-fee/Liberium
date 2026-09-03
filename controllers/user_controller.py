@@ -1,5 +1,6 @@
 import os
 import uuid
+import re
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -34,96 +35,188 @@ user_bp = Blueprint("user_bp", __name__, url_prefix="/user")
 
 @user_bp.route("/register", methods=["GET", "POST"])
 def register():
+
     if request.method == "POST":
+
         nome = request.form.get(
             "nome",
             ""
         ).strip()
+
+        username = request.form.get(
+            "username",
+            ""
+        ).strip().lower()
+
         email = request.form.get(
             "email",
             ""
         ).strip().lower()
+
         senha = request.form.get(
             "senha",
             ""
         )
+
         confirmar_senha = request.form.get(
             "confirmar_senha",
             ""
         )
+
         tipo = request.form.get(
             "tipo",
             "leitor"
         )
+
         # ==================================
         # VALIDAR TIPO DE USUÁRIO
         # ==================================
+
         tipos_permitidos = [
             "leitor",
             "autor"
         ]
+
         if tipo not in tipos_permitidos:
             tipo = "leitor"
+
         # ==================================
-        # VALIDAR CAMPOS
+        # VALIDAR CAMPOS OBRIGATÓRIOS
         # ==================================
-        if not nome or not email or not senha:
+
+        if (
+            not nome
+            or not username
+            or not email
+            or not senha
+        ):
+
             flash(
                 "Preencha todos os campos obrigatórios.",
                 "danger"
             )
+
             return redirect(
                 url_for("user_bp.register")
             )
+
+        # ==================================
+        # VALIDAR USERNAME
+        # ==================================
+
+        if len(username) < 3 or len(username) > 30:
+
+            flash(
+                "O @ deve ter entre 3 e 30 caracteres.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.register")
+            )
+
+        if not re.fullmatch(
+            r"[a-z0-9._]+",
+            username
+        ):
+
+            flash(
+                "O @ pode conter apenas letras, números, "
+                "ponto e underline.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.register")
+            )
+
+        # ==================================
+        # VERIFICAR USERNAME
+        # ==================================
+
+        username_existente = Usuario.query.filter_by(
+            username=username
+        ).first()
+
+        if username_existente:
+
+            flash(
+                "Este @ já está sendo usado.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.register")
+            )
+
         # ==================================
         # CONFIRMAR SENHA
         # ==================================
+
         if senha != confirmar_senha:
+
             flash(
                 "As senhas não coincidem!",
                 "danger"
             )
+
             return redirect(
                 url_for("user_bp.register")
             )
+
         # ==================================
         # VERIFICAR E-MAIL
         # ==================================
+
         usuario_existente = Usuario.query.filter_by(
             email=email
         ).first()
+
         if usuario_existente:
+
             flash(
                 "E-mail já cadastrado!",
                 "danger"
             )
+
             return redirect(
                 url_for("user_bp.register")
             )
+
         # ==================================
         # CRIAR USUÁRIO
         # ==================================
+
         novo_usuario = Usuario(
             nome=nome,
+            username=username,
             email=email,
             senha=generate_password_hash(senha),
             tipo=tipo
         )
+
         db.session.add(
             novo_usuario
         )
+
         db.session.commit()
+
         verificar_insignias(
             novo_usuario
         )
+
         flash(
             "Cadastro realizado com sucesso!",
             "success"
         )
+
         return redirect(
             url_for("user_bp.login")
         )
-    return render_template("user/register.html")
+
+    return render_template(
+        "user/register.html"
+    )
 
 
 @user_bp.route("/login", methods=["GET", "POST"])
@@ -274,6 +367,7 @@ def configuracoes():
     if request.method == "POST":
 
         nome = request.form.get("nome", "").strip()
+        username = request.form.get("username", "").strip().lower()
         email = request.form.get("email", "").strip().lower()
 
         senha_atual = request.form.get("senha_atual", "")
@@ -284,6 +378,61 @@ def configuracoes():
         if not nome:
             flash("O nome não pode ficar vazio.", "danger")
             return redirect(url_for("user_bp.configuracoes"))
+        if not username:
+            flash(
+                "O nome de usuário não pode ficar vazio.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.configuracoes")
+            )
+
+
+        if len(username) < 3 or len(username) > 30:
+
+            flash(
+                "O @ deve ter entre 3 e 30 caracteres.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.configuracoes")
+            )
+
+
+        if not re.fullmatch(
+            r"[a-z0-9._]+",
+            username
+        ):
+
+            flash(
+                "O @ pode conter apenas letras, números, "
+                "ponto e underline.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.configuracoes")
+            )
+
+
+        username_existente = Usuario.query.filter(
+            Usuario.username == username,
+            Usuario.id != current_user.id
+        ).first()
+
+
+        if username_existente:
+
+            flash(
+                "Este @ já está sendo usado por outro usuário.",
+                "danger"
+            )
+
+            return redirect(
+                url_for("user_bp.configuracoes")
+            )
 
         # Validar e-mail
         if not email:
@@ -349,8 +498,9 @@ def configuracoes():
 
             current_user.senha = generate_password_hash(nova_senha)
 
-        # Atualizar nome e e-mail
+        # Atualizar dados pessoais
         current_user.nome = nome
+        current_user.username = username
         current_user.email = email
 
         # Alterar foto
