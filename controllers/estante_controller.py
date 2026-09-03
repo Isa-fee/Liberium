@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
 from flask_login import login_required, current_user
 from datetime import date, datetime
 
@@ -10,6 +10,10 @@ from utils.notificacoes import criar_notificacao
 from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante, ComentarioResenha
 from extensions import db
 
+
+#teste
+
+from utils.gerar_imagem import gerar_card_livro_concluido
 
 estante_bp = Blueprint(
     "estante_bp",
@@ -1224,4 +1228,49 @@ def excluir_comentario(comentario_id):
             "estante_bp.ver_resenha",
             resenha_id=resenha_id
         )
+    )
+
+
+# =========================================================
+# TESTE — CARD DE LIVRO CONCLUÍDO
+# =========================================================
+
+@estante_bp.route(
+    "/teste-compartilhar/<int:livro_id>"
+)
+@login_required
+def teste_compartilhar(livro_id):
+
+    # -----------------------------------------------------
+    # PROCURAR O LIVRO NA ESTANTE DO USUÁRIO
+    # -----------------------------------------------------
+
+    item_estante = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=livro_id,
+        status="lido"
+    ).first_or_404()
+
+
+    livro = item_estante.livro
+
+
+    # -----------------------------------------------------
+    # GERAR CARD
+    # -----------------------------------------------------
+
+    caminho = gerar_card_livro_concluido(
+        usuario=current_user,
+        livro=livro,
+        nota=item_estante.nota
+    )
+
+
+    # -----------------------------------------------------
+    # MOSTRAR IMAGEM NO NAVEGADOR
+    # -----------------------------------------------------
+
+    return send_file(
+        caminho,
+        mimetype="image/png"
     )

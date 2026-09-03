@@ -932,6 +932,33 @@
     color: #777;
 }
 
+/* =========================================
+   STATUS DO USERNAME
+========================================= */
+
+.status-username {
+    display: block;
+
+    width: 100%;
+    min-height: 18px;
+
+    margin-top: 7px;
+    padding-left: 2px;
+
+    font-size: 0.78rem;
+    line-height: 1.4;
+
+    transition: 0.2s ease;
+}
+
+.status-username.disponivel {
+    color: #5f7a5d;
+}
+
+.status-username.indisponivel {
+    color: #a94442;
+}
+
 /* =========================================================
    RESPONSIVIDADE
 ========================================================= */

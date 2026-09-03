@@ -519,6 +519,26 @@
     color: #777;
 }
 
+.status-username {
+    display: block;
+
+    min-height: 18px;
+    margin-top: 6px;
+
+    font-size: 0.78rem;
+
+    transition: 0.2s ease;
+    margin-left: 9px;
+}
+
+.status-username.disponivel {
+    color: #435342;
+}
+
+.status-username.indisponivel {
+    color: #a94442;
+}
+
 /* =========================================
    RESPONSIVIDADE
 ========================================= */

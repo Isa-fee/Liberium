@@ -19,6 +19,7 @@ from models import (
     DecoracaoEstante,
     ElogioEstante
 )
+
 from utils.notificacoes import criar_notificacao
 from controllers.estante_controller import montar_prateleira
 from extensions import db
@@ -62,7 +63,14 @@ def amigos():
             amigo = amizade.usuario
 
         amigos.append(amigo)
+
+
+    # -----------------------------------------------------
+    # LEITURA ATUAL DOS AMIGOS
+    # -----------------------------------------------------
+
     for amigo in amigos:
+
         amigo.leitura_atual = Estante.query.filter_by(
             usuario_id=amigo.id,
             status="lendo"
@@ -83,22 +91,38 @@ def amigos():
     # SUGESTÕES
     # -----------------------------------------------------
 
-    ids_excluidos = {current_user.id}
+    ids_excluidos = {
+        current_user.id
+    }
 
     for amizade in amizades:
 
-        ids_excluidos.add(amizade.usuario_id)
-        ids_excluidos.add(amizade.amigo_id)
+        ids_excluidos.add(
+            amizade.usuario_id
+        )
 
-    for solicitacao in Amizade.query.filter(
+        ids_excluidos.add(
+            amizade.amigo_id
+        )
+
+
+    relacoes = Amizade.query.filter(
         (
             (Amizade.usuario_id == current_user.id) |
             (Amizade.amigo_id == current_user.id)
         )
-    ).all():
+    ).all()
 
-        ids_excluidos.add(solicitacao.usuario_id)
-        ids_excluidos.add(solicitacao.amigo_id)
+
+    for solicitacao in relacoes:
+
+        ids_excluidos.add(
+            solicitacao.usuario_id
+        )
+
+        ids_excluidos.add(
+            solicitacao.amigo_id
+        )
 
 
     sugestoes = Usuario.query.filter(
@@ -127,7 +151,7 @@ def amigos():
 
 
     # -----------------------------------------------------
-    # PESQUISA
+    # PESQUISA POR NOME OU @USERNAME
     # -----------------------------------------------------
 
     busca = request.args.get(
@@ -137,13 +161,42 @@ def amigos():
 
     resultados_busca = []
 
+
     if busca:
 
+        # Se o usuário pesquisar:
+        #
+        # @isacosta
+        #
+        # transforma em:
+        #
+        # isacosta
+
+        termo_username = busca.lstrip("@")
+
+
         resultados_busca = Usuario.query.filter(
-            Usuario.nome.ilike(f"%{busca}%"),
-            Usuario.id != current_user.id
+
+            Usuario.id != current_user.id,
+
+            db.or_(
+
+                Usuario.nome.ilike(
+                    f"%{busca}%"
+                ),
+
+                Usuario.username.ilike(
+                    f"%{termo_username}%"
+                )
+
+            )
+
         ).all()
 
+
+    # -----------------------------------------------------
+    # RENDERIZAR
+    # -----------------------------------------------------
 
     return render_template(
         "user/amigos.html",
@@ -189,7 +242,9 @@ def ranking():
     # 2. PEGAR OS AMIGOS DO USUÁRIO
     # =====================================================
 
-    usuarios_ranking = [current_user]
+    usuarios_ranking = [
+        current_user
+    ]
 
 
     for amizade in amizades:
@@ -205,7 +260,9 @@ def ranking():
 
         if amigo:
 
-            usuarios_ranking.append(amigo)
+            usuarios_ranking.append(
+                amigo
+            )
 
 
     # =====================================================
@@ -216,7 +273,9 @@ def ranking():
 
     for usuario in usuarios_ranking:
 
-        usuarios_unicos[usuario.id] = usuario
+        usuarios_unicos[
+            usuario.id
+        ] = usuario
 
 
     usuarios_ranking = list(
@@ -376,7 +435,9 @@ def ranking():
 
         if pessoa["sou_eu"]:
 
-            minha_posicao = pessoa["posicao"]
+            minha_posicao = pessoa[
+                "posicao"
+            ]
 
             break
 
@@ -395,7 +456,6 @@ def ranking():
         minha_posicao=minha_posicao
     )
 
-    
 
 # =========================================================
 # ENVIAR SOLICITAÇÃO
@@ -425,7 +485,10 @@ def adicionar_amigo(usuario_id):
     )
 
 
-    # Verifica se já existe alguma relação
+    # -----------------------------------------------------
+    # VERIFICAR SE JÁ EXISTE RELAÇÃO
+    # -----------------------------------------------------
+
     amizade = Amizade.query.filter(
         (
             (Amizade.usuario_id == current_user.id) &
@@ -442,7 +505,8 @@ def adicionar_amigo(usuario_id):
     if amizade:
 
         flash(
-            "Já existe uma solicitação ou amizade com esse leitor.",
+            "Já existe uma solicitação ou amizade "
+            "com esse leitor.",
             "erro"
         )
 
@@ -451,15 +515,27 @@ def adicionar_amigo(usuario_id):
         )
 
 
+    # -----------------------------------------------------
+    # CRIAR SOLICITAÇÃO
+    # -----------------------------------------------------
+
     nova_amizade = Amizade(
         usuario_id=current_user.id,
         amigo_id=usuario_id,
         status="pendente"
     )
 
-    db.session.add(nova_amizade)
+    db.session.add(
+        nova_amizade
+    )
+
     db.session.commit()
-    
+
+
+    # -----------------------------------------------------
+    # NOTIFICAÇÃO
+    # -----------------------------------------------------
+
     criar_notificacao(
         usuario_id=usuario.id,
         categoria="social",
@@ -469,21 +545,25 @@ def adicionar_amigo(usuario_id):
             f"{current_user.nome} enviou uma "
             "solicitação de amizade para você."
         ),
-        link=url_for("amigos_bp.solicitacoes")
+        link=url_for(
+            "amigos_bp.solicitacoes"
+        )
     )
 
+
     flash(
-        f"Solicitação enviada para {usuario.nome}!",
+        f"Solicitação enviada para "
+        f"{usuario.nome}!",
         "sucesso"
     )
 
 
     return redirect(
-    url_for(
-        "amigos_bp.perfil_usuario",
-        usuario_id=usuario_id
+        url_for(
+            "amigos_bp.perfil_usuario",
+            usuario_id=usuario_id
+        )
     )
-)
 
 
 # =========================================================
@@ -502,7 +582,10 @@ def aceitar_amizade(amizade_id):
     )
 
 
-    # Só quem recebeu pode aceitar
+    # -----------------------------------------------------
+    # SÓ QUEM RECEBEU PODE ACEITAR
+    # -----------------------------------------------------
+
     if amizade.amigo_id != current_user.id:
 
         flash(
@@ -518,7 +601,12 @@ def aceitar_amizade(amizade_id):
     amizade.status = "aceita"
 
     db.session.commit()
-    
+
+
+    # -----------------------------------------------------
+    # NOTIFICAÇÃO
+    # -----------------------------------------------------
+
     criar_notificacao(
         usuario_id=amizade.usuario_id,
         categoria="social",
@@ -533,6 +621,7 @@ def aceitar_amizade(amizade_id):
             usuario_id=current_user.id
         )
     )
+
 
     flash(
         "Amizade aceita! 🌿",
@@ -573,7 +662,9 @@ def recusar_amizade(amizade_id):
         )
 
 
-    db.session.delete(amizade)
+    db.session.delete(
+        amizade
+    )
 
     db.session.commit()
 
@@ -589,6 +680,10 @@ def recusar_amizade(amizade_id):
     )
 
 
+# =========================================================
+# PÁGINA DE SOLICITAÇÕES
+# =========================================================
+
 @amigos_bp.route("/solicitacoes")
 @login_required
 def solicitacoes():
@@ -598,10 +693,16 @@ def solicitacoes():
         status="pendente"
     ).all()
 
+
     return render_template(
         "user/solicitacoes.html",
         solicitacoes=solicitacoes
     )
+
+
+# =========================================================
+# ENCONTRAR LEITORES
+# =========================================================
 
 @amigos_bp.route("/encontrar")
 @login_required
@@ -614,25 +715,62 @@ def encontrar_leitores():
 
     resultados = []
 
+
     if busca:
 
+        # -------------------------------------------------
+        # PERMITIR BUSCA COM @
+        # -------------------------------------------------
+
+        termo_username = busca.lstrip("@")
+
+
+        # -------------------------------------------------
+        # BUSCAR POR NOME OU USERNAME
+        # -------------------------------------------------
+
         resultados = Usuario.query.filter(
-            Usuario.nome.ilike(f"%{busca}%"),
-            Usuario.id != current_user.id
+
+            Usuario.id != current_user.id,
+
+            db.or_(
+
+                Usuario.nome.ilike(
+                    f"%{busca}%"
+                ),
+
+                Usuario.username.ilike(
+                    f"%{termo_username}%"
+                )
+
+            )
+
         ).all()
+
 
     return render_template(
         "user/encontrar_leitores.html",
+
         resultados=resultados,
+
         busca=busca
     )
-    
 
-@amigos_bp.route("/perfil/<int:usuario_id>")
+
+# =========================================================
+# PERFIL DE OUTRO USUÁRIO
+# =========================================================
+
+@amigos_bp.route(
+    "/perfil/<int:usuario_id>"
+)
 @login_required
 def perfil_usuario(usuario_id):
 
-    usuario = Usuario.query.get_or_404(usuario_id)
+    usuario = Usuario.query.get_or_404(
+        usuario_id
+    )
+
 
     # =====================================================
     # LIVROS
@@ -643,12 +781,14 @@ def perfil_usuario(usuario_id):
         status="lido"
     ).all()
 
+
     livros_lendo = Estante.query.filter_by(
         usuario_id=usuario.id,
         status="lendo"
     ).order_by(
         Estante.posicao
     ).all()
+
 
     # =====================================================
     # QUANTIDADE DE AMIGOS
@@ -662,6 +802,7 @@ def perfil_usuario(usuario_id):
         )
     ).count()
 
+
     # =====================================================
     # ESTANTE
     # =====================================================
@@ -669,6 +810,7 @@ def perfil_usuario(usuario_id):
     estante = Estante.query.filter_by(
         usuario_id=usuario.id
     ).all()
+
 
     # =====================================================
     # ELOGIOS
@@ -680,11 +822,13 @@ def perfil_usuario(usuario_id):
         ElogioEstante.data.desc()
     ).all()
 
+
     # =====================================================
     # RELAÇÃO DE AMIZADE COM O USUÁRIO LOGADO
     # =====================================================
 
     amizade = None
+
 
     if usuario.id != current_user.id:
 
@@ -700,25 +844,33 @@ def perfil_usuario(usuario_id):
             )
         ).first()
 
+
     # =====================================================
     # RENDERIZAR
     # =====================================================
 
     return render_template(
         "user/perfil_amigo.html",
+
         usuario=usuario,
+
         livros_lidos=livros_lidos,
+
         livros_lendo=livros_lendo,
+
         quantidade_amigos=quantidade_amigos,
+
         estante=estante,
+
         elogios=elogios,
+
         amizade=amizade
     )
 
 
-# ==========================================
+# =========================================================
 # DESFAZER AMIZADE
-# ==========================================
+# =========================================================
 
 @amigos_bp.route(
     "/desfazer-amizade/<int:amizade_id>",
@@ -727,14 +879,20 @@ def perfil_usuario(usuario_id):
 @login_required
 def desfazer_amizade(amizade_id):
 
-    amizade = Amizade.query.get_or_404(amizade_id)
+    amizade = Amizade.query.get_or_404(
+        amizade_id
+    )
 
-    # Segurança: só alguém envolvido na amizade
-    # pode desfazê-la.
+
+    # -----------------------------------------------------
+    # SEGURANÇA
+    # -----------------------------------------------------
+
     if (
         current_user.id != amizade.usuario_id
         and current_user.id != amizade.amigo_id
     ):
+
         flash(
             "Você não pode desfazer esta amizade.",
             "erro"
@@ -744,19 +902,32 @@ def desfazer_amizade(amizade_id):
             url_for("amigos_bp.amigos")
         )
 
-    # Descobrir quem é o outro usuário
+
+    # -----------------------------------------------------
+    # DESCOBRIR O OUTRO USUÁRIO
+    # -----------------------------------------------------
+
     if current_user.id == amizade.usuario_id:
+
         outro_usuario_id = amizade.amigo_id
+
     else:
+
         outro_usuario_id = amizade.usuario_id
 
-    db.session.delete(amizade)
+
+    db.session.delete(
+        amizade
+    )
+
     db.session.commit()
+
 
     flash(
         "Amizade desfeita.",
         "sucesso"
     )
+
 
     return redirect(
         url_for(
@@ -766,9 +937,9 @@ def desfazer_amizade(amizade_id):
     )
 
 
-# ==========================================
+# =========================================================
 # CANCELAR SOLICITAÇÃO ENVIADA
-# ==========================================
+# =========================================================
 
 @amigos_bp.route(
     "/cancelar-solicitacao/<int:amizade_id>",
@@ -777,9 +948,15 @@ def desfazer_amizade(amizade_id):
 @login_required
 def cancelar_solicitacao(amizade_id):
 
-    amizade = Amizade.query.get_or_404(amizade_id)
+    amizade = Amizade.query.get_or_404(
+        amizade_id
+    )
 
-    # Só quem enviou pode cancelar
+
+    # -----------------------------------------------------
+    # SÓ QUEM ENVIOU PODE CANCELAR
+    # -----------------------------------------------------
+
     if amizade.usuario_id != current_user.id:
 
         flash(
@@ -791,7 +968,11 @@ def cancelar_solicitacao(amizade_id):
             url_for("amigos_bp.amigos")
         )
 
-    # Só pode cancelar enquanto estiver pendente
+
+    # -----------------------------------------------------
+    # PRECISA ESTAR PENDENTE
+    # -----------------------------------------------------
+
     if amizade.status != "pendente":
 
         flash(
@@ -806,15 +987,22 @@ def cancelar_solicitacao(amizade_id):
             )
         )
 
+
     outro_usuario_id = amizade.amigo_id
 
-    db.session.delete(amizade)
+
+    db.session.delete(
+        amizade
+    )
+
     db.session.commit()
+
 
     flash(
         "Solicitação cancelada.",
         "sucesso"
     )
+
 
     return redirect(
         url_for(
@@ -823,11 +1011,21 @@ def cancelar_solicitacao(amizade_id):
         )
     )
 
-@amigos_bp.route("/estante/<int:usuario_id>")
+
+# =========================================================
+# ESTANTE DE OUTRO USUÁRIO
+# =========================================================
+
+@amigos_bp.route(
+    "/estante/<int:usuario_id>"
+)
 @login_required
 def estante_amigo(usuario_id):
 
-    usuario = Usuario.query.get_or_404(usuario_id)
+    usuario = Usuario.query.get_or_404(
+        usuario_id
+    )
+
 
     livros = Estante.query.filter_by(
         usuario_id=usuario.id
@@ -835,19 +1033,32 @@ def estante_amigo(usuario_id):
         Estante.posicao
     ).all()
 
+
     decoracoes = DecoracaoEstante.query.filter_by(
         usuario_id=usuario.id
     ).order_by(
         DecoracaoEstante.posicao
     ).all()
 
-    lendo = montar_prateleira(livros, decoracoes)
+
+    lendo = montar_prateleira(
+        livros,
+        decoracoes
+    )
+
 
     return render_template(
         "books/estante_usuario.html",
+
         usuario=usuario,
+
         lendo=lendo
     )
+
+
+# =========================================================
+# ENVIAR ELOGIO
+# =========================================================
 
 @amigos_bp.route(
     "/elogio/<int:usuario_id>",
@@ -856,14 +1067,23 @@ def estante_amigo(usuario_id):
 @login_required
 def enviar_elogio(usuario_id):
 
-    usuario = Usuario.query.get_or_404(usuario_id)
+    usuario = Usuario.query.get_or_404(
+        usuario_id
+    )
+
 
     mensagem = request.form.get(
         "mensagem",
         ""
     ).strip()
 
+
+    # -----------------------------------------------------
+    # MENSAGEM VAZIA
+    # -----------------------------------------------------
+
     if not mensagem:
+
         flash(
             "Escreva um elogio antes de enviar.",
             "warning"
@@ -876,9 +1096,16 @@ def enviar_elogio(usuario_id):
             )
         )
 
+
+    # -----------------------------------------------------
+    # TAMANHO MÁXIMO
+    # -----------------------------------------------------
+
     if len(mensagem) > 300:
+
         flash(
-            "O elogio pode ter no máximo 300 caracteres.",
+            "O elogio pode ter no máximo "
+            "300 caracteres.",
             "warning"
         )
 
@@ -888,10 +1115,17 @@ def enviar_elogio(usuario_id):
                 usuario_id=usuario_id
             )
         )
+
+
+    # -----------------------------------------------------
+    # NÃO PODE ELOGIAR A SI MESMO
+    # -----------------------------------------------------
 
     if usuario_id == current_user.id:
+
         flash(
-            "Você não pode enviar um elogio para si mesmo.",
+            "Você não pode enviar um elogio "
+            "para si mesmo.",
             "warning"
         )
 
@@ -901,6 +1135,11 @@ def enviar_elogio(usuario_id):
                 usuario_id=usuario_id
             )
         )
+
+
+    # -----------------------------------------------------
+    # CRIAR ELOGIO
+    # -----------------------------------------------------
 
     elogio = ElogioEstante(
         autor_id=current_user.id,
@@ -908,9 +1147,18 @@ def enviar_elogio(usuario_id):
         mensagem=mensagem
     )
 
-    db.session.add(elogio)
+
+    db.session.add(
+        elogio
+    )
+
     db.session.commit()
-    
+
+
+    # -----------------------------------------------------
+    # NOTIFICAÇÃO
+    # -----------------------------------------------------
+
     criar_notificacao(
         usuario_id=usuario.id,
         categoria="social",
@@ -926,10 +1174,12 @@ def enviar_elogio(usuario_id):
         )
     )
 
+
     flash(
         "Elogio enviado! 💚",
         "success"
     )
+
 
     return redirect(
         url_for(

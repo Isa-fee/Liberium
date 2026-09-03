@@ -63,6 +63,10 @@
                 </label>
 
                 <div class="campo-username">
+                    <span
+                        class="status-username"
+                        id="statusUsername"
+                    ></span>
 
                     <span class="username-prefixo">
                         @
@@ -248,5 +252,92 @@
     </div>
 
 </section>
+
+<script>
+
+    const usernameInput =
+        document.getElementById("username");
+
+    const statusUsername =
+        document.getElementById("statusUsername");
+
+    let timeoutUsername;
+
+
+    usernameInput.addEventListener(
+        "input",
+        function () {
+
+            clearTimeout(timeoutUsername);
+
+            const username =
+                this.value.trim().toLowerCase();
+
+            this.value = username;
+
+            statusUsername.textContent = "";
+
+            statusUsername.classList.remove(
+                "disponivel",
+                "indisponivel"
+            );
+
+
+            if (!username) {
+                return;
+            }
+
+
+            statusUsername.textContent =
+                "Verificando...";
+
+
+            timeoutUsername = setTimeout(
+                async function () {
+
+                    try {
+
+                        const resposta = await fetch(
+                            "{{ url_for('user_bp.verificar_username') }}"
+                            + "?username="
+                            + encodeURIComponent(username)
+                        );
+
+                        const dados =
+                            await resposta.json();
+
+
+                        statusUsername.textContent =
+                            dados.mensagem;
+
+
+                        if (dados.disponivel) {
+
+                            statusUsername.classList.add(
+                                "disponivel"
+                            );
+
+                        } else {
+
+                            statusUsername.classList.add(
+                                "indisponivel"
+                            );
+
+                        }
+
+                    } catch (erro) {
+
+                        statusUsername.textContent = "";
+
+                    }
+
+                },
+                400
+            );
+
+        }
+    );
+
+</script>
 
 {% endblock %}
