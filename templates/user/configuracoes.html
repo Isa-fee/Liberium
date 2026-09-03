@@ -42,7 +42,7 @@
         </h3>
 
         <p class="usuario">
-            @{{ current_user.nome|lower|replace(' ', '') }}
+            @{{ current_user.username }}
         </p>
 
 
@@ -243,7 +243,7 @@
 
 
             <!-- =========================================
-                 INFORMAÇÕES PESSOAIS
+                INFORMAÇÕES PESSOAIS
             ========================================== -->
 
             <section class="card-config">
@@ -255,8 +255,8 @@
                     </h3>
 
                     <p>
-                        Altere seu nome ou
-                        endereço de e-mail.
+                        Altere seu nome, nome de usuário
+                        ou endereço de e-mail.
                     </p>
 
                 </div>
@@ -275,6 +275,40 @@
                         value="{{ current_user.nome }}"
                         required
                     >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="username">
+                        Nome de usuário
+                    </label>
+
+                    <div class="campo-username">
+
+                        <span class="username-prefixo">
+                            @
+                        </span>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value="{{ current_user.username }}"
+                            minlength="3"
+                            maxlength="30"
+                            pattern="[A-Za-z0-9._]+"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                    <span class="ajuda-campo">
+                        Seu @ é único e ajuda outras pessoas
+                        a encontrarem você no Liberium.
+                    </span>
 
                 </div>
 

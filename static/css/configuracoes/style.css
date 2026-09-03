@@ -880,6 +880,57 @@
     transform: translateY(-1px);
 }
 
+/* =========================================
+   USERNAME
+========================================= */
+
+.campo-username {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    border: 1px solid #d8d3cc;
+    border-radius: 10px;
+
+    background: #fff;
+
+    overflow: hidden;
+}
+
+.username-prefixo {
+    display: flex;
+    align-items: center;
+
+    padding-left: 14px;
+
+    font-weight: 600;
+    color: #435342;
+}
+
+.campo-username input {
+    flex: 1;
+
+    border: none !important;
+    outline: none;
+
+    padding-left: 5px !important;
+
+    background: transparent;
+}
+
+.campo-username:focus-within {
+    border-color: #435342;
+}
+
+.ajuda-campo {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 0.78rem;
+    color: #777;
+}
 
 /* =========================================================
    RESPONSIVIDADE

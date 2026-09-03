@@ -128,14 +128,10 @@ if __name__ == '__main__':
         from popular_banco import (
             popular_banco,
             popular_colecionaveis,
-            popular_usuarios_teste,
-            popular_amizades_teste,
             criar_administrador
         )
 
         popular_banco()
         popular_colecionaveis()
-        popular_usuarios_teste()
-        popular_amizades_teste()
         criar_administrador()
     app.run(debug=True)

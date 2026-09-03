@@ -2,7 +2,7 @@ import json
 import os
 
 from extensions import db
-from models import Livro, ItemColecionavel, Usuario, Amizade
+from models import Livro, ItemColecionavel, Usuario
 
 from werkzeug.security import generate_password_hash
 
@@ -73,126 +73,6 @@ def popular_colecionaveis():
     print("Colecionáveis importados com sucesso!")
 
 
-# ==========================================
-# USUÁRIOS DE TESTE
-# ==========================================
-
-def popular_usuarios_teste():
-
-    # Não cria novamente se já existirem usuários
-    if Usuario.query.first():
-        print("Usuários já estão cadastrados.")
-        return
-
-    usuarios = [
-
-        Usuario(
-            nome="Maria Oliveira",
-            email="maria@teste.com",
-            senha=generate_password_hash("123456"),
-            foto="img/perfil_padrao.png",
-            xp=320,
-            nivel="Leitor Curioso",
-            libelulas=18
-        ),
-
-        Usuario(
-            nome="João Silva",
-            email="joao@teste.com",
-            senha=generate_password_hash("123456"),
-            foto="img/perfil_padrao.png",
-            xp=580,
-            nivel="Explorador Literário",
-            libelulas=32
-        ),
-
-        Usuario(
-            nome="Ana Souza",
-            email="ana@teste.com",
-            senha=generate_password_hash("123456"),
-            foto="img/perfil_padrao.png",
-            xp=120,
-            nivel="Leitor Iniciante",
-            libelulas=10
-        ),
-
-        Usuario(
-            nome="Lucas Santos",
-            email="lucas@teste.com",
-            senha=generate_password_hash("123456"),
-            foto="img/perfil_padrao.png",
-            xp=1050,
-            nivel="Devorador de Livros",
-            libelulas=45
-        )
-    ]
-
-    db.session.add_all(usuarios)
-    db.session.commit()
-
-    print("Usuários de teste criados com sucesso!")
-
-# ==========================================
-# AMIZADES DE TESTE
-# ==========================================
-
-def popular_amizades_teste():
-
-    # Evita duplicar amizades
-    if Amizade.query.first():
-        print("Amizades de teste já estão cadastradas.")
-        return
-
-    maria = Usuario.query.filter_by(
-        email="maria@teste.com"
-    ).first()
-
-    joao = Usuario.query.filter_by(
-        email="joao@teste.com"
-    ).first()
-
-    ana = Usuario.query.filter_by(
-        email="ana@teste.com"
-    ).first()
-
-    lucas = Usuario.query.filter_by(
-        email="lucas@teste.com"
-    ).first()
-
-    if not all([maria, joao, ana, lucas]):
-        print("Usuários de teste não encontrados.")
-        return
-
-    # Maria e João são amigos
-    amizade1 = Amizade(
-        usuario_id=maria.id,
-        amigo_id=joao.id,
-        status="aceita"
-    )
-
-    # Maria recebeu solicitação da Ana
-    amizade2 = Amizade(
-        usuario_id=ana.id,
-        amigo_id=maria.id,
-        status="pendente"
-    )
-
-    # João enviou solicitação para Lucas
-    amizade3 = Amizade(
-        usuario_id=joao.id,
-        amigo_id=lucas.id,
-        status="pendente"
-    )
-
-    db.session.add_all([
-        amizade1,
-        amizade2,
-        amizade3
-    ])
-
-    db.session.commit()
-
-    print("Amizades de teste criadas com sucesso!")
 
 # ==========================================
 # ADMINISTRADOR
@@ -202,13 +82,21 @@ def criar_administrador():
 
     email = os.getenv("ADMIN_EMAIL")
     senha = os.getenv("ADMIN_PASSWORD")
+
     nome = os.getenv(
         "ADMIN_NOME",
         "Administrador"
     )
 
-    # Verifica se o administrador
-    # foi configurado no .env
+    username = os.getenv(
+        "ADMIN_USERNAME",
+        "admin"
+    )
+
+    # ======================================
+    # VERIFICAR CONFIGURAÇÃO
+    # ======================================
+
     if not email or not senha:
 
         print(
@@ -218,25 +106,40 @@ def criar_administrador():
         return
 
     email = email.strip().lower()
+    username = username.strip().lower()
 
-    # Procura uma conta com esse e-mail
+    # ======================================
+    # PROCURA CONTA PELO E-MAIL
+    # ======================================
+
     usuario = Usuario.query.filter_by(
         email=email
     ).first()
+
     # ======================================
     # CONTA JÁ EXISTE
     # ======================================
 
     if usuario:
 
+        alterado = False
+
         if usuario.tipo != "administrador":
 
             usuario.tipo = "administrador"
+            alterado = True
+
+        if not usuario.username:
+
+            usuario.username = username
+            alterado = True
+
+        if alterado:
 
             db.session.commit()
 
             print(
-                f"{usuario.nome} agora é administrador(a)."
+                f"{usuario.nome} atualizado como administrador(a)."
             )
 
         else:
@@ -246,20 +149,41 @@ def criar_administrador():
             )
 
         return
+
     # ======================================
-    # CONTA NÃO EXISTE
+    # VERIFICAR SE O USERNAME JÁ EXISTE
     # ======================================
+
+    username_existente = Usuario.query.filter_by(
+        username=username
+    ).first()
+
+    if username_existente:
+
+        print(
+            f"O username @{username} já está sendo utilizado."
+        )
+
+        return
+
+    # ======================================
+    # CRIAR ADMINISTRADOR
+    # ======================================
+
     administrador = Usuario(
         nome=nome,
+        username=username,
         email=email,
         senha=generate_password_hash(senha),
         tipo="administrador"
     )
 
-    db.session.add(administrador)
+    db.session.add(
+        administrador
+    )
 
     db.session.commit()
 
     print(
-        f"Administrador {nome} criado com sucesso!"
+        f"Administrador {nome} (@{username}) criado com sucesso!"
     )
