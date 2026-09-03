@@ -10,7 +10,7 @@
     <aside class="sidebar">
         <img src="{{ url_for('static', filename=current_user.foto if current_user.foto else 'img/perfil_padrão.jpg') }}" class="foto-perfil">
         <h3>{{ current_user.nome }}</h3>
-        <p class="usuario">@{{ current_user.nome|lower|replace(' ', '') }}</p>
+        <p class="usuario">@{{ current_user.username }}</p>
 
         <nav class="menu-lateral">
             <a href="{{ url_for('estante_bp.estante') }}">Minha Estante</a>
@@ -65,7 +65,9 @@
 
                                 <div class="dados-amigo">
                                     <h3>{{ usuario.nome }}</h3>
-                                    <span class="username">Leitor do Liberium</span>
+                                    <span class="username">
+                                        @{{ usuario.username }}
+                                    </span>
                                     <span class="nivel-amigo">{{ usuario.nivel }}</span>
                                 </div>
                             </div>

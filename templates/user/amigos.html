@@ -17,7 +17,7 @@
         <h3>{{ current_user.nome }}</h3>
 
         <p class="usuario">
-            @{{ current_user.nome|lower|replace(' ', '') }}
+            @{{ current_user.username }}
         </p>
 
         <nav class="menu-lateral">
@@ -138,7 +138,7 @@
                         type="text"
                         name="busca"
                         value="{{ busca }}"
-                        placeholder="Buscar leitores pelo nome..."
+                        placeholder="Buscar por nome ou @..."
                     >
 
                 </form>
@@ -178,7 +178,7 @@
                                     </h3>
 
                                     <span class="username">
-                                        Leitor do Liberium
+                                        @{{ usuario.username }}
                                     </span>
 
                                     <span class="nivel-amigo">
@@ -279,6 +279,10 @@
                                     <h3>
                                         {{ solicitacao.usuario.nome }}
                                     </h3>
+
+                                    <span class="username">
+                                        @{{ solicitacao.usuario.username }}
+                                    </span>
 
                                     <p>
                                         Quer adicionar você aos amigos.
@@ -398,7 +402,7 @@
                                     </h3>
 
                                     <span class="username">
-                                        Leitor do Liberium
+                                        @{{ amigo.username }}
                                     </span>
 
                                     <span class="nivel-amigo">
@@ -528,6 +532,10 @@
                                 {{ sugestao.nome }}
                             </h3>
 
+                            <span class="username">
+                                @{{ sugestao.username }}
+                            </span>
+
                             <p>
                                 {{ sugestao.nivel or "Leitor Iniciante" }}
                             </p>
@@ -580,7 +588,7 @@
                     </h3>
 
                     <p class="meu-username">
-                        @{{ current_user.nome|lower|replace(' ', '') }}
+                        @{{ current_user.username }}
                     </p>
 
 

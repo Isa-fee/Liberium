@@ -218,6 +218,87 @@ def register():
         "user/register.html"
     )
 
+@user_bp.route("/verificar-username")
+def verificar_username():
+
+    username = request.args.get(
+        "username",
+        ""
+    ).strip().lower()
+
+    if not username:
+
+        return {
+            "disponivel": False,
+            "mensagem": ""
+        }
+
+    if len(username) < 3:
+
+        return {
+            "disponivel": False,
+            "mensagem": "Use pelo menos 3 caracteres."
+        }
+
+    if len(username) > 30:
+
+        return {
+            "disponivel": False,
+            "mensagem": "Use no máximo 30 caracteres."
+        }
+
+    if not re.fullmatch(
+        r"[a-z0-9._]+",
+        username
+    ):
+
+        return {
+            "disponivel": False,
+            "mensagem": (
+                "Use apenas letras, números, "
+                "ponto e underline."
+            )
+        }
+
+    usuario = Usuario.query.filter_by(
+        username=username
+    ).first()
+
+    # ======================================
+    # EDIÇÃO DO PRÓPRIO PERFIL
+    # ======================================
+
+    if (
+        usuario
+        and current_user.is_authenticated
+        and usuario.id == current_user.id
+    ):
+
+        return {
+            "disponivel": True,
+            "mensagem": "Este é o seu nome de usuário atual."
+        }
+
+    # ======================================
+    # USERNAME JÁ UTILIZADO
+    # ======================================
+
+    if usuario:
+
+        return {
+            "disponivel": False,
+            "mensagem": "Este nome de usuário já está em uso."
+        }
+
+    # ======================================
+    # DISPONÍVEL
+    # ======================================
+
+    return {
+        "disponivel": True,
+        "mensagem": "Nome de usuário disponível!"
+    }
+
 
 @user_bp.route("/login", methods=["GET", "POST"])
 def login():

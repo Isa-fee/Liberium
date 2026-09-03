@@ -305,6 +305,11 @@
 
                     </div>
 
+                    <span
+                        class="status-username"
+                        id="statusUsername"
+                    ></span>
+
                     <span class="ajuda-campo">
                         Seu @ é único e ajuda outras pessoas
                         a encontrarem você no Liberium.
@@ -577,6 +582,122 @@
 ====================================================== -->
 
 <script>
+
+/* =====================================================
+   VERIFICAR DISPONIBILIDADE DO USERNAME
+===================================================== */
+
+const usernameInput =
+    document.getElementById("username");
+
+const statusUsername =
+    document.getElementById("statusUsername");
+
+const usernameAtual =
+    "{{ current_user.username }}".toLowerCase();
+
+let timeoutUsername;
+
+
+usernameInput.addEventListener(
+    "input",
+    function () {
+
+        clearTimeout(timeoutUsername);
+
+        const username =
+            this.value.trim().toLowerCase();
+
+        this.value = username;
+
+        statusUsername.textContent = "";
+
+        statusUsername.classList.remove(
+            "disponivel",
+            "indisponivel"
+        );
+
+
+        if (!username) {
+            return;
+        }
+
+
+        /* =============================================
+           USERNAME ATUAL
+        ============================================= */
+
+        if (username === usernameAtual) {
+
+            statusUsername.textContent =
+                "Este é o seu nome de usuário atual.";
+
+            statusUsername.classList.add(
+                "disponivel"
+            );
+
+            return;
+        }
+
+
+        /* =============================================
+           VERIFICANDO
+        ============================================= */
+
+        statusUsername.textContent =
+            "Verificando...";
+
+
+        timeoutUsername = setTimeout(
+            async function () {
+
+                try {
+
+                    const resposta = await fetch(
+                        "{{ url_for('user_bp.verificar_username') }}"
+                        + "?username="
+                        + encodeURIComponent(username)
+                    );
+
+                    const dados =
+                        await resposta.json();
+
+
+                    statusUsername.textContent =
+                        dados.mensagem;
+
+
+                    if (dados.disponivel) {
+
+                        statusUsername.classList.add(
+                            "disponivel"
+                        );
+
+                    } else {
+
+                        statusUsername.classList.add(
+                            "indisponivel"
+                        );
+
+                    }
+
+                } catch (erro) {
+
+                    statusUsername.textContent =
+                        "Não foi possível verificar o nome de usuário.";
+
+                    statusUsername.classList.add(
+                        "indisponivel"
+                    );
+
+                }
+
+            },
+            400
+        );
+
+    }
+);
 
     /* =====================================================
        PREVIEW DA FOTO
