@@ -445,95 +445,394 @@
 
 
 /* =========================================
-   SUGESTÕES
+   SUGESTÕES PERSONALIZADAS
 ========================================= */
 
 .secao-sugestoes {
-    margin-top: 40px;
+    margin-top: 42px;
 }
+
+
+/* -----------------------------------------
+   GRID
+----------------------------------------- */
 
 .grid-sugestoes {
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fill, minmax(150px, 1fr));
+        repeat(2, minmax(0, 1fr));
 
-    gap: 15px;
+    gap: 16px;
 }
 
-.card-sugestao {
-    display: flex;
 
-    flex-direction: column;
+/* -----------------------------------------
+   CARD
+----------------------------------------- */
+
+.card-sugestao {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 64px minmax(0, 1fr);
+
+    column-gap: 14px;
+    row-gap: 12px;
+
     align-items: center;
 
-    text-align: center;
+    padding: 18px;
 
-    padding: 20px 15px;
-
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #e2ddd7;
 
-    border-radius: 15px;
+    border-radius: 16px;
+
+    text-align: left;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card-sugestao:hover {
+    transform: translateY(-2px);
+
+    border-color: #ccd8c6;
+
+    box-shadow:
+        0 8px 22px rgba(91, 57, 35, 0.07);
+}
+
+
+/* -----------------------------------------
+   FOTO
+----------------------------------------- */
+
+.link-foto-sugestao {
+    display: block;
+
+    width: 64px;
+    height: 64px;
+
+    grid-column: 1;
+    grid-row: 1;
+
+    text-decoration: none;
 }
 
 .foto-sugestao {
-    width: 55px;
-    height: 55px;
+    display: block;
+
+    width: 64px;
+    height: 64px;
+
+    margin: 0;
 
     border-radius: 50%;
 
     object-fit: cover;
 
-    border: 2px solid #dce5d7;
+    border: 3px solid #dce5d7;
 
-    margin-bottom: 10px;
+    box-sizing: border-box;
+
+    transition: 0.2s;
 }
 
-.card-sugestao h3 {
+.link-foto-sugestao:hover .foto-sugestao {
+    border-color: #aebfa7;
+}
+
+
+/* -----------------------------------------
+   NOME E NÍVEL
+----------------------------------------- */
+
+.dados-sugestao {
+    grid-column: 2;
+    grid-row: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 5px;
+}
+
+.card-sugestao .dados-sugestao h3 {
+    width: 100%;
+
     margin: 0;
 
     color: #5b3923;
 
     font-family: "Tenor Sans", sans-serif;
 
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-.card-sugestao p {
-    margin: 4px 0 13px;
+.nivel-sugestao {
+    display: inline-flex;
 
-    color: #9a8e82;
+    align-items: center;
+
+    width: fit-content;
+
+    padding: 4px 8px;
+
+    background: #f0f4ed;
+
+    color: #6f8564;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* -----------------------------------------
+   MOTIVO DA RECOMENDAÇÃO
+----------------------------------------- */
+
+.motivo-sugestao {
+    grid-column: 1 / -1;
+
+    min-height: 52px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 10px 12px;
+
+    background: #f6f8f4;
+
+    border: 1px solid #e7ece3;
+
+    border-radius: 11px;
+}
+
+.motivo-principal {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #5f7358;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+.icone-motivo {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    background: #e3ebe0;
+
+    border-radius: 50%;
 
     font-size: 11px;
 }
 
-.btn-adicionar {
+.motivo-secundario {
+    display: block;
+
+    padding-left: 29px;
+
+    color: #958a7e;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+}
+
+.motivo-novo-leitor {
+    color: #7d746b;
+}
+
+
+/* -----------------------------------------
+   AÇÕES
+----------------------------------------- */
+
+.acoes-sugestao {
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 8px;
+
+    width: 100%;
+}
+
+.acoes-sugestao form {
     width: 100%;
 
-    padding: 8px;
+    margin: 0;
+}
 
-    border: none;
+
+/* -----------------------------------------
+   VER PERFIL
+----------------------------------------- */
+
+.btn-ver-sugestao {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding: 7px 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #b9c8b4;
 
     border-radius: 18px;
 
-    background: #8fa382;
+    background: transparent;
 
-    color: white;
+    color: #65765f;
 
-    cursor: pointer;
+    text-decoration: none;
 
     font-family: "Raleway", sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
+
     font-weight: 600;
 
     transition: 0.2s;
 }
 
-.btn-adicionar:hover {
+.btn-ver-sugestao:hover {
+    background: #f0f4ed;
+
+    border-color: #8fa382;
+
+    color: #52634d;
+}
+
+
+/* -----------------------------------------
+   ADICIONAR
+----------------------------------------- */
+
+.acoes-sugestao .btn-adicionar {
+    width: 100%;
+
+    min-height: 34px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #8fa382;
+
+    border-radius: 18px;
+
+    background: #8fa382;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-family: "Raleway", sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.acoes-sugestao .btn-adicionar:hover {
     background: #788d6c;
+
+    border-color: #788d6c;
+
+    transform: translateY(-1px);
+}
+
+
+/* -----------------------------------------
+   RESPONSIVIDADE DAS SUGESTÕES
+----------------------------------------- */
+
+@media (max-width: 1250px) {
+
+    .grid-sugestoes {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .grid-sugestoes {
+        grid-template-columns: 1fr;
+    }
+
+    .card-sugestao {
+        grid-template-columns: 58px minmax(0, 1fr);
+
+        padding: 16px;
+    }
+
+    .link-foto-sugestao,
+    .foto-sugestao {
+        width: 58px;
+        height: 58px;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .acoes-sugestao {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 

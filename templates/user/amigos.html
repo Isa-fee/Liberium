@@ -498,11 +498,12 @@
                         <div>
 
                             <h2>
-                                Sugestões para você
+                                Pessoas que você talvez conheça
                             </h2>
 
                             <p>
-                                Outros leitores que podem compartilhar seus interesses literários.
+                                Leitores recomendados com base nas suas amizades,
+                                clubes e leituras.
                             </p>
 
                         </div>
@@ -510,55 +511,354 @@
                     </div>
 
 
+                    {% if sugestoes %}
+
                     <div class="grid-sugestoes">
 
                         {% for sugestao in sugestoes %}
 
+                        {% set usuario = sugestao.usuario %}
+
                         <div class="card-sugestao">
 
+
+                            <!-- =========================================
+                                FOTO
+                            ========================================== -->
+
                             <a
-                                href="{{ url_for('amigos_bp.perfil_usuario', usuario_id=sugestao.id) }}"
+                                href="{{ url_for(
+                                    'amigos_bp.perfil_usuario',
+                                    usuario_id=usuario.id
+                                ) }}"
+                                class="link-foto-sugestao"
                             >
 
                                 <img
-                                    src="{{ url_for('static', filename=sugestao.foto if sugestao.foto else 'img/perfil_padrão.jpg') }}"
-                                    alt="Foto de {{ sugestao.nome }}"
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=usuario.foto
+                                        if usuario.foto
+                                        else 'img/perfil_padrão.jpg'
+                                    ) }}"
+                                    alt="Foto de {{ usuario.nome }}"
                                     class="foto-sugestao"
                                 >
 
                             </a>
 
-                            <h3>
-                                {{ sugestao.nome }}
-                            </h3>
 
-                            <span class="username">
-                                @{{ sugestao.username }}
-                            </span>
+                            <!-- =========================================
+                                USUÁRIO
+                            ========================================== -->
 
-                            <p>
-                                {{ sugestao.nivel or "Leitor Iniciante" }}
-                            </p>
+                            <div class="dados-sugestao">
 
-                            <form
-                                method="POST"
-                                action="{{ url_for('amigos_bp.adicionar_amigo', usuario_id=sugestao.id) }}"
-                            >
+                                <h3>
+                                    {{ usuario.nome }}
+                                </h3>
 
-                                <button
-                                    type="submit"
-                                    class="btn-adicionar"
+                                <span class="nivel-sugestao">
+                                    ✦ {{ usuario.nivel or "Leitor Iniciante" }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- =========================================
+                                MOTIVO DA RECOMENDAÇÃO
+                            ========================================== -->
+
+                            <div class="motivo-sugestao">
+
+
+                                {% if sugestao.amigos_comuns > 0 %}
+
+                                    <div class="motivo-principal">
+
+                                        <span class="icone-motivo">
+                                            👥
+                                        </span>
+
+                                        <span>
+
+                                            {% if sugestao.amigos_comuns == 1 %}
+
+                                                1 amigo em comum
+
+                                            {% else %}
+
+                                                {{ sugestao.amigos_comuns }}
+                                                amigos em comum
+
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                {% elif sugestao.clubes_comuns > 0 %}
+
+                                    <div class="motivo-principal">
+
+                                        <span class="icone-motivo">
+                                            ✦
+                                        </span>
+
+                                        <span>
+
+                                            {% if sugestao.clubes_comuns == 1 %}
+
+                                                Participa de um clube com você
+
+                                            {% else %}
+
+                                                Participa de
+                                                {{ sugestao.clubes_comuns }}
+                                                clubes com você
+
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                {% elif sugestao.livros_lendo_comuns > 0 %}
+
+                                    <div class="motivo-principal">
+
+                                        <span class="icone-motivo">
+                                            📖
+                                        </span>
+
+                                        <span>
+
+                                            {% if sugestao.livros_lendo_comuns == 1 %}
+
+                                                Está lendo o mesmo livro que você
+
+                                            {% else %}
+
+                                                Vocês estão lendo
+                                                {{ sugestao.livros_lendo_comuns }}
+                                                livros em comum
+
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                {% elif sugestao.livros_lidos_comuns > 0 %}
+
+                                    <div class="motivo-principal">
+
+                                        <span class="icone-motivo">
+                                            📚
+                                        </span>
+
+                                        <span>
+
+                                            {% if sugestao.livros_lidos_comuns == 1 %}
+
+                                                Vocês leram um livro em comum
+
+                                            {% else %}
+
+                                                Vocês leram
+                                                {{ sugestao.livros_lidos_comuns }}
+                                                livros em comum
+
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                {% elif sugestao.livros_quero_ler_comuns > 0 %}
+
+                                    <div class="motivo-principal">
+
+                                        <span class="icone-motivo">
+                                            ♡
+                                        </span>
+
+                                        <span>
+
+                                            {% if sugestao.livros_quero_ler_comuns == 1 %}
+
+                                                Um livro em comum na lista de desejos
+
+                                            {% else %}
+
+                                                {{ sugestao.livros_quero_ler_comuns }}
+                                                livros em comum na lista de desejos
+
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                {% else %}
+
+                                    <div class="motivo-principal motivo-novo-leitor">
+
+                                        <span class="icone-motivo">
+                                            ✦
+                                        </span>
+
+                                        <span>
+                                            Conheça outro leitor do Liberium
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <!-- =====================================
+                                    SEGUNDO MOTIVO
+                                ====================================== -->
+
+                                {% if (
+                                    sugestao.amigos_comuns > 0
+                                    and sugestao.clubes_comuns > 0
+                                ) %}
+
+                                    <small class="motivo-secundario">
+
+                                        {% if sugestao.clubes_comuns == 1 %}
+
+                                            + 1 clube em comum
+
+                                        {% else %}
+
+                                            + {{ sugestao.clubes_comuns }}
+                                            clubes em comum
+
+                                        {% endif %}
+
+                                    </small>
+
+
+                                {% elif (
+                                    sugestao.amigos_comuns > 0
+                                    and sugestao.livros_lidos_comuns > 0
+                                ) %}
+
+                                    <small class="motivo-secundario">
+
+                                        + {{ sugestao.livros_lidos_comuns }}
+
+                                        {% if sugestao.livros_lidos_comuns == 1 %}
+                                            livro lido em comum
+                                        {% else %}
+                                            livros lidos em comum
+                                        {% endif %}
+
+                                    </small>
+
+
+                                {% elif (
+                                    sugestao.clubes_comuns > 0
+                                    and sugestao.livros_lidos_comuns > 0
+                                ) %}
+
+                                    <small class="motivo-secundario">
+
+                                        + {{ sugestao.livros_lidos_comuns }}
+
+                                        {% if sugestao.livros_lidos_comuns == 1 %}
+                                            livro lido em comum
+                                        {% else %}
+                                            livros lidos em comum
+                                        {% endif %}
+
+                                    </small>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =========================================
+                                AÇÕES
+                            ========================================== -->
+
+                            <div class="acoes-sugestao">
+
+                                <a
+                                    href="{{ url_for(
+                                        'amigos_bp.perfil_usuario',
+                                        usuario_id=usuario.id
+                                    ) }}"
+                                    class="btn-ver-sugestao"
                                 >
-                                    + Adicionar
-                                </button>
+                                    Ver perfil
+                                </a>
 
-                            </form>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'amigos_bp.adicionar_amigo',
+                                        usuario_id=usuario.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn-adicionar"
+                                    >
+                                        + Adicionar
+                                    </button>
+
+                                </form>
+
+                            </div>
 
                         </div>
 
                         {% endfor %}
 
                     </div>
+
+
+                    {% else %}
+
+                    <div class="estado-vazio">
+
+                        <div class="icone-vazio-circulo">
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='img/icones/Encontrar_leitores.png'
+                                ) }}"
+                                alt="Encontrar leitores"
+                                class="icone-vazio-img"
+                            >
+
+                        </div>
+
+                        <h2>
+                            Nenhuma sugestão por enquanto
+                        </h2>
+
+                        <p>
+                            Continue lendo e participando de clubes.
+                            Novos leitores aparecerão por aqui.
+                        </p>
+
+                    </div>
+
+                    {% endif %}
 
                 </section>
 
