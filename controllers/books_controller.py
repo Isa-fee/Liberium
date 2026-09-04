@@ -1083,7 +1083,10 @@ def adicionar_estante(livro_id):
     )   
 
     return redirect(
-        url_for("estante_bp.estante")
+    url_for(
+        "books_bp.ver",
+        id=livro.id
+    )
     )
     
 

@@ -1757,6 +1757,446 @@
     color: #435342;
 }
 
+/* ========================================
+   COMPARTILHAR LEITURA
+======================================== */
+
+.area-compartilhar-leitura {
+    width: 100%;
+    margin-top: 28px;
+    padding: 22px 20px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+
+    background: #f3f6f1;
+    border: 1px solid #d8e0d4;
+    border-radius: 18px;
+}
+
+
+/* ========================================
+   TEXTO
+======================================== */
+
+.compartilhar-texto {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.compartilhar-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+
+    color: #71866b;
+}
+
+.compartilhar-texto h3 {
+    margin: 0;
+
+    font-family: "Tenor Sans", serif;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.15;
+
+    color: #442b1a;
+}
+
+.compartilhar-texto p {
+    margin: 2px 0 0;
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    color: #7a756f;
+}
+
+.compartilhar-texto strong {
+    color: #435342;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   BOTÃO
+======================================== */
+
+.btn-compartilhar-leitura {
+    width: 100%;
+    min-height: 44px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 16px;
+
+    background: #435342;
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-compartilhar-leitura:hover {
+    background: #36503c;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   MODAL — COMPARTILHAR LEITURA
+======================================== */
+
+.modal-compartilhar-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(36, 29, 23, 0.42);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.modal-compartilhar-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* MODAL */
+
+.modal-compartilhar {
+    width: min(460px, 100%);
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: #fdfcfb;
+
+    border: 1px solid #dfe6db;
+    border-radius: 22px;
+
+    box-shadow:
+        0 18px 50px rgba(55, 43, 32, 0.18);
+
+    transform: translateY(12px);
+
+    transition: transform 0.2s ease;
+}
+
+.modal-compartilhar-overlay.ativo
+.modal-compartilhar {
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.modal-compartilhar-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-compartilhar-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #879d84;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.modal-compartilhar-topo h2 {
+    margin: 0;
+
+    font-family: "Tenor Sans", serif;
+    font-size: 26px;
+    font-weight: 400;
+
+    color: #442b1a;
+}
+
+
+/* FECHAR */
+
+.fechar-modal-compartilhar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #71866b;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   DESCRIÇÃO
+======================================== */
+
+.modal-compartilhar-descricao {
+    margin: 12px 0 24px;
+
+    color: #77716c;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   CAMPO
+======================================== */
+
+.campo-frase-compartilhar {
+    position: relative;
+}
+
+.campo-frase-compartilhar label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #435342;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.campo-frase-compartilhar textarea {
+    width: 100%;
+    min-height: 90px;
+
+    box-sizing: border-box;
+
+    padding: 14px 15px 30px;
+
+    resize: none;
+
+    outline: none;
+
+    background: #ffffff;
+
+    border: 1px solid #d8dfd4;
+    border-radius: 12px;
+
+    color: #442b1a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+
+    transition: border-color 0.2s ease;
+}
+
+.campo-frase-compartilhar textarea:focus {
+    border-color: #879d84;
+}
+
+.campo-frase-compartilhar textarea::placeholder {
+    color: #aaa49e;
+}
+
+
+/* CONTADOR */
+
+.contador-frase {
+    position: absolute;
+
+    right: 12px;
+    bottom: 10px;
+
+    color: #9a958f;
+
+    font-size: 10px;
+}
+
+
+/* ========================================
+   BOTÕES
+======================================== */
+
+.acoes-modal-compartilhar {
+    margin-top: 22px;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-cancelar-compartilhar,
+.btn-gerar-compartilhamento {
+    min-height: 42px;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.btn-cancelar-compartilhar {
+    background: transparent;
+
+    border: 1px solid #d8dfd4;
+
+    color: #71866b;
+}
+
+.btn-gerar-compartilhamento {
+    background: #435342;
+
+    border: 1px solid #435342;
+
+    color: #ffffff;
+}
+
+.btn-gerar-compartilhamento:hover {
+    background: #36503c;
+}
+
+/* =========================================
+   PRÉVIA DO CARD DE COMPARTILHAMENTO
+========================================= */
+
+.etapa-preview-compartilhar {
+    width: 100%;
+}
+
+
+/* Área onde o story aparece */
+
+.preview-card-compartilhar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+    margin-bottom: 24px;
+
+    min-height: 430px;
+
+    padding: 20px;
+
+    background: #f4f3eb;
+
+    border: 1px solid #e3e0d4;
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+/* Imagem do story */
+
+.imagem-preview-compartilhar {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 260px;
+    max-height: 460px;
+
+    aspect-ratio: 9 / 16;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(68, 43, 26, 0.16);
+}
+
+
+/* Carregamento */
+
+.preview-card-carregando {
+    font-size: 14px;
+    color: #71866b;
+    text-align: center;
+}
+
+
+/* Link de download com aparência de botão */
+
+#baixar-card-compartilhar {
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Garante que hidden realmente esconda as etapas */
+
+.etapa-compartilhar[hidden],
+.imagem-preview-compartilhar[hidden],
+.preview-card-carregando[hidden] {
+    display: none !important;
+}
 
 /* ==========================================
    RESPONSIVIDADE

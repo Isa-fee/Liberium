@@ -1241,68 +1241,90 @@ def excluir_comentario(comentario_id):
 @login_required
 def compartilhar_livro(livro_id):
 
-    # -----------------------------------------------------
-    # PROCURAR O LIVRO NA ESTANTE DO USUÁRIO
-    # -----------------------------------------------------
+    # ==========================================
+    # BUSCAR LIVRO CONCLUÍDO
+    # ==========================================
 
     item_estante = Estante.query.filter_by(
         usuario_id=current_user.id,
         livro_id=livro_id,
         status="lido"
-    ).first()
-
-
-    # -----------------------------------------------------
-    # VERIFICAR SE O LIVRO FOI CONCLUÍDO
-    # -----------------------------------------------------
-
-    if not item_estante:
-
-        flash(
-            "Você só pode compartilhar livros concluídos.",
-            "erro"
-        )
-
-        return redirect(
-            url_for("estante_bp.estante")
-        )
-
-
-    # -----------------------------------------------------
-    # PEGAR LIVRO
-    # -----------------------------------------------------
+    ).first_or_404()
 
     livro = item_estante.livro
 
 
-    if not livro:
+    # ==========================================
+    # FRASE PERSONALIZADA
+    # ==========================================
 
-        flash(
-            "Não foi possível encontrar esse livro.",
-            "erro"
+    frase = request.args.get(
+        "frase",
+        ""
+    ).strip()
+
+    # Limite também no backend
+    frase = frase[:70]
+
+    if not frase:
+
+        frase = (
+            "Mais uma história "
+            "para a minha estante."
         )
 
-        return redirect(
-            url_for("estante_bp.estante")
-        )
+
+    # ==========================================
+    # MODO
+    # ==========================================
+
+    modo = request.args.get(
+        "modo",
+        "preview"
+    )
+
+    if modo not in [
+        "preview",
+        "download"
+    ]:
+
+        modo = "preview"
 
 
-    # -----------------------------------------------------
+    # ==========================================
     # GERAR CARD
-    # -----------------------------------------------------
+    # ==========================================
 
     caminho = gerar_card_livro_concluido(
         usuario=current_user,
         livro=livro,
-        nota=item_estante.nota
+        nota=item_estante.nota,
+        frase=frase
     )
 
 
-    # -----------------------------------------------------
-    # ENVIAR IMAGEM
-    # -----------------------------------------------------
+    # ==========================================
+    # DOWNLOAD
+    # ==========================================
+
+    if modo == "download":
+
+        return send_file(
+            caminho,
+            mimetype="image/png",
+            as_attachment=True,
+            download_name=(
+                f"{livro.titulo} - Liberium.png"
+            )
+        )
+
+
+    # ==========================================
+    # PRÉVIA
+    # ==========================================
 
     return send_file(
         caminho,
-        mimetype="image/png"
+        mimetype="image/png",
+        as_attachment=False
     )

@@ -126,6 +126,174 @@
             </div>
 
         </div>
+
+        {% if origem == "banco" and item_estante and item_estante.status == "lido" %}
+
+            <div
+                class="modal-compartilhar-overlay"
+                id="modal-compartilhar"
+                aria-hidden="true"
+            >
+                <div
+                    class="modal-compartilhar"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="titulo-modal-compartilhar"
+                >
+
+                    <!-- =========================================
+                        CABEÇALHO
+                    ========================================== -->
+
+                    <div class="modal-compartilhar-topo">
+
+                        <div>
+
+                            <span class="modal-compartilhar-label">
+                                SUA LEITURA
+                            </span>
+
+                            <h2 id="titulo-modal-compartilhar">
+                                Compartilhar leitura
+                            </h2>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="fechar-modal-compartilhar"
+                            id="fechar-modal-compartilhar"
+                            aria-label="Fechar"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <!-- =========================================
+                        ETAPA 1 — PERSONALIZAR
+                    ========================================== -->
+
+                    <div
+                        class="etapa-compartilhar"
+                        id="etapa-personalizar"
+                    >
+
+                        <p class="modal-compartilhar-descricao">
+                            Personalize seu card antes de compartilhar.
+                        </p>
+
+
+                        <!-- FRASE -->
+
+                        <div class="campo-frase-compartilhar">
+
+                            <label for="frase-compartilhar">
+                                Escreva uma frase
+                            </label>
+
+                            <textarea
+                                id="frase-compartilhar"
+                                maxlength="70"
+                                rows="2"
+                                placeholder="O que você achou dessa leitura?"
+                            ></textarea>
+
+                            <div class="contador-frase">
+                                <span id="contador-frase">0</span>/70
+                            </div>
+
+                        </div>
+
+
+                        <!-- AÇÕES -->
+
+                        <div class="acoes-modal-compartilhar">
+
+                            <button
+                                type="button"
+                                class="btn-cancelar-compartilhar"
+                                id="cancelar-compartilhar"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn-gerar-compartilhamento"
+                                id="gerar-compartilhamento"
+                            >
+                                Ver meu card
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                        ETAPA 2 — PRÉVIA
+                    ========================================== -->
+
+                    <div
+                        class="etapa-compartilhar etapa-preview-compartilhar"
+                        id="etapa-preview"
+                        hidden
+                    >
+
+                        <p class="modal-compartilhar-descricao">
+                            Seu card está pronto! 💚
+                        </p>
+
+
+                        <!-- PRÉVIA DO STORY -->
+
+                        <div class="preview-card-compartilhar">
+
+                            <div class="preview-card-carregando" id="preview-carregando">
+                                Gerando seu card...
+                            </div>
+
+                            <img
+                                id="imagem-preview-compartilhar"
+                                class="imagem-preview-compartilhar"
+                                src=""
+                                alt="Prévia do card da leitura"
+                                hidden
+                            >
+
+                        </div>
+
+
+                        <!-- AÇÕES -->
+
+                        <div class="acoes-modal-compartilhar">
+
+                            <button
+                                type="button"
+                                class="btn-cancelar-compartilhar"
+                                id="voltar-personalizacao"
+                            >
+                                ← Alterar frase
+                            </button>
+
+                            <a
+                                href="#"
+                                class="btn-gerar-compartilhamento"
+                                id="baixar-card-compartilhar"
+                            >
+                                Baixar imagem
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            {% endif %}
         
         {% if current_user.tipo == "administrador" and origem == "banco" %}
             <div class="acoes-admin-livro">
@@ -948,5 +1116,477 @@
     </section>
 
 </main>
+
+{% if origem == "banco" and item_estante and item_estante.status == "lido" %}
+
+<div
+    class="modal-compartilhar-overlay"
+    id="modal-compartilhar"
+    aria-hidden="true"
+>
+    <div
+        class="modal-compartilhar"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-compartilhar"
+    >
+
+        <!-- CABEÇALHO -->
+
+        <div class="modal-compartilhar-topo">
+
+            <div>
+                <span class="modal-compartilhar-label">
+                    SUA LEITURA
+                </span>
+
+                <h2 id="titulo-modal-compartilhar">
+                    Compartilhar leitura
+                </h2>
+            </div>
+
+            <button
+                type="button"
+                class="fechar-modal-compartilhar"
+                id="fechar-modal-compartilhar"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- TEXTO -->
+
+        <p class="modal-compartilhar-descricao">
+            Personalize seu card antes de compartilhar.
+        </p>
+
+
+        <!-- FRASE -->
+
+        <div class="campo-frase-compartilhar">
+
+            <label for="frase-compartilhar">
+                Escreva uma frase
+            </label>
+
+            <textarea
+                id="frase-compartilhar"
+                maxlength="70"
+                rows="2"
+                placeholder="O que você achou dessa leitura?"
+            ></textarea>
+
+            <div class="contador-frase">
+                <span id="contador-frase">0</span>/70
+            </div>
+
+        </div>
+
+
+        <!-- AÇÕES -->
+
+        <div class="acoes-modal-compartilhar">
+
+            <button
+                type="button"
+                class="btn-cancelar-compartilhar"
+                id="cancelar-compartilhar"
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                class="btn-gerar-compartilhamento"
+                id="gerar-compartilhamento"
+            >
+                Ver meu card
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+{% endif %}
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =====================================================
+    // ELEMENTOS PRINCIPAIS
+    // =====================================================
+
+    const abrirModal = document.getElementById(
+        "abrir-modal-compartilhar"
+    );
+
+    const modal = document.getElementById(
+        "modal-compartilhar"
+    );
+
+    const fecharModal = document.getElementById(
+        "fechar-modal-compartilhar"
+    );
+
+    const cancelar = document.getElementById(
+        "cancelar-compartilhar"
+    );
+
+    const frase = document.getElementById(
+        "frase-compartilhar"
+    );
+
+    const contador = document.getElementById(
+        "contador-frase"
+    );
+
+    const gerar = document.getElementById(
+        "gerar-compartilhamento"
+    );
+
+
+    // =====================================================
+    // ETAPAS
+    // =====================================================
+
+    const etapaPersonalizar = document.getElementById(
+        "etapa-personalizar"
+    );
+
+    const etapaPreview = document.getElementById(
+        "etapa-preview"
+    );
+
+
+    // =====================================================
+    // PRÉVIA
+    // =====================================================
+
+    const imagemPreview = document.getElementById(
+        "imagem-preview-compartilhar"
+    );
+
+    const previewCarregando = document.getElementById(
+        "preview-carregando"
+    );
+
+    const voltarPersonalizacao = document.getElementById(
+        "voltar-personalizacao"
+    );
+
+    const baixarCard = document.getElementById(
+        "baixar-card-compartilhar"
+    );
+
+
+    // =====================================================
+    // VERIFICAÇÃO
+    // =====================================================
+
+    if (
+        !abrirModal ||
+        !modal ||
+        !fecharModal ||
+        !cancelar ||
+        !frase ||
+        !contador ||
+        !gerar ||
+        !etapaPersonalizar ||
+        !etapaPreview ||
+        !imagemPreview ||
+        !previewCarregando ||
+        !voltarPersonalizacao ||
+        !baixarCard
+    ) {
+        return;
+    }
+
+
+    // =====================================================
+    // URL BASE
+    // =====================================================
+
+    const urlBase =
+        "{{ url_for(
+            'estante_bp.compartilhar_livro',
+            livro_id=livro.id
+        ) }}";
+
+
+    // =====================================================
+    // ABRIR MODAL
+    // =====================================================
+
+    function abrir() {
+
+        // Sempre começa pela personalização
+        etapaPersonalizar.hidden = false;
+        etapaPreview.hidden = true;
+
+        modal.classList.add(
+            "ativo"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+        setTimeout(
+            function () {
+                frase.focus();
+            },
+            100
+        );
+    }
+
+
+    // =====================================================
+    // FECHAR MODAL
+    // =====================================================
+
+    function fechar() {
+
+        modal.classList.remove(
+            "ativo"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+        // Volta para a primeira etapa
+        etapaPersonalizar.hidden = false;
+        etapaPreview.hidden = true;
+
+        imagemPreview.hidden = true;
+        imagemPreview.src = "";
+
+        previewCarregando.hidden = false;
+    }
+
+
+    // =====================================================
+    // MONTAR URL
+    // =====================================================
+
+    function montarUrl(modo) {
+
+        const texto =
+            frase.value.trim();
+
+        const parametros =
+            new URLSearchParams();
+
+        parametros.set(
+            "modo",
+            modo
+        );
+
+        if (texto) {
+
+            parametros.set(
+                "frase",
+                texto
+            );
+        }
+
+        // Evita que o navegador use uma imagem antiga
+        // quando o usuário alterar a frase.
+        if (modo === "preview") {
+
+            parametros.set(
+                "t",
+                Date.now()
+            );
+        }
+
+        return (
+            urlBase +
+            "?" +
+            parametros.toString()
+        );
+    }
+
+
+    // =====================================================
+    // EVENTOS DO MODAL
+    // =====================================================
+
+    abrirModal.addEventListener(
+        "click",
+        abrir
+    );
+
+
+    fecharModal.addEventListener(
+        "click",
+        fechar
+    );
+
+
+    cancelar.addEventListener(
+        "click",
+        fechar
+    );
+
+
+    modal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === modal) {
+
+                fechar();
+            }
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("ativo")
+            ) {
+
+                fechar();
+            }
+        }
+    );
+
+
+    // =====================================================
+    // CONTADOR DA FRASE
+    // =====================================================
+
+    frase.addEventListener(
+        "input",
+        function () {
+
+            contador.textContent =
+                frase.value.length;
+        }
+    );
+
+
+    // =====================================================
+    // GERAR PRÉVIA
+    // =====================================================
+
+    gerar.addEventListener(
+        "click",
+        function () {
+
+            const urlPreview =
+                montarUrl("preview");
+
+            const urlDownload =
+                montarUrl("download");
+
+
+            // ---------------------------------------------
+            // TROCAR PARA TELA DA PRÉVIA
+            // ---------------------------------------------
+
+            etapaPersonalizar.hidden = true;
+            etapaPreview.hidden = false;
+
+
+            // ---------------------------------------------
+            // ESTADO DE CARREGAMENTO
+            // ---------------------------------------------
+
+            imagemPreview.hidden = true;
+
+            previewCarregando.hidden = false;
+
+            previewCarregando.textContent =
+                "Gerando seu card...";
+
+
+            // ---------------------------------------------
+            // DOWNLOAD
+            // ---------------------------------------------
+
+            baixarCard.href =
+                urlDownload;
+
+
+            // ---------------------------------------------
+            // CARREGAR IMAGEM
+            // ---------------------------------------------
+
+            imagemPreview.onload =
+                function () {
+
+                    previewCarregando.hidden =
+                        true;
+
+                    imagemPreview.hidden =
+                        false;
+                };
+
+
+            imagemPreview.onerror =
+                function () {
+
+                    previewCarregando.hidden =
+                        false;
+
+                    previewCarregando.textContent =
+                        "Não foi possível gerar o card.";
+                };
+
+
+            imagemPreview.src =
+                urlPreview;
+        }
+    );
+
+
+    // =====================================================
+    // VOLTAR PARA PERSONALIZAÇÃO
+    // =====================================================
+
+    voltarPersonalizacao.addEventListener(
+        "click",
+        function () {
+
+            etapaPreview.hidden = true;
+
+            etapaPersonalizar.hidden = false;
+
+            imagemPreview.hidden = true;
+
+            previewCarregando.hidden = false;
+
+            setTimeout(
+                function () {
+                    frase.focus();
+                },
+                100
+            );
+        }
+    );
+
+});
+</script>
+
 
 {% endblock %}
