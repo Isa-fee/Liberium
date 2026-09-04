@@ -788,7 +788,8 @@ def desenhar_card_usuario(
     imagem,
     draw,
     usuario,
-    mensagem
+    mensagem,
+    frase
 ):
 
     x = 155
@@ -1010,7 +1011,7 @@ def desenhar_card_usuario(
     mensagem = (
         mensagem
         or
-        "Mais uma história para a minha estante."
+        frase
     )
 
     if len(mensagem) > 70:
@@ -1043,7 +1044,8 @@ def gerar_card_livro_concluido(
     usuario,
     livro,
     nota=None,
-    mensagem=None
+    mensagem=None,
+    frase="Mais uma história para a minha estante."
 ):
 
     # =====================================================
@@ -1392,10 +1394,11 @@ def gerar_card_livro_concluido(
     # =====================================================
 
     desenhar_card_usuario(
-        imagem,
-        draw,
-        usuario,
-        mensagem
+    imagem,
+    draw,
+    usuario,
+    mensagem,
+    frase
     )
 
 
