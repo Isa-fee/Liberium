@@ -17,7 +17,8 @@ from models import (
     Amizade,
     Estante,
     DecoracaoEstante,
-    ElogioEstante
+    ElogioEstante,
+    MembroClube
 )
 
 from utils.notificacoes import criar_notificacao
@@ -31,6 +32,272 @@ amigos_bp = Blueprint(
     url_prefix="/amigos"
 )
 
+
+# =========================================================
+# GERAR SUGESTÕES DE AMIZADE
+# =========================================================
+
+def gerar_sugestoes_amizade(usuario_id, ids_excluidos, limite=6):
+
+    # =====================================================
+    # DADOS DO USUÁRIO ATUAL
+    # =====================================================
+
+    minhas_amizades = Amizade.query.filter(
+        Amizade.status == "aceita",
+        (
+            (Amizade.usuario_id == usuario_id) |
+            (Amizade.amigo_id == usuario_id)
+        )
+    ).all()
+
+    meus_amigos_ids = set()
+
+    for amizade in minhas_amizades:
+
+        if amizade.usuario_id == usuario_id:
+            meus_amigos_ids.add(amizade.amigo_id)
+        else:
+            meus_amigos_ids.add(amizade.usuario_id)
+
+
+    # -----------------------------------------------------
+    # CLUBES DO USUÁRIO
+    # -----------------------------------------------------
+
+    meus_clubes_ids = {
+        membro.clube_id
+        for membro in MembroClube.query.filter_by(
+            usuario_id=usuario_id
+        ).all()
+    }
+
+
+    # -----------------------------------------------------
+    # LIVROS DO USUÁRIO
+    # -----------------------------------------------------
+
+    minha_estante = Estante.query.filter_by(
+        usuario_id=usuario_id
+    ).all()
+
+    meus_livros_lidos = {
+        item.livro_id
+        for item in minha_estante
+        if item.status == "lido"
+    }
+
+    meus_livros_lendo = {
+        item.livro_id
+        for item in minha_estante
+        if item.status == "lendo"
+    }
+
+    meus_livros_quero_ler = {
+        item.livro_id
+        for item in minha_estante
+        if item.status == "quero_ler"
+    }
+
+
+    # =====================================================
+    # POSSÍVEIS SUGESTÕES
+    # =====================================================
+
+    candidatos = Usuario.query.filter(
+        ~Usuario.id.in_(ids_excluidos)
+    ).all()
+
+    sugestoes = []
+
+
+    # =====================================================
+    # ANALISAR CADA CANDIDATO
+    # =====================================================
+
+    for candidato in candidatos:
+
+        pontuacao = 0
+
+
+        # -------------------------------------------------
+        # AMIGOS EM COMUM
+        # -------------------------------------------------
+
+        amizades_candidato = Amizade.query.filter(
+            Amizade.status == "aceita",
+            (
+                (Amizade.usuario_id == candidato.id) |
+                (Amizade.amigo_id == candidato.id)
+            )
+        ).all()
+
+        amigos_candidato_ids = set()
+
+        for amizade in amizades_candidato:
+
+            if amizade.usuario_id == candidato.id:
+                amigos_candidato_ids.add(
+                    amizade.amigo_id
+                )
+            else:
+                amigos_candidato_ids.add(
+                    amizade.usuario_id
+                )
+
+        amigos_comuns_ids = (
+            meus_amigos_ids &
+            amigos_candidato_ids
+        )
+
+        amigos_comuns = len(
+            amigos_comuns_ids
+        )
+
+        pontuacao += amigos_comuns * 5
+
+
+        # -------------------------------------------------
+        # CLUBES EM COMUM
+        # -------------------------------------------------
+
+        clubes_candidato_ids = {
+            membro.clube_id
+            for membro in MembroClube.query.filter_by(
+                usuario_id=candidato.id
+            ).all()
+        }
+
+        clubes_comuns_ids = (
+            meus_clubes_ids &
+            clubes_candidato_ids
+        )
+
+        clubes_comuns = len(
+            clubes_comuns_ids
+        )
+
+        pontuacao += clubes_comuns * 4
+
+
+        # -------------------------------------------------
+        # ESTANTE DO CANDIDATO
+        # -------------------------------------------------
+
+        estante_candidato = Estante.query.filter_by(
+            usuario_id=candidato.id
+        ).all()
+
+        livros_lidos_candidato = {
+            item.livro_id
+            for item in estante_candidato
+            if item.status == "lido"
+        }
+
+        livros_lendo_candidato = {
+            item.livro_id
+            for item in estante_candidato
+            if item.status == "lendo"
+        }
+
+        livros_quero_ler_candidato = {
+            item.livro_id
+            for item in estante_candidato
+            if item.status == "quero_ler"
+        }
+
+
+        # -------------------------------------------------
+        # LIVROS LIDOS EM COMUM
+        # -------------------------------------------------
+
+        livros_lidos_comuns_ids = (
+            meus_livros_lidos &
+            livros_lidos_candidato
+        )
+
+        livros_lidos_comuns = len(
+            livros_lidos_comuns_ids
+        )
+
+        pontuacao += livros_lidos_comuns * 3
+
+
+        # -------------------------------------------------
+        # LIVROS SENDO LIDOS EM COMUM
+        # -------------------------------------------------
+
+        livros_lendo_comuns_ids = (
+            meus_livros_lendo &
+            livros_lendo_candidato
+        )
+
+        livros_lendo_comuns = len(
+            livros_lendo_comuns_ids
+        )
+
+        pontuacao += livros_lendo_comuns * 4
+
+
+        # -------------------------------------------------
+        # QUERO LER EM COMUM
+        # -------------------------------------------------
+
+        livros_quero_ler_comuns_ids = (
+            meus_livros_quero_ler &
+            livros_quero_ler_candidato
+        )
+
+        livros_quero_ler_comuns = len(
+            livros_quero_ler_comuns_ids
+        )
+
+        pontuacao += livros_quero_ler_comuns
+
+
+        # =================================================
+        # GUARDAR RECOMENDAÇÃO
+        # =================================================
+
+        sugestoes.append({
+
+            "usuario": candidato,
+
+            "pontuacao": pontuacao,
+
+            "amigos_comuns": amigos_comuns,
+
+            "clubes_comuns": clubes_comuns,
+
+            "livros_lidos_comuns": livros_lidos_comuns,
+
+            "livros_lendo_comuns": livros_lendo_comuns,
+
+            "livros_quero_ler_comuns": livros_quero_ler_comuns
+        })
+
+
+    # =====================================================
+    # ORDENAR POR RELEVÂNCIA
+    # =====================================================
+
+    sugestoes.sort(
+        key=lambda sugestao: (
+            sugestao["pontuacao"],
+            sugestao["amigos_comuns"],
+            sugestao["clubes_comuns"],
+            sugestao["livros_lendo_comuns"],
+            sugestao["livros_lidos_comuns"]
+        ),
+        reverse=True
+    )
+
+
+    # =====================================================
+    # RETORNAR APENAS O LIMITE
+    # =====================================================
+
+    return sugestoes[:limite]
 
 # =========================================================
 # PÁGINA PRINCIPAL
@@ -88,12 +355,15 @@ def amigos():
 
 
     # -----------------------------------------------------
-    # SUGESTÕES
+    # SUGESTÕES PERSONALIZADAS
     # -----------------------------------------------------
 
-    ids_excluidos = {
-        current_user.id
-    }
+    ids_excluidos = {current_user.id}
+
+
+    # -----------------------------------------------------
+    # EXCLUIR AMIGOS
+    # -----------------------------------------------------
 
     for amizade in amizades:
 
@@ -106,7 +376,11 @@ def amigos():
         )
 
 
-    relacoes = Amizade.query.filter(
+    # -----------------------------------------------------
+    # EXCLUIR SOLICITAÇÕES EXISTENTES
+    # -----------------------------------------------------
+
+    relacoes_existentes = Amizade.query.filter(
         (
             (Amizade.usuario_id == current_user.id) |
             (Amizade.amigo_id == current_user.id)
@@ -114,20 +388,26 @@ def amigos():
     ).all()
 
 
-    for solicitacao in relacoes:
+    for relacao in relacoes_existentes:
 
         ids_excluidos.add(
-            solicitacao.usuario_id
+            relacao.usuario_id
         )
 
         ids_excluidos.add(
-            solicitacao.amigo_id
+            relacao.amigo_id
         )
 
 
-    sugestoes = Usuario.query.filter(
-        ~Usuario.id.in_(ids_excluidos)
-    ).limit(6).all()
+    # -----------------------------------------------------
+    # GERAR RECOMENDAÇÕES
+    # -----------------------------------------------------
+
+    sugestoes = gerar_sugestoes_amizade(
+        current_user.id,
+        ids_excluidos,
+        limite=6
+    )
 
 
     # -----------------------------------------------------
