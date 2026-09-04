@@ -1,53 +1,24 @@
 import os
+import io
 import textwrap
-from io import BytesIO
-
-import requests
+import urllib.request
 
 from PIL import (
     Image,
     ImageDraw,
     ImageFont,
-    ImageFilter
+    ImageFilter,
+    ImageOps
 )
-
-
-# =========================================================
-# CONFIGURAÇÕES
-# =========================================================
-
-LARGURA = 1080
-ALTURA = 1920
-
-
-# =========================================================
-# CORES DO LIBERIUM
-# =========================================================
-
-FUNDO = "#FDFCFB"
-
-VERDE = "#879D84"
-VERDE_ESCURO = "#435342"
-VERDE_CLARO = "#E8EEE6"
-
-MARROM = "#442B1A"
-MARROM_CLARO = "#765C4A"
-
-BEGE = "#F3EEE7"
-BEGE_ESCURO = "#E5D9CC"
-
-BRANCO = "#FFFFFF"
-CINZA = "#8C8178"
 
 
 # =========================================================
 # CAMINHOS
 # =========================================================
 
-BASE_DIR = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__),
-        ".."
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
     )
 )
 
@@ -62,6 +33,11 @@ PASTA_COMPARTILHAMENTOS = os.path.join(
     "compartilhamentos"
 )
 
+PASTA_ELEMENTOS = os.path.join(
+    PASTA_COMPARTILHAMENTOS,
+    "elementos"
+)
+
 os.makedirs(
     PASTA_COMPARTILHAMENTOS,
     exist_ok=True
@@ -69,135 +45,438 @@ os.makedirs(
 
 
 # =========================================================
+# TAMANHO DO STORY
+# =========================================================
+
+LARGURA = 1080
+ALTURA = 1920
+
+
+# =========================================================
+# CORES
+# =========================================================
+
+FUNDO = "#FBFCF3"
+
+VERDE = "#82997D"
+VERDE_ESCURO = "#64775B"
+VERDE_CLARO = "#A8B9A1"
+
+MARROM = "#71442D"
+MARROM_ESCURO = "#583521"
+
+BEGE = "#E8E5D7"
+
+BRANCO = "#FFFFFF"
+PRETO = "#252525"
+
+
+# =========================================================
 # FONTES
 # =========================================================
 
-def buscar_fonte(
-    tamanho,
-    negrito=False
-):
-    """
-    Procura uma fonte disponível no Windows.
-    Caso não encontre, usa a fonte padrão do Pillow.
-    """
+PASTA_FONTES_WINDOWS = "C:/Windows/Fonts"
 
-    fontes_normais = [
-        "C:/Windows/Fonts/arial.ttf",
-        "C:/Windows/Fonts/calibri.ttf",
-        "C:/Windows/Fonts/segoeui.ttf",
-    ]
 
-    fontes_negrito = [
-        "C:/Windows/Fonts/arialbd.ttf",
-        "C:/Windows/Fonts/calibrib.ttf",
-        "C:/Windows/Fonts/seguisb.ttf",
-    ]
+def encontrar_fonte(nomes):
 
-    lista = (
-        fontes_negrito
-        if negrito
-        else fontes_normais
-    )
+    for nome in nomes:
 
-    for caminho in lista:
+        caminho = os.path.join(
+            PASTA_FONTES_WINDOWS,
+            nome
+        )
 
         if os.path.exists(caminho):
+            return caminho
 
-            return ImageFont.truetype(
-                caminho,
-                tamanho
-            )
+    return None
+
+
+FONTE_SERIF = encontrar_fonte([
+    "georgia.ttf",
+    "times.ttf"
+])
+
+FONTE_SERIF_BOLD = encontrar_fonte([
+    "georgiab.ttf",
+    "timesbd.ttf"
+])
+
+FONTE_SANS = encontrar_fonte([
+    "arial.ttf",
+    "calibri.ttf"
+])
+
+FONTE_SANS_BOLD = encontrar_fonte([
+    "arialbd.ttf",
+    "calibrib.ttf"
+])
+
+
+def fonte(caminho, tamanho):
+
+    if caminho and os.path.exists(caminho):
+
+        return ImageFont.truetype(
+            caminho,
+            tamanho
+        )
 
     return ImageFont.load_default()
 
 
 # =========================================================
-# FONTES UTILIZADAS
+# FUNÇÕES AUXILIARES
 # =========================================================
 
-FONTE_LOGO = buscar_fonte(
-    44,
-    True
-)
+def abrir_png(nome):
 
-FONTE_SUBLOGO = buscar_fonte(
-    23
-)
+    caminho = os.path.join(
+        PASTA_ELEMENTOS,
+        nome
+    )
 
-FONTE_SECAO = buscar_fonte(
-    27,
-    True
-)
+    if not os.path.exists(caminho):
+        return None
 
-FONTE_TITULO = buscar_fonte(
-    58,
-    True
-)
+    return Image.open(
+        caminho
+    ).convert("RGBA")
 
-FONTE_AUTOR = buscar_fonte(
-    34
-)
 
-FONTE_NOTA = buscar_fonte(
-    28,
-    True
-)
+def redimensionar_proporcional(
+    imagem,
+    largura=None,
+    altura=None
+):
 
-FONTE_NOME = buscar_fonte(
-    34,
-    True
-)
+    if not largura and not altura:
+        return imagem
 
-FONTE_USERNAME = buscar_fonte(
-    26
-)
+    proporcao = (
+        imagem.width
+        /
+        imagem.height
+    )
 
-FONTE_FRASE = buscar_fonte(
-    27
-)
+    if largura and not altura:
 
-FONTE_RODAPE = buscar_fonte(
-    22
-)
+        altura = int(
+            largura
+            /
+            proporcao
+        )
+
+    elif altura and not largura:
+
+        largura = int(
+            altura
+            *
+            proporcao
+        )
+
+    return imagem.resize(
+        (
+            int(largura),
+            int(altura)
+        ),
+        Image.Resampling.LANCZOS
+    )
+
+
+def adicionar_elemento(
+    base,
+    nome,
+    x,
+    y,
+    largura=None,
+    altura=None,
+    opacidade=255
+):
+
+    elemento = abrir_png(nome)
+
+    if elemento is None:
+        return
+
+    elemento = redimensionar_proporcional(
+        elemento,
+        largura,
+        altura
+    )
+
+    if opacidade < 255:
+
+        alpha = elemento.getchannel("A")
+
+        alpha = alpha.point(
+            lambda p:
+                int(
+                    p
+                    *
+                    opacidade
+                    /
+                    255
+                )
+        )
+
+        elemento.putalpha(alpha)
+
+    base.alpha_composite(
+        elemento,
+        (
+            int(x),
+            int(y)
+        )
+    )
+
+
+# =========================================================
+# CARREGAR IMAGEM LOCAL OU URL
+# =========================================================
+
+def carregar_imagem(origem):
+
+    if not origem:
+        return None
+
+    try:
+
+        # -------------------------------------------------
+        # URL
+        # -------------------------------------------------
+
+        if origem.startswith(
+            ("http://", "https://")
+        ):
+
+            requisicao = urllib.request.Request(
+                origem,
+                headers={
+                    "User-Agent": "Mozilla/5.0"
+                }
+            )
+
+            with urllib.request.urlopen(
+                requisicao,
+                timeout=10
+            ) as resposta:
+
+                dados = resposta.read()
+
+            return Image.open(
+                io.BytesIO(dados)
+            ).convert("RGBA")
+
+
+        # -------------------------------------------------
+        # ARQUIVO LOCAL
+        # -------------------------------------------------
+
+        caminho = origem.replace(
+            "\\",
+            "/"
+        )
+
+        if caminho.startswith("/static/"):
+            caminho = caminho[8:]
+
+        elif caminho.startswith("static/"):
+            caminho = caminho[7:]
+
+        caminho_completo = os.path.join(
+            STATIC_DIR,
+            caminho
+        )
+
+        if os.path.exists(
+            caminho_completo
+        ):
+
+            return Image.open(
+                caminho_completo
+            ).convert("RGBA")
+
+    except Exception as erro:
+
+        print(
+            "Erro ao carregar imagem:",
+            erro
+        )
+
+    return None
+
+
+# =========================================================
+# CROP PROPORCIONAL
+# =========================================================
+
+def ajustar_imagem_cover(
+    imagem,
+    largura,
+    altura
+):
+
+    return ImageOps.fit(
+        imagem,
+        (
+            largura,
+            altura
+        ),
+        method=Image.Resampling.LANCZOS,
+        centering=(0.5, 0.5)
+    )
+
+
+# =========================================================
+# FOTO CIRCULAR
+# =========================================================
+
+def criar_foto_circular(
+    imagem,
+    tamanho
+):
+
+    imagem = ajustar_imagem_cover(
+        imagem,
+        tamanho,
+        tamanho
+    )
+
+    mascara = Image.new(
+        "L",
+        (
+            tamanho,
+            tamanho
+        ),
+        0
+    )
+
+    draw_mascara = ImageDraw.Draw(
+        mascara
+    )
+
+    draw_mascara.ellipse(
+        (
+            0,
+            0,
+            tamanho,
+            tamanho
+        ),
+        fill=255
+    )
+
+    resultado = Image.new(
+        "RGBA",
+        (
+            tamanho,
+            tamanho
+        ),
+        (
+            0,
+            0,
+            0,
+            0
+        )
+    )
+
+    resultado.paste(
+        imagem,
+        (0, 0),
+        mascara
+    )
+
+    return resultado
 
 
 # =========================================================
 # TEXTO CENTRALIZADO
 # =========================================================
 
-def desenhar_texto_centralizado(
+def texto_centralizado(
     draw,
     texto,
     y,
-    fonte,
+    fonte_texto,
     cor,
-    largura_maxima=850,
-    espacamento=10
+    largura=LARGURA
+):
+
+    bbox = draw.textbbox(
+        (0, 0),
+        texto,
+        font=fonte_texto
+    )
+
+    largura_texto = (
+        bbox[2]
+        -
+        bbox[0]
+    )
+
+    x = (
+        largura
+        -
+        largura_texto
+    ) // 2
+
+    draw.text(
+        (
+            x,
+            y
+        ),
+        texto,
+        font=fonte_texto,
+        fill=cor
+    )
+
+
+# =========================================================
+# QUEBRA DE TEXTO CENTRALIZADA
+# =========================================================
+
+def texto_multilinha_centralizado(
+    draw,
+    texto,
+    y,
+    fonte_texto,
+    cor,
+    largura_maxima,
+    espacamento=8
 ):
 
     palavras = texto.split()
 
     linhas = []
-
     linha_atual = ""
 
     for palavra in palavras:
 
         teste = (
-            linha_atual + " " + palavra
+            linha_atual
+            +
+            " "
+            +
+            palavra
         ).strip()
 
-        caixa = draw.textbbox(
+        bbox = draw.textbbox(
             (0, 0),
             teste,
-            font=fonte
+            font=fonte_texto
         )
 
-        largura = (
-            caixa[2] - caixa[0]
+        largura_teste = (
+            bbox[2]
+            -
+            bbox[0]
         )
 
-        if largura <= largura_maxima:
+        if (
+            largura_teste
+            <= largura_maxima
+        ):
 
             linha_atual = teste
 
@@ -211,444 +490,176 @@ def desenhar_texto_centralizado(
             linha_atual = palavra
 
     if linha_atual:
-
         linhas.append(
             linha_atual
         )
 
-
-    alturas = []
+    altura_total = 0
 
     for linha in linhas:
 
-        caixa = draw.textbbox(
+        bbox = draw.textbbox(
             (0, 0),
             linha,
-            font=fonte
+            font=fonte_texto
         )
 
-        alturas.append(
-            caixa[3] - caixa[1]
+        largura_linha = (
+            bbox[2]
+            -
+            bbox[0]
         )
 
-
-    altura_total = (
-        sum(alturas)
-        +
-        espacamento
-        *
-        max(
-            len(linhas) - 1,
-            0
-        )
-    )
-
-
-    y_atual = y
-
-
-    for indice, linha in enumerate(
-        linhas
-    ):
-
-        caixa = draw.textbbox(
-            (0, 0),
-            linha,
-            font=fonte
-        )
-
-        largura = (
-            caixa[2] - caixa[0]
+        altura_linha = (
+            bbox[3]
+            -
+            bbox[1]
         )
 
         x = (
-            LARGURA - largura
+            LARGURA
+            -
+            largura_linha
         ) // 2
 
         draw.text(
-            (x, y_atual),
+            (
+                x,
+                y
+            ),
             linha,
-            font=fonte,
+            font=fonte_texto,
             fill=cor
         )
 
-        y_atual += (
-            alturas[indice]
+        y += (
+            altura_linha
             +
             espacamento
         )
 
-
-    return (
-        y_atual,
-        altura_total
-    )
-
-
-# =========================================================
-# CARREGAR IMAGEM
-# =========================================================
-
-def carregar_imagem(
-    caminho
-):
-
-    if not caminho:
-        return None
-
-
-    try:
-
-        # =================================================
-        # IMAGEM EXTERNA
-        # =================================================
-
-        if caminho.startswith(
-            (
-                "http://",
-                "https://"
-            )
-        ):
-
-            response = requests.get(
-                caminho,
-                timeout=10
-            )
-
-            response.raise_for_status()
-
-            return Image.open(
-                BytesIO(
-                    response.content
-                )
-            ).convert("RGBA")
-
-
-        # =================================================
-        # IMAGEM LOCAL
-        # =================================================
-
-        caminho_limpo = caminho.replace(
-            "\\",
-            "/"
+        altura_total += (
+            altura_linha
+            +
+            espacamento
         )
 
-        if caminho_limpo.startswith(
-            "static/"
-        ):
-
-            caminho_completo = os.path.join(
-                BASE_DIR,
-                caminho_limpo
-            )
-
-        else:
-
-            caminho_completo = os.path.join(
-                STATIC_DIR,
-                caminho_limpo
-            )
-
-
-        if os.path.exists(
-            caminho_completo
-        ):
-
-            return Image.open(
-                caminho_completo
-            ).convert("RGBA")
-
-
-    except Exception as erro:
-
-        print(
-            "Erro ao carregar imagem:",
-            erro
-        )
-
-
-    return None
+    return y
 
 
 # =========================================================
-# CORTAR IMAGEM PARA PREENCHER
+# SOMBRA DA CAPA
 # =========================================================
 
-def cortar_para_preencher(
-    imagem,
+def adicionar_sombra_capa(
+    base,
+    x,
+    y,
     largura,
     altura
 ):
 
-    proporcao_imagem = (
-        imagem.width
-        /
-        imagem.height
-    )
-
-    proporcao_destino = (
-        largura
-        /
-        altura
-    )
-
-
-    if (
-        proporcao_imagem
-        >
-        proporcao_destino
-    ):
-
-        nova_altura = altura
-
-        nova_largura = int(
-            altura
-            *
-            proporcao_imagem
-        )
-
-    else:
-
-        nova_largura = largura
-
-        nova_altura = int(
-            largura
-            /
-            proporcao_imagem
-        )
-
-
-    imagem = imagem.resize(
+    sombra = Image.new(
+        "RGBA",
+        base.size,
         (
-            nova_largura,
-            nova_altura
+            0,
+            0,
+            0,
+            0
+        )
+    )
+
+    draw_sombra = ImageDraw.Draw(
+        sombra
+    )
+
+    draw_sombra.rounded_rectangle(
+        (
+            x + 10,
+            y + 15,
+            x + largura + 10,
+            y + altura + 15
         ),
-        Image.Resampling.LANCZOS
-    )
-
-
-    esquerda = (
-        nova_largura
-        -
-        largura
-    ) // 2
-
-    topo = (
-        nova_altura
-        -
-        altura
-    ) // 2
-
-
-    return imagem.crop(
-        (
-            esquerda,
-            topo,
-            esquerda + largura,
-            topo + altura
+        radius=15,
+        fill=(
+            50,
+            45,
+            35,
+            90
         )
     )
 
+    sombra = sombra.filter(
+        ImageFilter.GaussianBlur(
+            22
+        )
+    )
+
+    base.alpha_composite(
+        sombra
+    )
+
 
 # =========================================================
-# CÍRCULO COM FOTO
+# CHECK
 # =========================================================
 
-def criar_avatar(
-    foto,
-    nome,
-    tamanho=110
+def desenhar_check(
+    draw,
+    centro_x,
+    centro_y
 ):
 
-    avatar = Image.new(
-        "RGBA",
+    raio = 24
+
+    draw.ellipse(
         (
-            tamanho,
-            tamanho
+            centro_x - raio,
+            centro_y - raio,
+            centro_x + raio,
+            centro_y + raio
         ),
+        fill=VERDE
+    )
+
+    draw.line(
         (
-            0,
-            0,
-            0,
-            0
-        )
-    )
-
-
-    draw_avatar = ImageDraw.Draw(
-        avatar
-    )
-
-
-    imagem_foto = carregar_imagem(
-        foto
-    )
-
-
-    # =====================================================
-    # FOTO EXISTE
-    # =====================================================
-
-    if imagem_foto:
-
-        imagem_foto = cortar_para_preencher(
-            imagem_foto,
-            tamanho,
-            tamanho
-        )
-
-
-        mascara = Image.new(
-            "L",
-            (
-                tamanho,
-                tamanho
-            ),
-            0
-        )
-
-
-        draw_mascara = ImageDraw.Draw(
-            mascara
-        )
-
-        draw_mascara.ellipse(
-            (
-                0,
-                0,
-                tamanho,
-                tamanho
-            ),
-            fill=255
-        )
-
-
-        avatar.paste(
-            imagem_foto,
-            (
-                0,
-                0
-            ),
-            mascara
-        )
-
-
-    # =====================================================
-    # SEM FOTO
-    # =====================================================
-
-    else:
-
-        draw_avatar.ellipse(
-            (
-                0,
-                0,
-                tamanho - 1,
-                tamanho - 1
-            ),
-            fill=BEGE,
-            outline=VERDE,
-            width=4
-        )
-
-
-        inicial = (
-            nome[0].upper()
-            if nome
-            else "L"
-        )
-
-
-        fonte_inicial = buscar_fonte(
-            45,
-            True
-        )
-
-
-        caixa = draw_avatar.textbbox(
-            (
-                0,
-                0
-            ),
-            inicial,
-            font=fonte_inicial
-        )
-
-
-        largura_texto = (
-            caixa[2]
-            -
-            caixa[0]
-        )
-
-        altura_texto = (
-            caixa[3]
-            -
-            caixa[1]
-        )
-
-
-        draw_avatar.text(
-            (
-                (
-                    tamanho
-                    -
-                    largura_texto
-                )
-                // 2,
-
-                (
-                    tamanho
-                    -
-                    altura_texto
-                )
-                // 2
-                -
-                5
-            ),
-            inicial,
-            font=fonte_inicial,
-            fill=VERDE_ESCURO
-        )
-
-
-    # =====================================================
-    # BORDA
-    # =====================================================
-
-    draw_avatar.ellipse(
-        (
-            1,
-            1,
-            tamanho - 2,
-            tamanho - 2
+            centro_x - 11,
+            centro_y,
+            centro_x - 2,
+            centro_y + 10
         ),
-        outline=VERDE,
-        width=4
+        fill=BRANCO,
+        width=5
     )
 
-
-    return avatar
+    draw.line(
+        (
+            centro_x - 2,
+            centro_y + 10,
+            centro_x + 14,
+            centro_y - 10
+        ),
+        fill=BRANCO,
+        width=5
+    )
 
 
 # =========================================================
-# DESENHAR ESTRELA
+# ESTRELAS
 # =========================================================
 
-def desenhar_estrela(
-    draw,
+def pontos_estrela(
     centro_x,
     centro_y,
     raio_externo,
-    raio_interno,
-    cor
+    raio_interno
 ):
 
     import math
 
-
     pontos = []
-
 
     for i in range(10):
 
@@ -662,35 +673,27 @@ def desenhar_estrela(
             5
         )
 
-
         raio = (
             raio_externo
             if i % 2 == 0
             else raio_interno
         )
 
-
         x = (
             centro_x
             +
-            raio
+            math.cos(angulo)
             *
-            math.cos(
-                angulo
-            )
+            raio
         )
-
 
         y = (
             centro_y
             +
-            raio
+            math.sin(angulo)
             *
-            math.sin(
-                angulo
-            )
+            raio
         )
-
 
         pontos.append(
             (
@@ -699,36 +702,27 @@ def desenhar_estrela(
             )
         )
 
-
-    draw.polygon(
-        pontos,
-        fill=cor
-    )
+    return pontos
 
 
-# =========================================================
-# ESTRELAS DA AVALIAÇÃO
-# =========================================================
-
-def desenhar_avaliacao(
+def desenhar_estrelas(
     draw,
     nota,
     y
 ):
 
     try:
-
-        nota = float(
-            nota or 0
+        nota = int(
+            round(
+                float(nota)
+            )
         )
 
     except (
         TypeError,
         ValueError
     ):
-
         nota = 0
-
 
     nota = max(
         0,
@@ -738,26 +732,14 @@ def desenhar_avaliacao(
         )
     )
 
-
-    quantidade = 5
-
-    tamanho = 30
-
-    distancia = 68
-
+    tamanho = 34
+    distancia = 78
 
     largura_total = (
         distancia
         *
-        (
-            quantidade - 1
-        )
-        +
-        tamanho
-        *
-        2
+        4
     )
-
 
     inicio_x = (
         LARGURA
@@ -765,55 +747,311 @@ def desenhar_avaliacao(
         largura_total
     ) // 2
 
-
-    for indice in range(
-        quantidade
-    ):
+    for i in range(5):
 
         centro_x = (
             inicio_x
             +
-            tamanho
-            +
-            indice
+            i
             *
             distancia
         )
 
-
-        cor = (
-            VERDE_ESCURO
-            if indice < round(nota)
-            else BEGE_ESCURO
-        )
-
-
-        desenhar_estrela(
-            draw,
+        pontos = pontos_estrela(
             centro_x,
             y,
             tamanho,
-            13,
-            cor
+            tamanho * 0.45
+        )
+
+        if i < nota:
+
+            draw.polygon(
+                pontos,
+                fill=VERDE_ESCURO
+            )
+
+        else:
+
+            draw.polygon(
+                pontos,
+                outline=VERDE_CLARO,
+                width=3
+            )
+
+
+# =========================================================
+# CARD DO USUÁRIO
+# =========================================================
+
+def desenhar_card_usuario(
+    imagem,
+    draw,
+    usuario,
+    mensagem
+):
+
+    x = 155
+    y = 1570
+
+    largura = 770
+    altura = 160
+
+
+    # -----------------------------------------------------
+    # FUNDO TRANSLÚCIDO
+    # -----------------------------------------------------
+
+    camada = Image.new(
+        "RGBA",
+        imagem.size,
+        (
+            0,
+            0,
+            0,
+            0
+        )
+    )
+
+    draw_camada = ImageDraw.Draw(
+        camada
+    )
+
+    draw_camada.rounded_rectangle(
+        (
+            x,
+            y,
+            x + largura,
+            y + altura
+        ),
+        radius=38,
+        fill=(
+            255,
+            255,
+            255,
+            185
+        )
+    )
+
+    imagem.alpha_composite(
+        camada
+    )
+
+
+    # -----------------------------------------------------
+    # FOTO
+    # -----------------------------------------------------
+
+    tamanho_foto = 105
+
+    foto = carregar_imagem(
+        getattr(
+            usuario,
+            "foto",
+            None
+        )
+    )
+
+    foto_x = x + 35
+    foto_y = y + 27
+
+
+    if foto:
+
+        foto = criar_foto_circular(
+            foto,
+            tamanho_foto
+        )
+
+        imagem.alpha_composite(
+            foto,
+            (
+                foto_x,
+                foto_y
+            )
+        )
+
+    else:
+
+        draw.ellipse(
+            (
+                foto_x,
+                foto_y,
+                foto_x + tamanho_foto,
+                foto_y + tamanho_foto
+            ),
+            fill="#F6F3EA",
+            outline=VERDE,
+            width=4
+        )
+
+        inicial = (
+            usuario.nome[0].upper()
+            if usuario.nome
+            else "L"
+        )
+
+        fonte_inicial = fonte(
+            FONTE_SERIF_BOLD,
+            42
+        )
+
+        bbox = draw.textbbox(
+            (0, 0),
+            inicial,
+            font=fonte_inicial
+        )
+
+        draw.text(
+            (
+                foto_x
+                +
+                (
+                    tamanho_foto
+                    -
+                    (
+                        bbox[2]
+                        -
+                        bbox[0]
+                    )
+                )
+                / 2,
+
+                foto_y
+                +
+                (
+                    tamanho_foto
+                    -
+                    (
+                        bbox[3]
+                        -
+                        bbox[1]
+                    )
+                )
+                / 2
+                -
+                7
+            ),
+            inicial,
+            font=fonte_inicial,
+            fill=MARROM
         )
 
 
+    # -----------------------------------------------------
+    # NOME
+    # -----------------------------------------------------
+
+    nome = (
+        usuario.nome
+        or "Leitor"
+    )
+
+    draw.text(
+        (
+            x + 165,
+            y + 30
+        ),
+        nome.upper(),
+        font=fonte(
+            FONTE_SERIF_BOLD,
+            27
+        ),
+        fill=MARROM
+    )
+
+
+    # -----------------------------------------------------
+    # USERNAME
+    # -----------------------------------------------------
+
+    username = getattr(
+        usuario,
+        "username",
+        None
+    )
+
+    if username:
+
+        draw.text(
+            (
+                x + 165,
+                y + 67
+            ),
+            f"@{username}",
+            font=fonte(
+                FONTE_SANS,
+                20
+            ),
+            fill=VERDE
+        )
+
+
+    # -----------------------------------------------------
+    # LINHA
+    # -----------------------------------------------------
+
+    draw.line(
+        (
+            x + 165,
+            y + 99,
+            x + largura - 45,
+            y + 99
+        ),
+        fill="#D8D8C9",
+        width=2
+    )
+
+
+    # -----------------------------------------------------
+    # MENSAGEM
+    # -----------------------------------------------------
+
+    mensagem = (
+        mensagem
+        or
+        "Mais uma história para a minha estante."
+    )
+
+    if len(mensagem) > 70:
+
+        mensagem = (
+            mensagem[:67]
+            +
+            "..."
+        )
+
+    draw.text(
+        (
+            x + 165,
+            y + 113
+        ),
+        mensagem,
+        font=fonte(
+            FONTE_SANS,
+            23
+        ),
+        fill=PRETO
+    )
+
+
 # =========================================================
-# CARD DE LIVRO CONCLUÍDO
+# FUNÇÃO PRINCIPAL
 # =========================================================
 
 def gerar_card_livro_concluido(
-    livro,
     usuario,
-    nota=None
+    livro,
+    nota=None,
+    mensagem=None
 ):
 
     # =====================================================
-    # IMAGEM BASE
+    # FUNDO
     # =====================================================
 
     imagem = Image.new(
-        "RGB",
+        "RGBA",
         (
             LARGURA,
             ALTURA
@@ -821,225 +1059,111 @@ def gerar_card_livro_concluido(
         FUNDO
     )
 
-
     draw = ImageDraw.Draw(
         imagem
     )
 
 
     # =====================================================
-    # DECORAÇÃO SUPERIOR
+    # TEXTURA VERDE
     # =====================================================
 
-    draw.ellipse(
-        (
-            -180,
-            -250,
-            420,
-            350
-        ),
-        fill="#F1F4EF"
+    textura = abrir_png(
+        "textura_verde.png"
     )
 
+    if textura:
 
-    draw.ellipse(
-        (
-            780,
-            -180,
-            1250,
-            290
-        ),
-        fill="#F6F0E9"
-    )
+        textura = redimensionar_proporcional(
+            textura,
+            largura=690
+        )
+
+        imagem.alpha_composite(
+            textura,
+            (
+                0,
+                ALTURA
+                -
+                textura.height
+            )
+        )
 
 
     # =====================================================
-    # MARCA LIBERIUM
+    # RAMO SUPERIOR
     # =====================================================
 
-    draw.text(
-        (
-            90,
-            95
-        ),
-        "LIBERIUM",
-        font=FONTE_LOGO,
-        fill=VERDE_ESCURO
-    )
-
-
-    draw.text(
-        (
-            92,
-            150
-        ),
-        "sua jornada entre páginas",
-        font=FONTE_SUBLOGO,
-        fill=VERDE
+    adicionar_elemento(
+        imagem,
+        "ramo_superior.png",
+        0,
+        0,
+        largura=260
     )
 
 
     # =====================================================
-    # TEXTO SUPERIOR
+    # RAMO INFERIOR
     # =====================================================
 
-    texto_topo = (
-        "MINHA JORNADA LITERÁRIA"
+    ramo_inferior = abrir_png(
+        "ramo_inferior.png"
     )
 
+    if ramo_inferior:
 
-    caixa = draw.textbbox(
-        (
-            0,
-            0
-        ),
-        texto_topo,
-        font=FONTE_SECAO
-    )
+        ramo_inferior = (
+            redimensionar_proporcional(
+                ramo_inferior,
+                largura=300
+            )
+        )
 
-
-    largura_texto = (
-        caixa[2]
-        -
-        caixa[0]
-    )
-
-
-    draw.text(
-        (
+        imagem.alpha_composite(
+            ramo_inferior,
             (
                 LARGURA
                 -
-                largura_texto
+                ramo_inferior.width,
+                ALTURA
+                -
+                ramo_inferior.height
             )
-            // 2,
-            255
-        ),
-        texto_topo,
-        font=FONTE_SECAO,
-        fill=VERDE
-    )
-
-
-    # =====================================================
-    # CAPA DO LIVRO
-    # =====================================================
-
-    largura_capa = 480
-
-    altura_capa = 690
-
-    x_capa = (
-        LARGURA
-        -
-        largura_capa
-    ) // 2
-
-    y_capa = 350
-
-
-    # =====================================================
-    # SOMBRA
-    # =====================================================
-
-    sombra = Image.new(
-        "RGBA",
-        (
-            LARGURA,
-            ALTURA
-        ),
-        (
-            0,
-            0,
-            0,
-            0
         )
+
+
+    # =====================================================
+    # LOGO
+    # =====================================================
+
+    logo = abrir_png(
+        "logo_compartilhamento.png"
     )
 
+    if logo:
 
-    draw_sombra = ImageDraw.Draw(
-        sombra
-    )
-
-
-    draw_sombra.rounded_rectangle(
-        (
-            x_capa + 15,
-            y_capa + 20,
-            x_capa
-            +
-            largura_capa
-            +
-            15,
-            y_capa
-            +
-            altura_capa
-            +
-            20
-        ),
-        radius=35,
-        fill=(
-            68,
-            43,
-            26,
-            45
+        logo = redimensionar_proporcional(
+            logo,
+            largura=370
         )
-    )
 
-
-    sombra = sombra.filter(
-        ImageFilter.GaussianBlur(
-            18
+        imagem.alpha_composite(
+            logo,
+            (
+                (
+                    LARGURA
+                    -
+                    logo.width
+                )
+                // 2,
+                55
+            )
         )
-    )
-
-
-    imagem = Image.alpha_composite(
-        imagem.convert("RGBA"),
-        sombra
-    )
-
-
-    draw = ImageDraw.Draw(
-        imagem
-    )
 
 
     # =====================================================
-    # FUNDO DA CAPA
-    # =====================================================
-
-    margem_capa = 28
-
-
-    draw.rounded_rectangle(
-        (
-            x_capa
-            -
-            margem_capa,
-            y_capa
-            -
-            margem_capa,
-
-            x_capa
-            +
-            largura_capa
-            +
-            margem_capa,
-
-            y_capa
-            +
-            altura_capa
-            +
-            margem_capa
-        ),
-        radius=40,
-        fill=BEGE
-    )
-
-
-    # =====================================================
-    # CARREGAR CAPA
+    # CAPA
     # =====================================================
 
     capa = carregar_imagem(
@@ -1050,46 +1174,41 @@ def gerar_card_livro_concluido(
         )
     )
 
+    largura_capa = 470
+    altura_capa = 680
+
+    x_capa = (
+        LARGURA
+        -
+        largura_capa
+    ) // 2
+
+    y_capa = 300
+
 
     if capa:
 
-        capa.thumbnail(
-            (
-                largura_capa,
-                altura_capa
-            ),
-            Image.Resampling.LANCZOS
+        capa = ajustar_imagem_cover(
+            capa,
+            largura_capa,
+            altura_capa
         )
 
-
-        x_real = (
-            LARGURA
-            -
-            capa.width
-        ) // 2
-
-
-        y_real = (
-            y_capa
-            +
-            (
-                altura_capa
-                -
-                capa.height
-            )
-            // 2
+        adicionar_sombra_capa(
+            imagem,
+            x_capa,
+            y_capa,
+            largura_capa,
+            altura_capa
         )
 
-
-        imagem.paste(
+        imagem.alpha_composite(
             capa,
             (
-                x_real,
-                y_real
-            ),
-            capa
+                x_capa,
+                y_capa
+            )
         )
-
 
     else:
 
@@ -1097,75 +1216,92 @@ def gerar_card_livro_concluido(
             (
                 x_capa,
                 y_capa,
-                x_capa
-                +
-                largura_capa,
-                y_capa
-                +
-                altura_capa
+                x_capa + largura_capa,
+                y_capa + altura_capa
             ),
-            radius=25,
-            fill=VERDE_CLARO
+            radius=15,
+            fill="#EDEBDD"
         )
 
-
-        desenhar_texto_centralizado(
+        texto_centralizado(
             draw,
-            "Livro",
-            y_capa + 300,
-            FONTE_TITULO,
-            VERDE_ESCURO,
-            largura_maxima=350
+            "Sem capa",
+            y_capa + 310,
+            fonte(
+                FONTE_SERIF,
+                36
+            ),
+            VERDE
         )
+
+
+    # =====================================================
+    # SELO DA LIBÉLULA
+    # =====================================================
+
+    adicionar_elemento(
+        imagem,
+        "selo_libelula.png",
+        x_capa + largura_capa - 80,
+        y_capa + altura_capa - 105,
+        largura=170
+    )
 
 
     # =====================================================
     # LEITURA CONCLUÍDA
     # =====================================================
 
-    y_status = (
-        y_capa
-        +
-        altura_capa
-        +
-        100
+    y_status = 1060
+
+    fonte_status = fonte(
+        FONTE_SANS,
+        42
     )
 
-
-    status = (
-        "LEITURA CONCLUÍDA"
+    texto_status = (
+        "LEITURA CONCLUÍDA!"
     )
 
-
-    caixa = draw.textbbox(
-        (
-            0,
-            0
-        ),
-        status,
-        font=FONTE_SECAO
+    bbox_status = draw.textbbox(
+        (0, 0),
+        texto_status,
+        font=fonte_status
     )
-
 
     largura_status = (
-        caixa[2]
+        bbox_status[2]
         -
-        caixa[0]
+        bbox_status[0]
+    )
+
+    largura_grupo = (
+        55
+        +
+        largura_status
+    )
+
+    x_grupo = (
+        LARGURA
+        -
+        largura_grupo
+    ) // 2
+
+
+    desenhar_check(
+        draw,
+        x_grupo + 20,
+        y_status + 25
     )
 
 
     draw.text(
         (
-            (
-                LARGURA
-                -
-                largura_status
-            )
-            // 2,
+            x_grupo + 55,
             y_status
         ),
-        status,
-        font=FONTE_SECAO,
+        texto_status,
+        font=fonte_status,
         fill=VERDE
     )
 
@@ -1174,29 +1310,30 @@ def gerar_card_livro_concluido(
     # TÍTULO
     # =====================================================
 
-    titulo = getattr(
-        livro,
-        "titulo",
+    titulo = (
+        getattr(
+            livro,
+            "titulo",
+            None
+        )
+        or
         "Livro concluído"
     )
 
+    y_titulo = 1175
 
-    y_titulo = (
-        y_status
-        +
-        70
-    )
-
-
-    y_depois_titulo, _ = (
-        desenhar_texto_centralizado(
+    y_final_titulo = (
+        texto_multilinha_centralizado(
             draw,
             titulo,
             y_titulo,
-            FONTE_TITULO,
+            fonte(
+                FONTE_SERIF_BOLD,
+                55
+            ),
             MARROM,
-            largura_maxima=850,
-            espacamento=8
+            largura_maxima=820,
+            espacamento=7
         )
     )
 
@@ -1205,213 +1342,60 @@ def gerar_card_livro_concluido(
     # AUTOR
     # =====================================================
 
-    autor = getattr(
-        livro,
-        "autor",
+    autor = (
+        getattr(
+            livro,
+            "autor",
+            None
+        )
+        or
         ""
     )
 
+    y_autor = (
+        y_final_titulo
+        +
+        15
+    )
 
-    if autor:
-
-        y_autor = (
-            y_depois_titulo
-            +
-            25
-        )
-
-
-        caixa = draw.textbbox(
-            (
-                0,
-                0
-            ),
-            autor,
-            font=FONTE_AUTOR
-        )
-
-
-        largura_autor = (
-            caixa[2]
-            -
-            caixa[0]
-        )
-
-
-        draw.text(
-            (
-                (
-                    LARGURA
-                    -
-                    largura_autor
-                )
-                // 2,
-                y_autor
-            ),
-            autor,
-            font=FONTE_AUTOR,
-            fill=VERDE_ESCURO
-        )
-
-
-    else:
-
-        y_autor = (
-            y_depois_titulo
-        )
+    texto_centralizado(
+        draw,
+        autor,
+        y_autor,
+        fonte(
+            FONTE_SANS,
+            40
+        ),
+        VERDE
+    )
 
 
     # =====================================================
-    # AVALIAÇÃO
+    # ESTRELAS
     # =====================================================
 
-    if nota:
+    y_estrelas = (
+        y_autor
+        +
+        105
+    )
 
-        y_estrelas = (
-            y_autor
-            +
-            100
-        )
-
-
-        desenhar_avaliacao(
-            draw,
-            nota,
-            y_estrelas
-        )
+    desenhar_estrelas(
+        draw,
+        nota,
+        y_estrelas
+    )
 
 
     # =====================================================
     # CARD DO USUÁRIO
     # =====================================================
 
-    card_x = 90
-
-    card_y = 1570
-
-    card_largura = 900
-
-    card_altura = 220
-
-
-    draw.rounded_rectangle(
-        (
-            card_x,
-            card_y,
-            card_x
-            +
-            card_largura,
-            card_y
-            +
-            card_altura
-        ),
-        radius=38,
-        fill=BEGE
-    )
-
-
-    # =====================================================
-    # AVATAR
-    # =====================================================
-
-    nome_usuario = getattr(
+    desenhar_card_usuario(
+        imagem,
+        draw,
         usuario,
-        "nome",
-        "Leitor"
-    )
-
-
-    foto_usuario = getattr(
-        usuario,
-        "foto",
-        None
-    )
-
-
-    avatar = criar_avatar(
-        foto_usuario,
-        nome_usuario,
-        115
-    )
-
-
-    imagem.paste(
-        avatar,
-        (
-            card_x + 45,
-            card_y + 45
-        ),
-        avatar
-    )
-
-
-    # =====================================================
-    # NOME
-    # =====================================================
-
-    draw.text(
-        (
-            card_x + 190,
-            card_y + 50
-        ),
-        nome_usuario,
-        font=FONTE_NOME,
-        fill=MARROM
-    )
-
-
-    # =====================================================
-    # USERNAME
-    # =====================================================
-
-    username = getattr(
-        usuario,
-        "username",
-        None
-    )
-
-
-    if username:
-
-        username_texto = (
-            f"@{username}"
-        )
-
-    else:
-
-        username_texto = (
-            "@leitor"
-        )
-
-
-    draw.text(
-        (
-            card_x + 190,
-            card_y + 100
-        ),
-        username_texto,
-        font=FONTE_USERNAME,
-        fill=VERDE
-    )
-
-
-    # =====================================================
-    # FRASE
-    # =====================================================
-
-    frase = (
-        "Mais uma história para a minha estante."
-    )
-
-
-    draw.text(
-        (
-            card_x + 190,
-            card_y + 150
-        ),
-        frase,
-        font=FONTE_FRASE,
-        fill=MARROM_CLARO
+        mensagem
     )
 
 
@@ -1419,41 +1403,15 @@ def gerar_card_livro_concluido(
     # RODAPÉ
     # =====================================================
 
-    texto_rodape = (
-        "Compartilhado pelo Liberium"
-    )
-
-
-    caixa = draw.textbbox(
-        (
-            0,
-            0
+    texto_centralizado(
+        draw,
+        "Compartilhado através do Liberium",
+        1810,
+        fonte(
+            FONTE_SANS,
+            28
         ),
-        texto_rodape,
-        font=FONTE_RODAPE
-    )
-
-
-    largura_rodape = (
-        caixa[2]
-        -
-        caixa[0]
-    )
-
-
-    draw.text(
-        (
-            (
-                LARGURA
-                -
-                largura_rodape
-            )
-            // 2,
-            1840
-        ),
-        texto_rodape,
-        font=FONTE_RODAPE,
-        fill=VERDE
+        VERDE
     )
 
 
@@ -1461,39 +1419,52 @@ def gerar_card_livro_concluido(
     # SALVAR
     # =====================================================
 
-    livro_id = getattr(
-        livro,
-        "id",
-        "livro"
-    )
-
-
     usuario_id = getattr(
         usuario,
         "id",
         "usuario"
     )
 
+    livro_id = getattr(
+        livro,
+        "id",
+        "livro"
+    )
 
     nome_arquivo = (
         f"livro_{livro_id}_"
         f"usuario_{usuario_id}.png"
     )
 
-
     caminho_saida = os.path.join(
         PASTA_COMPARTILHAMENTOS,
         nome_arquivo
     )
 
-
-    imagem.convert(
+    imagem = imagem.convert(
         "RGB"
-    ).save(
-        caminho_saida,
-        "PNG",
-        quality=95
     )
 
+    imagem.save(
+        caminho_saida,
+        "PNG",
+        optimize=True
+    )
+
+    print(
+        "Imagem criada em:",
+        caminho_saida
+    )
 
     return caminho_saida
+
+
+# =========================================================
+# TESTE DIRETO DO ARQUIVO
+# =========================================================
+
+if __name__ == "__main__":
+
+    print(
+        "gerar_imagem.py carregado com sucesso."
+    )

@@ -1232,14 +1232,14 @@ def excluir_comentario(comentario_id):
 
 
 # =========================================================
-# TESTE — CARD DE LIVRO CONCLUÍDO
+# COMPARTILHAR LIVRO CONCLUÍDO
 # =========================================================
 
 @estante_bp.route(
-    "/teste-compartilhar/<int:livro_id>"
+    "/compartilhar/<int:livro_id>"
 )
 @login_required
-def teste_compartilhar(livro_id):
+def compartilhar_livro(livro_id):
 
     # -----------------------------------------------------
     # PROCURAR O LIVRO NA ESTANTE DO USUÁRIO
@@ -1249,10 +1249,42 @@ def teste_compartilhar(livro_id):
         usuario_id=current_user.id,
         livro_id=livro_id,
         status="lido"
-    ).first_or_404()
+    ).first()
 
+
+    # -----------------------------------------------------
+    # VERIFICAR SE O LIVRO FOI CONCLUÍDO
+    # -----------------------------------------------------
+
+    if not item_estante:
+
+        flash(
+            "Você só pode compartilhar livros concluídos.",
+            "erro"
+        )
+
+        return redirect(
+            url_for("estante_bp.estante")
+        )
+
+
+    # -----------------------------------------------------
+    # PEGAR LIVRO
+    # -----------------------------------------------------
 
     livro = item_estante.livro
+
+
+    if not livro:
+
+        flash(
+            "Não foi possível encontrar esse livro.",
+            "erro"
+        )
+
+        return redirect(
+            url_for("estante_bp.estante")
+        )
 
 
     # -----------------------------------------------------
@@ -1267,7 +1299,7 @@ def teste_compartilhar(livro_id):
 
 
     # -----------------------------------------------------
-    # MOSTRAR IMAGEM NO NAVEGADOR
+    # ENVIAR IMAGEM
     # -----------------------------------------------------
 
     return send_file(
