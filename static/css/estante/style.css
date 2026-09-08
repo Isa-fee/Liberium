@@ -97,6 +97,7 @@
     align-items:center;
     padding: 10px;
     margin-bottom:25px;
+    margin-left: 10px;
 
 }
 
@@ -600,4 +601,47 @@
 .data-elogio {
     color: #999;
     font-size: .8rem;
+}
+
+/* =========================================
+   ESTANTE PÚBLICA - VOLTAR AO PERFIL
+========================================= */
+
+.btn-voltar-perfil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 22px;
+    padding: 10px 18px;
+
+    background: #8fa382;
+    color: #fff;
+
+    border-radius: 24px;
+
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-voltar-perfil:hover {
+    background: #71866b;
+    transform: translateX(-3px);
+}
+
+
+/* espaçamento do título da estante pública */
+
+.cabecalho-estante h1 {
+    margin: 0 0 5px;
+}
+
+.cabecalho-estante p {
+    margin: 0;
+    color: #6c5338;
 }

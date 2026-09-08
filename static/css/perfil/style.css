@@ -1111,6 +1111,7 @@
 }
 
 .colecao-vazia-perfil a {
+    margin-top: 15px;
     display: inline-block;
     background: var(--verde-principal);
     color: white;
@@ -1179,6 +1180,14 @@
     border: 1px solid rgba(110, 130, 100, 0.07);
 }
 
+.imagem-colecao-vazia {
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px;
+}
+
 /* =========================================================
    RESPONSIVIDADE
    ========================================================= */
@@ -1199,9 +1208,7 @@
         grid-column: 1 / -1;
     }
 
-    .lista-insignias {
-        grid-template-columns: repeat(2, 1fr);
-    }
+
 }
 
 
@@ -1232,9 +1239,6 @@
         grid-template-columns: 1fr;
     }
 
-    .lista-insignias {
-        grid-template-columns: 1fr;
-    }
 }
 
 

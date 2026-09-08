@@ -485,8 +485,8 @@
                     {% for item in insignias %}
 
                         <div
-                            class="card-insignia {% if loop.index > 3 %}insignia-extra{% endif %}"
-                            {% if loop.index > 3 %}style="display: none;"{% endif %}
+                            class="card-insignia {% if loop.index > 7 %}insignia-extra{% endif %}"
+                            {% if loop.index > 7 %}style="display: none;"{% endif %}
                         >
 
                             <div class="icone-insignia">
@@ -526,8 +526,8 @@
                     BOTÃO VER TODAS
                 =========================== -->
 
-                {% if insignias|length > 3 %}
-
+                {% if insignias|length > 7 %}
+                
                     <div class="acoes-insignias">
 
                         <button
@@ -606,7 +606,11 @@
                 
                         <div class="colecao-vazia-perfil">
                 
-                            <span>🛍️</span>
+                            <img
+                                src="{{ url_for('static', filename='img/gamificacao/sacola_vazia.png') }}"
+                                alt="Coleção vazia"
+                                class="imagem-colecao-vazia"
+                            >
                 
                             <p>
                                 Sua coleção ainda está vazia.

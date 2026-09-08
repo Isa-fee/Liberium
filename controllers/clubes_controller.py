@@ -23,6 +23,8 @@ from utils.google_books import (
     buscar_livro_google
 )
 
+from utils.insignias import verificar_insignias
+
 from extensions import db
 
 from models import (
@@ -278,7 +280,10 @@ def criar_clube():
             membro_criador
         )
 
+
         db.session.commit()
+
+        verificar_insignias(current_user)
 
         flash(
             "Clube criado com sucesso! Agora escolha a primeira leitura.",
@@ -1192,6 +1197,8 @@ def entrar_clube(clube_id):
 
     db.session.commit()
 
+    verificar_insignias(current_user)
+
     return redirect(
         url_for(
             "clubes.ver_clube",
@@ -2079,6 +2086,8 @@ def aceitar_convite(convite_id):
     convite.status = "aceita"
 
     db.session.commit()
+
+    verificar_insignias(current_user)
 
     # Notificar remetente
 

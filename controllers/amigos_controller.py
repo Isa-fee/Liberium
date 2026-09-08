@@ -25,6 +25,8 @@ from utils.notificacoes import criar_notificacao
 from controllers.estante_controller import montar_prateleira
 from extensions import db
 
+from utils.insignias import verificar_insignias
+
 
 amigos_bp = Blueprint(
     "amigos_bp",
@@ -881,6 +883,15 @@ def aceitar_amizade(amizade_id):
     amizade.status = "aceita"
 
     db.session.commit()
+
+    verificar_insignias(current_user)
+
+    outro_usuario = Usuario.query.get(
+        amizade.usuario_id
+    )
+
+    if outro_usuario:
+        verificar_insignias(outro_usuario)
 
 
     # -----------------------------------------------------
