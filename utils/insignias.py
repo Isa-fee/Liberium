@@ -1,5 +1,12 @@
 from extensions import db
-from models import Insignia, UsuarioInsignia, Estante
+from models import (
+    Insignia,
+    UsuarioInsignia,
+    Estante,
+    Amizade,
+    MembroClube,
+    MetaLeitura
+)
 from flask import flash
 
 
@@ -20,7 +27,7 @@ INSIGNIAS = [
     {
         "nome": "Primeira Avaliação",
         "descricao": "Avaliar o primeiro livro.",
-        "imagem": "5 Livros.png"
+        "imagem": "Avaliacao.png"
     },
 
     {
@@ -51,6 +58,23 @@ INSIGNIAS = [
         "nome": "100 Livros",
         "descricao": "Concluir cem livros.",
         "imagem": "100 Livros.png"
+    },  
+    {
+        "nome": "Primeiro Amigo",
+        "descricao": "Fazer sua primeira amizade no Liberium.",
+        "imagem": "Primeiro Amigo.png"
+    },
+
+    {
+        "nome": "Primeiro Clube",
+        "descricao": "Participar do seu primeiro clube de leitura.",
+        "imagem": "Primeiro Clube.png"
+    },
+
+    {
+        "nome": "Meta Concluída",
+        "descricao": "Concluir sua primeira meta de leitura.",
+        "imagem": "Meta Concluida.png"
     }
 
 ]
@@ -208,4 +232,53 @@ def verificar_insignias(usuario):
         desbloquear_insignia(
             usuario,
             "100 Livros"
+        )
+
+       # ==========================================
+    # PRIMEIRO AMIGO
+    # ==========================================
+
+    total_amigos = Amizade.query.filter(
+        Amizade.status == "aceita",
+        (
+            (Amizade.usuario_id == usuario.id) |
+            (Amizade.amigo_id == usuario.id)
+        )
+    ).count()
+
+    if total_amigos >= 1:
+        desbloquear_insignia(
+            usuario,
+            "Primeiro Amigo"
+        )
+
+
+    # ==========================================
+    # PRIMEIRO CLUBE
+    # ==========================================
+
+    total_clubes = MembroClube.query.filter_by(
+        usuario_id=usuario.id
+    ).count()
+
+    if total_clubes >= 1:
+        desbloquear_insignia(
+            usuario,
+            "Primeiro Clube"
+        )
+
+
+    # ==========================================
+    # META CONCLUÍDA
+    # ==========================================
+
+    meta_concluida = MetaLeitura.query.filter_by(
+        usuario_id=usuario.id,
+        concluida=True
+    ).first()
+
+    if meta_concluida:
+        desbloquear_insignia(
+            usuario,
+            "Meta Concluída"
         )

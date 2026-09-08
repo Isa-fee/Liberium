@@ -4,6 +4,7 @@ import calendar
 
 from extensions import db
 from models import MetaLeitura, Estante
+from utils.insignias import desbloquear_insignia
 
 
 NIVEIS = [
@@ -54,15 +55,20 @@ def adicionar_libelulas(usuario, quantidade, motivo):
         f"Você ganhou +{quantidade} libélulas por {motivo}.",
         "success"
     )
-    
+
+
 def atualizar_meta_leitura(usuario):
 
     hoje = date.today()
 
-    meta = MetaLeitura.query.filter_by(
-        usuario_id=usuario.id,
-        mes=hoje.month,
-        ano=hoje.year
+    # ==========================================
+    # BUSCAR META ATUAL
+    # ==========================================
+
+    meta = MetaLeitura.query.filter(
+        MetaLeitura.usuario_id == usuario.id,
+        MetaLeitura.data_inicio <= hoje,
+        MetaLeitura.data_fim >= hoje
     ).order_by(
         MetaLeitura.id.desc()
     ).first()
@@ -70,31 +76,37 @@ def atualizar_meta_leitura(usuario):
     if not meta:
         return None
 
-    primeiro_dia = meta.data_inicio
+    # ==========================================
+    # PERÍODO REAL DA META
+    # ==========================================
 
-    ultimo_dia = date(
-        hoje.year,
-        hoje.month,
-        calendar.monthrange(
-            hoje.year,
-            hoje.month
-        )[1]
-    )
+    primeiro_dia = meta.data_inicio
+    ultimo_dia = meta.data_fim
+
+    # ==========================================
+    # CONTAR LIVROS LIDOS DENTRO DO PERÍODO
+    # ==========================================
 
     livros_lidos = Estante.query.filter(
         Estante.usuario_id == usuario.id,
         Estante.status == "lido",
+        Estante.data_leitura.isnot(None),
         Estante.data_leitura >= primeiro_dia,
         Estante.data_leitura <= ultimo_dia
     ).count()
 
     meta.progresso = livros_lidos
 
+    # ==========================================
+    # META CONCLUÍDA
+    # ==========================================
+
     if livros_lidos >= meta.quantidade:
 
         meta.progresso = meta.quantidade
         meta.concluida = True
 
+        # Recompensa somente uma vez
         if not meta.recompensa_recebida:
 
             meta.recompensa_recebida = True
@@ -111,13 +123,24 @@ def atualizar_meta_leitura(usuario):
                 "cumprir sua meta de leitura"
             )
 
+            desbloquear_insignia(
+                usuario,
+                "Meta Concluída"
+            )
+
             flash(
                 "🎯 Parabéns! Você cumpriu sua meta de leitura!",
                 "success"
             )
 
+    # ==========================================
+    # META AINDA NÃO CONCLUÍDA
+    # ==========================================
+
     else:
 
         meta.concluida = False
+
+    db.session.commit()
 
     return meta
