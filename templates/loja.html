@@ -28,17 +28,18 @@
                     class="icone-libelula"
                 >
 
-                <span class="texto-libelulas">
-                    Minhas Libélulas:
+                <div class="info-libelulas">
+                    <span>Suas libélulas</span>
                     <strong>{{ current_user.libelulas }}</strong>
-                </span>
+                </div>
             </div>
 
             <a
                 href="{{ url_for('loja_bp.colecao') }}"
                 class="btn-colecao"
             >
-                Minha coleção
+                Ver minha coleção
+                <span>→</span>
             </a>
 
         </div>

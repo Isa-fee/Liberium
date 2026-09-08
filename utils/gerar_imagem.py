@@ -1035,6 +1035,291 @@ def desenhar_card_usuario(
         fill=PRETO
     )
 
+# =========================================================
+# CARD DO USUÁRIO — PROGRESSO
+# =========================================================
+
+def desenhar_card_usuario_progresso(
+    imagem,
+    draw,
+    usuario,
+    pagina_atual,
+    total_paginas
+):
+
+    x = 155
+    y = 1570
+
+    largura = 770
+    altura = 160
+
+    # -----------------------------------------------------
+    # FUNDO TRANSLÚCIDO
+    # -----------------------------------------------------
+
+    camada = Image.new(
+        "RGBA",
+        imagem.size,
+        (0, 0, 0, 0)
+    )
+
+    draw_camada = ImageDraw.Draw(
+        camada
+    )
+
+    draw_camada.rounded_rectangle(
+        (
+            x,
+            y,
+            x + largura,
+            y + altura
+        ),
+        radius=38,
+        fill=(
+            255,
+            255,
+            255,
+            185
+        )
+    )
+
+    imagem.alpha_composite(
+        camada
+    )
+
+    # -----------------------------------------------------
+    # FOTO
+    # -----------------------------------------------------
+
+    tamanho_foto = 105
+
+    foto = carregar_imagem(
+        getattr(
+            usuario,
+            "foto",
+            None
+        )
+    )
+
+    foto_x = x + 35
+    foto_y = y + 27
+
+    if foto:
+
+        foto = criar_foto_circular(
+            foto,
+            tamanho_foto
+        )
+
+        imagem.alpha_composite(
+            foto,
+            (
+                foto_x,
+                foto_y
+            )
+        )
+
+    else:
+
+        draw.ellipse(
+            (
+                foto_x,
+                foto_y,
+                foto_x + tamanho_foto,
+                foto_y + tamanho_foto
+            ),
+            fill="#F6F3EA",
+            outline=VERDE,
+            width=4
+        )
+
+        inicial = (
+            usuario.nome[0].upper()
+            if usuario.nome
+            else "L"
+        )
+
+        fonte_inicial = fonte(
+            FONTE_SERIF_BOLD,
+            42
+        )
+
+        bbox = draw.textbbox(
+            (0, 0),
+            inicial,
+            font=fonte_inicial
+        )
+
+        draw.text(
+            (
+                foto_x
+                + (
+                    tamanho_foto
+                    - (bbox[2] - bbox[0])
+                ) / 2,
+
+                foto_y
+                + (
+                    tamanho_foto
+                    - (bbox[3] - bbox[1])
+                ) / 2
+                - 7
+            ),
+            inicial,
+            font=fonte_inicial,
+            fill=MARROM
+        )
+
+    # -----------------------------------------------------
+    # NOME
+    # -----------------------------------------------------
+
+    nome = (
+        getattr(
+            usuario,
+            "nome",
+            None
+        )
+        or
+        "Leitor"
+    )
+
+    draw.text(
+        (
+            x + 165,
+            y + 30
+        ),
+        nome.upper(),
+        font=fonte(
+            FONTE_SERIF_BOLD,
+            27
+        ),
+        fill=MARROM
+    )
+
+    # -----------------------------------------------------
+    # USERNAME
+    # -----------------------------------------------------
+
+    username = getattr(
+        usuario,
+        "username",
+        None
+    )
+
+    if username:
+
+        draw.text(
+            (
+                x + 165,
+                y + 67
+            ),
+            f"@{username}",
+            font=fonte(
+                FONTE_SANS,
+                20
+            ),
+            fill=VERDE
+        )
+
+    # -----------------------------------------------------
+    # LINHA
+    # -----------------------------------------------------
+
+    draw.line(
+        (
+            x + 165,
+            y + 99,
+            x + largura - 45,
+            y + 99
+        ),
+        fill="#D8D8C9",
+        width=2
+    )
+
+    # -----------------------------------------------------
+    # PÁGINAS
+    # -----------------------------------------------------
+
+    if total_paginas:
+
+        texto_paginas = (
+            f"Página {pagina_atual} "
+            f"de {total_paginas}"
+        )
+
+    else:
+
+        texto_paginas = (
+            f"Página {pagina_atual}"
+        )
+
+    draw.text(
+        (
+            x + 165,
+            y + 113
+        ),
+        texto_paginas,
+        font=fonte(
+            FONTE_SANS,
+            23
+        ),
+        fill=PRETO
+    )
+
+# =========================================================
+# BARRA DE PROGRESSO
+# =========================================================
+
+def desenhar_barra_progresso(
+    draw,
+    progresso,
+    x,
+    y,
+    largura=620,
+    altura=18
+):
+
+    try:
+        progresso = int(progresso or 0)
+    except (TypeError, ValueError):
+        progresso = 0
+
+    progresso = max(
+        0,
+        min(progresso, 100)
+    )
+
+    raio = altura // 2
+
+    # Fundo da barra
+    draw.rounded_rectangle(
+        (
+            x,
+            y,
+            x + largura,
+            y + altura
+        ),
+        radius=raio,
+        fill="#D9DED2"
+    )
+
+    largura_preenchida = int(
+        largura * progresso / 100
+    )
+
+    if largura_preenchida > 0:
+
+        draw.rounded_rectangle(
+            (
+                x,
+                y,
+                x + largura_preenchida,
+                y + altura
+            ),
+            radius=raio,
+            fill=VERDE
+        )
 
 # =========================================================
 # FUNÇÃO PRINCIPAL
@@ -1456,6 +1741,486 @@ def gerar_card_livro_concluido(
 
     print(
         "Imagem criada em:",
+        caminho_saida
+    )
+
+    return caminho_saida
+
+
+# =========================================================
+# CARD — ESTOU LENDO
+# =========================================================
+
+def gerar_card_progresso_leitura(
+    usuario,
+    livro,
+    pagina_atual=0,
+    progresso=0,
+    emoji="📖",
+    comentario=""
+):
+
+    # =====================================================
+    # TRATAR DADOS
+    # =====================================================
+
+    try:
+        pagina_atual = int(
+            pagina_atual or 0
+        )
+    except (TypeError, ValueError):
+        pagina_atual = 0
+
+    try:
+        progresso = int(
+            progresso or 0
+        )
+    except (TypeError, ValueError):
+        progresso = 0
+
+    progresso = max(
+        0,
+        min(progresso, 100)
+    )
+
+    comentario = (
+        comentario
+        or
+        ""
+    ).strip()[:70]
+
+    emoji = (
+        emoji
+        or
+        "📖"
+    ).strip()
+
+    # Impede texto enorme no lugar do emoji
+    emoji = emoji[:4]
+
+    total_paginas = (
+        getattr(
+            livro,
+            "paginas",
+            None
+        )
+        or
+        0
+    )
+
+    # =====================================================
+    # FUNDO
+    # =====================================================
+
+    imagem = Image.new(
+        "RGBA",
+        (
+            LARGURA,
+            ALTURA
+        ),
+        FUNDO
+    )
+
+    draw = ImageDraw.Draw(
+        imagem
+    )
+
+    # =====================================================
+    # TEXTURA VERDE
+    # =====================================================
+
+    textura = abrir_png(
+        "textura_verde.png"
+    )
+
+    if textura:
+
+        textura = redimensionar_proporcional(
+            textura,
+            largura=690
+        )
+
+        imagem.alpha_composite(
+            textura,
+            (
+                0,
+                ALTURA - textura.height
+            )
+        )
+
+    # =====================================================
+    # RAMO SUPERIOR
+    # =====================================================
+
+    adicionar_elemento(
+        imagem,
+        "ramo_superior.png",
+        0,
+        0,
+        largura=260
+    )
+
+    # =====================================================
+    # RAMO INFERIOR
+    # =====================================================
+
+    ramo_inferior = abrir_png(
+        "ramo_inferior.png"
+    )
+
+    if ramo_inferior:
+
+        ramo_inferior = (
+            redimensionar_proporcional(
+                ramo_inferior,
+                largura=300
+            )
+        )
+
+        imagem.alpha_composite(
+            ramo_inferior,
+            (
+                LARGURA
+                - ramo_inferior.width,
+
+                ALTURA
+                - ramo_inferior.height
+            )
+        )
+
+    # =====================================================
+    # LOGO
+    # =====================================================
+
+    logo = abrir_png(
+        "logo_compartilhamento.png"
+    )
+
+    if logo:
+
+        logo = redimensionar_proporcional(
+            logo,
+            largura=370
+        )
+
+        imagem.alpha_composite(
+            logo,
+            (
+                (
+                    LARGURA
+                    - logo.width
+                ) // 2,
+                55
+            )
+        )
+
+    # =====================================================
+    # CAPA
+    # =====================================================
+
+    capa = carregar_imagem(
+        getattr(
+            livro,
+            "capa",
+            None
+        )
+    )
+
+    largura_capa = 400
+    altura_capa = 580
+
+    x_capa = (
+        LARGURA
+        - largura_capa
+    ) // 2
+
+    y_capa = 270
+
+    if capa:
+
+        capa = ajustar_imagem_cover(
+            capa,
+            largura_capa,
+            altura_capa
+        )
+
+        adicionar_sombra_capa(
+            imagem,
+            x_capa,
+            y_capa,
+            largura_capa,
+            altura_capa
+        )
+
+        imagem.alpha_composite(
+            capa,
+            (
+                x_capa,
+                y_capa
+            )
+        )
+
+    else:
+
+        draw.rounded_rectangle(
+            (
+                x_capa,
+                y_capa,
+                x_capa + largura_capa,
+                y_capa + altura_capa
+            ),
+            radius=15,
+            fill="#EDEBDD"
+        )
+
+        texto_centralizado(
+            draw,
+            "Sem capa",
+            y_capa + 265,
+            fonte(
+                FONTE_SERIF,
+                36
+            ),
+            VERDE
+        )
+
+    # =====================================================
+    # SELO DA LIBÉLULA
+    # =====================================================
+
+    adicionar_elemento(
+        imagem,
+        "selo_libelula.png",
+        x_capa + largura_capa - 75,
+        y_capa + altura_capa - 100,
+        largura=160
+    )
+
+    # =====================================================
+    # ESTOU LENDO
+    # =====================================================
+
+    texto_centralizado(
+        draw,
+        "ESTOU LENDO",
+        925,
+        fonte(
+            FONTE_SANS,
+            39
+        ),
+        VERDE
+    )
+
+    # =====================================================
+    # TÍTULO
+    # =====================================================
+
+    titulo = (
+        getattr(
+            livro,
+            "titulo",
+            None
+        )
+        or
+        "Minha leitura"
+    )
+
+    y_final_titulo = (
+        texto_multilinha_centralizado(
+            draw,
+            titulo,
+            1000,
+            fonte(
+                FONTE_SERIF_BOLD,
+                48
+            ),
+            MARROM,
+            largura_maxima=800,
+            espacamento=6
+        )
+    )
+
+    # =====================================================
+    # AUTOR
+    # =====================================================
+
+    autor = (
+        getattr(
+            livro,
+            "autor",
+            None
+        )
+        or
+        ""
+    )
+
+    y_autor = (
+        y_final_titulo
+        + 10
+    )
+
+    texto_centralizado(
+        draw,
+        autor,
+        y_autor,
+        fonte(
+            FONTE_SANS,
+            32
+        ),
+        VERDE
+    )
+
+    # =====================================================
+    # PROGRESSO
+    # =====================================================
+
+    y_porcentagem = (
+        y_autor
+        + 75
+    )
+
+    texto_centralizado(
+        draw,
+        f"{progresso}%",
+        y_porcentagem,
+        fonte(
+            FONTE_SERIF_BOLD,
+            44
+        ),
+        MARROM
+    )
+
+    largura_barra = 600
+
+    x_barra = (
+        LARGURA
+        - largura_barra
+    ) // 2
+
+    desenhar_barra_progresso(
+        draw,
+        progresso,
+        x_barra,
+        y_porcentagem + 70,
+        largura=largura_barra,
+        altura=18
+    )
+
+    # =====================================================
+    # HUMOR / EMOJI
+    # =====================================================
+
+    y_emoji = (
+        y_porcentagem
+        + 125
+    )
+
+    texto_centralizado(
+        draw,
+        emoji,
+        y_emoji,
+        fonte(
+            FONTE_SANS,
+            70
+        ),
+        MARROM
+    )
+
+    # =====================================================
+    # COMENTÁRIO
+    # =====================================================
+
+    if comentario:
+
+        texto_centralizado(
+            draw,
+            "COMO ESTÁ A LEITURA?",
+            y_emoji + 95,
+            fonte(
+                FONTE_SANS_BOLD,
+                20
+            ),
+            VERDE
+        )
+
+        texto_multilinha_centralizado(
+            draw,
+            f'"{comentario}"',
+            y_emoji + 135,
+            fonte(
+                FONTE_SERIF,
+                30
+            ),
+            MARROM,
+            largura_maxima=690,
+            espacamento=7
+        )
+
+    # =====================================================
+    # CARD DO USUÁRIO
+    # =====================================================
+
+    desenhar_card_usuario_progresso(
+        imagem,
+        draw,
+        usuario,
+        pagina_atual,
+        total_paginas
+    )
+
+    # =====================================================
+    # RODAPÉ
+    # =====================================================
+
+    texto_centralizado(
+        draw,
+        "Compartilhado através do Liberium",
+        1810,
+        fonte(
+            FONTE_SANS,
+            28
+        ),
+        VERDE
+    )
+
+    # =====================================================
+    # SALVAR
+    # =====================================================
+
+    usuario_id = getattr(
+        usuario,
+        "id",
+        "usuario"
+    )
+
+    livro_id = getattr(
+        livro,
+        "id",
+        "livro"
+    )
+
+    nome_arquivo = (
+        f"progresso_livro_{livro_id}_"
+        f"usuario_{usuario_id}.png"
+    )
+
+    caminho_saida = os.path.join(
+        PASTA_COMPARTILHAMENTOS,
+        nome_arquivo
+    )
+
+    imagem = imagem.convert(
+        "RGB"
+    )
+
+    imagem.save(
+        caminho_saida,
+        "PNG",
+        optimize=True
+    )
+
+    print(
+        "Imagem de progresso criada em:",
         caminho_saida
     )
 

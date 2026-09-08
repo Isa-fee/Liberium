@@ -13,7 +13,10 @@ from extensions import db
 
 #teste
 
-from utils.gerar_imagem import gerar_card_livro_concluido
+from utils.gerar_imagem import (
+    gerar_card_livro_concluido,
+    gerar_card_progresso_leitura
+)
 
 estante_bp = Blueprint(
     "estante_bp",
@@ -1327,4 +1330,119 @@ def compartilhar_livro(livro_id):
         caminho,
         mimetype="image/png",
         as_attachment=False
+    )
+    
+# =========================================================
+# COMPARTILHAR PROGRESSO DA LEITURA
+# =========================================================
+
+@estante_bp.route(
+    "/compartilhar-progresso/<int:livro_id>"
+)
+@login_required
+def compartilhar_progresso(livro_id):
+
+    # =====================================================
+    # BUSCAR LIVRO QUE ESTÁ SENDO LIDO
+    # =====================================================
+
+    item_estante = Estante.query.filter_by(
+        usuario_id=current_user.id,
+        livro_id=livro_id,
+        status="lendo"
+    ).first_or_404()
+
+    livro = item_estante.livro
+
+    # =====================================================
+    # EMOJI / HUMOR
+    # =====================================================
+
+    emoji = request.args.get(
+        "emoji",
+        "📖"
+    ).strip()
+
+    # Lista fechada para evitar receber qualquer texto
+    # no parâmetro de emoji.
+    emojis_permitidos = [
+        "😍",
+        "🥹",
+        "😭",
+        "😱",
+        "😡",
+        "🤯",
+        "😂",
+        "🤔",
+        "😴",
+        "🫠",
+        "📖"
+    ]
+
+    if emoji not in emojis_permitidos:
+        emoji = "📖"
+
+    # =====================================================
+    # COMENTÁRIO
+    # =====================================================
+
+    comentario = request.args.get(
+        "comentario",
+        ""
+    ).strip()
+
+    # Limite também no backend
+    comentario = comentario[:70]
+
+    # =====================================================
+    # PROGRESSO
+    # =====================================================
+
+    pagina_atual = (
+        item_estante.pagina_atual
+        or 0
+    )
+
+    progresso = (
+        item_estante.progresso
+        or 0
+    )
+
+    # =====================================================
+    # GERAR CARD
+    # =====================================================
+
+    caminho = gerar_card_progresso_leitura(
+        usuario=current_user,
+        livro=livro,
+        pagina_atual=pagina_atual,
+        progresso=progresso,
+        emoji=emoji,
+        comentario=comentario
+    )
+
+    # =====================================================
+    # PREVIEW OU DOWNLOAD
+    # =====================================================
+
+    modo = request.args.get(
+        "modo",
+        "preview"
+    )
+
+    if modo == "download":
+
+        return send_file(
+            caminho,
+            mimetype="image/png",
+            as_attachment=True,
+            download_name=(
+                f"liberium-"
+                f"{livro.titulo}.png"
+            )
+        )
+
+    return send_file(
+        caminho,
+        mimetype="image/png"
     )
