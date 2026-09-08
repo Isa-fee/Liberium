@@ -129,171 +129,49 @@
 
         {% if origem == "banco" and item_estante and item_estante.status == "lido" %}
 
-            <div
-                class="modal-compartilhar-overlay"
-                id="modal-compartilhar"
-                aria-hidden="true"
-            >
-                <div
-                    class="modal-compartilhar"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="titulo-modal-compartilhar"
-                >
+            <div class="area-compartilhar-leitura">
 
-                    <!-- =========================================
-                        CABEÇALHO
-                    ========================================== -->
+                <div class="compartilhar-texto">
 
-                    <div class="modal-compartilhar-topo">
+                    <span class="compartilhar-label">
+                        LEITURA CONCLUÍDA
+                    </span>
 
-                        <div>
+                    <h3>
+                        Compartilhe essa leitura
+                    </h3>
 
-                            <span class="modal-compartilhar-label">
-                                SUA LEITURA
-                            </span>
-
-                            <h2 id="titulo-modal-compartilhar">
-                                Compartilhar leitura
-                            </h2>
-
-                        </div>
-
-                        <button
-                            type="button"
-                            class="fechar-modal-compartilhar"
-                            id="fechar-modal-compartilhar"
-                            aria-label="Fechar"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-
-                    <!-- =========================================
-                        ETAPA 1 — PERSONALIZAR
-                    ========================================== -->
-
-                    <div
-                        class="etapa-compartilhar"
-                        id="etapa-personalizar"
-                    >
-
-                        <p class="modal-compartilhar-descricao">
-                            Personalize seu card antes de compartilhar.
-                        </p>
-
-
-                        <!-- FRASE -->
-
-                        <div class="campo-frase-compartilhar">
-
-                            <label for="frase-compartilhar">
-                                Escreva uma frase
-                            </label>
-
-                            <textarea
-                                id="frase-compartilhar"
-                                maxlength="70"
-                                rows="2"
-                                placeholder="O que você achou dessa leitura?"
-                            ></textarea>
-
-                            <div class="contador-frase">
-                                <span id="contador-frase">0</span>/70
-                            </div>
-
-                        </div>
-
-
-                        <!-- AÇÕES -->
-
-                        <div class="acoes-modal-compartilhar">
-
-                            <button
-                                type="button"
-                                class="btn-cancelar-compartilhar"
-                                id="cancelar-compartilhar"
-                            >
-                                Cancelar
-                            </button>
-
-                            <button
-                                type="button"
-                                class="btn-gerar-compartilhamento"
-                                id="gerar-compartilhamento"
-                            >
-                                Ver meu card
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =========================================
-                        ETAPA 2 — PRÉVIA
-                    ========================================== -->
-
-                    <div
-                        class="etapa-compartilhar etapa-preview-compartilhar"
-                        id="etapa-preview"
-                        hidden
-                    >
-
-                        <p class="modal-compartilhar-descricao">
-                            Seu card está pronto! 💚
-                        </p>
-
-
-                        <!-- PRÉVIA DO STORY -->
-
-                        <div class="preview-card-compartilhar">
-
-                            <div class="preview-card-carregando" id="preview-carregando">
-                                Gerando seu card...
-                            </div>
-
-                            <img
-                                id="imagem-preview-compartilhar"
-                                class="imagem-preview-compartilhar"
-                                src=""
-                                alt="Prévia do card da leitura"
-                                hidden
-                            >
-
-                        </div>
-
-
-                        <!-- AÇÕES -->
-
-                        <div class="acoes-modal-compartilhar">
-
-                            <button
-                                type="button"
-                                class="btn-cancelar-compartilhar"
-                                id="voltar-personalizacao"
-                            >
-                                ← Alterar frase
-                            </button>
-
-                            <a
-                                href="#"
-                                class="btn-gerar-compartilhamento"
-                                id="baixar-card-compartilhar"
-                            >
-                                Baixar imagem
-                            </a>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Mostre que você concluiu
+                        <strong>{{ livro.titulo }}</strong>.
+                    </p>
 
                 </div>
+
+                <button
+                    type="button"
+                    class="btn-compartilhar-leitura"
+                    id="abrir-modal-compartilhar"
+                >
+                    Compartilhar leitura
+                </button>
+
             </div>
 
-            {% endif %}
+        {% endif %}
+
+        {% if origem == "banco" and item_estante and item_estante.status == "lendo" %}
+            <div class="area-compartilhar-leitura area-compartilhar-progresso">
+                <div class="compartilhar-texto">
+                    <span class="compartilhar-label">LEITURA EM ANDAMENTO</span>
+                    <h3>Compartilhe seu progresso</h3>
+                    <p>Mostre como está sendo sua experiência com <strong>{{ livro.titulo }}</strong>.</p>
+                </div>
+                <button type="button" class="btn-compartilhar-leitura" id="abrir-modal-progresso">
+                    Compartilhar progresso
+                </button>
+            </div>
+        {% endif %}
         
         {% if current_user.tipo == "administrador" and origem == "banco" %}
             <div class="acoes-admin-livro">
@@ -358,6 +236,7 @@
                 <!-- ================= PROGRESSO ================= -->
 
                 {% if item_estante.status == "lendo" %}
+                    
 
                     <div class="progresso-box">
 
@@ -1118,475 +997,267 @@
 </main>
 
 {% if origem == "banco" and item_estante and item_estante.status == "lido" %}
-
-<div
-    class="modal-compartilhar-overlay"
-    id="modal-compartilhar"
-    aria-hidden="true"
->
-    <div
-        class="modal-compartilhar"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="titulo-modal-compartilhar"
-    >
-
-        <!-- CABEÇALHO -->
-
+<div class="modal-compartilhar-overlay" id="modal-compartilhar" aria-hidden="true">
+    <div class="modal-compartilhar" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-compartilhar">
         <div class="modal-compartilhar-topo">
-
             <div>
-                <span class="modal-compartilhar-label">
-                    SUA LEITURA
-                </span>
-
-                <h2 id="titulo-modal-compartilhar">
-                    Compartilhar leitura
-                </h2>
+                <span class="modal-compartilhar-label">SUA LEITURA</span>
+                <h2 id="titulo-modal-compartilhar">Compartilhar leitura</h2>
             </div>
-
-            <button
-                type="button"
-                class="fechar-modal-compartilhar"
-                id="fechar-modal-compartilhar"
-                aria-label="Fechar"
-            >
-                ×
-            </button>
-
+            <button type="button" class="fechar-modal-compartilhar" id="fechar-modal-compartilhar" aria-label="Fechar">×</button>
         </div>
 
-
-        <!-- TEXTO -->
-
-        <p class="modal-compartilhar-descricao">
-            Personalize seu card antes de compartilhar.
-        </p>
-
-
-        <!-- FRASE -->
-
-        <div class="campo-frase-compartilhar">
-
-            <label for="frase-compartilhar">
-                Escreva uma frase
-            </label>
-
-            <textarea
-                id="frase-compartilhar"
-                maxlength="70"
-                rows="2"
-                placeholder="O que você achou dessa leitura?"
-            ></textarea>
-
-            <div class="contador-frase">
-                <span id="contador-frase">0</span>/70
+        <div class="etapa-compartilhar" id="etapa-personalizar">
+            <p class="modal-compartilhar-descricao">Personalize seu card antes de compartilhar.</p>
+            <div class="campo-frase-compartilhar">
+                <label for="frase-compartilhar">Escreva uma frase</label>
+                <textarea id="frase-compartilhar" maxlength="70" rows="2" placeholder="O que você achou dessa leitura?"></textarea>
+                <div class="contador-frase"><span id="contador-frase">0</span>/70</div>
             </div>
-
+            <div class="acoes-modal-compartilhar">
+                <button type="button" class="btn-cancelar-compartilhar" id="cancelar-compartilhar">Cancelar</button>
+                <button type="button" class="btn-gerar-compartilhamento" id="gerar-compartilhamento">Ver meu card</button>
+            </div>
         </div>
 
-
-        <!-- AÇÕES -->
-
-        <div class="acoes-modal-compartilhar">
-
-            <button
-                type="button"
-                class="btn-cancelar-compartilhar"
-                id="cancelar-compartilhar"
-            >
-                Cancelar
-            </button>
-
-            <button
-                type="button"
-                class="btn-gerar-compartilhamento"
-                id="gerar-compartilhamento"
-            >
-                Ver meu card
-            </button>
-
+        <div class="etapa-compartilhar etapa-preview-compartilhar" id="etapa-preview" hidden>
+            <p class="modal-compartilhar-descricao">Seu card está pronto! 💚</p>
+            <div class="preview-card-compartilhar">
+                <div class="preview-card-carregando" id="preview-carregando">Gerando seu card...</div>
+                <img id="imagem-preview-compartilhar" class="imagem-preview-compartilhar" src="" alt="Prévia do card da leitura" hidden>
+            </div>
+            <div class="acoes-modal-compartilhar">
+                <button type="button" class="btn-cancelar-compartilhar" id="voltar-personalizacao">← Alterar frase</button>
+                <a href="#" class="btn-gerar-compartilhamento" id="baixar-card-compartilhar">Baixar imagem</a>
+            </div>
         </div>
-
     </div>
 </div>
-
 {% endif %}
 
+{% if origem == "banco" and item_estante and item_estante.status == "lendo" %}
+<div class="modal-compartilhar-overlay" id="modal-progresso" aria-hidden="true">
+    <div class="modal-compartilhar" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-progresso">
+        <div class="modal-compartilhar-topo">
+            <div>
+                <span class="modal-compartilhar-label">SUA LEITURA</span>
+                <h2 id="titulo-modal-progresso">Compartilhar progresso</h2>
+            </div>
+            <button type="button" class="fechar-modal-compartilhar" id="fechar-modal-progresso" aria-label="Fechar">×</button>
+        </div>
+
+        <div class="etapa-compartilhar" id="etapa-personalizar-progresso">
+            <p class="modal-compartilhar-descricao">Conte como está sendo essa leitura.</p>
+
+            <div class="campo-frase-compartilhar">
+                <label>Como esse livro está te fazendo sentir?</label>
+                <div class="opcoes-humor" id="opcoes-humor">
+                    <button type="button" class="opcao-humor" data-emoji="😍" title="Apaixonada">😍</button>
+                    <button type="button" class="opcao-humor" data-emoji="🥹" title="Emocionada">🥹</button>
+                    <button type="button" class="opcao-humor" data-emoji="😭" title="Chorando">😭</button>
+                    <button type="button" class="opcao-humor" data-emoji="😱" title="Assustada">😱</button>
+                    <button type="button" class="opcao-humor" data-emoji="😡" title="Brava">😡</button>
+                    <button type="button" class="opcao-humor" data-emoji="🤯" title="Chocada">🤯</button>
+                    <button type="button" class="opcao-humor" data-emoji="😂" title="Rindo">😂</button>
+                    <button type="button" class="opcao-humor" data-emoji="🤔" title="Pensativa">🤔</button>
+                    <button type="button" class="opcao-humor" data-emoji="😴" title="Sonolenta">😴</button>
+                    <button type="button" class="opcao-humor" data-emoji="🫠" title="Derretendo">🫠</button>
+                </div>
+                <input type="hidden" id="emoji-progresso" value="📖">
+            </div>
+
+            <div class="campo-frase-compartilhar">
+                <label for="comentario-progresso">Escreva um comentário</label>
+                <textarea id="comentario-progresso" maxlength="70" rows="2" placeholder="Ex.: Esse livro está acabando comigo..."></textarea>
+                <div class="contador-frase"><span id="contador-progresso">0</span>/70</div>
+            </div>
+
+            <div class="acoes-modal-compartilhar">
+                <button type="button" class="btn-cancelar-compartilhar" id="cancelar-progresso">Cancelar</button>
+                <button type="button" class="btn-gerar-compartilhamento" id="gerar-progresso">Ver meu card</button>
+            </div>
+        </div>
+
+        <div class="etapa-compartilhar etapa-preview-compartilhar" id="etapa-preview-progresso" hidden>
+            <p class="modal-compartilhar-descricao">Seu card está pronto! 💚</p>
+            <div class="preview-card-compartilhar">
+                <div class="preview-card-carregando" id="preview-carregando-progresso">Gerando seu card...</div>
+                <img id="imagem-preview-progresso" class="imagem-preview-compartilhar" src="" alt="Prévia do card de progresso" hidden>
+            </div>
+            <div class="acoes-modal-compartilhar">
+                <button type="button" class="btn-cancelar-compartilhar" id="voltar-progresso">← Alterar</button>
+                <a href="#" class="btn-gerar-compartilhamento" id="baixar-progresso">Baixar imagem</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
+    const abrirModal = document.getElementById("abrir-modal-compartilhar");
+    const modal = document.getElementById("modal-compartilhar");
+    const fecharModal = document.getElementById("fechar-modal-compartilhar");
+    const cancelar = document.getElementById("cancelar-compartilhar");
+    const frase = document.getElementById("frase-compartilhar");
+    const contador = document.getElementById("contador-frase");
+    const gerar = document.getElementById("gerar-compartilhamento");
+    const etapaPersonalizar = document.getElementById("etapa-personalizar");
+    const etapaPreview = document.getElementById("etapa-preview");
+    const imagemPreview = document.getElementById("imagem-preview-compartilhar");
+    const previewCarregando = document.getElementById("preview-carregando");
+    const voltarPersonalizacao = document.getElementById("voltar-personalizacao");
+    const baixarCard = document.getElementById("baixar-card-compartilhar");
 
-    // =====================================================
-    // ELEMENTOS PRINCIPAIS
-    // =====================================================
+    if (!abrirModal || !modal || !fecharModal || !cancelar || !frase || !contador || !gerar || !etapaPersonalizar || !etapaPreview || !imagemPreview || !previewCarregando || !voltarPersonalizacao || !baixarCard) return;
 
-    const abrirModal = document.getElementById(
-        "abrir-modal-compartilhar"
-    );
-
-    const modal = document.getElementById(
-        "modal-compartilhar"
-    );
-
-    const fecharModal = document.getElementById(
-        "fechar-modal-compartilhar"
-    );
-
-    const cancelar = document.getElementById(
-        "cancelar-compartilhar"
-    );
-
-    const frase = document.getElementById(
-        "frase-compartilhar"
-    );
-
-    const contador = document.getElementById(
-        "contador-frase"
-    );
-
-    const gerar = document.getElementById(
-        "gerar-compartilhamento"
-    );
-
-
-    // =====================================================
-    // ETAPAS
-    // =====================================================
-
-    const etapaPersonalizar = document.getElementById(
-        "etapa-personalizar"
-    );
-
-    const etapaPreview = document.getElementById(
-        "etapa-preview"
-    );
-
-
-    // =====================================================
-    // PRÉVIA
-    // =====================================================
-
-    const imagemPreview = document.getElementById(
-        "imagem-preview-compartilhar"
-    );
-
-    const previewCarregando = document.getElementById(
-        "preview-carregando"
-    );
-
-    const voltarPersonalizacao = document.getElementById(
-        "voltar-personalizacao"
-    );
-
-    const baixarCard = document.getElementById(
-        "baixar-card-compartilhar"
-    );
-
-
-    // =====================================================
-    // VERIFICAÇÃO
-    // =====================================================
-
-    if (
-        !abrirModal ||
-        !modal ||
-        !fecharModal ||
-        !cancelar ||
-        !frase ||
-        !contador ||
-        !gerar ||
-        !etapaPersonalizar ||
-        !etapaPreview ||
-        !imagemPreview ||
-        !previewCarregando ||
-        !voltarPersonalizacao ||
-        !baixarCard
-    ) {
-        return;
-    }
-
-
-    // =====================================================
-    // URL BASE
-    // =====================================================
-
-    const urlBase =
-        "{{ url_for(
-            'estante_bp.compartilhar_livro',
-            livro_id=livro.id
-        ) }}";
-
-
-    // =====================================================
-    // ABRIR MODAL
-    // =====================================================
+    const urlBase = "{{ url_for('estante_bp.compartilhar_livro', livro_id=livro.id) }}";
 
     function abrir() {
-
-        // Sempre começa pela personalização
         etapaPersonalizar.hidden = false;
         etapaPreview.hidden = true;
-
-        modal.classList.add(
-            "ativo"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow =
-            "hidden";
-
-        setTimeout(
-            function () {
-                frase.focus();
-            },
-            100
-        );
+        modal.classList.add("ativo");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        setTimeout(() => frase.focus(), 100);
     }
 
-
-    // =====================================================
-    // FECHAR MODAL
-    // =====================================================
-
     function fechar() {
-
-        modal.classList.remove(
-            "ativo"
-        );
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.style.overflow =
-            "";
-
-        // Volta para a primeira etapa
+        modal.classList.remove("ativo");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
         etapaPersonalizar.hidden = false;
         etapaPreview.hidden = true;
-
         imagemPreview.hidden = true;
         imagemPreview.src = "";
-
         previewCarregando.hidden = false;
     }
 
-
-    // =====================================================
-    // MONTAR URL
-    // =====================================================
-
     function montarUrl(modo) {
-
-        const texto =
-            frase.value.trim();
-
-        const parametros =
-            new URLSearchParams();
-
-        parametros.set(
-            "modo",
-            modo
-        );
-
-        if (texto) {
-
-            parametros.set(
-                "frase",
-                texto
-            );
-        }
-
-        // Evita que o navegador use uma imagem antiga
-        // quando o usuário alterar a frase.
-        if (modo === "preview") {
-
-            parametros.set(
-                "t",
-                Date.now()
-            );
-        }
-
-        return (
-            urlBase +
-            "?" +
-            parametros.toString()
-        );
+        const parametros = new URLSearchParams();
+        parametros.set("modo", modo);
+        const texto = frase.value.trim();
+        if (texto) parametros.set("frase", texto);
+        if (modo === "preview") parametros.set("t", Date.now());
+        return urlBase + "?" + parametros.toString();
     }
 
+    abrirModal.addEventListener("click", abrir);
+    fecharModal.addEventListener("click", fechar);
+    cancelar.addEventListener("click", fechar);
+    modal.addEventListener("click", event => { if (event.target === modal) fechar(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && modal.classList.contains("ativo")) fechar(); });
+    frase.addEventListener("input", () => { contador.textContent = frase.value.length; });
 
-    // =====================================================
-    // EVENTOS DO MODAL
-    // =====================================================
+    gerar.addEventListener("click", function () {
+        etapaPersonalizar.hidden = true;
+        etapaPreview.hidden = false;
+        imagemPreview.hidden = true;
+        previewCarregando.hidden = false;
+        previewCarregando.textContent = "Gerando seu card...";
+        baixarCard.href = montarUrl("download");
+        imagemPreview.onload = function () { previewCarregando.hidden = true; imagemPreview.hidden = false; };
+        imagemPreview.onerror = function () { previewCarregando.hidden = false; previewCarregando.textContent = "Não foi possível gerar o card."; };
+        imagemPreview.src = montarUrl("preview");
+    });
 
-    abrirModal.addEventListener(
-        "click",
-        abrir
-    );
+    voltarPersonalizacao.addEventListener("click", function () {
+        etapaPreview.hidden = true;
+        etapaPersonalizar.hidden = false;
+        imagemPreview.hidden = true;
+        previewCarregando.hidden = false;
+        setTimeout(() => frase.focus(), 100);
+    });
+});
 
+// Compartilhamento do progresso da leitura
+document.addEventListener("DOMContentLoaded", function () {
+    const abrir = document.getElementById("abrir-modal-progresso");
+    const modal = document.getElementById("modal-progresso");
+    if (!abrir || !modal) return;
 
-    fecharModal.addEventListener(
-        "click",
-        fechar
-    );
+    const fecharBtn = document.getElementById("fechar-modal-progresso");
+    const cancelar = document.getElementById("cancelar-progresso");
+    const comentario = document.getElementById("comentario-progresso");
+    const contador = document.getElementById("contador-progresso");
+    const emojiInput = document.getElementById("emoji-progresso");
+    const humores = modal.querySelectorAll(".opcao-humor");
+    const gerar = document.getElementById("gerar-progresso");
+    const personalizar = document.getElementById("etapa-personalizar-progresso");
+    const preview = document.getElementById("etapa-preview-progresso");
+    const imagem = document.getElementById("imagem-preview-progresso");
+    const carregando = document.getElementById("preview-carregando-progresso");
+    const voltar = document.getElementById("voltar-progresso");
+    const baixar = document.getElementById("baixar-progresso");
+    const urlBase = "{{ url_for('estante_bp.compartilhar_progresso', livro_id=livro.id) }}";
 
+    function abrirModal() {
+        personalizar.hidden = false;
+        preview.hidden = true;
+        modal.classList.add("ativo");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
 
-    cancelar.addEventListener(
-        "click",
-        fechar
-    );
+    function fecharModal() {
+        modal.classList.remove("ativo");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        personalizar.hidden = false;
+        preview.hidden = true;
+        imagem.hidden = true;
+        imagem.src = "";
+        carregando.hidden = false;
+    }
 
+    function montarUrl(modo) {
+        const parametros = new URLSearchParams();
+        parametros.set("modo", modo);
+        parametros.set("emoji", emojiInput.value);
+        const texto = comentario.value.trim();
+        if (texto) parametros.set("comentario", texto);
+        if (modo === "preview") parametros.set("t", Date.now());
+        return urlBase + "?" + parametros.toString();
+    }
 
-    modal.addEventListener(
-        "click",
-        function (event) {
+    abrir.addEventListener("click", abrirModal);
+    fecharBtn.addEventListener("click", fecharModal);
+    cancelar.addEventListener("click", fecharModal);
+    modal.addEventListener("click", event => { if (event.target === modal) fecharModal(); });
 
-            if (event.target === modal) {
+    comentario.addEventListener("input", () => { contador.textContent = comentario.value.length; });
 
-                fechar();
-            }
-        }
-    );
+    humores.forEach(botao => {
+        botao.addEventListener("click", function () {
+            humores.forEach(item => item.classList.remove("selecionado"));
+            this.classList.add("selecionado");
+            emojiInput.value = this.dataset.emoji;
+        });
+    });
 
+    gerar.addEventListener("click", function () {
+        personalizar.hidden = true;
+        preview.hidden = false;
+        imagem.hidden = true;
+        carregando.hidden = false;
+        carregando.textContent = "Gerando seu card...";
+        baixar.href = montarUrl("download");
+        imagem.onload = function () { carregando.hidden = true; imagem.hidden = false; };
+        imagem.onerror = function () { carregando.hidden = false; carregando.textContent = "Não foi possível gerar o card."; };
+        imagem.src = montarUrl("preview");
+    });
 
-    document.addEventListener(
-        "keydown",
-        function (event) {
+    voltar.addEventListener("click", function () {
+        preview.hidden = true;
+        personalizar.hidden = false;
+        imagem.hidden = true;
+        carregando.hidden = false;
+    });
 
-            if (
-                event.key === "Escape" &&
-                modal.classList.contains("ativo")
-            ) {
-
-                fechar();
-            }
-        }
-    );
-
-
-    // =====================================================
-    // CONTADOR DA FRASE
-    // =====================================================
-
-    frase.addEventListener(
-        "input",
-        function () {
-
-            contador.textContent =
-                frase.value.length;
-        }
-    );
-
-
-    // =====================================================
-    // GERAR PRÉVIA
-    // =====================================================
-
-    gerar.addEventListener(
-        "click",
-        function () {
-
-            const urlPreview =
-                montarUrl("preview");
-
-            const urlDownload =
-                montarUrl("download");
-
-
-            // ---------------------------------------------
-            // TROCAR PARA TELA DA PRÉVIA
-            // ---------------------------------------------
-
-            etapaPersonalizar.hidden = true;
-            etapaPreview.hidden = false;
-
-
-            // ---------------------------------------------
-            // ESTADO DE CARREGAMENTO
-            // ---------------------------------------------
-
-            imagemPreview.hidden = true;
-
-            previewCarregando.hidden = false;
-
-            previewCarregando.textContent =
-                "Gerando seu card...";
-
-
-            // ---------------------------------------------
-            // DOWNLOAD
-            // ---------------------------------------------
-
-            baixarCard.href =
-                urlDownload;
-
-
-            // ---------------------------------------------
-            // CARREGAR IMAGEM
-            // ---------------------------------------------
-
-            imagemPreview.onload =
-                function () {
-
-                    previewCarregando.hidden =
-                        true;
-
-                    imagemPreview.hidden =
-                        false;
-                };
-
-
-            imagemPreview.onerror =
-                function () {
-
-                    previewCarregando.hidden =
-                        false;
-
-                    previewCarregando.textContent =
-                        "Não foi possível gerar o card.";
-                };
-
-
-            imagemPreview.src =
-                urlPreview;
-        }
-    );
-
-
-    // =====================================================
-    // VOLTAR PARA PERSONALIZAÇÃO
-    // =====================================================
-
-    voltarPersonalizacao.addEventListener(
-        "click",
-        function () {
-
-            etapaPreview.hidden = true;
-
-            etapaPersonalizar.hidden = false;
-
-            imagemPreview.hidden = true;
-
-            previewCarregando.hidden = false;
-
-            setTimeout(
-                function () {
-                    frase.focus();
-                },
-                100
-            );
-        }
-    );
-
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && modal.classList.contains("ativo")) fecharModal();
+    });
 });
 </script>
-
 
 {% endblock %}
