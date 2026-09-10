@@ -1756,7 +1756,7 @@ def gerar_card_progresso_leitura(
     livro,
     pagina_atual=0,
     progresso=0,
-    emoji="📖",
+    humor="feliz",
     comentario=""
 ):
 
@@ -1789,14 +1789,23 @@ def gerar_card_progresso_leitura(
         ""
     ).strip()[:70]
 
-    emoji = (
-        emoji
-        or
-        "📖"
-    ).strip()
+    humor = (
+    humor
+    or
+    "feliz"
+    ).strip().lower()
 
-    # Impede texto enorme no lugar do emoji
-    emoji = emoji[:4]
+    HUMORES = {
+        "amando": "humor_amando.png",
+        "feliz": "humor_feliz.png",
+        "emocionada": "humor_emocionada.png",
+        "triste": "humor_triste.png",
+        "chocada": "humor_chocada.png",
+        "brava": "humor_brava.png"
+    }
+
+    if humor not in HUMORES:
+        humor = "feliz"
 
     total_paginas = (
         getattr(
@@ -2110,21 +2119,36 @@ def gerar_card_progresso_leitura(
     # HUMOR / EMOJI
     # =====================================================
 
-    y_emoji = (
-        y_porcentagem
-        + 125
+    y_humor = (
+    y_porcentagem
+    + 115
     )
 
-    texto_centralizado(
-        draw,
-        emoji,
-        y_emoji,
-        fonte(
-            FONTE_SANS,
-            70
-        ),
-        MARROM
+    nome_arquivo_humor = HUMORES[humor]
+
+    imagem_humor = abrir_png(
+        nome_arquivo_humor
     )
+
+    if imagem_humor:
+
+        imagem_humor = redimensionar_proporcional(
+            imagem_humor,
+            largura=125
+        )
+
+        x_humor = (
+            LARGURA
+            - imagem_humor.width
+        ) // 2
+
+        imagem.alpha_composite(
+            imagem_humor,
+            (
+                x_humor,
+                y_humor
+            )
+        )
 
     # =====================================================
     # COMENTÁRIO
@@ -2132,10 +2156,15 @@ def gerar_card_progresso_leitura(
 
     if comentario:
 
+        y_comentario = (
+            y_humor
+            + 145
+        )
+
         texto_centralizado(
             draw,
             "COMO ESTÁ A LEITURA?",
-            y_emoji + 95,
+            y_comentario,
             fonte(
                 FONTE_SANS_BOLD,
                 20
@@ -2146,7 +2175,7 @@ def gerar_card_progresso_leitura(
         texto_multilinha_centralizado(
             draw,
             f'"{comentario}"',
-            y_emoji + 135,
+            y_comentario + 40,
             fonte(
                 FONTE_SERIF,
                 30

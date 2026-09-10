@@ -1355,32 +1355,25 @@ def compartilhar_progresso(livro_id):
     livro = item_estante.livro
 
     # =====================================================
-    # EMOJI / HUMOR
+    # HUMOR DA LEITURA
     # =====================================================
 
-    emoji = request.args.get(
-        "emoji",
-        "📖"
-    ).strip()
+    humor = request.args.get(
+        "humor",
+        "feliz"
+    ).strip().lower()
 
-    # Lista fechada para evitar receber qualquer texto
-    # no parâmetro de emoji.
-    emojis_permitidos = [
-        "😍",
-        "🥹",
-        "😭",
-        "😱",
-        "😡",
-        "🤯",
-        "😂",
-        "🤔",
-        "😴",
-        "🫠",
-        "📖"
+    humores_permitidos = [
+        "amando",
+        "feliz",
+        "emocionada",
+        "triste",
+        "chocada",
+        "brava"
     ]
 
-    if emoji not in emojis_permitidos:
-        emoji = "📖"
+    if humor not in humores_permitidos:
+        humor = "feliz"
 
     # =====================================================
     # COMENTÁRIO
@@ -1391,7 +1384,6 @@ def compartilhar_progresso(livro_id):
         ""
     ).strip()
 
-    # Limite também no backend
     comentario = comentario[:70]
 
     # =====================================================
@@ -1417,7 +1409,7 @@ def compartilhar_progresso(livro_id):
         livro=livro,
         pagina_atual=pagina_atual,
         progresso=progresso,
-        emoji=emoji,
+        humor=humor,
         comentario=comentario
     )
 
