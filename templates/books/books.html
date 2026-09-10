@@ -695,6 +695,105 @@
 
         </section>
 
+                <!-- =========================================
+                    RECOMENDAÇÕES
+                ========================================== -->
+
+                {% if origem == "banco" and recomendacoes %}
+
+                    <section class="recomendacoes-livro">
+
+                        <div class="cabecalho-recomendacoes">
+
+                            <div>
+                                <span class="subtitulo-recomendacoes">
+                                    DESCUBRA SUA PRÓXIMA LEITURA
+                                </span>
+
+                                <h2>
+                                    {{ titulo_recomendacoes }}
+                                </h2>
+                            </div>
+
+                        </div>
+
+
+                        <div class="lista-recomendacoes">
+
+                            {% for recomendado in recomendacoes %}
+
+                                <a
+                                    href="{{ url_for(
+                                        'books_bp.ver',
+                                        id=recomendado.id
+                                    ) }}"
+                                    class="card-recomendacao"
+                                >
+
+                                    <div class="capa-recomendacao">
+
+                                        {% if recomendado.capa %}
+
+                                            {% if recomendado.capa.startswith("http") %}
+
+                                                <img
+                                                    src="{{ recomendado.capa }}"
+                                                    alt="{{ recomendado.titulo }}"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{{ url_for(
+                                                        'static',
+                                                        filename=recomendado.capa
+                                                    ) }}"
+                                                    alt="{{ recomendado.titulo }}"
+                                                >
+
+                                            {% endif %}
+
+                                        {% else %}
+
+                                            <div class="sem-capa-recomendacao">
+                                                Sem capa
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="dados-recomendacao">
+
+                                        {% if recomendado.genero %}
+
+                                            <span class="genero-recomendacao">
+                                                {{ recomendado.genero }}
+                                            </span>
+
+                                        {% endif %}
+
+                                        <h3>
+                                            {{ recomendado.titulo }}
+                                        </h3>
+
+                                        <p>
+                                            {{ recomendado.autor }}
+                                        </p>
+
+                                    </div>
+
+                                </a>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </section>
+
+                {% endif %}
+
 
         <!-- ================= ORIGEM GOOGLE ================= -->
 

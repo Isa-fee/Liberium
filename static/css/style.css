@@ -898,36 +898,246 @@ body {
     }
 }
 
+/* =========================================
+   FLASH / TOASTS
+========================================= */
 
+.flash-container {
+    position: fixed;
 
+    top: 92px;
+    right: 24px;
 
+    width: min(390px, calc(100vw - 40px));
 
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
-.flash-container{
-    width:90%;
-    margin:20px auto;
+    z-index: 9999;
+
+    pointer-events: none;
 }
 
-.flash{
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:10px;
-    font-weight:600;
+
+/* =========================================
+   CARD DA NOTIFICAÇÃO
+========================================= */
+
+.flash {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    padding: 16px 44px 16px 16px;
+
+    background: #fdfcfb;
+
+    border: 1px solid rgba(68, 43, 26, 0.10);
+    border-left: 4px solid #879d84;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 28px rgba(68, 43, 26, 0.13);
+
+    color: #442b1a;
+
+    pointer-events: auto;
+
+    animation: flashEntrar 0.35s ease forwards;
 }
 
-.flash.success{
-    background:#dff6dd;
-    color:#35693c;
+
+/* =========================================
+   ÍCONE
+========================================= */
+
+.flash-icone {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(135, 157, 132, 0.16);
+
+    color: #36503c;
+
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.flash.warning{
-    background:#fff4d5;
-    color:#8a6b00;
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.flash-conteudo {
+    flex: 1;
+    min-width: 0;
 }
 
-.flash.error{
-    background:#ffdede;
-    color:#9b2c2c;
+.flash-titulo {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #36503c;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+.flash-conteudo p {
+    margin: 0;
+
+    color: #6c5338;
+
+    font-size: 0.82rem;
+    font-weight: 400;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================
+   BOTÃO FECHAR
+========================================= */
+
+.flash-fechar {
+    position: absolute;
+
+    top: 10px;
+    right: 12px;
+
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #879d84;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.flash-fechar:hover {
+    background: rgba(135, 157, 132, 0.12);
+    color: #36503c;
+}
+
+
+/* =========================================
+   TIPOS
+========================================= */
+
+.flash.success {
+    border-left-color: #879d84;
+}
+
+.flash.success .flash-icone {
+    background: #e5eddf;
+    color: #36503c;
+}
+
+
+.flash.warning {
+    border-left-color: #c6a15b;
+}
+
+.flash.warning .flash-icone {
+    background: #f6eedc;
+    color: #8a6b2d;
+}
+
+
+.flash.error {
+    border-left-color: #a86c67;
+}
+
+.flash.error .flash-icone {
+    background: #f5e4e2;
+    color: #8b4e49;
+}
+
+
+/* =========================================
+   ANIMAÇÕES
+========================================= */
+
+@keyframes flashEntrar {
+
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+.flash.saindo {
+    animation: flashSair 0.25s ease forwards;
+}
+
+@keyframes flashSair {
+
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+}
+
+
+/* =========================================
+   RESPONSIVO
+========================================= */
+
+@media (max-width: 600px) {
+
+    .flash-container {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+
+        width: auto;
+    }
+
 }
 
 /* =========================================
