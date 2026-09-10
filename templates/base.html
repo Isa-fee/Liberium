@@ -272,7 +272,50 @@
             {% for categoria, mensagem in messages %}
 
                 <div class="flash {{ categoria }}">
-                    {{ mensagem }}
+
+                    <div class="flash-icone">
+
+                        {% if categoria == "success" %}
+                            ✓
+                        {% elif categoria == "warning" %}
+                            !
+                        {% elif categoria == "error" %}
+                            ×
+                        {% else %}
+                            ✦
+                        {% endif %}
+
+                    </div>
+
+                    <div class="flash-conteudo">
+
+                        <span class="flash-titulo">
+
+                            {% if categoria == "success" %}
+                                Tudo certo!
+                            {% elif categoria == "warning" %}
+                                Atenção
+                            {% elif categoria == "error" %}
+                                Ops!
+                            {% else %}
+                                Liberium
+                            {% endif %}
+
+                        </span>
+
+                        <p>{{ mensagem }}</p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="flash-fechar"
+                        aria-label="Fechar notificação"
+                        onclick="fecharFlash(this)"
+                    >
+                        ×
+                    </button>
+
                 </div>
 
             {% endfor %}
@@ -331,23 +374,37 @@
 
 <script>
 
-    setTimeout(() => {
+    function removerFlash(flash) {
 
-        const flashes = document.querySelectorAll(".flash");
+        if (!flash || flash.classList.contains("saindo")) {
+            return;
+        }
 
-        flashes.forEach((flash) => {
+        flash.classList.add("saindo");
 
-            flash.style.transition = "opacity 2s ease";
+        setTimeout(() => {
+            flash.remove();
+        }, 250);
+    }
 
-            flash.style.opacity = "0";
 
-            setTimeout(() => {
-                flash.remove();
-            }, 2000);
+    function fecharFlash(botao) {
 
-        });
+        const flash = botao.closest(".flash");
 
-    }, 10000);
+        removerFlash(flash);
+    }
+
+
+    document.querySelectorAll(".flash").forEach((flash) => {
+
+        setTimeout(() => {
+
+            removerFlash(flash);
+
+        }, 7000);
+
+    });
 
 </script>
 

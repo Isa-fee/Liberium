@@ -336,12 +336,112 @@ def ver(id):
 
         media_avaliacoes = None
 
+    # ==================================
+    # RECOMENDAÇÕES
+    # ==================================
+
+    recomendacoes = []
+    titulo_recomendacoes = None
+
+    if (
+        item_estante
+        and item_estante.status in [
+            "quero ler",
+            "lendo",
+            "lido"
+        ]
+    ):
+
+        # IDs de todos os livros que o usuário
+        # já possui na estante
+        livros_na_estante = {
+            item.livro_id
+            for item in Estante.query.filter_by(
+                usuario_id=current_user.id
+            ).all()
+        }
+
+        # Também garantimos que o livro atual
+        # nunca seja recomendado
+        ids_ignorados = set(livros_na_estante)
+        ids_ignorados.add(livro.id)
+
+        # ==================================
+        # 1. LIVROS DO MESMO AUTOR
+        # ==================================
+
+        mesmo_autor = Livro.query.filter(
+            Livro.autor == livro.autor,
+            Livro.id.notin_(ids_ignorados)
+        ).limit(5).all()
+
+        recomendacoes.extend(
+            mesmo_autor
+        )
+
+        # Guarda os livros que já entraram
+        ids_recomendados = {
+            recomendado.id
+            for recomendado in recomendacoes
+        }
+
+        # ==================================
+        # 2. COMPLETAR COM MESMO GÊNERO
+        # ==================================
+
+        quantidade_faltando = (
+            5 - len(recomendacoes)
+        )
+
+        if (
+            quantidade_faltando > 0
+            and livro.genero
+        ):
+
+            ids_excluir = (
+                ids_ignorados
+                | ids_recomendados
+            )
+
+            mesmo_genero = Livro.query.filter(
+                Livro.genero == livro.genero,
+                Livro.id.notin_(ids_excluir)
+            ).limit(
+                quantidade_faltando
+            ).all()
+
+            recomendacoes.extend(
+                mesmo_genero
+            )
+
+        # ==================================
+        # TÍTULO DA SEÇÃO
+        # ==================================
+
+        if mesmo_autor:
+
+            titulo_recomendacoes = (
+                f"Mais de {livro.autor}"
+            )
+
+        elif recomendacoes:
+
+            titulo_recomendacoes = (
+                "Você também pode gostar"
+            )
+
+    # ==================================
+    # TEMPLATE
+    # ==================================
+
     return render_template(
         "books/books.html",
         livro=livro,
         item_estante=item_estante,
         resenhas=resenhas,
         media_avaliacoes=media_avaliacoes,
+        recomendacoes=recomendacoes,
+        titulo_recomendacoes=titulo_recomendacoes,
         hoje=date.today(),
         origem="banco"
     )
