@@ -1092,7 +1092,7 @@
     </div>
 </div>
 {% endif %}
-
+{% if origem == "banco" %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const abrirModal = document.getElementById("abrir-modal-compartilhar");
@@ -1259,5 +1259,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
+{% endif %}
 {% endblock %}
