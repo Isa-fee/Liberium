@@ -1052,18 +1052,85 @@
             <div class="campo-frase-compartilhar">
                 <label>Como esse livro está te fazendo sentir?</label>
                 <div class="opcoes-humor" id="opcoes-humor">
-                    <button type="button" class="opcao-humor" data-emoji="😍" title="Apaixonada">😍</button>
-                    <button type="button" class="opcao-humor" data-emoji="🥹" title="Emocionada">🥹</button>
-                    <button type="button" class="opcao-humor" data-emoji="😭" title="Chorando">😭</button>
-                    <button type="button" class="opcao-humor" data-emoji="😱" title="Assustada">😱</button>
-                    <button type="button" class="opcao-humor" data-emoji="😡" title="Brava">😡</button>
-                    <button type="button" class="opcao-humor" data-emoji="🤯" title="Chocada">🤯</button>
-                    <button type="button" class="opcao-humor" data-emoji="😂" title="Rindo">😂</button>
-                    <button type="button" class="opcao-humor" data-emoji="🤔" title="Pensativa">🤔</button>
-                    <button type="button" class="opcao-humor" data-emoji="😴" title="Sonolenta">😴</button>
-                    <button type="button" class="opcao-humor" data-emoji="🫠" title="Derretendo">🫠</button>
+                    <button
+                        type="button"
+                        class="opcao-humor"
+                        data-humor="amando"
+                        title="Amando"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_amando.png') }}"
+                            alt="Amando"
+                        >
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcao-humor selecionado"
+                        data-humor="feliz"
+                        title="Feliz"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_feliz.png') }}"
+                            alt="Feliz"
+                        >
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcao-humor"
+                        data-humor="emocionada"
+                        title="Emocionada"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_emocionada.png') }}"
+                            alt="Emocionada"
+                        >
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcao-humor"
+                        data-humor="triste"
+                        title="Triste"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_triste.png') }}"
+                            alt="Triste"
+                        >
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcao-humor"
+                        data-humor="chocada"
+                        title="Chocada"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_chocada.png') }}"
+                            alt="Chocada"
+                        >
+                    </button>
+
+                    <button
+                        type="button"
+                        class="opcao-humor"
+                        data-humor="brava"
+                        title="Brava"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/compartilhamentos/elementos/humor_brava.png') }}"
+                            alt="Brava"
+                        >
+                    </button>
+
                 </div>
-                <input type="hidden" id="emoji-progresso" value="📖">
+
+                <input
+                    type="hidden"
+                    id="humor-progresso"
+                    value="feliz"
+                >
             </div>
 
             <div class="campo-frase-compartilhar">
@@ -1180,7 +1247,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cancelar = document.getElementById("cancelar-progresso");
     const comentario = document.getElementById("comentario-progresso");
     const contador = document.getElementById("contador-progresso");
-    const emojiInput = document.getElementById("emoji-progresso");
+    const humorInput = document.getElementById("humor-progresso");
     const humores = modal.querySelectorAll(".opcao-humor");
     const gerar = document.getElementById("gerar-progresso");
     const personalizar = document.getElementById("etapa-personalizar-progresso");
@@ -1213,7 +1280,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function montarUrl(modo) {
         const parametros = new URLSearchParams();
         parametros.set("modo", modo);
-        parametros.set("emoji", emojiInput.value);
+        parametros.set("humor", humorInput.value);
         const texto = comentario.value.trim();
         if (texto) parametros.set("comentario", texto);
         if (modo === "preview") parametros.set("t", Date.now());
@@ -1229,10 +1296,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     humores.forEach(botao => {
         botao.addEventListener("click", function () {
-            humores.forEach(item => item.classList.remove("selecionado"));
+
+            humores.forEach(item => {
+                item.classList.remove("selecionado");
+            });
+
             this.classList.add("selecionado");
-            emojiInput.value = this.dataset.emoji;
+
+            humorInput.value = this.dataset.humor;
         });
+
     });
 
     gerar.addEventListener("click", function () {
