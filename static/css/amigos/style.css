@@ -1653,6 +1653,107 @@
 }
 
 
+/* =========================================================
+   PERFIL BLOQUEADO / CONTEÚDO PRIVADO
+========================================================= */
+
+.perfil-bloqueado {
+    margin-top: 34px;
+}
+
+.card-perfil-bloqueado {
+    width: 100%;
+    min-height: 230px;
+
+    padding: 45px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ddd6;
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+/* RÓTULO */
+
+.rotulo-bloqueado {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+    padding: 6px 13px;
+
+    background: #eef2eb;
+    color: #71866b;
+
+    border-radius: 20px;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+
+/* TÍTULO */
+
+.card-perfil-bloqueado h2 {
+    margin: 0 0 8px;
+
+    color: #5b3923;
+
+    font-size: 1.55rem;
+    font-weight: 500;
+}
+
+
+/* TEXTO */
+
+.card-perfil-bloqueado p {
+    max-width: 520px;
+
+    margin: 0;
+
+    color: #8b8179;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .perfil-bloqueado {
+        margin-top: 25px;
+    }
+
+    .card-perfil-bloqueado {
+        min-height: 210px;
+        padding: 35px 22px;
+    }
+
+    .card-perfil-bloqueado h2 {
+        font-size: 1.2rem;
+    }
+
+    .card-perfil-bloqueado p {
+        font-size: 0.82rem;
+    }
+}
+
 
 /* =========================================
    RESPONSIVIDADE

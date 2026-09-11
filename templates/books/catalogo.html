@@ -458,27 +458,88 @@
 
             </div>
 
-            {% if tem_mais %}
+            <!-- PAGINAÇÃO -->
 
-                <div class="carregar-mais-container">
+            {% if paginas|length > 1 or tem_anterior or tem_proxima %}
 
-                    <a
-                        href="{{ url_for(
-                            'books_bp.catalogo',
-                            q=busca,
-                            genero=genero,
-                            idioma=idioma,
-                            ano=ano,
-                            avaliacao=avaliacao,
-                            ordenar=ordenar,
-                            pagina=pagina + 1
-                        ) }}"
-                        class="btn-carregar-mais"
-                    >
-                        Carregar mais
-                    </a>
+                <nav
+                    class="paginacao"
+                    aria-label="Navegação entre páginas"
+                >
+                    {% if tem_anterior %}
 
-                </div>
+                        <a
+                            href="{{ url_for(
+                                'books_bp.catalogo',
+                                q=busca,
+                                genero=genero,
+                                idioma=idioma,
+                                ano=ano,
+                                avaliacao=avaliacao,
+                                ordenar=ordenar,
+                                pagina=pagina - 1
+                            ) }}"
+                            class="pagina-link pagina-seta"
+                            aria-label="Página anterior"
+                        >
+                            ‹
+                        </a>
+
+                    {% endif %}
+
+                    <!-- NÚMEROS DAS PÁGINAS -->
+                    {% for numero in paginas %}
+                        {% if numero == pagina %}
+                             <span
+                                class="pagina-link pagina-atual"
+                                aria-current="page"
+                            >
+                                {{ numero }}
+                            </span>
+
+                        {% else %}
+                            <a
+                                href="{{ url_for(
+                                    'books_bp.catalogo',
+                                    q=busca,
+                                    genero=genero,
+                                    idioma=idioma,
+                                    ano=ano,
+                                    avaliacao=avaliacao,
+                                    ordenar=ordenar,
+                                    pagina=numero
+                                ) }}"
+                                class="pagina-link"
+                            >
+                                {{ numero }}
+                            </a>
+
+                        {% endif %}
+
+                    {% endfor %}
+                    
+                    {% if tem_proxima %}
+
+                        <a
+                            href="{{ url_for(
+                                'books_bp.catalogo',
+                                q=busca,
+                                genero=genero,
+                                idioma=idioma,
+                                ano=ano,
+                                avaliacao=avaliacao,
+                                ordenar=ordenar,
+                                pagina=pagina + 1
+                            ) }}"
+                            class="pagina-link pagina-seta"
+                            aria-label="Próxima página"
+                        >
+                            ›
+                        </a>
+
+                    {% endif %}
+
+                </nav>
 
             {% endif %}
 
@@ -487,7 +548,13 @@
             <div class="nenhum-livro">
 
                 <div class="icone-vazio">
-                    📚
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='img/catalogo/nenhum_livro.png'
+                        ) }}"
+                        alt="Nenhum livro encontrado"
+                    >
                 </div>
 
                 <h3>

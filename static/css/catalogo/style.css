@@ -231,58 +231,108 @@
 }
 
 /* =========================================
-   CARREGAR MAIS
+   PAGINAÇÃO
 ========================================= */
 
-.carregar-mais-container {
+.paginacao {
     max-width: 1250px;
-    margin: 38px auto 10px;
+    margin: 42px auto 10px;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
-.btn-carregar-mais {
+.pagina-link {
+    width: 38px;
+    height: 38px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    min-width: 165px;
-    height: 44px;
-    padding: 0 24px;
-
-    background: #8fa382;
-    color: #ffffff;
-
-    border: 1px solid #8fa382;
+    border: 1px solid #dfe4dc;
     border-radius: 10px;
 
+    background: #ffffff;
+    color: #6c5338;
+
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: .85rem;
     font-weight: 600;
 
-    cursor: pointer;
-
     transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        background-color .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
-.btn-carregar-mais:hover {
-    background: #71866b;
-    border-color: #71866b;
-    color: #ffffff;
+
+/* PÁGINAS CLICÁVEIS */
+
+a.pagina-link:hover {
+    background: #eef2eb;
+    border-color: #b8c5b2;
+
+    color: #4b3323;
 
     transform: translateY(-2px);
 
     box-shadow:
-        0 6px 15px rgba(91, 112, 82, 0.16);
+        0 5px 12px rgba(91, 112, 82, .10);
 }
 
-.btn-carregar-mais:active {
-    transform: translateY(0);
+
+/* PÁGINA ATUAL */
+
+.pagina-atual {
+    background: #8fa382;
+    border-color: #8fa382;
+
+    color: #ffffff;
+
+    cursor: default;
+
+    box-shadow:
+        0 4px 10px rgba(91, 112, 82, .16);
+}
+
+
+/* SETAS */
+
+.pagina-seta {
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+
+/* =========================================
+   PAGINAÇÃO - RESPONSIVO
+========================================= */
+
+@media (max-width: 600px) {
+
+    .paginacao {
+        gap: 6px;
+        margin-top: 32px;
+    }
+
+    .pagina-link {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 9px;
+
+        font-size: .8rem;
+    }
+
+    .pagina-seta {
+        font-size: 1.2rem;
+    }
 }
 
 /* =========================================
@@ -422,16 +472,29 @@
 }
 
 .icone-vazio {
-    font-size: 50px;
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.icone-vazio img {
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+
+    display: block;
 }
 
 .nenhum-livro h3 {
+    margin: 0 0 6px;
     color: #5b3923;
     font-size: 1.4rem;
 }
 
 .nenhum-livro p {
+    margin: 0;
     color: #888;
 }
 

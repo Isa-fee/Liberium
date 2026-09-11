@@ -1189,8 +1189,6 @@ def adicionar_estante(livro_id):
     )
     )
     
-
-
 # ======================================
 # CATÁLOGO DE LIVROS
 # ======================================
@@ -1242,7 +1240,16 @@ def catalogo():
     if pagina < 1:
         pagina = 1
 
+
+    # ======================================
+    # CONFIGURAÇÃO DA PAGINAÇÃO
+    # ======================================
+
     por_pagina = 12
+
+    # Enquanto existirem livros do banco,
+    # tentaremos mostrar 6 deles por página.
+    quantidade_banco_por_pagina = 6
 
 
     # ======================================
@@ -1332,7 +1339,7 @@ def catalogo():
 
 
     # ======================================
-    # ORDENAÇÃO BANCO
+    # ORDENAÇÃO DO BANCO
     # ======================================
 
     if ordenar == "avaliacao":
@@ -1367,21 +1374,51 @@ def catalogo():
 
 
     # ======================================
-    # PEGAR LIVROS DO BANCO
+    # TOTAL DE LIVROS DO BANCO
     # ======================================
 
-    if pagina == 1:
+    total_livros_banco = consulta.count()
 
-        livros_banco = consulta.limit(
-            por_pagina
-        ).all()
-
-    else:
-
-        livros_banco = []
 
     # ======================================
-    # TRANSFORMAR EM DICIONÁRIO
+    # LIVROS DO BANCO DA PÁGINA ATUAL
+    # ======================================
+
+    inicio_banco = (
+        (pagina - 1)
+        * quantidade_banco_por_pagina
+    )
+
+    restantes_banco = max(
+        total_livros_banco - inicio_banco,
+        0
+    )
+
+    quantidade_banco = min(
+        quantidade_banco_por_pagina,
+        restantes_banco
+    )
+
+    livros_banco = (
+        consulta
+        .offset(inicio_banco)
+        .limit(quantidade_banco)
+        .all()
+    )
+
+
+    # ======================================
+    # QUANTIDADE QUE O GOOGLE PRECISA COMPLETAR
+    # ======================================
+
+    quantidade_google = (
+        por_pagina - len(livros_banco)
+    )
+
+
+    # ======================================
+    # TRANSFORMAR LIVROS DO BANCO
+    # EM DICIONÁRIOS
     # ======================================
 
     livros = []
@@ -1438,42 +1475,144 @@ def catalogo():
 
 
     # ======================================
+    # CALCULAR POSIÇÃO DO GOOGLE
+    # ======================================
+
+    paginas_banco_completas = (
+        total_livros_banco
+        // quantidade_banco_por_pagina
+    )
+
+    resto_banco = (
+        total_livros_banco
+        % quantidade_banco_por_pagina
+    )
+
+
+    if pagina <= paginas_banco_completas:
+
+        # Enquanto existem páginas completas
+        # do banco, usamos 6 Banco + 6 Google.
+
+        inicio_google = (
+            (pagina - 1)
+            * (
+                por_pagina
+                - quantidade_banco_por_pagina
+            )
+        )
+
+    elif (
+        resto_banco > 0
+        and pagina == paginas_banco_completas + 1
+    ):
+
+        # Página onde aparecem os últimos
+        # livros restantes do banco.
+
+        inicio_google = (
+            paginas_banco_completas
+            * (
+                por_pagina
+                - quantidade_banco_por_pagina
+            )
+        )
+
+    else:
+
+        # ==================================
+        # BANCO JÁ ACABOU
+        # ==================================
+
+        google_antes_fim_banco = (
+            paginas_banco_completas
+            * (
+                por_pagina
+                - quantidade_banco_por_pagina
+            )
+        )
+
+        if resto_banco > 0:
+
+            # Na última página mista,
+            # o Google completa as vagas.
+
+            google_antes_fim_banco += (
+                por_pagina - resto_banco
+            )
+
+            paginas_so_google_anteriores = (
+                pagina
+                - paginas_banco_completas
+                - 2
+            )
+
+        else:
+
+            paginas_so_google_anteriores = (
+                pagina
+                - paginas_banco_completas
+                - 1
+            )
+
+
+        inicio_google = (
+            google_antes_fim_banco
+            + (
+                max(
+                    paginas_so_google_anteriores,
+                    0
+                )
+                * por_pagina
+            )
+        )
+
+
+    # ======================================
     # GOOGLE BOOKS
     # ======================================
 
-    inicio_google = (
-        (pagina - 1)
-        * por_pagina
-    )
+    livros_google = []
 
-    livros_google = buscar_google_books(
-        termo_google,
-        start_index=inicio_google,
-        max_results=por_pagina,
-        idioma=(
-            idioma
-            if idioma
-            else None
+    if quantidade_google > 0:
+
+        livros_google = buscar_google_books(
+            termo_google,
+            start_index=inicio_google,
+            max_results=por_pagina,
+            idioma=(
+                idioma
+                if idioma
+                else None
+            )
         )
-    )
 
-        # ======================================
-        # FILTRAR GOOGLE POR GÊNERO
-        # ======================================
+        livros_google = livros_google[
+            :quantidade_google
+        ]
+
+
+    # ======================================
+    # FILTRAR GOOGLE POR GÊNERO
+    # ======================================
 
     if genero:
+
         livros_google = [
+
             livro
+
             for livro in livros_google
-                if (
-                    livro.get("genero")
-                    and genero.lower()
-                    in livro.get(
-                        "genero",
-                        ""
-                    ).lower()
-                )
-            ]
+
+            if (
+                livro.get("genero")
+                and genero.lower()
+                in livro.get(
+                    "genero",
+                    ""
+                ).lower()
+            )
+        ]
 
 
     # ======================================
@@ -1558,11 +1697,12 @@ def catalogo():
             "google_id"
         )
 
-        # Se o mesmo volume já existe no
-        # banco, não mostramos duas vezes
+        # Se o mesmo volume já existe no banco,
+        # não mostramos duas vezes.
+
         if (
             google_id
-            not in google_ids_salvos
+            and google_id not in google_ids_salvos
         ):
 
             livros.append(
@@ -1586,7 +1726,6 @@ def catalogo():
             ).lower()
         )
 
-
     elif ordenar == "za":
 
         livros.sort(
@@ -1600,7 +1739,6 @@ def catalogo():
             reverse=True
         )
 
-
     elif ordenar == "avaliacao":
 
         livros.sort(
@@ -1611,7 +1749,6 @@ def catalogo():
             or 0,
             reverse=True
         )
-
 
     elif ordenar == "antigos":
 
@@ -1624,7 +1761,6 @@ def catalogo():
                 or "9999"
             )
         )
-
 
     else:
 
@@ -1758,9 +1894,6 @@ def catalogo():
 
     # ======================================
     # ANOS
-    #
-    # Mantém compatibilidade com seu
-    # catalogo.html atual.
     # ======================================
 
     anos = [
@@ -1782,12 +1915,48 @@ def catalogo():
 
 
     # ======================================
-    # EXISTEM MAIS RESULTADOS?
+    # PAGINAÇÃO
     # ======================================
 
-    tem_mais = (
-        len(livros_google)
-        == por_pagina
+    # Se o Google devolveu a quantidade
+    # solicitada, consideramos que pode
+    # existir uma próxima página.
+
+    tem_proxima = (
+        len(livros_google) > 0
+        )
+    # Só existe anterior depois da página 1.
+
+    tem_anterior = pagina > 1
+
+
+    # ======================================
+    # NÚMEROS DA PAGINAÇÃO
+    # ======================================
+
+    # Mostramos até 5 números próximos
+    # da página atual.
+
+    inicio_paginas = max(
+        1,
+        pagina - 2
+    )
+
+    fim_paginas = pagina + 2
+
+    # Se chegamos ao fim dos resultados,
+    # não mostramos páginas posteriores.
+
+    if not tem_proxima:
+
+        fim_paginas = pagina
+
+
+    paginas = list(
+        range(
+            inicio_paginas,
+            fim_paginas + 1
+        )
     )
 
 
@@ -1825,8 +1994,13 @@ def catalogo():
 
         pagina=pagina,
 
-        tem_mais=tem_mais
+        paginas=paginas,
+
+        tem_anterior=tem_anterior,
+
+        tem_proxima=tem_proxima
     )
+
 # ======================================
 # PAINEL - SOLICITAÇÕES DE LIVROS
 # ======================================

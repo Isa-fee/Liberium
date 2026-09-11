@@ -7,7 +7,7 @@ from utils.insignias import verificar_insignias
 from utils.atividades import registrar_atividade
 from utils.notificacoes import criar_notificacao
 
-from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante, ComentarioResenha
+from models import Estante, DecoracaoEstante, UsuarioColecionavel, ElogioEstante, ComentarioResenha, Amizade
 from extensions import db
 
 
@@ -193,9 +193,71 @@ def estante():
 @login_required
 def estante_usuario(usuario_id):
 
-    from models import Usuario
+    from models import Usuario, Amizade
 
-    usuario = Usuario.query.get_or_404(usuario_id)
+    usuario = Usuario.query.get_or_404(
+        usuario_id
+    )
+
+
+    # ==================================
+    # VERIFICAR PERMISSÃO
+    # ==================================
+
+    # O próprio usuário pode acessar.
+    # Qualquer outro usuário precisa
+    # ter uma amizade aceita.
+
+    if usuario.id != current_user.id:
+
+        amizade = Amizade.query.filter(
+            Amizade.status == "aceita",
+            (
+                (
+                    Amizade.usuario_id
+                    == current_user.id
+                )
+                &
+                (
+                    Amizade.amigo_id
+                    == usuario.id
+                )
+            )
+            |
+            (
+                (
+                    Amizade.usuario_id
+                    == usuario.id
+                )
+                &
+                (
+                    Amizade.amigo_id
+                    == current_user.id
+                )
+            )
+        ).first()
+
+
+        # ==================================
+        # NÃO SÃO AMIGOS
+        # ==================================
+
+        if not amizade:
+
+            flash(
+                f"Você precisa ser amigo de "
+                f"{usuario.nome} para visualizar "
+                f"esta estante.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "amigos_bp.perfil_usuario",
+                    usuario_id=usuario.id
+                )
+            )
+
 
     # ==================================
     # LIVROS
@@ -222,6 +284,7 @@ def estante_usuario(usuario_id):
         Estante.posicao
     ).all()
 
+
     # ==================================
     # DECORAÇÕES
     # ==================================
@@ -247,6 +310,7 @@ def estante_usuario(usuario_id):
         DecoracaoEstante.posicao
     ).all()
 
+
     # ==================================
     # MONTAR PRATELEIRAS
     # ==================================
@@ -266,19 +330,37 @@ def estante_usuario(usuario_id):
         decoracoes_quero_ler
     )
 
+
+    # ==================================
+    # ELOGIOS
+    # ==================================
+
     elogios = ElogioEstante.query.filter_by(
-    destinatario_id=usuario.id
+        destinatario_id=usuario.id
     ).order_by(
         ElogioEstante.data.desc()
     ).all()
 
+
+    # ==================================
+    # TEMPLATE
+    # ==================================
+
     return render_template(
         "books/estante_usuario.html",
+
         usuario=usuario,
+
         itens_lendo=itens_lendo,
+
         itens_lidos=itens_lidos,
+
         itens_quero_ler=itens_quero_ler,
-        elogios=elogios    )
+
+        elogios=elogios
+    )
+
+
 # REORDENAR ESTANTE
 # ======================================
 

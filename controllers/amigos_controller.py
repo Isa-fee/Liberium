@@ -1064,62 +1064,10 @@ def perfil_usuario(usuario_id):
 
 
     # =====================================================
-    # LIVROS
-    # =====================================================
-
-    livros_lidos = Estante.query.filter_by(
-        usuario_id=usuario.id,
-        status="lido"
-    ).all()
-
-
-    livros_lendo = Estante.query.filter_by(
-        usuario_id=usuario.id,
-        status="lendo"
-    ).order_by(
-        Estante.posicao
-    ).all()
-
-
-    # =====================================================
-    # QUANTIDADE DE AMIGOS
-    # =====================================================
-
-    quantidade_amigos = Amizade.query.filter(
-        Amizade.status == "aceita",
-        (
-            (Amizade.usuario_id == usuario.id) |
-            (Amizade.amigo_id == usuario.id)
-        )
-    ).count()
-
-
-    # =====================================================
-    # ESTANTE
-    # =====================================================
-
-    estante = Estante.query.filter_by(
-        usuario_id=usuario.id
-    ).all()
-
-
-    # =====================================================
-    # ELOGIOS
-    # =====================================================
-
-    elogios = ElogioEstante.query.filter_by(
-        destinatario_id=usuario.id
-    ).order_by(
-        ElogioEstante.data.desc()
-    ).all()
-
-
-    # =====================================================
-    # RELAÇÃO DE AMIZADE COM O USUÁRIO LOGADO
+    # RELAÇÃO DE AMIZADE
     # =====================================================
 
     amizade = None
-
 
     if usuario.id != current_user.id:
 
@@ -1137,6 +1085,105 @@ def perfil_usuario(usuario_id):
 
 
     # =====================================================
+    # PODE VER CONTEÚDO PRIVADO?
+    # =====================================================
+
+    # O próprio usuário pode ver.
+    # Amigos com amizade aceita também podem ver.
+
+    pode_ver_conteudo = (
+        usuario.id == current_user.id
+        or (
+            amizade is not None
+            and amizade.status == "aceita"
+        )
+    )
+
+
+    # =====================================================
+    # QUANTIDADE DE AMIGOS
+    # =====================================================
+
+    quantidade_amigos = Amizade.query.filter(
+        Amizade.status == "aceita",
+        (
+            (Amizade.usuario_id == usuario.id) |
+            (Amizade.amigo_id == usuario.id)
+        )
+    ).count()
+
+
+    # =====================================================
+    # DADOS PRIVADOS
+    # =====================================================
+
+    livros_lidos = []
+    livros_lendo = []
+    estante = []
+    elogios = []
+
+
+    # Só buscamos esses dados se o usuário
+    # tiver permissão para visualizá-los.
+
+    if pode_ver_conteudo:
+
+        # -------------------------------------------------
+        # LIVROS LIDOS
+        # -------------------------------------------------
+
+        livros_lidos = Estante.query.filter_by(
+            usuario_id=usuario.id,
+            status="lido"
+        ).all()
+
+
+        # -------------------------------------------------
+        # LENDO ATUALMENTE
+        # -------------------------------------------------
+
+        livros_lendo = Estante.query.filter_by(
+            usuario_id=usuario.id,
+            status="lendo"
+        ).order_by(
+            Estante.posicao
+        ).all()
+
+
+        # -------------------------------------------------
+        # ESTANTE
+        # -------------------------------------------------
+
+        estante = Estante.query.filter_by(
+            usuario_id=usuario.id
+        ).all()
+
+
+        # -------------------------------------------------
+        # ELOGIOS
+        # -------------------------------------------------
+
+        elogios = ElogioEstante.query.filter_by(
+            destinatario_id=usuario.id
+        ).order_by(
+            ElogioEstante.data.desc()
+        ).all()
+
+
+    # =====================================================
+    # QUANTIDADE DE LIVROS LIDOS
+    # =====================================================
+
+    # Podemos manter apenas a quantidade pública
+    # sem entregar quais são os livros.
+
+    quantidade_livros_lidos = Estante.query.filter_by(
+        usuario_id=usuario.id,
+        status="lido"
+    ).count()
+
+
+    # =====================================================
     # RENDERIZAR
     # =====================================================
 
@@ -1151,13 +1198,16 @@ def perfil_usuario(usuario_id):
 
         quantidade_amigos=quantidade_amigos,
 
+        quantidade_livros_lidos=quantidade_livros_lidos,
+
         estante=estante,
 
         elogios=elogios,
 
-        amizade=amizade
-    )
+        amizade=amizade,
 
+        pode_ver_conteudo=pode_ver_conteudo
+    )
 
 # =========================================================
 # DESFAZER AMIZADE
@@ -1318,12 +1368,74 @@ def estante_amigo(usuario_id):
     )
 
 
+    # =====================================================
+    # VERIFICAR AMIZADE
+    # =====================================================
+
+    if usuario.id != current_user.id:
+
+        amizade = Amizade.query.filter(
+            Amizade.status == "aceita",
+            (
+                (
+                    Amizade.usuario_id
+                    == current_user.id
+                )
+                &
+                (
+                    Amizade.amigo_id
+                    == usuario.id
+                )
+            )
+            |
+            (
+                (
+                    Amizade.usuario_id
+                    == usuario.id
+                )
+                &
+                (
+                    Amizade.amigo_id
+                    == current_user.id
+                )
+            )
+        ).first()
+
+
+        # -------------------------------------------------
+        # NÃO SÃO AMIGOS
+        # -------------------------------------------------
+
+        if not amizade:
+
+            flash(
+                "Vocês precisam ser amigos para "
+                "visualizar esta estante.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "amigos_bp.perfil_usuario",
+                    usuario_id=usuario.id
+                )
+            )
+
+
+    # =====================================================
+    # LIVROS
+    # =====================================================
+
     livros = Estante.query.filter_by(
         usuario_id=usuario.id
     ).order_by(
         Estante.posicao
     ).all()
 
+
+    # =====================================================
+    # DECORAÇÕES
+    # =====================================================
 
     decoracoes = DecoracaoEstante.query.filter_by(
         usuario_id=usuario.id
@@ -1332,11 +1444,19 @@ def estante_amigo(usuario_id):
     ).all()
 
 
+    # =====================================================
+    # MONTAR PRATELEIRA
+    # =====================================================
+
     lendo = montar_prateleira(
         livros,
         decoracoes
     )
 
+
+    # =====================================================
+    # RENDERIZAR
+    # =====================================================
 
     return render_template(
         "books/estante_usuario.html",
