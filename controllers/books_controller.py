@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from datetime import date
+from datetime import date, datetime, timedelta
 from random import choice
 import os
 import json
@@ -1849,12 +1849,40 @@ def solicitacoes_admin():
         return redirect(
             url_for("home.home")
         )
+    
+    # ==================================
+    # LIMITE DAS RESPOSTAS
+    # Solicitações aprovadas ou recusadas
+    # permanecem visíveis por 10 dias
+    # após a resposta.
+    # ==================================
+    limite_respostas = (
+        datetime.utcnow()
+        - timedelta(days=10)
+    )
 
     # ==================================
     # BUSCAR SOLICITAÇÕES
+    # Mostra:
+    # - todas as pendentes
+    # - aprovadas/recusadas respondidas
+    #   nos últimos 10 dias
     # ==================================
 
-    solicitacoes = SolicitacaoLivro.query.order_by(
+    solicitacoes = SolicitacaoLivro.query.filter(
+        db.or_(
+            SolicitacaoLivro.status == "pendente",
+            db.and_(
+                SolicitacaoLivro.status.in_(
+                    ["aprovado", "recusado", "excluido"]
+                ),
+                SolicitacaoLivro.data_resposta.isnot(None),
+                SolicitacaoLivro.data_resposta
+                >= limite_respostas
+            )
+        )
+
+    ).order_by(
         SolicitacaoLivro.data_solicitacao.desc()
     ).all()
 
@@ -1945,6 +1973,7 @@ def aprovar_solicitacao(solicitacao_id):
     if livro_existente:
 
         solicitacao.status = "aprovado"
+        solicitacao.data_resposta = datetime.utcnow()
 
         db.session.commit()
 
@@ -2004,7 +2033,7 @@ def aprovar_solicitacao(solicitacao_id):
     )
 
     solicitacao.status = "aprovado"
-
+    solicitacao.data_resposta = datetime.utcnow()
     db.session.commit()
 
     adicionar_livro_json(
@@ -2072,6 +2101,7 @@ def recusar_solicitacao(solicitacao_id):
         )
 
     solicitacao.status = "recusado"
+    solicitacao.data_resposta = datetime.utcnow()
 
     db.session.commit()
     
