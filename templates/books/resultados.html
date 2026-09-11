@@ -44,6 +44,11 @@
 
                     <!-- CAPA -->
 
+                    {% set capa_padrao = url_for(
+                        'static',
+                        filename='img/capas/padrao/capa_padrão.png'
+                    ) %}
+
                     {% if livro.capa %}
 
                         {% if livro.capa.startswith('http') %}
@@ -52,6 +57,7 @@
                                 src="{{ livro.capa }}"
                                 class="capa-lista"
                                 alt="Capa de {{ livro.titulo }}"
+                                onerror="this.onerror=null; this.src='{{ capa_padrao }}';"
                             >
 
                         {% else %}
@@ -63,15 +69,18 @@
                                 ) }}"
                                 class="capa-lista"
                                 alt="Capa de {{ livro.titulo }}"
+                                onerror="this.onerror=null; this.src='{{ capa_padrao }}';"
                             >
 
                         {% endif %}
 
                     {% else %}
 
-                        <div class="sem-capa">
-                            Sem capa
-                        </div>
+                        <img
+                            src="{{ capa_padrao }}"
+                            class="capa-lista"
+                            alt="Capa indisponível"
+                        >
 
                     {% endif %}
 

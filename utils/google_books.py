@@ -13,25 +13,28 @@ def normalizar_capa(imagens, google_id=None):
         or imagens.get("smallThumbnail")
     )
 
-    if capa:
-        capa = capa.replace("http://", "https://")
+    # ==================================
+    # NÃO EXISTE CAPA
+    # ==================================
 
-        # Algumas URLs publisher vêm codificadas incorretamente
-        if "content%3Fid=" not in capa:
-            return capa
+    if not capa:
+        return None
 
-    # Fallback usando diretamente o ID do Google Books
-    if google_id:
-        return (
-            "https://books.google.com/books/content"
-            f"?id={google_id}"
-            "&printsec=frontcover"
-            "&img=1"
-            "&zoom=2"
-            "&source=gbs_api"
-        )
+    # ==================================
+    # NORMALIZAR HTTPS
+    # ==================================
 
-    return None
+    capa = capa.replace(
+        "http://",
+        "https://"
+    )
+
+    # Algumas URLs publisher vêm
+    # codificadas incorretamente.
+    if "content%3Fid=" in capa:
+        return None
+
+    return capa
 
 def buscar_google_books(
     termo,
