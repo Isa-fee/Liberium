@@ -20,6 +20,10 @@
     <aside class="coluna-esquerda">
 
         <!-- ================= CAPA ================= -->
+        {% set capa_padrao = url_for(
+            'static',
+            filename='img/capas/padrao/capa_padrão.png'
+        ) %}
 
         {% set capa_padrao = url_for(
             'static',
