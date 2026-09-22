@@ -309,6 +309,36 @@ def carregar_imagem(origem):
 
 
 # =========================================================
+# CARREGAR CAPA COM IMAGEM PADRÃO
+# =========================================================
+
+def carregar_capa(livro):
+
+    # Primeiro tenta carregar a capa original
+    capa = carregar_imagem(
+        getattr(livro, "capa", None)
+    )
+
+    if capa is not None:
+        return capa
+
+    # Se não existir, utiliza a capa padrão
+    caminho_padrao = os.path.join(
+        STATIC_DIR,
+        "img",
+        "capas",
+        "padrao",
+        "capa_padrão.png"
+    )
+
+    if os.path.isfile(caminho_padrao):
+        with Image.open(caminho_padrao) as imagem:
+            return imagem.convert("RGBA")
+
+    print("Aviso: capa padrão não encontrada.")
+    return None
+
+# =========================================================
 # CROP PROPORCIONAL
 # =========================================================
 
@@ -1453,13 +1483,7 @@ def gerar_card_livro_concluido(
     # CAPA
     # =====================================================
 
-    capa = carregar_imagem(
-        getattr(
-            livro,
-            "capa",
-            None
-        )
-    )
+    capa = carregar_capa(livro)
 
     largura_capa = 470
     altura_capa = 680
@@ -1927,13 +1951,7 @@ def gerar_card_progresso_leitura(
     # CAPA
     # =====================================================
 
-    capa = carregar_imagem(
-        getattr(
-            livro,
-            "capa",
-            None
-        )
-    )
+    capa = carregar_capa(livro)
 
     largura_capa = 400
     altura_capa = 580
