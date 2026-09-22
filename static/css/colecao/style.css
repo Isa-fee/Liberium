@@ -94,7 +94,10 @@
 
 .grid-colecao {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(220px, 240px)
+    );
     gap: 25px;
     padding: 30px;
 }
@@ -107,17 +110,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    min-width: 0;
     padding: 20px;
+
     background: #f8f7f5;
     border: 1px solid #d7e2cf;
     border-radius: 14px;
+
     text-align: center;
-    transition: .25s;
+    transition: 0.25s;
 }
 
 .item-colecao:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     border-color: #8fa382;
 }
 
@@ -126,7 +133,8 @@
 ================================ */
 
 .imagem-item {
-    width: 170px;
+    width: 100%;
+    max-width: 170px;
     height: 170px;
     display: flex;
     align-items: center;
@@ -205,4 +213,136 @@
     color: #6a8b6f;
     font-weight: bold;
     text-decoration: none;
+}
+/* ================================
+   FORMULÁRIO
+================================ */
+
+.item-colecao form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 100%;
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+/* ================================
+   ESCOLHER PRATELEIRA
+================================ */
+
+.item-colecao select[name="prateleira"] {
+    display: block;
+
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+
+    padding: 0 30px 0 12px;
+
+    border: 1px solid #d7e2cf;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+    color: #442b1a;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            #64775b 50%
+        ),
+        linear-gradient(
+            135deg,
+            #64775b 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 17px) 18px,
+        calc(100% - 12px) 18px;
+
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+
+    transition: border-color 0.2s,
+                box-shadow 0.2s;
+}
+
+.item-colecao select[name="prateleira"]:hover {
+    border-color: #879d84;
+}
+
+.item-colecao select[name="prateleira"]:focus {
+    outline: none;
+    border-color: #64775b;
+
+    box-shadow:
+        0 0 0 3px rgba(135, 157, 132, 0.15);
+}
+
+.item-colecao select[name="prateleira"] option {
+    background: #ffffff;
+    color: #442b1a;
+}
+
+/* ================================
+   BOTÃO DECORAR
+================================ */
+
+.item-colecao .btn-decorar {
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #879d84;
+    color: #ffffff;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.item-colecao .btn-decorar:hover {
+    background: #71866b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .pagina-colecao {
+        padding: 25px 15px;
+    }
+
+    .grid-colecao {
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(100%, 220px), 1fr)
+        );
+
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .cabecalho-colecao {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
 }
