@@ -60,9 +60,9 @@
 
         <div class="acoes-catalogo">
 
-            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda">
-                Surpreenda-me
-            </button>
+            
+            <a href="{{ url_for('books_bp.catalogo', surpreenda=1) }}" class="btn-surpreenda"> Surpreenda-me </a>
+
 
             <button
                 type="button"

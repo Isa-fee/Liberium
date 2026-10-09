@@ -84,6 +84,7 @@
 .btn-surpreenda {
     flex-shrink: 0;
     white-space: nowrap;
+    text-decoration: none;
     border: none;
     background: #f3eee7;
     color: #6c5338;
