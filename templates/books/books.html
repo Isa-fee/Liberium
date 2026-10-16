@@ -262,38 +262,44 @@
                         </p>
 
                         <form
-                            action="{{ url_for(
-                                'estante_bp.atualizar_progresso',
-                                id=livro.id
-                            ) }}"
+                            action="{{ url_for('estante_bp.atualizar_progresso', id=livro.id) }}"
                             method="POST"
                             class="form-progresso"
                         >
+                            {% if not livro.paginas %}
+                                <label for="total_paginas">Total de páginas do livro</label>
+                                <input
+                                    type="number"
+                                    id="total_paginas"
+                                    name="total_paginas"
+                                    min="1"
+                                    required
+                                    placeholder="Informe o total de páginas"
+                                >
+                            {% endif %}
 
-                            <label for="pagina">
-                                Página atual
-                            </label>
-
+                            <label for="pagina">Página atual</label>
                             <input
                                 type="number"
                                 id="pagina"
                                 name="pagina"
                                 min="0"
-                                max="{{ livro.paginas }}"
+                                {% if livro.paginas %}
+                                    max="{{ livro.paginas }}"
+                                {% endif %}
                                 value="{{ item_estante.pagina_atual or 0 }}"
+                                required
                             >
 
-                            <small>
-                                de {{ livro.paginas }} páginas
-                            </small>
+                            {% if livro.paginas %}
+                                <small>de {{ livro.paginas }} páginas</small>
+                            {% else %}
+                                <small>Informe o total de páginas para acompanhar sua leitura.</small>
+                            {% endif %}
 
-                            <button
-                                type="submit"
-                                class="btn-secundario"
-                            >
+                            <button type="submit" class="btn-secundario">
                                 Atualizar progresso
                             </button>
-
                         </form>
 
                     </div>
