@@ -59,10 +59,10 @@
         </div>
 
         <div class="acoes-catalogo">
-
             
-            <a href="{{ url_for('books_bp.catalogo', surpreenda=1) }}" class="btn-surpreenda"> Surpreenda-me </a>
-
+            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda">
+                Surpreenda-me
+            </button>
 
             <button
                 type="button"
@@ -541,6 +541,12 @@
 
                 </nav>
 
+                {% if pagina < total_paginas %}
+                <a href="{{ url_for('books_bp.catalogo', q=busca, genero=genero, idioma=idioma, ano=ano, avaliacao=avaliacao, ordenar=ordenar, pagina=pagina+1) }}" class="pagina-seta">
+                    ›
+                </a>
+                {% endif %}
+            </div>
             {% endif %}
 
         {% else %}
@@ -601,8 +607,20 @@
             }
     
         });
+
+        const formulario = document.querySelector(".filtros-livros");
+        const btnSurpreenda = document.querySelector(".btn-surpreenda");
+
+        if (formulario && btnSurpreenda) {
+            formulario.addEventListener("submit", function(event) {
+                if (event.submitter !== btnSurpreenda) {
+                    btnSurpreenda.disabled = true;
+                }
+            });
+        }
     
     });
+
     </script>
 
 {% endblock %}

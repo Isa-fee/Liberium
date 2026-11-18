@@ -950,22 +950,27 @@
    SEM INSÍGNIAS
    ========================================================= */
 
-.sem-insignias {
-    width: fit-content;
-    min-width: 360px;
 
+/* =========================================================
+   SEM INSÍGNIAS
+   ========================================================= */
+
+.sem-insignias {
+    width: 100%;
+    min-width: 360px;
     background: #fff;
     border-radius: 18px;
-
     padding: 28px 35px;
-
     text-align: center;
-
-    box-shadow: var(--sombra);
+    /* box-shadow: var(--sombra); */
 }
 
-.sem-insignias span {
-    font-size: 38px;
+.sem-insignias .icone-sem-insignias {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 15px;
 }
 
 .sem-insignias h3 {
@@ -980,6 +985,8 @@
     line-height: 1.5;
     margin: 0;
 }
+
+
 
 /* =========================================================
    PARTE INFERIOR

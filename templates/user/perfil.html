@@ -87,7 +87,7 @@
     
             <div class="perfil-info">
     
-                <h1>Olá, {{ current_user.nome }} 🦋</h1>
+                <h1>Olá, {{ current_user.nome }}</h1>
     
                 <p class="frase">
                     "Entre páginas e palavras,
@@ -156,7 +156,7 @@
                 {% if meta.concluida %}
         
                     <p class="texto-meta">
-                        🎉 Parabéns! Você concluiu sua meta de leitura!
+                        Parabéns! Você concluiu sua meta de leitura!
                     </p>
         
                 {% else %}
@@ -547,7 +547,7 @@
 
                 <div class="sem-insignias">
 
-                    <span>🔒</span>
+                    <span><img src="{{ url_for('static', filename='img/icones/nenhuma_insignia.png') }}" alt="Nenhuma insígnia" class="icone-sem-insignias"></span>
 
                     <h3>
                         Nenhuma insígnia conquistada ainda
@@ -556,7 +556,7 @@
                     <p>
                         Continue adicionando livros,
                         lendo e participando do Liberium
-                        para desbloquear conquistas! 📚🦋
+                        para desbloquear conquistas! 
                     </p>
 
                 </div>
@@ -634,7 +634,7 @@
 
             <div class="atividade">
 
-                <h2>ATIVIDADE RECENTE</h2>
+                <h2>Atividade Recente</h2>
 
                 {% if atividades %}
 
@@ -690,7 +690,7 @@
 
                     <p class="atividade-vazia">
                         Nenhuma atividade recente ainda.
-                        📚 Comece adicionando um livro à sua estante!
+                        Comece adicionando um livro à sua estante!
                     </p>
 
                 {% endif %}

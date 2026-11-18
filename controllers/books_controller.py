@@ -1377,43 +1377,32 @@ def catalogo():
     # TOTAL DE LIVROS DO BANCO
     # ======================================
 
-    total_livros_banco = consulta.count()
 
+  total_livros_banco = consulta.order_by(None).count()
 
-    # ======================================
-    # LIVROS DO BANCO DA PÁGINA ATUAL
-    # ======================================
+  # LIVROS DO BANCO DA PÁGINA ATUAL
+  inicio_banco = (pagina - 1) * quantidade_banco_por_pagina
 
-    inicio_banco = (
-        (pagina - 1)
-        * quantidade_banco_por_pagina
-    )
+  restantes_banco = max(
+      total_livros_banco - inicio_banco,
+      0
+  )
 
-    restantes_banco = max(
-        total_livros_banco - inicio_banco,
-        0
-    )
+  quantidade_banco = min(
+      quantidade_banco_por_pagina,
+      restantes_banco
+  )
 
-    quantidade_banco = min(
-        quantidade_banco_por_pagina,
-        restantes_banco
-    )
+  livros_banco = (
+      consulta
+      .offset(inicio_banco)
+      .limit(quantidade_banco)
+      .all()
+  )
 
-    livros_banco = (
-        consulta
-        .offset(inicio_banco)
-        .limit(quantidade_banco)
-        .all()
-    )
+  # QUANTIDADE QUE O GOOGLE PRECISA COMPLETAR
+  quantidade_google = por_pagina - len(livros_banco)
 
-
-    # ======================================
-    # QUANTIDADE QUE O GOOGLE PRECISA COMPLETAR
-    # ======================================
-
-    quantidade_google = (
-        por_pagina - len(livros_banco)
-    )
 
 
     # ======================================
@@ -1794,9 +1783,7 @@ def catalogo():
     # SURPREENDA-ME
     # ======================================
 
-    if request.args.get(
-        "surpreenda"
-    ):
+    if request.args.get("surpreenda") == "1":
 
         livros_disponiveis = []
 
@@ -1918,45 +1905,26 @@ def catalogo():
     # PAGINAÇÃO
     # ======================================
 
-    # Se o Google devolveu a quantidade
-    # solicitada, consideramos que pode
-    # existir uma próxima página.
-
-    tem_proxima = (
-        len(livros_google) > 0
-        )
-    # Só existe anterior depois da página 1.
-
-    tem_anterior = pagina > 1
-
-
-    # ======================================
-    # NÚMEROS DA PAGINAÇÃO
-    # ======================================
-
-    # Mostramos até 5 números próximos
-    # da página atual.
-
-    inicio_paginas = max(
-        1,
-        pagina - 2
+    tem_mais_banco = (
+        inicio_banco + len(livros_banco) < total_livros_banco
     )
 
+    tem_mais_google = (
+        quantidade_google > 0
+        and len(livros_google) == quantidade_google
+    )
+
+    tem_proxima = tem_mais_banco or tem_mais_google
+    tem_anterior = pagina > 1
+
+    inicio_paginas = max(1, pagina - 2)
     fim_paginas = pagina + 2
 
-    # Se chegamos ao fim dos resultados,
-    # não mostramos páginas posteriores.
-
     if not tem_proxima:
-
         fim_paginas = pagina
 
+    paginas = list(range(inicio_paginas, fim_paginas + 1))
 
-    paginas = list(
-        range(
-            inicio_paginas,
-            fim_paginas + 1
-        )
     )
 
 
@@ -1993,13 +1961,14 @@ def catalogo():
         ordenar=ordenar,
 
         pagina=pagina,
-
+        
         paginas=paginas,
-
+      
         tem_anterior=tem_anterior,
-
+      
         tem_proxima=tem_proxima
-    )
+        )
+
 
 # ======================================
 # PAINEL - SOLICITAÇÕES DE LIVROS
