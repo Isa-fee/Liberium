@@ -169,7 +169,9 @@
                                     src="{{ url_for('static', filename=usuario.foto if usuario.foto else 'img/perfil_padrão.jpg') }}"
                                     class="foto-amigo"
                                     alt="Foto de {{ usuario.nome }}"
+                                    onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/perfil_padrão.jpg') }}';"
                                 >
+
 
                                 <div class="dados-amigo">
 

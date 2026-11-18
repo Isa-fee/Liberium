@@ -1995,3 +1995,74 @@
 
     transform: scale(1.2);
 }
+
+/* ----------------------------------------
+   Resultados de pesquisa
+---------------------------------------- */
+.card-amigo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.card-amigo .perfil-amigo{
+    flex:1;
+    min-width:0;
+}
+
+.card-amigo .foto-amigo{
+    width:62px;
+    height:62px;
+    min-width:62px;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+.card-amigo form{
+    margin:0;
+    flex-shrink:0;
+}
+
+.card-amigo .btn-perfil,
+.card-amigo .btn-adicionar{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:36px;
+    padding:9px 17px;
+    box-sizing:border-box;
+    border-radius:22px;
+    font-family:"Raleway",sans-serif;
+    font-size:12px;
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card-amigo .btn-adicionar{
+    background:#879d84;
+    color:#fff;
+    border:1px solid #879d84;
+}
+
+.card-amigo .btn-adicionar:hover{
+    background:#36503c;
+    border-color:#36503c;
+}
+
+@media(max-width:700px){
+    .card-amigo{
+        flex-wrap:wrap;
+    }
+    .card-amigo .perfil-amigo{
+        flex-basis:100%;
+    }
+    .card-amigo form{
+        flex:1;
+    }
+    .card-amigo .btn-adicionar{
+        width:100%;
+    }
+}
