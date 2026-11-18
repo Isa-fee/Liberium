@@ -77,11 +77,23 @@
     color: white;
 }
 
+/* .titulo-secao h2 {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+} */
+
 .titulo-secao h2 {
     margin: 0;
     font-size: 1rem;
     letter-spacing: 2px;
     text-transform: uppercase;
+    color: #ffffff;
+}
+.titulo-secao span {
+    font-size: .85rem;
+    color: #ffffff;
 }
 
 .titulo-secao span {
