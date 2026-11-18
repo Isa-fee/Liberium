@@ -368,25 +368,29 @@
     margin: 0 auto 5px;
 }
 
-
-.item-decoracao-estante {
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
-    transition: transform 0.2s ease;
+.decoracao-estante {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 50px;
+    height: 120px;
+    margin: 0 10px;
+    align-self: flex-end;
+    flex: 0 0 auto;
 }
-
+.item-decoracao-estante {
+    display: block;
+    width: 100px;
+    height: 180px;
+    object-fit: contain;
+    object-position: center bottom;
+    transition: transform .2s ease;
+}
 .item-decoracao-estante:hover {
     transform: translateY(-5px);
 }
 
-.decoracao-estante {
-    width: 80px;
-    height: 120px;
-    object-fit: contain;
-    margin: 0 10px;
-    align-self: flex-end;
-}
 
 /* =========================================
    ARRASTAR LIVROS E DECORAÇÕES
