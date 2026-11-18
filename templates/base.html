@@ -334,7 +334,7 @@
 
 {% if request.endpoint != 'home.index' %}
 
-<footer class="rodape">
+<!-- <footer class="rodape">
 
     <div class="rodape-conteudo">
 
@@ -365,7 +365,38 @@
 
     </div>
 
+</footer> -->
+
+
+
+<footer class="rodape-final">
+    <div class="rodape-conteudo">
+        <a href="{{ url_for('home.index') }}" class="rodape-logo">
+            <img src="{{ url_for('static', filename='img/navlogo.png') }}" alt="Liberium">
+        </a>
+
+        <nav class="rodape-links">
+            <a href="/sobre">Sobre</a>
+            <a href="/contato">Contato</a>
+            <a href="#">Ajuda</a>
+            <a href="#">Tutoriais</a>
+        </nav>
+
+        <div class="rodape-redes">
+            <a href="#" aria-label="Instagram">
+                <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram">
+            </a>
+            <a href="#" aria-label="TikTok">
+                <img src="{{ url_for('static', filename='img/tik-tok.png') }}" alt="TikTok">
+            </a>
+            <a href="#" aria-label="Bluesky">
+                <img src="{{ url_for('static', filename='img/bluesky.png') }}" alt="Bluesky">
+            </a>
+        </div>
+    </div>
 </footer>
+
+
 
 {% endif %}
 

@@ -46,7 +46,6 @@
     <!-- ================================= -->
 
     <form action="{{ url_for('books_bp.catalogo') }}" method="GET" class="filtros-livros">
-
         <div class="barra-busca">
             <span>⌕</span>
 
@@ -60,7 +59,7 @@
 
         <div class="acoes-catalogo">
             
-            <button type="submit" name="surpreenda" value="1" class="btn-surpreenda">
+            <button type="button" class="btn-surpreenda" onclick="surpreenderLivro()">
                 Surpreenda-me
             </button>
 
@@ -513,41 +512,36 @@
 
 </main>
 
+
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    
-        const btnFiltros = document.querySelector(".btn-toggle-filtros");
-        const conteudoFiltros = document.querySelector(".conteudo-filtros");
-    
-        if (!btnFiltros || !conteudoFiltros) {
-            return;
-        }
-    
+document.addEventListener("DOMContentLoaded", () => {
+    const btnFiltros = document.querySelector(".btn-toggle-filtros");
+    const conteudoFiltros = document.querySelector(".conteudo-filtros");
+
+    if (btnFiltros && conteudoFiltros) {
         btnFiltros.addEventListener("click", () => {
-    
             conteudoFiltros.classList.toggle("aberto");
-    
-            if (conteudoFiltros.classList.contains("aberto")) {
-                btnFiltros.textContent = "✕ Fechar filtros";
-            } else {
-                btnFiltros.textContent = "☰ Filtros";
-            }
-    
+
+            btnFiltros.textContent = conteudoFiltros.classList.contains("aberto")
+                ? "✕ Fechar filtros"
+                : "☰ Filtros";
         });
+    }
+});
 
-        const formulario = document.querySelector(".filtros-livros");
-        const btnSurpreenda = document.querySelector(".btn-surpreenda");
+function surpreenderLivro() {
+    const formulario = document.querySelector(".filtros-livros");
 
-        if (formulario && btnSurpreenda) {
-            formulario.addEventListener("submit", function(event) {
-                if (event.submitter !== btnSurpreenda) {
-                    btnSurpreenda.disabled = true;
-                }
-            });
-        }
-    
-    });
+    if (!formulario) return;
 
-    </script>
+    const dados = new FormData(formulario);
+    dados.set("surpreenda", "1");
+    dados.delete("pagina");
+
+    const parametros = new URLSearchParams(dados);
+    window.location.href = formulario.action + "?" + parametros.toString();
+}
+</script>
+
 
 {% endblock %}
