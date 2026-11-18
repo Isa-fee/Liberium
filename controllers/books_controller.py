@@ -1378,30 +1378,30 @@ def catalogo():
     # ======================================
 
 
-  total_livros_banco = consulta.order_by(None).count()
+    total_livros_banco = consulta.order_by(None).count()
 
-  # LIVROS DO BANCO DA PÁGINA ATUAL
-  inicio_banco = (pagina - 1) * quantidade_banco_por_pagina
+    # LIVROS DO BANCO DA PÁGINA ATUAL
+    inicio_banco = (pagina - 1) * quantidade_banco_por_pagina
 
-  restantes_banco = max(
-      total_livros_banco - inicio_banco,
-      0
-  )
+    restantes_banco = max(
+        total_livros_banco - inicio_banco,
+        0
+    )
 
-  quantidade_banco = min(
-      quantidade_banco_por_pagina,
-      restantes_banco
-  )
+    quantidade_banco = min(
+        quantidade_banco_por_pagina,
+        restantes_banco
+    )
 
-  livros_banco = (
-      consulta
-      .offset(inicio_banco)
-      .limit(quantidade_banco)
-      .all()
-  )
+    livros_banco = (
+        consulta
+        .offset(inicio_banco)
+        .limit(quantidade_banco)
+        .all()
+    )
 
-  # QUANTIDADE QUE O GOOGLE PRECISA COMPLETAR
-  quantidade_google = por_pagina - len(livros_banco)
+    # QUANTIDADE QUE O GOOGLE PRECISA COMPLETAR
+    quantidade_google = por_pagina - len(livros_banco)
 
 
 
@@ -1924,9 +1924,6 @@ def catalogo():
         fim_paginas = pagina
 
     paginas = list(range(inicio_paginas, fim_paginas + 1))
-
-    )
-
 
     # ======================================
     # TEMPLATE
