@@ -1370,15 +1370,12 @@ def catalogo():
     # PEGAR LIVROS DO BANCO
     # ======================================
 
-    if pagina == 1:
+    total_livros_banco = consulta.order_by(None).count()
 
-        livros_banco = consulta.limit(
-            por_pagina
-        ).all()
+    livros_banco = consulta.offset(
+        (pagina - 1) * por_pagina
+    ).limit(por_pagina).all()
 
-    else:
-
-        livros_banco = []
 
     # ======================================
     # TRANSFORMAR EM DICIONÁRIO
@@ -1658,9 +1655,7 @@ def catalogo():
     # SURPREENDA-ME
     # ======================================
 
-    if request.args.get(
-        "surpreenda"
-    ):
+    if request.args.get("surpreenda") == "1":
 
         livros_disponiveis = []
 
@@ -1783,11 +1778,19 @@ def catalogo():
 
     # ======================================
     # EXISTEM MAIS RESULTADOS?
+    # 
+    # PAGINAÇÃO
     # ======================================
 
-    tem_mais = (
-        len(livros_google)
-        == por_pagina
+    from math import ceil
+
+    total_paginas_banco = ceil(total_livros_banco / por_pagina)
+
+    tem_mais_google = len(livros_google) == por_pagina
+
+    total_paginas = max(
+        total_paginas_banco,
+        pagina + 1 if tem_mais_google else pagina
     )
 
 
@@ -1825,8 +1828,7 @@ def catalogo():
 
         pagina=pagina,
 
-        tem_mais=tem_mais
-    )
+        total_paginas=total_paginas    )
 # ======================================
 # PAINEL - SOLICITAÇÕES DE LIVROS
 # ======================================

@@ -65,6 +65,23 @@
 
             <hr>
 
+            <span class="titulo-menu">
+                Atalhos
+            </span>
+
+            <a href="{{ url_for('user_bp.configuracoes') }}">
+                Configurações
+            </a>
+
+            <a
+                href="{{ url_for('notificacoes.listar') }}"
+                class="menu-ativo"
+            >
+                Notificações
+            </a>
+
+            <hr>
+            
             <!-- ============================= -->
             <!-- MOEDAS -->
             <!-- ============================= -->
@@ -86,19 +103,6 @@
                 </span>
 
             </div>
-
-            <hr>
-
-            <a href="{{ url_for('user_bp.configuracoes') }}">
-                Configurações
-            </a>
-
-            <a
-                href="{{ url_for('notificacoes.listar') }}"
-                class="menu-ativo"
-            >
-                Notificações
-            </a>
 
         </nav>
 
