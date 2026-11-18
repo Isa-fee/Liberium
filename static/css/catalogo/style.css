@@ -510,16 +510,18 @@ a.pagina-link:hover {
     font-weight: 600;
 }
 
-
 /* PAGINAÇÃO */
 .paginacao {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    margin: 35px 0 20px;
+    width: 100%;
+    margin: 35px auto 20px;
     flex-wrap: wrap;
+    clear: both;
 }
+
 .pagina-numero,
 .pagina-seta {
     display: flex;
