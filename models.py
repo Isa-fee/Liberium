@@ -1118,6 +1118,11 @@ class SolicitacaoLivro(db.Model):
         default=datetime.utcnow
     )
 
+    data_resposta = db.Column(
+        db.DateTime,
+        nullable=True
+    )
+
     solicitante = db.relationship(
         "Usuario",
         backref="solicitacoes_livros"

@@ -645,3 +645,204 @@
     margin: 0;
     color: #6c5338;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* ================================
+   RESPONSIVIDADE DA ESTANTE
+================================ */
+
+/* Telas médias: tablets e notebooks menores */
+@media (max-width: 1000px) {
+
+    .pagina-estante {
+        grid-template-columns: 200px minmax(0, 1fr);
+    }
+
+    .area-estante {
+        padding: 25px 15px;
+        min-width: 0;
+    }
+
+    .estante-container {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cabecalho-estante h1 {
+        font-size: 2rem;
+    }
+
+    .linha-prateleira {
+        padding: 20px 15px;
+        gap: 14px;
+    }
+
+    .bloco-prateleira.expandida .linha-prateleira {
+        padding: 25px 15px;
+        gap: 20px;
+    }
+
+    .bloco-prateleira.expandida .livro-estante {
+        height: 190px;
+    }
+}
+
+
+/* Celulares e telas estreitas */
+@media (max-width: 700px) {
+
+    .pagina-estante {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
+    }
+
+    .sidebar {
+        padding: 20px 15px;
+    }
+
+    .foto-perfil {
+        width: 85px;
+        height: 85px;
+    }
+
+    .sidebar h3 {
+        font-size: 22px;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .usuario {
+        margin-bottom: 15px;
+        overflow-wrap: anywhere;
+    }
+
+    .menu-lateral {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .titulo-menu {
+        width: 100%;
+        text-align: center;
+        margin: 12px 0 5px;
+    }
+
+    .menu-lateral a {
+        padding: 9px;
+        font-size: 14px;
+    }
+
+    .menu-lateral hr {
+        display: none;
+    }
+
+    .card-moedas {
+        width: 100%;
+        max-width: 180px;
+        box-sizing: border-box;
+        margin: 10px auto;
+    }
+
+    .area-estante {
+        padding: 15px 10px;
+    }
+
+    .estante-container {
+        padding-top: 15px;
+        padding-bottom: 20px;
+    }
+
+    .cabecalho-estante {
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 0 5px 20px;
+        padding: 10px;
+    }
+
+    .cabecalho-estante h1 {
+        font-size: 1.7rem;
+    }
+
+    .btn-adicionar {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .linha-prateleira {
+        min-height: 180px;
+        padding: 18px 12px;
+        gap: 12px;
+    }
+
+    .livro-estante {
+        height: 145px;
+        max-width: 110px;
+        object-fit: contain;
+    }
+
+    .bloco-prateleira.expandida .linha-prateleira {
+        min-height: 0;
+        gap: 18px;
+        padding: 20px 12px;
+    }
+
+    .bloco-prateleira.expandida .livro-estante {
+        height: 165px;
+        max-width: 110px;
+    }
+
+    .mensagem-vazia {
+        font-size: 14px;
+    }
+
+    .loja {
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .loja p {
+        margin: 0;
+    }
+}
+
+
+/* Celulares muito estreitos */
+@media (max-width: 380px) {
+
+    .cabecalho-estante h1 {
+        font-size: 1.45rem;
+    }
+
+    .btn-adicionar {
+        font-size: 13px;
+        padding: 9px 11px;
+    }
+
+    .livro-estante {
+        height: 125px;
+        max-width: 90px;
+    }
+
+    .bloco-prateleira.expandida .livro-estante {
+        height: 145px;
+        max-width: 95px;
+    }
+
+    .linha-prateleira {
+        gap: 10px;
+        padding: 15px 8px;
+    }
+}

@@ -489,6 +489,17 @@ Solicitações de livros | Liberium
 
                                 {% endif %}
 
+                                {% if solicitacao.data_resposta %}
+                                    <div class="data-solicitacao">
+                                        <span class="titulo-secao-card">
+                                            Respondido em
+                                        </span>
+                                        <span>
+                                            {{ solicitacao.data_resposta.strftime('%d/%m/%Y') }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                                
                             </div>
 
 
