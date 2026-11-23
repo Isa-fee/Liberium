@@ -833,3 +833,9 @@
     }
 
 }
+
+.clubes-conteudo>.btn-voltar{
+    display:inline-flex;
+    width:fit-content;
+    margin:0 0 20px;
+}

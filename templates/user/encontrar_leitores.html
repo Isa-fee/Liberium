@@ -27,6 +27,10 @@
 
     <div class="conteudo">
 
+        <button type="button" class="btn-voltar" onclick="history.back()">
+           ← Voltar
+        </button>
+        
         <div class="navegacao-amigos">
             <a href="{{ url_for('amigos_bp.amigos') }}" class="aba-amigos">Amigos</a>
             <a href="{{ url_for('amigos_bp.solicitacoes') }}" class="aba-amigos">Solicitações</a>

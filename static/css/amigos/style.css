@@ -1995,3 +1995,10 @@
 
     transform: scale(1.2);
 }
+
+.pagina-amigos .conteudo>.btn-voltar{
+    display:inline-flex;
+    align-self:flex-start;
+    width:fit-content;
+    margin:0 0 15px;
+}

@@ -551,3 +551,10 @@ a.pagina-link:hover {
     color: #fff;
     font-weight: 600;
 }
+
+
+.pagina-livros>.btn-voltar{
+    display:flex;
+    width:fit-content;
+    margin:0 0 20px;
+}

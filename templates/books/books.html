@@ -12,14 +12,17 @@
 {% endblock %}
 
 {% block content %}
-
 <main class="livro-container">
+
+    <div class="area-voltar-livro">
+        <button type="button" class="btn-voltar" onclick="history.back()">
+            ← Voltar
+        </button>
+    </div>
 
     <!-- ================= COLUNA ESQUERDA ================= -->
 
     <aside class="coluna-esquerda">
-
-        
         <!-- ================= CAPA ================= -->
 
         {% if livro.capa %}

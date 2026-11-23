@@ -1,566 +1,365 @@
-/* =========================================================
-   PÁGINA
-========================================================= */
 
-.pagina-notificacoes {
-    width: 100%;
-    min-height: 100vh;
-
-    padding: 0;
-
-    background: #f8f7f5;
-    color: #442b1a;
+/* PÁGINA */
+.pagina-notificacoes{
+    width:100%;
+    min-height:100vh;
+    padding:0;
+    background:#fafbf8;
+    color:#442b1a;
+    box-sizing:border-box;
 }
 
-
-/* =========================================================
-   SIDEBAR + CONTEÚDO
-========================================================= */
-
-.notificacoes-layout {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
-
-    align-items: stretch;
-
-    gap: 0;
+/* SIDEBAR + CONTEÚDO */
+.notificacoes-layout{
+    width:100%;
+    display:grid;
+    grid-template-columns:250px minmax(0,1fr);
+    align-items:stretch;
+    gap:0;
 }
 
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-.pagina-notificacoes .sidebar {
-    width: 250px;
-    min-height: 100vh;
-
-    border-radius: 0;
-
-    align-self: stretch;
+/* SIDEBAR */
+.pagina-notificacoes .sidebar{
+    width:250px;
+    min-height:100vh;
+    border-radius:0;
+    align-self:stretch;
 }
 
-
-/* =========================================================
-   CONTEÚDO
-========================================================= */
-
-.conteudo-notificacoes {
-    width: 100%;
-    max-width: 1100px;
-
-    min-width: 0;
-
-    margin: 0 auto;
-
-    padding: 45px 35px 60px;
+/* CONTEÚDO */
+.conteudo-notificacoes{
+    width:100%;
+    max-width:1100px;
+    min-width:0;
+    margin:0 auto;
+    padding:30px 35px 60px;
+    box-sizing:border-box;
 }
 
-
-/* =========================================
-   CABEÇALHO
-========================================= */
-
-.notificacoes-topo {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    gap: 30px;
-
-    margin-bottom: 30px;
+/* BOTÃO VOLTAR */
+.conteudo-notificacoes>.btn-voltar{
+    display:inline-flex;
+    align-items:center;
+    width:fit-content;
+    margin:0 0 20px;
 }
 
-
-.titulo-notificacoes h1 {
-    margin: 0 0 7px;
-
-    color: #36503c;
-
-    font-size: 2.5rem;
-    font-weight: 600;
+/* CABEÇALHO */
+.notificacoes-topo{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:30px;
+}
+.titulo-notificacoes h1{
+    margin:0 0 7px;
+    color:#36503c;
+    font-size:2.5rem;
+    font-weight:600;
+}
+.titulo-notificacoes p{
+    margin:0;
+    color:#6c5338;
+    font-size:1rem;
 }
 
-
-.titulo-notificacoes p {
-    margin: 0;
-
-    color: #6c5338;
-
-    font-size: 1rem;
+/* MARCAR TODAS COMO LIDAS */
+.btn-marcar-todas{
+    padding:11px 20px;
+    background:transparent;
+    border:1px solid #879d84;
+    border-radius:9px;
+    color:#36503c;
+    font-family:inherit;
+    font-size:.92rem;
+    cursor:pointer;
+    transition:background .2s ease,color .2s ease,transform .2s ease;
+}
+.btn-marcar-todas:hover{
+    background:#879d84;
+    color:#fff;
+    transform:translateY(-1px);
 }
 
-
-/* =========================================
-   MARCAR TODAS COMO LIDAS
-========================================= */
-
-.btn-marcar-todas {
-    padding: 11px 20px;
-
-    background: transparent;
-
-    border: 1px solid #879d84;
-    border-radius: 9px;
-
-    color: #36503c;
-
-    font-family: inherit;
-    font-size: 0.92rem;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+/* LISTA */
+.lista-notificacoes{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-
-.btn-marcar-todas:hover {
-    background: #879d84;
-    color: #ffffff;
-
-    transform: translateY(-1px);
+/* CARD */
+.notificacao-card{
+    position:relative;
+    width:100%;
+    min-height:125px;
+    padding:20px 22px;
+    display:grid;
+    grid-template-columns:68px minmax(0,1fr) auto;
+    align-items:center;
+    gap:20px;
+    border:1px solid #e1dfd8;
+    border-radius:11px;
+    box-sizing:border-box;
+    transition:transform .2s ease,box-shadow .2s ease;
+}
+.notificacao-card:hover{
+    transform:translateY(-1px);
+    box-shadow:0 5px 15px rgba(54,80,60,.06);
 }
 
-/* =========================================
-   LISTA
-========================================= */
-
-.lista-notificacoes {
-    display: flex;
-    flex-direction: column;
-
-    gap: 12px;
+/* NÃO LIDA */
+.notificacao-card.nao-lida{
+    background:#eef3eb;
+    border-left:4px solid #879d84;
 }
 
-
-/* =========================================
-   CARD
-========================================= */
-
-.notificacao-card {
-    position: relative;
-
-    width: 100%;
-    min-height: 125px;
-
-    padding: 20px 22px;
-
-    display: grid;
-    grid-template-columns: 68px 1fr auto;
-    align-items: center;
-
-    gap: 20px;
-
-    border: 1px solid #e1dfd8;
-    border-radius: 11px;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+/* LIDA */
+.notificacao-card.lida{
+    background:#fff;
 }
 
-
-.notificacao-card:hover {
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 5px 15px rgba(54, 80, 60, 0.06);
+/* ÍCONES */
+.notificacao-card .notificacao-icone{
+    width:70px;
+    height:70px;
+    min-width:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:transparent;
+    border:none;
+    border-radius:50%;
+    overflow:hidden;
+}
+.notificacao-card .notificacao-icone img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.25);
+    display:block;
 }
 
-
-/* =========================================
-   NÃO LIDA
-========================================= */
-
-.notificacao-card.nao-lida {
-    background: #eef3eb;
-
-    border-left: 4px solid #879d84;
+/* INFORMAÇÕES */
+.notificacao-info{
+    min-width:0;
+}
+.notificacao-categoria{
+    display:block;
+    margin-bottom:4px;
+    color:#60745e;
+    font-size:.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+.notificacao-info h2{
+    margin:0 0 6px;
+    color:#442b1a;
+    font-size:1.15rem;
+    font-weight:600;
+}
+.notificacao-info p{
+    margin:0 0 7px;
+    color:#5d5147;
+    font-size:.93rem;
+    line-height:1.45;
 }
 
-
-/* =========================================
-   LIDA
-========================================= */
-
-.notificacao-card.lida {
-    background: #ffffff;
+/* AÇÕES DA NOTIFICAÇÃO */
+.notificacao-botoes{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:8px;
+}
+.notificacao-botoes form{
+    margin:0;
+}
+.notificacao-info form{
+    display:inline;
 }
 
-
-/* =========================================
-   ÍCONE
-========================================= */
-
-/* =========================================
-   ÍCONE DA NOTIFICAÇÃO
-========================================= */
-
-.notificacao-icone {
-    width: 58px;
-    height: 58px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* sem bolinha */
-    background: transparent;
-    border-radius: 0;
-    overflow: visible;
+/* CLIQUE PARA VER */
+.notificacao-link{
+    padding:0;
+    background:none;
+    border:none;
+    color:#36503c;
+    font-family:inherit;
+    font-size:.91rem;
+    font-weight:600;
+    cursor:pointer;
+}
+.notificacao-link:hover{
+    text-decoration:underline;
 }
 
-
-
-
-/* =========================================
-   INFORMAÇÕES
-========================================= */
-
-.notificacao-info {
-    min-width: 0;
+/* BOTÃO RESPONDER */
+.btn-responder{
+    padding:6px 14px;
+    background:#879d84;
+    border:1px solid #879d84;
+    border-radius:7px;
+    color:#fff;
+    font-family:inherit;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.btn-responder:hover{
+    background:transparent;
+    color:#435342;
 }
 
-
-.notificacao-categoria {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: #60745e;
-
-    font-size: 0.72rem;
-    font-weight: 700;
-
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
+/* DATA E EXCLUIR */
+.notificacao-acoes{
+    min-width:90px;
+    align-self:stretch;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+}
+.notificacao-data{
+    color:#756b62;
+    font-size:.78rem;
+    white-space:nowrap;
 }
 
-
-.notificacao-info h2 {
-    margin: 0 0 6px;
-
-    color: #442b1a;
-
-    font-size: 1.15rem;
-    font-weight: 600;
+/* EXCLUIR */
+.btn-excluir{
+    width:40px;
+    height:40px;
+    padding:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f1f2ed;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    transition:background .2s ease,transform .2s ease;
+}
+.btn-excluir:hover{
+    background:#e2e8df;
+    transform:scale(1.05);
+}
+.btn-excluir img{
+    width:28px;
+    height:28px;
+    object-fit:contain;
 }
 
-
-.notificacao-info p {
-    margin: 0 0 7px;
-
-    color: #5d5147;
-
-    font-size: 0.93rem;
-    line-height: 1.45;
+/* SEM NOTIFICAÇÕES */
+.sem-notificacoes{
+    padding:65px 30px;
+    background:#fff;
+    border:1px solid #e1dfd8;
+    border-radius:12px;
+    text-align:center;
+}
+.sem-notificacoes h2{
+    margin:0 0 8px;
+    color:#36503c;
+    font-size:1.4rem;
+}
+.sem-notificacoes p{
+    margin:0;
+    color:#756b62;
 }
 
-
-/* =========================================
-   CLIQUE PARA VER
-========================================= */
-
-.notificacao-info form {
-    display: inline;
+/* AVISO DOS 10 DIAS */
+.aviso-notificacoes{
+    margin-top:25px;
+    padding:17px 22px;
+    background:#fff;
+    border:1px dashed #c8c9bf;
+    border-radius:10px;
+}
+.aviso-notificacoes p{
+    margin:0;
+    color:#665d54;
+    font-size:.87rem;
+    line-height:1.5;
+}
+.aviso-notificacoes strong{
+    color:#36503c;
 }
 
-
-.notificacao-link {
-    padding: 0;
-
-    background: none;
-    border: none;
-
-    color: #36503c;
-
-    font-family: inherit;
-    font-size: 0.91rem;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.notificacao-link:hover {
-    text-decoration: underline;
-}
-
-
-/* =========================================
-   AÇÕES
-========================================= */
-
-.notificacao-acoes {
-    min-width: 90px;
-
-    align-self: stretch;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-
-.notificacao-data {
-    color: #756b62;
-
-    font-size: 0.78rem;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================
-   EXCLUIR
-========================================= */
-
-.btn-excluir {
-    width: 40px;
-    height: 40px;
-
-    padding: 8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f1f2ed;
-
-    border: none;
-    border-radius: 50%;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.btn-excluir:hover {
-    background: #e2e8df;
-
-    transform: scale(1.05);
-}
-
-
-.btn-excluir img {
-    width: 28px;
-    height: 28px;
-
-    object-fit: contain;
-}
-
-
-/* =========================================
-   SEM NOTIFICAÇÕES
-========================================= */
-
-.sem-notificacoes {
-    padding: 65px 30px;
-
-    background: #ffffff;
-
-    border: 1px solid #e1dfd8;
-    border-radius: 12px;
-
-    text-align: center;
-}
-
-
-.sem-notificacoes h2 {
-    margin: 0 0 8px;
-
-    color: #36503c;
-
-    font-size: 1.4rem;
-}
-
-
-.sem-notificacoes p {
-    margin: 0;
-
-    color: #756b62;
-}
-
-
-/* =========================================
-   AVISO DOS 10 DIAS
-========================================= */
-
-.aviso-notificacoes {
-    margin-top: 25px;
-
-    padding: 17px 22px;
-
-    background: #ffffff;
-
-    border: 1px dashed #c8c9bf;
-    border-radius: 10px;
-}
-
-
-.aviso-notificacoes p {
-    margin: 0;
-
-    color: #665d54;
-
-    font-size: 0.87rem;
-    line-height: 1.5;
-}
-
-
-.aviso-notificacoes strong {
-    color: #36503c;
-}
-
-
-/* =========================================
-   RESPONSIVIDADE
-========================================= */
-
-@media (max-width: 1000px) {
-
-    .notificacoes-layout {
-        grid-template-columns: 1fr;
+/* RESPONSIVIDADE */
+@media(max-width:1000px){
+    .notificacoes-layout{
+        grid-template-columns:minmax(0,1fr);
     }
-
-    .pagina-notificacoes .sidebar {
-        display: none;
+    .pagina-notificacoes .sidebar{
+        display:none;
     }
-
-    .conteudo-notificacoes {
-        padding: 35px 25px 50px;
+    .conteudo-notificacoes{
+        padding:35px 25px 50px;
     }
 }
 
-
-@media (max-width: 700px) {
-
-    .pagina-notificacoes {
-        padding: 30px 20px 45px;
+@media(max-width:700px){
+    .pagina-notificacoes{
+        padding:0;
     }
-
-
-    .notificacoes-topo {
-        flex-direction: column;
+    .conteudo-notificacoes{
+        padding:25px 20px 45px;
     }
-
-
-    .notificacao-card {
-        grid-template-columns: 50px 1fr;
-
-        padding: 18px;
+    .notificacoes-topo{
+        flex-direction:column;
+        gap:18px;
     }
-
-
-    .notificacao-icone {
-        width: 48px;
-        height: 48px;
+    .titulo-notificacoes h1{
+        font-size:2rem;
     }
-
-
-    .notificacao-icone img {
-        width: 30px;
-        height: 30px;
+    .notificacao-card{
+        grid-template-columns:50px minmax(0,1fr);
+        gap:15px;
+        padding:18px;
     }
-
-
-    .notificacao-acoes {
-        grid-column: 2;
-
-        width: 100%;
-        min-width: 0;
-
-        flex-direction: row;
-        align-items: center;
+    .notificacao-card .notificacao-icone{
+        width:48px;
+        height:48px;
+        min-width:48px;
     }
-
+    .notificacao-acoes{
+        grid-column:2;
+        width:100%;
+        min-width:0;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+    }
+    .notificacao-botoes{
+        gap:10px;
+    }
+    .sem-notificacoes{
+        padding:45px 20px;
+    }
 }
 
-/* =========================================
-   ÍCONES DAS NOTIFICAÇÕES
-========================================= */
-
-.notificacao-card .notificacao-icone {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-    overflow: hidden;
-
-    background: transparent;
-    border: none;
-}
-
-.notificacao-card .notificacao-icone img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transform: scale(1.25);
-
-    display: block;
-}
-
-/* =========================================
-   AÇÕES DA NOTIFICAÇÃO
-========================================= */
-
-.notificacao-botoes {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 8px;
-}
-
-.notificacao-botoes form {
-    margin: 0;
-}
-
-
-/* =========================================
-   BOTÃO RESPONDER
-========================================= */
-
-.btn-responder {
-    border: 1px solid #879d84;
-    background-color: #879d84;
-    color: #ffffff;
-    padding: 6px 14px;
-
-    border-radius: 7px;
-
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.btn-responder:hover {
-    background-color: transparent;
-    color: #435342;
+@media(max-width:400px){
+    .conteudo-notificacoes{
+        padding:20px 15px 40px;
+    }
+    .notificacao-card{
+        gap:12px;
+        padding:14px;
+    }
+    .notificacao-info h2{
+        font-size:1rem;
+    }
+    .notificacao-info p{
+        font-size:.85rem;
+    }
+    .notificacao-acoes{
+        flex-wrap:wrap;
+    }
 }

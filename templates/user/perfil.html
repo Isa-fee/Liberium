@@ -30,7 +30,6 @@
             </span>
 
             <a href="{{ url_for('estante_bp.estante') }}">Estante</a>
-            <a href="#">Gráficos</a>
             <a href="{{ url_for('estante_bp.minhas_resenhas') }}">Resenhas</a>
             <hr>
 
@@ -81,7 +80,9 @@
 
     <section class="area-estante">
 
-        <!-- TOPO -->
+        <button type="button" class="btn-voltar" onclick="history.back()">
+            ← Voltar
+        </button>
     
         <div class="card-perfil">
     

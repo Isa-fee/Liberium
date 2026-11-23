@@ -55,28 +55,15 @@ html {
     overflow-x: hidden; 
 }
 
-/* Adicione esta regra fora das media queries */
-/* main {
-    flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário 
-    width: 100%; /* Garante que ele use a largura total 
-} */
-
 main{
     flex:1 0 auto;
     width:100%;
     background:#fff;
 }
 
-/* body {
-    margin: 0;
-    font-family: 'Raleway', sans-serif;
-    /* Fundo gradiente da página inicial 
-    background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
-    color: var(--marrom-cafe);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-} */
+body:has(.welcome) main{
+    background:transparent;
+}
 
 body{
     margin:0;
@@ -1628,4 +1615,24 @@ body{
     color: #879d84;
 
     transform: translateX(2px);
+}
+
+
+.btn-voltar{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin:0 0 15px;
+    padding:0;
+    background:none;
+    border:none;
+    color:#71866b;
+    font-family:'Raleway',sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    transition:.2s;
+}
+.btn-voltar:hover{
+    color:#4b3323;
+    transform:translateX(-3px);
 }
