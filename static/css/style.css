@@ -56,22 +56,36 @@ html {
 }
 
 /* Adicione esta regra fora das media queries */
-main {
-    flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário */
-    width: 100%; /* Garante que ele use a largura total */
+/* main {
+    flex-grow: 1; /* Permite que o MAIN ocupe todo o espaço vertical necessário 
+    width: 100%; /* Garante que ele use a largura total 
+} */
+
+main{
+    flex:1 0 auto;
+    width:100%;
+    background:#fff;
 }
 
-
-
-body {
+/* body {
     margin: 0;
     font-family: 'Raleway', sans-serif;
-    /* Fundo gradiente da página inicial */
+    /* Fundo gradiente da página inicial 
     background: linear-gradient(135deg, #6a8b6f, #e1d4c3);
     color: var(--marrom-cafe);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+} */
+
+body{
+    margin:0;
+    font-family:"Raleway",sans-serif;
+    background:linear-gradient(135deg,#6a8b6f,#e1d4c3);
+    color:var(--marrom-cafe);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
 * {
@@ -322,7 +336,7 @@ body {
 
 
 /* RODAPÉ FINAL */
-.rodape-final {
+/* .rodape-final {
     width: 100%;
     background: linear-gradient(100deg, #718f79, #a8b59a);
     padding: 12px 35px;
@@ -409,9 +423,107 @@ body {
     .rodape-redes {
         justify-content: center;
     }
+} */
+
+
+/* RODAPÉ FINAL */
+.rodape-final{
+    width:100%;
+    height:auto;
+    min-height:0;
+    margin:0;
+    padding:12px 35px;
+    box-sizing:border-box;
+    background:linear-gradient(100deg,#718f79,#a8b59a);
+    flex-shrink:0;
+}
+.rodape-final .rodape-conteudo{
+    width:100%;
+    height:auto;
+    min-height:0;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:1fr 2fr 1fr;
+    align-items:center;
+    gap:25px;
+}
+.rodape-final .rodape-logo{
+    display:flex;
+    align-items:center;
+    justify-self:start;
+    text-decoration:none;
+}
+.rodape-final .rodape-logo img{
+    display:block;
+    width:auto;
+    height:75px;
+    max-width:250px;
+    object-fit:contain;
+}
+.rodape-final .rodape-links{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+}
+.rodape-final .rodape-links a{
+    color:var(--branco-floral);
+    text-decoration:none;
+    font-family:"Raleway",sans-serif;
+    font-size:15px;
+    font-weight:500;
+    white-space:nowrap;
+    transition:.2s;
+}
+.rodape-final .rodape-links a:hover{
+    color:var(--marrom-cafe);
+}
+.rodape-final .rodape-redes{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:20px;
+}
+.rodape-final .rodape-redes a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+.rodape-final .rodape-redes img{
+    display:block;
+    width:27px;
+    height:27px;
+    object-fit:contain;
+}
+.rodape-final .rodape-redes a:hover{
+    transform:translateY(-3px);
 }
 
-
+@media(max-width:700px){
+    .rodape-final{
+        padding:18px 15px;
+    }
+    .rodape-final .rodape-conteudo{
+        grid-template-columns:1fr;
+        justify-items:center;
+        gap:18px;
+    }
+    .rodape-final .rodape-logo{
+        justify-self:center;
+    }
+    .rodape-final .rodape-logo img{
+        height:65px;
+    }
+    .rodape-final .rodape-links{
+        gap:15px;
+    }
+    .rodape-final .rodape-redes{
+        justify-content:center;
+    }
+}
 
 
 
